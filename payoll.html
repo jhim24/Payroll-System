@@ -1,34 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Employee Master List</title>
+  <title>Payroll</title>
   <style>
-    body {font-family: Arial; padding:20px; background:#f0f4ff;}
-    h2 {border-bottom:3px solid blue;}
+    body {font-family:Arial; padding:20px; background:#fff7f0;}
+    h2 {border-bottom:3px solid green;}
 
     button {
       padding:10px;
       margin:5px;
       border:none;
       color:white;
-      cursor:pointer;
       border-radius:5px;
+      cursor:pointer;
     }
 
-    .nav {background:green;}
-    .add {background:green;}
-    .update {background:orange;}
-    .delete {background:red;}
-    .edit {background:gray;}
+    .back {background:#444;}
+    .compute {background:green;}
 
-    .box {
-      border:2px solid blue;
-      padding:15px;
-      border-radius:10px;
-      background:white;
-    }
-
-    input, select {
+    select,input {
       padding:8px;
       margin:5px;
       width:180px;
@@ -38,146 +28,82 @@
       width:100%;
       margin-top:20px;
       border-collapse:collapse;
-      background:white;
-      border:2px solid blue;
+      border:2px solid green;
     }
 
-    th, td {
+    th,td {
       border:1px solid #ccc;
-      padding:8px;
+      padding:10px;
       text-align:center;
     }
 
-    th {background:blue; color:white;}
+    th {background:green; color:white;}
   </style>
 </head>
 <body>
 
-<h2>👥 Employee Master List</h2>
+<h2>💰 Payroll System</h2>
 
-<button class="nav" onclick="goPayroll()">Go to Payroll 💰</button>
+<button class="back" onclick="back()">⬅ Back to Employee</button>
 
-<div class="box">
+<br><br>
 
-<input id="fname" placeholder="First Name">
-<input id="mname" placeholder="Middle Name">
-<input id="lname" placeholder="Last Name"><br>
+<select id="emp"></select>
+<input id="rate" placeholder="Rate">
+<input id="days" placeholder="Days">
+<input id="deduction" placeholder="Deduction">
 
-<input type="date" id="birthday">
-<input id="age" placeholder="Age" readonly><br>
-
-<input id="empid" placeholder="Employee ID">
-
-<select id="bank">
-<option value="">Bank</option>
-<option>BDO</option>
-<option>BPI</option>
-<option>Metrobank</option>
-</select>
-
-<input id="bankAccount" placeholder="Account Number"><br>
-
-<button class="add" onclick="add()">Add</button>
-<button class="update" onclick="update()">Update</button>
-<button onclick="location.reload()">Refresh</button>
-
-</div>
+<button class="compute" onclick="compute()">Compute</button>
 
 <table>
 <tr>
-<th>First</th><th>Middle</th><th>Last</th>
-<th>Age</th><th>ID</th><th>Bank</th><th>Account</th>
-<th>Action</th>
+<th>Name</th>
+<th>Gross</th>
+<th>Deduction</th>
+<th>Net</th>
 </tr>
 <tbody id="table"></tbody>
 </table>
 
 <script>
 let data = JSON.parse(localStorage.getItem("employees")) || [];
-let editIndex = -1;
 
-birthday.onchange = function(){
-  let b = new Date(this.value);
-  let t = new Date();
-  age.value = t.getFullYear() - b.getFullYear();
+function back(){
+  window.location.href="index.html";
 }
 
-function save(){
-  localStorage.setItem("employees", JSON.stringify(data));
-}
-
-function render(){
-  table.innerHTML="";
+function load(){
+  emp.innerHTML="<option>Select Employee</option>";
   data.forEach((e,i)=>{
-    table.innerHTML += `
-    <tr>
-      <td>${e.fname}</td>
-      <td>${e.mname}</td>
-      <td>${e.lname}</td>
-      <td>${e.age}</td>
-      <td>${e.empid}</td>
-      <td>${e.bank}</td>
-      <td>${e.bankAccount}</td>
-      <td>
-        <button class="edit" onclick="edit(${i})">Edit</button>
-        <button class="delete" onclick="del(${i})">Delete</button>
-      </td>
-    </tr>`;
+    emp.innerHTML += `<option value="${i}">
+      ${e.fname} ${e.lname}
+    </option>`;
   });
 }
 
-function getForm(){
-  return {
-    fname: fname.value,
-    mname: mname.value,
-    lname: lname.value,
-    birthday: birthday.value,
-    age: age.value,
-    empid: empid.value,
-    bank: bank.value,
-    bankAccount: bankAccount.value
-  };
+function compute(){
+  let i=emp.value;
+  let e=data[i];
+
+  if(!e){ alert("Select employee"); return; }
+
+  let r=+rate.value||0;
+  let d=+days.value||0;
+  let ded=+deduction.value||0;
+
+  let gross=r*d;
+  let net=gross-ded;
+
+  table.innerHTML += `
+  <tr>
+    <td>${e.fname} ${e.lname}</td>
+    <td>${gross}</td>
+    <td>${ded}</td>
+    <td>${net}</td>
+  </tr>`;
 }
 
-function add(){
-  data.push(getForm());
-  save(); render(); clear();
-}
-
-function edit(i){
-  let e=data[i]; editIndex=i;
-  fname.value=e.fname;
-  mname.value=e.mname;
-  lname.value=e.lname;
-  birthday.value=e.birthday;
-  age.value=e.age;
-  empid.value=e.empid;
-  bank.value=e.bank;
-  bankAccount.value=e.bankAccount;
-}
-
-function update(){
-  if(editIndex==-1)return;
-  data[editIndex]=getForm();
-  save(); render(); clear();
-  editIndex=-1;
-}
-
-function del(i){
-  data.splice(i,1);
-  save(); render();
-}
-
-function clear(){
-  document.querySelectorAll("input").forEach(i=>i.value="");
-  bank.value="";
-}
-
-function goPayroll(){
-  window.location.href="payroll.html";
-}
-
-render();
+load();
 </script>
 
 </body>
