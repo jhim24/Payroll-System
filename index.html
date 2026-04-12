@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Payroll System</title>
+  <title>Payroll System Level 2</title>
   <style>
     body {
       font-family: Arial;
@@ -46,11 +46,16 @@
       background:#333;
       color:white;
     }
+
+    .deleteBtn {
+      background:red;
+      padding:5px 10px;
+    }
   </style>
 </head>
 <body>
 
-<h2>💰 Automated Payroll System</h2>
+<h2>💰 Payroll System (Level 2)</h2>
 
 <input type="text" id="name" placeholder="Employee Name">
 <input type="number" id="rate" placeholder="Daily Rate">
@@ -65,15 +70,42 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Gross Pay</th>
-      <th>Deductions</th>
-      <th>Net Pay</th>
+      <th>Gross</th>
+      <th>Deduction</th>
+      <th>Net</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody id="payrollTable"></tbody>
 </table>
 
 <script>
+let employees = JSON.parse(localStorage.getItem("payroll")) || [];
+
+function saveData() {
+  localStorage.setItem("payroll", JSON.stringify(employees));
+}
+
+function renderTable() {
+  let table = document.getElementById("payrollTable");
+  table.innerHTML = "";
+
+  employees.forEach((emp, index) => {
+    let row = `
+      <tr>
+        <td>${emp.name}</td>
+        <td>${emp.gross.toFixed(2)}</td>
+        <td>${emp.deduction.toFixed(2)}</td>
+        <td>${emp.net.toFixed(2)}</td>
+        <td>
+          <button class="deleteBtn" onclick="deleteEmployee(${index})">Delete</button>
+        </td>
+      </tr>
+    `;
+    table.innerHTML += row;
+  });
+}
+
 function addEmployee() {
   let name = document.getElementById("name").value;
   let rate = parseFloat(document.getElementById("rate").value) || 0;
@@ -83,25 +115,32 @@ function addEmployee() {
   let gross = rate * days;
   let net = gross - deduction;
 
-  let table = document.getElementById("payrollTable");
+  let employee = {
+    name,
+    gross,
+    deduction,
+    net
+  };
 
-  let row = `
-    <tr>
-      <td>${name}</td>
-      <td>${gross.toFixed(2)}</td>
-      <td>${deduction.toFixed(2)}</td>
-      <td>${net.toFixed(2)}</td>
-    </tr>
-  `;
+  employees.push(employee);
+  saveData();
+  renderTable();
 
-  table.innerHTML += row;
-
-  // clear inputs after add
+  // clear input
   document.getElementById("name").value = "";
   document.getElementById("rate").value = "";
   document.getElementById("days").value = "";
   document.getElementById("deduction").value = "";
 }
+
+function deleteEmployee(index) {
+  employees.splice(index, 1);
+  saveData();
+  renderTable();
+}
+
+// auto load data
+renderTable();
 </script>
 
 </body>
