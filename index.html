@@ -7,12 +7,9 @@
     h2 {border-bottom:3px solid blue;}
 
     button {
-      padding:10px;
-      margin:5px;
-      border:none;
-      color:white;
-      cursor:pointer;
-      border-radius:5px;
+      padding:10px; margin:5px;
+      border:none; color:white;
+      border-radius:5px; cursor:pointer;
     }
 
     .nav {background:green;}
@@ -29,17 +26,15 @@
     }
 
     input, select {
-      padding:8px;
-      margin:5px;
-      width:180px;
+      padding:8px; margin:5px; width:180px;
     }
 
     table {
-      width:100%;
-      margin-top:20px;
+      width:100%; margin-top:20px;
       border-collapse:collapse;
       background:white;
       border:2px solid blue;
+      font-size:12px;
     }
 
     th, td {
@@ -77,6 +72,11 @@
 
 <input id="bankAccount" placeholder="Account Number"><br>
 
+<!-- GOVERNMENT -->
+<input id="sss" placeholder="SSS">
+<input id="philhealth" placeholder="PhilHealth">
+<input id="pagibig" placeholder="Pag-IBIG"><br>
+
 <button class="add" onclick="add()">Add</button>
 <button class="update" onclick="update()">Update</button>
 <button onclick="location.reload()">Refresh</button>
@@ -86,7 +86,9 @@
 <table>
 <tr>
 <th>First</th><th>Middle</th><th>Last</th>
-<th>Age</th><th>ID</th><th>Bank</th><th>Account</th>
+<th>Age</th><th>ID</th>
+<th>Bank</th><th>Account</th>
+<th>SSS</th><th>PhilHealth</th><th>Pag-IBIG</th>
 <th>Action</th>
 </tr>
 <tbody id="table"></tbody>
@@ -96,16 +98,19 @@
 let data = JSON.parse(localStorage.getItem("employees")) || [];
 let editIndex = -1;
 
+// AGE AUTO
 birthday.onchange = function(){
   let b = new Date(this.value);
   let t = new Date();
   age.value = t.getFullYear() - b.getFullYear();
-}
+};
 
+// SAVE
 function save(){
   localStorage.setItem("employees", JSON.stringify(data));
 }
 
+// RENDER
 function render(){
   table.innerHTML="";
   data.forEach((e,i)=>{
@@ -118,6 +123,9 @@ function render(){
       <td>${e.empid}</td>
       <td>${e.bank}</td>
       <td>${e.bankAccount}</td>
+      <td>${e.sss}</td>
+      <td>${e.philhealth}</td>
+      <td>${e.pagibig}</td>
       <td>
         <button class="edit" onclick="edit(${i})">Edit</button>
         <button class="delete" onclick="del(${i})">Delete</button>
@@ -126,6 +134,7 @@ function render(){
   });
 }
 
+// GET FORM
 function getForm(){
   return {
     fname: fname.value,
@@ -135,15 +144,20 @@ function getForm(){
     age: age.value,
     empid: empid.value,
     bank: bank.value,
-    bankAccount: bankAccount.value
+    bankAccount: bankAccount.value,
+    sss: sss.value,
+    philhealth: philhealth.value,
+    pagibig: pagibig.value
   };
 }
 
+// ADD
 function add(){
   data.push(getForm());
   save(); render(); clear();
 }
 
+// EDIT
 function edit(i){
   let e=data[i]; editIndex=i;
   fname.value=e.fname;
@@ -154,8 +168,12 @@ function edit(i){
   empid.value=e.empid;
   bank.value=e.bank;
   bankAccount.value=e.bankAccount;
+  sss.value=e.sss;
+  philhealth.value=e.philhealth;
+  pagibig.value=e.pagibig;
 }
 
+// UPDATE
 function update(){
   if(editIndex==-1)return;
   data[editIndex]=getForm();
@@ -163,16 +181,19 @@ function update(){
   editIndex=-1;
 }
 
+// DELETE
 function del(i){
   data.splice(i,1);
   save(); render();
 }
 
+// CLEAR
 function clear(){
   document.querySelectorAll("input").forEach(i=>i.value="");
   bank.value="";
 }
 
+// NAV
 function goPayroll(){
   window.location.href="payroll.html";
 }
