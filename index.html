@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Payroll System Level 2</title>
+  <title>Employee Master List</title>
   <style>
     body {
       font-family: Arial;
@@ -11,22 +11,22 @@
 
     h2 {color:#333;}
 
-    input {
+    input, select {
       padding:8px;
       margin:5px;
-      width:150px;
+      width:180px;
     }
 
     button {
       padding:10px;
-      background:green;
+      background:blue;
       color:white;
       border:none;
       cursor:pointer;
     }
 
     button:hover {
-      background:darkgreen;
+      background:darkblue;
     }
 
     table {
@@ -34,11 +34,12 @@
       margin-top:20px;
       border-collapse:collapse;
       background:white;
+      font-size:12px;
     }
 
     th, td {
       border:1px solid #ccc;
-      padding:10px;
+      padding:8px;
       text-align:center;
     }
 
@@ -55,12 +56,46 @@
 </head>
 <body>
 
-<h2>💰 Payroll System (Level 2)</h2>
+<h2>👥 Employee Master List (Full HR System)</h2>
 
-<input type="text" id="name" placeholder="Employee Name">
-<input type="number" id="rate" placeholder="Daily Rate">
-<input type="number" id="days" placeholder="Days Worked">
-<input type="number" id="deduction" placeholder="Deductions">
+<input type="text" id="fname" placeholder="First Name">
+<input type="text" id="mname" placeholder="Middle Name">
+<input type="text" id="lname" placeholder="Last Name">
+
+<br>
+
+<input type="date" id="birthday">
+<input type="number" id="age" placeholder="Age" readonly>
+
+<br>
+
+<input type="text" id="address" placeholder="Address">
+<input type="text" id="contact" placeholder="Contact Number">
+<input type="email" id="email" placeholder="Email">
+
+<br>
+
+<input type="text" id="empid" placeholder="Employee ID">
+<input type="text" id="passport" placeholder="Passport">
+
+<br>
+
+<select id="bank">
+  <option value="">Select Bank</option>
+  <option>BDO</option>
+  <option>BPI</option>
+  <option>Metrobank</option>
+  <option>Landbank</option>
+  <option>UnionBank</option>
+</select>
+
+<br>
+
+<!-- NEW FIELDS -->
+<input type="text" id="sss" placeholder="SSS Number">
+<input type="text" id="philhealth" placeholder="PhilHealth Number">
+<input type="text" id="pagibig" placeholder="Pag-IBIG Number">
+<input type="text" id="healthcard" placeholder="Health Card">
 
 <br>
 
@@ -70,33 +105,61 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Gross</th>
-      <th>Deduction</th>
-      <th>Net</th>
+      <th>Birthday</th>
+      <th>Age</th>
+      <th>Contact</th>
+      <th>Email</th>
+      <th>Employee ID</th>
+      <th>Bank</th>
+      <th>SSS</th>
+      <th>PhilHealth</th>
+      <th>Pag-IBIG</th>
+      <th>Health Card</th>
       <th>Action</th>
     </tr>
   </thead>
-  <tbody id="payrollTable"></tbody>
+  <tbody id="employeeTable"></tbody>
 </table>
 
 <script>
-let employees = JSON.parse(localStorage.getItem("payroll")) || [];
+let employees = JSON.parse(localStorage.getItem("employees")) || [];
+
+// auto age
+document.getElementById("birthday").addEventListener("change", function() {
+  let birthDate = new Date(this.value);
+  let today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  let m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  document.getElementById("age").value = age;
+});
 
 function saveData() {
-  localStorage.setItem("payroll", JSON.stringify(employees));
+  localStorage.setItem("employees", JSON.stringify(employees));
 }
 
 function renderTable() {
-  let table = document.getElementById("payrollTable");
+  let table = document.getElementById("employeeTable");
   table.innerHTML = "";
 
   employees.forEach((emp, index) => {
     let row = `
       <tr>
-        <td>${emp.name}</td>
-        <td>${emp.gross.toFixed(2)}</td>
-        <td>${emp.deduction.toFixed(2)}</td>
-        <td>${emp.net.toFixed(2)}</td>
+        <td>${emp.fname} ${emp.mname} ${emp.lname}</td>
+        <td>${emp.birthday}</td>
+        <td>${emp.age}</td>
+        <td>${emp.contact}</td>
+        <td>${emp.email}</td>
+        <td>${emp.empid}</td>
+        <td>${emp.bank}</td>
+        <td>${emp.sss}</td>
+        <td>${emp.philhealth}</td>
+        <td>${emp.pagibig}</td>
+        <td>${emp.healthcard}</td>
         <td>
           <button class="deleteBtn" onclick="deleteEmployee(${index})">Delete</button>
         </td>
@@ -107,30 +170,36 @@ function renderTable() {
 }
 
 function addEmployee() {
-  let name = document.getElementById("name").value;
-  let rate = parseFloat(document.getElementById("rate").value) || 0;
-  let days = parseFloat(document.getElementById("days").value) || 0;
-  let deduction = parseFloat(document.getElementById("deduction").value) || 0;
-
-  let gross = rate * days;
-  let net = gross - deduction;
-
   let employee = {
-    name,
-    gross,
-    deduction,
-    net
+    fname: document.getElementById("fname").value,
+    mname: document.getElementById("mname").value,
+    lname: document.getElementById("lname").value,
+    birthday: document.getElementById("birthday").value,
+    age: document.getElementById("age").value,
+    address: document.getElementById("address").value,
+    contact: document.getElementById("contact").value,
+    email: document.getElementById("email").value,
+    empid: document.getElementById("empid").value,
+    passport: document.getElementById("passport").value,
+    bank: document.getElementById("bank").value,
+    sss: document.getElementById("sss").value,
+    philhealth: document.getElementById("philhealth").value,
+    pagibig: document.getElementById("pagibig").value,
+    healthcard: document.getElementById("healthcard").value
   };
+
+  if(employee.fname === "" || employee.lname === "") {
+    alert("Required: First and Last Name");
+    return;
+  }
 
   employees.push(employee);
   saveData();
   renderTable();
 
-  // clear input
-  document.getElementById("name").value = "";
-  document.getElementById("rate").value = "";
-  document.getElementById("days").value = "";
-  document.getElementById("deduction").value = "";
+  // clear inputs
+  document.querySelectorAll("input").forEach(i => i.value = "");
+  document.getElementById("bank").value = "";
 }
 
 function deleteEmployee(index) {
@@ -139,7 +208,6 @@ function deleteEmployee(index) {
   renderTable();
 }
 
-// auto load data
 renderTable();
 </script>
 
