@@ -44,6 +44,7 @@
 
 <h2>💰 Payroll System</h2>
 
+<!-- BACK BUTTON (IMPORTANT 🔥) -->
 <button class="back" onclick="back()">⬅ Back to Employee</button>
 
 <br><br>
@@ -68,12 +69,14 @@
 <script>
 let data = JSON.parse(localStorage.getItem("employees")) || [];
 
+// 🔙 BACK FUNCTION (VERY IMPORTANT)
 function back(){
-  window.location.href="index.html";
+  window.location.href = "index.html";
 }
 
+// LOAD EMPLOYEES
 function load(){
-  emp.innerHTML="<option>Select Employee</option>";
+  emp.innerHTML = "<option>Select Employee</option>";
   data.forEach((e,i)=>{
     emp.innerHTML += `<option value="${i}">
       ${e.fname} ${e.lname}
@@ -81,18 +84,22 @@ function load(){
   });
 }
 
+// COMPUTE
 function compute(){
-  let i=emp.value;
-  let e=data[i];
+  let i = emp.value;
+  let e = data[i];
 
-  if(!e){ alert("Select employee"); return; }
+  if(!e){
+    alert("Select employee");
+    return;
+  }
 
-  let r=+rate.value||0;
-  let d=+days.value||0;
-  let ded=+deduction.value||0;
+  let r = +rate.value || 0;
+  let d = +days.value || 0;
+  let ded = +deduction.value || 0;
 
-  let gross=r*d;
-  let net=gross-ded;
+  let gross = r * d;
+  let net = gross - ded;
 
   table.innerHTML += `
   <tr>
