@@ -50,6 +50,7 @@
       border-collapse:collapse;
       background:white;
       border:2px solid blue;
+      font-size:12px;
     }
 
     th, td {
@@ -63,20 +64,13 @@
       color:white;
     }
 
-    .deleteBtn {
-      background:red;
-      padding:5px 10px;
-    }
-
-    .editBtn {
-      background:purple;
-      padding:5px 10px;
-    }
+    .deleteBtn { background:red; padding:5px 10px; }
+    .editBtn { background:purple; padding:5px 10px; }
   </style>
 </head>
 <body>
 
-<h2>👥 Employee Master List (Editable)</h2>
+<h2>👥 Employee Master List (Full System)</h2>
 
 <div class="form-box">
 
@@ -117,11 +111,17 @@
 <table>
 <thead>
 <tr>
-<th>Name</th>
+<th>First Name</th>
+<th>Middle Name</th>
+<th>Last Name</th>
 <th>Age</th>
 <th>Contact</th>
-<th>ID</th>
+<th>Employee ID</th>
 <th>Bank</th>
+<th>SSS</th>
+<th>PhilHealth</th>
+<th>Pag-IBIG</th>
+<th>Health Card</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -132,11 +132,15 @@
 let employees = JSON.parse(localStorage.getItem("employees")) || [];
 let editIndex = -1;
 
-// age auto
+// auto age
 document.getElementById("birthday").addEventListener("change", function() {
   let birthDate = new Date(this.value);
   let today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
+  let m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
   document.getElementById("age").value = age;
 });
 
@@ -151,11 +155,17 @@ function renderTable() {
   employees.forEach((emp, index) => {
     let row = `
       <tr>
-        <td>${emp.fname} ${emp.lname}</td>
+        <td>${emp.fname}</td>
+        <td>${emp.mname}</td>
+        <td>${emp.lname}</td>
         <td>${emp.age}</td>
         <td>${emp.contact}</td>
         <td>${emp.empid}</td>
         <td>${emp.bank}</td>
+        <td>${emp.sss}</td>
+        <td>${emp.philhealth}</td>
+        <td>${emp.pagibig}</td>
+        <td>${emp.healthcard}</td>
         <td>
           <button class="editBtn" onclick="editEmployee(${index})">Edit</button>
           <button class="deleteBtn" onclick="deleteEmployee(${index})">Delete</button>
@@ -197,7 +207,6 @@ function editEmployee(index) {
 
 function updateEmployee() {
   if(editIndex === -1) return;
-
   employees[editIndex] = getFormData();
   saveData();
   renderTable();
