@@ -6,35 +6,50 @@
     body {
       font-family: Arial;
       padding:20px;
-      background:#f5f5f5;
+      background:#f0f4ff;
     }
 
-    h2 {color:#333;}
+    h2 {
+      color:#333;
+      border-bottom:3px solid blue;
+      padding-bottom:5px;
+    }
+
+    .form-box {
+      border:2px solid blue;
+      padding:15px;
+      border-radius:10px;
+      background:white;
+      margin-bottom:20px;
+    }
 
     input, select {
       padding:8px;
       margin:5px;
       width:180px;
+      border:1px solid #ccc;
+      border-radius:5px;
     }
 
     button {
       padding:10px;
-      background:blue;
+      margin:5px;
       color:white;
       border:none;
       cursor:pointer;
+      border-radius:5px;
     }
 
-    button:hover {
-      background:darkblue;
-    }
+    .addBtn { background:green; }
+    .updateBtn { background:orange; }
+    .refreshBtn { background:gray; }
 
     table {
       width:100%;
       margin-top:20px;
       border-collapse:collapse;
       background:white;
-      font-size:12px;
+      border:2px solid blue;
     }
 
     th, td {
@@ -44,7 +59,7 @@
     }
 
     th {
-      background:#333;
+      background:blue;
       color:white;
     }
 
@@ -52,33 +67,33 @@
       background:red;
       padding:5px 10px;
     }
+
+    .editBtn {
+      background:purple;
+      padding:5px 10px;
+    }
   </style>
 </head>
 <body>
 
-<h2>👥 Employee Master List (Full HR System)</h2>
+<h2>👥 Employee Master List (Editable)</h2>
+
+<div class="form-box">
 
 <input type="text" id="fname" placeholder="First Name">
 <input type="text" id="mname" placeholder="Middle Name">
-<input type="text" id="lname" placeholder="Last Name">
-
-<br>
+<input type="text" id="lname" placeholder="Last Name"><br>
 
 <input type="date" id="birthday">
-<input type="number" id="age" placeholder="Age" readonly>
-
-<br>
+<input type="number" id="age" placeholder="Age" readonly><br>
 
 <input type="text" id="address" placeholder="Address">
-<input type="text" id="contact" placeholder="Contact Number">
+<input type="text" id="contact" placeholder="Contact"><br>
+
 <input type="email" id="email" placeholder="Email">
+<input type="text" id="empid" placeholder="Employee ID"><br>
 
-<br>
-
-<input type="text" id="empid" placeholder="Employee ID">
 <input type="text" id="passport" placeholder="Passport">
-
-<br>
 
 <select id="bank">
   <option value="">Select Bank</option>
@@ -86,55 +101,42 @@
   <option>BPI</option>
   <option>Metrobank</option>
   <option>Landbank</option>
-  <option>UnionBank</option>
-</select>
+</select><br>
 
-<br>
+<input type="text" id="sss" placeholder="SSS">
+<input type="text" id="philhealth" placeholder="PhilHealth">
+<input type="text" id="pagibig" placeholder="Pag-IBIG">
+<input type="text" id="healthcard" placeholder="Health Card"><br>
 
-<!-- NEW FIELDS -->
-<input type="text" id="sss" placeholder="SSS Number">
-<input type="text" id="philhealth" placeholder="PhilHealth Number">
-<input type="text" id="pagibig" placeholder="Pag-IBIG Number">
-<input type="text" id="healthcard" placeholder="Health Card">
+<button class="addBtn" onclick="addEmployee()">Add</button>
+<button class="updateBtn" onclick="updateEmployee()">Update</button>
+<button class="refreshBtn" onclick="location.reload()">Refresh</button>
 
-<br>
-
-<button onclick="addEmployee()">Add Employee</button>
+</div>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Birthday</th>
-      <th>Age</th>
-      <th>Contact</th>
-      <th>Email</th>
-      <th>Employee ID</th>
-      <th>Bank</th>
-      <th>SSS</th>
-      <th>PhilHealth</th>
-      <th>Pag-IBIG</th>
-      <th>Health Card</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody id="employeeTable"></tbody>
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Contact</th>
+<th>ID</th>
+<th>Bank</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="employeeTable"></tbody>
 </table>
 
 <script>
 let employees = JSON.parse(localStorage.getItem("employees")) || [];
+let editIndex = -1;
 
-// auto age
+// age auto
 document.getElementById("birthday").addEventListener("change", function() {
   let birthDate = new Date(this.value);
   let today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
-  let m = today.getMonth() - birthDate.getMonth();
-
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-
   document.getElementById("age").value = age;
 });
 
@@ -149,18 +151,13 @@ function renderTable() {
   employees.forEach((emp, index) => {
     let row = `
       <tr>
-        <td>${emp.fname} ${emp.mname} ${emp.lname}</td>
-        <td>${emp.birthday}</td>
+        <td>${emp.fname} ${emp.lname}</td>
         <td>${emp.age}</td>
         <td>${emp.contact}</td>
-        <td>${emp.email}</td>
         <td>${emp.empid}</td>
         <td>${emp.bank}</td>
-        <td>${emp.sss}</td>
-        <td>${emp.philhealth}</td>
-        <td>${emp.pagibig}</td>
-        <td>${emp.healthcard}</td>
         <td>
+          <button class="editBtn" onclick="editEmployee(${index})">Edit</button>
           <button class="deleteBtn" onclick="deleteEmployee(${index})">Delete</button>
         </td>
       </tr>
@@ -170,7 +167,52 @@ function renderTable() {
 }
 
 function addEmployee() {
-  let employee = {
+  let employee = getFormData();
+  employees.push(employee);
+  saveData();
+  renderTable();
+  clearForm();
+}
+
+function editEmployee(index) {
+  let emp = employees[index];
+  editIndex = index;
+
+  document.getElementById("fname").value = emp.fname;
+  document.getElementById("mname").value = emp.mname;
+  document.getElementById("lname").value = emp.lname;
+  document.getElementById("birthday").value = emp.birthday;
+  document.getElementById("age").value = emp.age;
+  document.getElementById("address").value = emp.address;
+  document.getElementById("contact").value = emp.contact;
+  document.getElementById("email").value = emp.email;
+  document.getElementById("empid").value = emp.empid;
+  document.getElementById("passport").value = emp.passport;
+  document.getElementById("bank").value = emp.bank;
+  document.getElementById("sss").value = emp.sss;
+  document.getElementById("philhealth").value = emp.philhealth;
+  document.getElementById("pagibig").value = emp.pagibig;
+  document.getElementById("healthcard").value = emp.healthcard;
+}
+
+function updateEmployee() {
+  if(editIndex === -1) return;
+
+  employees[editIndex] = getFormData();
+  saveData();
+  renderTable();
+  clearForm();
+  editIndex = -1;
+}
+
+function deleteEmployee(index) {
+  employees.splice(index, 1);
+  saveData();
+  renderTable();
+}
+
+function getFormData() {
+  return {
     fname: document.getElementById("fname").value,
     mname: document.getElementById("mname").value,
     lname: document.getElementById("lname").value,
@@ -187,25 +229,11 @@ function addEmployee() {
     pagibig: document.getElementById("pagibig").value,
     healthcard: document.getElementById("healthcard").value
   };
-
-  if(employee.fname === "" || employee.lname === "") {
-    alert("Required: First and Last Name");
-    return;
-  }
-
-  employees.push(employee);
-  saveData();
-  renderTable();
-
-  // clear inputs
-  document.querySelectorAll("input").forEach(i => i.value = "");
-  document.getElementById("bank").value = "";
 }
 
-function deleteEmployee(index) {
-  employees.splice(index, 1);
-  saveData();
-  renderTable();
+function clearForm() {
+  document.querySelectorAll("input").forEach(i => i.value = "");
+  document.getElementById("bank").value = "";
 }
 
 renderTable();
