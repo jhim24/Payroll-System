@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Payroll System</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding:20px;
+      background:#f5f5f5;
+    }
+
+    h2 {color:#333;}
+
+    input {
+      padding:8px;
+      margin:5px;
+      width:150px;
+    }
+
+    button {
+      padding:10px;
+      background:green;
+      color:white;
+      border:none;
+      cursor:pointer;
+    }
+
+    button:hover {
+      background:darkgreen;
+    }
+
+    table {
+      width:100%;
+      margin-top:20px;
+      border-collapse:collapse;
+      background:white;
+    }
+
+    th, td {
+      border:1px solid #ccc;
+      padding:10px;
+      text-align:center;
+    }
+
+    th {
+      background:#333;
+      color:white;
+    }
+  </style>
+</head>
+<body>
+
+<h2>💰 Automated Payroll System</h2>
+
+<input type="text" id="name" placeholder="Employee Name">
+<input type="number" id="rate" placeholder="Daily Rate">
+<input type="number" id="days" placeholder="Days Worked">
+<input type="number" id="deduction" placeholder="Deductions">
+
+<br>
+
+<button onclick="addEmployee()">Add Employee</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Gross Pay</th>
+      <th>Deductions</th>
+      <th>Net Pay</th>
+    </tr>
+  </thead>
+  <tbody id="payrollTable"></tbody>
+</table>
+
+<script>
+function addEmployee() {
+  let name = document.getElementById("name").value;
+  let rate = parseFloat(document.getElementById("rate").value) || 0;
+  let days = parseFloat(document.getElementById("days").value) || 0;
+  let deduction = parseFloat(document.getElementById("deduction").value) || 0;
+
+  let gross = rate * days;
+  let net = gross - deduction;
+
+  let table = document.getElementById("payrollTable");
+
+  let row = `
+    <tr>
+      <td>${name}</td>
+      <td>${gross.toFixed(2)}</td>
+      <td>${deduction.toFixed(2)}</td>
+      <td>${net.toFixed(2)}</td>
+    </tr>
+  `;
+
+  table.innerHTML += row;
+
+  // clear inputs after add
+  document.getElementById("name").value = "";
+  document.getElementById("rate").value = "";
+  document.getElementById("days").value = "";
+  document.getElementById("deduction").value = "";
+}
+</script>
+
+</body>
+</html>
