@@ -599,33 +599,90 @@ Save Employee
 
 </div>
 
-<script>
+<script type="module">
+
+/* =========================
+FIREBASE IMPORT
+========================= */
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* =========================
+FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain: "hr-system-38fc3.firebaseapp.com",
+
+projectId: "hr-system-38fc3",
+
+storageBucket: "hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId: "615471610834",
+
+appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b",
+
+measurementId: "G-TGBXWWZWE0"
+
+};
+
+/* =========================
+INIT FIREBASE
+========================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+VARIABLES
+========================= */
 
 let editRowIndex = null;
 
-let employees =
+let employees = [];
 
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
+/* =========================
+MODAL
+========================= */
 
-/* MODAL */
-
-function openModal(){
+window.openModal = function(){
 
 employeeModal.style.display='flex';
 
 }
 
-function closeModal(){
+window.closeModal = function(){
 
 employeeModal.style.display='none';
 
 }
 
-/* TAB */
+/* =========================
+TAB
+========================= */
 
-function openTab(evt,tabId){
+window.openTab = function(evt,tabId){
 
 document
 .querySelectorAll('.tab-content')
@@ -655,9 +712,11 @@ evt.currentTarget
 
 }
 
-/* AGE */
+/* =========================
+AGE
+========================= */
 
-function calcAge(){
+window.calcAge = function(){
 
 let birth =
 new Date(birthdate.value);
@@ -689,9 +748,12 @@ age.value = years;
 
 }
 
-/* SAVE */
+/* =========================
+SAVE EMPLOYEE
+========================= */
 
-function addEmployee(){
+window.addEmployee =
+async function(){
 
 let fields =
 
@@ -706,6 +768,8 @@ fields.forEach(field=>{
 employeeData.push(field.value);
 
 });
+
+/* LOCAL */
 
 if(editRowIndex !== null){
 
@@ -724,10 +788,91 @@ alert('Employee Saved');
 
 }
 
+/* LOCAL STORAGE */
+
 localStorage.setItem(
+
 'employees',
+
 JSON.stringify(employees)
+
 );
+
+/* FIREBASE SAVE */
+
+try{
+
+await addDoc(
+
+collection(db,'employees'),
+
+{
+
+firstname: employeeData[0] || '',
+
+middlename: employeeData[1] || '',
+
+lastname: employeeData[2] || '',
+
+birthdate: employeeData[3] || '',
+
+age: employeeData[4] || '',
+
+gender: employeeData[5] || '',
+
+sss: employeeData[6] || '',
+
+philhealth: employeeData[7] || '',
+
+pagibig: employeeData[8] || '',
+
+healthcard: employeeData[9] || '',
+
+bankname: employeeData[10] || '',
+
+bankaccount: employeeData[11] || '',
+
+idtype: employeeData[12] || '',
+
+idnumber: employeeData[13] || '',
+
+mobile: employeeData[14] || '',
+
+email: employeeData[15] || '',
+
+currentaddress: employeeData[16] || '',
+
+permanentaddress: employeeData[17] || '',
+
+employeeid: employeeData[18] || '',
+
+position: employeeData[19] || '',
+
+department: employeeData[20] || '',
+
+employment: employeeData[21] || '',
+
+salary: employeeData[22] || ''
+
+}
+
+);
+
+console.log(
+'Firebase Save Success'
+);
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Firebase Save Error'
+);
+
+}
+
+/* REFRESH */
 
 renderTable();
 
@@ -737,7 +882,9 @@ clearForm();
 
 }
 
-/* RENDER */
+/* =========================
+RENDER TABLE
+========================= */
 
 function renderTable(){
 
@@ -755,32 +902,32 @@ table.innerHTML += `
 
 <tr>
 
-<td>${emp[0]}</td>
-<td>${emp[1]}</td>
-<td>${emp[2]}</td>
-<td>${emp[3]}</td>
-<td>${emp[4]}</td>
-<td>${emp[5]}</td>
+<td>${emp[0] || ''}</td>
+<td>${emp[1] || ''}</td>
+<td>${emp[2] || ''}</td>
+<td>${emp[3] || ''}</td>
+<td>${emp[4] || ''}</td>
+<td>${emp[5] || ''}</td>
 
-<td>${emp[6]}</td>
-<td>${emp[7]}</td>
-<td>${emp[8]}</td>
-<td>${emp[9]}</td>
+<td>${emp[6] || ''}</td>
+<td>${emp[7] || ''}</td>
+<td>${emp[8] || ''}</td>
+<td>${emp[9] || ''}</td>
 
-<td>${emp[10]}</td>
-<td>${emp[11]}</td>
+<td>${emp[10] || ''}</td>
+<td>${emp[11] || ''}</td>
 
-<td>${emp[12]}</td>
-<td>${emp[13]}</td>
+<td>${emp[12] || ''}</td>
+<td>${emp[13] || ''}</td>
 
-<td>${emp[14]}</td>
-<td>${emp[15]}</td>
+<td>${emp[14] || ''}</td>
+<td>${emp[15] || ''}</td>
 
-<td>${emp[18]}</td>
-<td>${emp[19]}</td>
-<td>${emp[20]}</td>
-<td>${emp[21]}</td>
-<td>${emp[22]}</td>
+<td>${emp[18] || ''}</td>
+<td>${emp[19] || ''}</td>
+<td>${emp[20] || ''}</td>
+<td>${emp[21] || ''}</td>
+<td>${emp[22] || ''}</td>
 
 <td>
 
@@ -812,9 +959,11 @@ updateTotal();
 
 }
 
-/* EDIT */
+/* =========================
+EDIT
+========================= */
 
-function editRow(index){
+window.editRow = function(index){
 
 openModal();
 
@@ -836,24 +985,31 @@ field.value = emp[i] || '';
 
 }
 
-/* DELETE */
+/* =========================
+DELETE
+========================= */
 
-function deleteRow(index){
+window.deleteRow = function(index){
 
 employees.splice(index,1);
 
 localStorage.setItem(
+
 'employees',
+
 JSON.stringify(employees)
+
 );
 
 renderTable();
 
 }
 
-/* SEARCH */
+/* =========================
+SEARCH
+========================= */
 
-function searchEmp(){
+window.searchEmp = function(){
 
 let val =
 search.value.toLowerCase();
@@ -886,7 +1042,9 @@ total.innerText =
 
 }
 
-/* CLEAR */
+/* =========================
+CLEAR
+========================= */
 
 function clearForm(){
 
@@ -901,7 +1059,9 @@ el.value='';
 
 }
 
-/* TOTAL */
+/* =========================
+TOTAL
+========================= */
 
 function updateTotal(){
 
@@ -916,89 +1076,13 @@ total.innerText =
 
 }
 
-renderTable();
+/* =========================
+LOAD FIREBASE
+========================= */
 
-</script>
-<script type="module">
+async function loadEmployeesFirebase(){
 
-import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-
-import {
-
-getFirestore,
-collection,
-addDoc,
-getDocs
-
-}
-
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-/* FIREBASE */
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
-
-authDomain: "hr-system-38fc3.firebaseapp.com",
-
-projectId: "hr-system-38fc3",
-
-storageBucket: "hr-system-38fc3.firebasestorage.app",
-
-messagingSenderId: "615471610834",
-
-appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b",
-
-measurementId: "G-TGBXWWZWE0"
-
-};
-
-/* INIT */
-
-const app =
-initializeApp(firebaseConfig);
-
-const db =
-getFirestore(app);
-
-/* SAVE EMPLOYEE */
-
-window.saveEmployeeFirebase =
-async function(employeeData){
-
-try{
-
-await addDoc(
-
-collection(db,'employees'),
-
-employeeData
-
-);
-
-alert(
-'Employee Saved Online'
-);
-
-}catch(error){
-
-console.log(error);
-
-alert(
-'Firebase Save Error'
-);
-
-}
-
-}
-
-/* LOAD EMPLOYEE */
-
-window.loadEmployeeFirebase =
-async function(){
+employees = [];
 
 let querySnapshot =
 await getDocs(
@@ -1007,12 +1091,49 @@ collection(db,'employees')
 
 querySnapshot.forEach((doc)=>{
 
-console.log(doc.data());
+let data = doc.data();
+
+employees.push([
+
+data.firstname || '',
+data.middlename || '',
+data.lastname || '',
+data.birthdate || '',
+data.age || '',
+data.gender || '',
+data.sss || '',
+data.philhealth || '',
+data.pagibig || '',
+data.healthcard || '',
+data.bankname || '',
+data.bankaccount || '',
+data.idtype || '',
+data.idnumber || '',
+data.mobile || '',
+data.email || '',
+data.currentaddress || '',
+data.permanentaddress || '',
+data.employeeid || '',
+data.position || '',
+data.department || '',
+data.employment || '',
+data.salary || ''
+
+]);
 
 });
 
+renderTable();
+
 }
 
+/* =========================
+AUTO LOAD
+========================= */
+
+loadEmployeesFirebase();
+
 </script>
+
 </body>
 </html>
