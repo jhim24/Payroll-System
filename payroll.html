@@ -413,11 +413,19 @@ LOAD EMPLOYEES
 
 function loadEmployees(){
 
-let employees =
+let employees = [];
 
-JSON.parse(
+try{
+
+employees = JSON.parse(
 localStorage.getItem('employees')
 ) || [];
+
+}catch(error){
+
+employees = [];
+
+}
 
 let select =
 document.getElementById(
@@ -429,10 +437,19 @@ select.innerHTML =
 
 employees.forEach((emp)=>{
 
+let first =
+emp[0] || '';
+
+let middle =
+emp[1] || '';
+
+let last =
+emp[2] || '';
+
 let fullName =
-(emp[0] || '') + ' ' +
-(emp[1] || '') + ' ' +
-(emp[2] || '');
+first + ' ' +
+middle + ' ' +
+last;
 
 let empId =
 emp[18] || 'NO-ID';
@@ -455,11 +472,19 @@ select.appendChild(option);
 PAYROLL STORAGE
 ====================== */
 
-let payrollRecords =
+let payrollRecords = [];
 
-JSON.parse(
+try{
+
+payrollRecords = JSON.parse(
 localStorage.getItem('payroll')
 ) || [];
+
+}catch(error){
+
+payrollRecords = [];
+
+}
 
 /* ======================
 SAVE PAYROLL
@@ -605,7 +630,7 @@ alert('Payroll Saved');
 
 }
 
-/* SAVE */
+/* SAVE STORAGE */
 
 localStorage.setItem(
 'payroll',
@@ -633,6 +658,26 @@ document.getElementById(
 
 tbody.innerHTML = '';
 
+if(payrollRecords.length === 0){
+
+tbody.innerHTML = `
+
+<tr>
+
+<td colspan="16">
+
+NO PAYROLL RECORD FOUND
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
 payrollRecords.forEach((pay,index)=>{
 
 let row =
@@ -640,54 +685,54 @@ document.createElement('tr');
 
 row.innerHTML = `
 
-<td>${pay.employee}</td>
+<td>${pay.employee || ''}</td>
 
-<td>${pay.rate.toFixed(2)}</td>
+<td>${Number(pay.rate || 0).toFixed(2)}</td>
 
-<td>${pay.days}</td>
+<td>${pay.days || 0}</td>
 
-<td>${pay.gross.toFixed(2)}</td>
+<td>${Number(pay.gross || 0).toFixed(2)}</td>
 
-<td>${pay.overtime.toFixed(2)}</td>
+<td>${Number(pay.overtime || 0).toFixed(2)}</td>
 
 <td class="deduction">
-${pay.cash.toFixed(2)}
+${Number(pay.cash || 0).toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.late.toFixed(2)}
+${Number(pay.late || 0).toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.sss.toFixed(2)}
+${Number(pay.sss || 0).toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.philhealth.toFixed(2)}
+${Number(pay.philhealth || 0).toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.pagibig.toFixed(2)}
+${Number(pay.pagibig || 0).toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.health.toFixed(2)}
+${Number(pay.health || 0).toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.other.toFixed(2)}
+${Number(pay.other || 0).toFixed(2)}
 </td>
 
 <td class="notes">
-${pay.otherReason}
+${pay.otherReason || '-'}
 </td>
 
 <td class="deduction">
-${pay.deductions.toFixed(2)}
+${Number(pay.deductions || 0).toFixed(2)}
 </td>
 
 <td class="netpay">
-${pay.net.toFixed(2)}
+${Number(pay.net || 0).toFixed(2)}
 </td>
 
 <td>
@@ -730,52 +775,52 @@ payrollRecords[index];
 editIndex = index;
 
 employeeSelect.value =
-pay.employee;
+pay.employee || '';
 
 dailyRate.value =
-pay.rate;
+pay.rate || '';
 
 daysWorked.value =
-pay.days;
+pay.days || '';
 
 overtime.value =
-pay.overtime;
+pay.overtime || '';
 
 cashAdvance.value =
-pay.cash;
+pay.cash || '';
 
 lateDeduction.value =
-pay.late;
+pay.late || '';
 
 sss.value =
-pay.sss;
+pay.sss || '';
 
 philhealth.value =
-pay.philhealth;
+pay.philhealth || '';
 
 pagibig.value =
-pay.pagibig;
+pay.pagibig || '';
 
 healthCard.value =
-pay.health;
+pay.health || '';
 
 otherDeduction.value =
-pay.other;
+pay.other || '';
 
 otherNote.value =
-pay.otherReason;
+pay.otherReason || '';
 
 grossPay.innerText =
 'Gross Pay : ' +
-pay.gross.toFixed(2);
+Number(pay.gross || 0).toFixed(2);
 
 totalDeduction.innerText =
 'Total Deduction : ' +
-pay.deductions.toFixed(2);
+Number(pay.deductions || 0).toFixed(2);
 
 netPay.innerText =
 'Net Pay : ' +
-pay.net.toFixed(2);
+Number(pay.net || 0).toFixed(2);
 
 }
 
