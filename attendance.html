@@ -877,10 +877,31 @@ return;
 let fullName =
 employeeSelect.value;
 
-let empId =
-'EMP-' + Math.floor(
-Math.random()*9999
-);
+/* GET EMPLOYEE ID FROM MASTERLIST */
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let empId = 'NO-ID';
+
+employees.forEach(emp=>{
+
+let full =
+
+(emp[0] || '') + ' ' +
+(emp[1] || '') + ' ' +
+(emp[2] || '');
+
+if(full === fullName){
+
+empId = emp[18] || 'NO-ID';
+
+}
+
+});
 
 let data = {
 
@@ -1149,7 +1170,8 @@ totalRecords.innerText =
 filtered.length;
 
 employeeId.innerText =
-'EMPLOYEE ID : FILTERED';
+'EMPLOYEE ID : ' +
+(filtered[0]?.empid || '-');
 
 employeeName.innerText =
 'EMPLOYEE NAME : ' +
