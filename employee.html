@@ -4,7 +4,8 @@
 
 <title>Employees</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 </head>
 
@@ -14,45 +15,67 @@
 
 <h1>Employee Masterlist</h1>
 
+<input
+type="text"
+id="search"
+placeholder="Search Employee"
+onkeyup="searchEmployee()">
+
 <button onclick="openModal()">
 + Add Employee
 </button>
 
+<!-- MODAL -->
+
 <div id="modal"
-style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.5);
-">
+class="modal">
 
-<div style="
-background:white;
-width:90%;
-max-width:600px;
-margin:50px auto;
-padding:20px;
-">
+<div class="modal-box">
 
-<input id="fname"
+<h2>Add Employee</h2>
+
+<input
+id="fname"
 placeholder="First Name">
+
+<input
+id="lname"
+placeholder="Last Name">
+
+<input
+id="position"
+placeholder="Position">
+
+<br><br>
 
 <button onclick="saveEmployee()">
 Save
 </button>
 
-</div>
+<button onclick="closeModal()">
+Close
+</button>
 
 </div>
 
-<table border="1"
+</div>
+
+<!-- TABLE -->
+
+<table
+border="1"
 width="100%"
 id="empTable">
 
 <thead>
 
 <tr>
+
 <th>First Name</th>
+<th>Last Name</th>
+<th>Position</th>
+<th>Action</th>
+
 </tr>
 
 </thead>
@@ -67,28 +90,212 @@ id="empTable">
 
 <script>
 
+let editIndex = null;
+
+/* LOAD */
+
+window.onload = loadEmployees;
+
+/* OPEN */
+
 function openModal(){
 
 modal.style.display='block';
 
 }
 
+/* CLOSE */
+
+function closeModal(){
+
+modal.style.display='none';
+
+clearForm();
+
+}
+
+/* SAVE */
+
 function saveEmployee(){
+
+let employees =
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let employee = {
+
+fname:fname.value,
+
+lname:lname.value,
+
+position:position.value
+
+};
+
+/* EDIT */
+
+if(editIndex !== null){
+
+employees[editIndex] = employee;
+
+editIndex = null;
+
+}
+
+/* ADD */
+
+else{
+
+employees.push(employee);
+
+}
+
+localStorage.setItem(
+'employees',
+JSON.stringify(employees)
+);
+
+loadEmployees();
+
+closeModal();
+
+}
+
+/* LOAD TABLE */
+
+function loadEmployees(){
+
+let employees =
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
 
 let table =
 document.querySelector(
 '#empTable tbody'
 );
 
+table.innerHTML='';
+
+employees.forEach((emp,index)=>{
+
 table.innerHTML += `
 
 <tr>
-<td>${fname.value}</td>
+
+<td>${emp.fname}</td>
+
+<td>${emp.lname}</td>
+
+<td>${emp.position}</td>
+
+<td>
+
+<button
+onclick="editEmployee(${index})">
+
+Edit
+
+</button>
+
+<button
+onclick="deleteEmployee(${index})">
+
+Delete
+
+</button>
+
+</td>
+
 </tr>
 
 `;
 
-modal.style.display='none';
+});
+
+}
+
+/* DELETE */
+
+function deleteEmployee(index){
+
+let employees =
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+employees.splice(index,1);
+
+localStorage.setItem(
+'employees',
+JSON.stringify(employees)
+);
+
+loadEmployees();
+
+}
+
+/* EDIT */
+
+function editEmployee(index){
+
+let employees =
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let emp = employees[index];
+
+fname.value = emp.fname;
+
+lname.value = emp.lname;
+
+position.value = emp.position;
+
+editIndex = index;
+
+openModal();
+
+}
+
+/* SEARCH */
+
+function searchEmployee(){
+
+let value =
+search.value.toLowerCase();
+
+let rows =
+document.querySelectorAll(
+'#empTable tbody tr'
+);
+
+rows.forEach(row=>{
+
+row.style.display =
+
+row.innerText
+.toLowerCase()
+.includes(value)
+
+? ''
+
+: 'none';
+
+});
+
+}
+
+/* CLEAR */
+
+function clearForm(){
+
+fname.value='';
+
+lname.value='';
+
+position.value='';
 
 }
 
