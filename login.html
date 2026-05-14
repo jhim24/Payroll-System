@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>HR SYSTEM LOGIN</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:linear-gradient(
+135deg,
+#1f1f1f,
+#2b2b2b
+);
+
+overflow:hidden;
+}
+
+/* LOGIN BOX */
+
+.login-box{
+
+width:380px;
+
+background:#2b2b2b;
+
+padding:30px;
+
+border-radius:15px;
+
+border:3px solid #ffcc00;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.6);
+
+text-align:center;
+
+color:white;
+}
+
+/* TITLE */
+
+.title{
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#ffcc00;
+
+margin-bottom:10px;
+
+text-shadow:2px 2px 5px black;
+}
+
+.subtitle{
+
+font-size:14px;
+
+margin-bottom:25px;
+
+color:#ccc;
+}
+
+/* INPUT */
+
+input,
+select{
+
+width:100%;
+
+padding:12px;
+
+margin-bottom:15px;
+
+border:none;
+
+border-radius:10px;
+
+background:#1f1f1f;
+
+color:white;
+
+font-size:14px;
+
+border:2px solid #555;
+}
+
+input:focus,
+select:focus{
+
+outline:none;
+
+border-color:#ffcc00;
+}
+
+/* BUTTON */
+
+.login-btn{
+
+width:100%;
+
+padding:12px;
+
+border:none;
+
+border-radius:10px;
+
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff8800
+);
+
+color:black;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:0.3s;
+}
+
+.login-btn:hover{
+
+transform:scale(1.03);
+}
+
+/* DEMO */
+
+.demo{
+
+margin-top:20px;
+
+font-size:12px;
+
+line-height:1.8;
+
+background:#1f1f1f;
+
+padding:12px;
+
+border-radius:10px;
+
+border:1px solid #555;
+}
+
+.demo span{
+
+color:#ffcc00;
+
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<div class="title">
+
+HR SYSTEM
+
+</div>
+
+<div class="subtitle">
+
+Admin & Employee Login
+
+</div>
+
+<select id="role">
+
+<option value="">
+Select Role
+</option>
+
+<option value="admin">
+ADMIN
+</option>
+
+<option value="employee">
+EMPLOYEE
+</option>
+
+</select>
+
+<input
+type="text"
+id="username"
+placeholder="Username">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<button
+class="login-btn"
+onclick="login()">
+
+LOGIN
+
+</button>
+
+<div class="demo">
+
+<div>
+<span>ADMIN</span>
+</div>
+
+Username : admin
+
+<br>
+
+Password : admin123
+
+<br><br>
+
+<div>
+<span>EMPLOYEE</span>
+</div>
+
+Username : employee
+
+<br>
+
+Password : employee123
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+LOGIN
+========================= */
+
+function login(){
+
+let role =
+document.getElementById(
+'role'
+).value;
+
+let username =
+document.getElementById(
+'username'
+).value;
+
+let password =
+document.getElementById(
+'password'
+).value;
+
+/* ADMIN */
+
+if(
+
+role === 'admin' &&
+
+username === 'admin' &&
+
+password === 'admin123'
+
+){
+
+localStorage.setItem(
+'userRole',
+'admin'
+);
+
+window.location.href =
+'index.html';
+
+}
+
+/* EMPLOYEE */
+
+else if(
+
+role === 'employee' &&
+
+username === 'employee' &&
+
+password === 'employee123'
+
+){
+
+localStorage.setItem(
+'userRole',
+'employee'
+);
+
+window.location.href =
+'employeeportal.html';
+
+}
+
+/* INVALID */
+
+else{
+
+alert(
+'Invalid Login'
+);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
