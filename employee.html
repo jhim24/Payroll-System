@@ -2,92 +2,276 @@
 <html>
 <head>
 
-<title>Employees</title>
+<title>Employee Masterlist</title>
 
-<link rel="stylesheet"
-href="style.css">
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+margin:0;
+background:#d4d0c8;
+padding:15px;
+}
+
+/* TOP */
+
+.top-bar{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:15px;
+}
+
+h2{
+margin:0;
+}
+
+/* BUTTON */
+
+.add-btn,
+.save-btn,
+.btn,
+.close-btn{
+
+padding:8px 15px;
+
+background:#dcdcdc;
+
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
+
+cursor:pointer;
+
+font-weight:bold;
+}
+
+/* SEARCH */
+
+.search-box{
+margin-bottom:10px;
+}
+
+.search-box input{
+
+padding:8px;
+
+border:1px solid #808080;
+
+width:250px;
+}
+
+/* TABLE */
+
+.table-box{
+
+background:white;
+
+border:1px solid #808080;
+
+overflow-x:auto;
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:5000px;
+
+font-size:12px;
+}
+
+th,
+td{
+
+border:1px solid #808080;
+
+padding:6px;
+
+text-align:left;
+
+white-space:nowrap;
+}
+
+th{
+background:#dcdcdc;
+}
+
+/* MODAL */
+
+.modal{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.5);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+}
+
+.modal-box{
+
+background:white;
+
+width:95%;
+
+max-width:1300px;
+
+height:95vh;
+
+overflow:auto;
+
+border:2px solid #808080;
+
+padding:15px;
+
+position:relative;
+}
+
+/* CLOSE */
+
+.close-btn{
+
+position:absolute;
+
+top:10px;
+right:10px;
+}
+
+/* TABS */
+
+.classic-tabs{
+
+display:flex;
+flex-wrap:wrap;
+
+gap:2px;
+
+background:#c0c0c0;
+
+padding:4px 4px 0 4px;
+
+border:1px solid #808080;
+
+border-bottom:none;
+
+margin-top:10px;
+}
+
+.tab-btn{
+
+background:#dcdcdc;
+
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
+
+padding:6px 14px;
+
+font-size:12px;
+
+font-weight:bold;
+
+cursor:pointer;
+}
+
+.tab-btn.active{
+
+background:white;
+
+border-bottom:1px solid white;
+}
+
+/* TAB CONTENT */
+
+.tab-content{
+
+display:none;
+
+border:1px solid #808080;
+
+padding:15px;
+
+background:white;
+}
+
+.tab-content.active{
+display:block;
+}
+
+/* FORM GRID */
+
+.form-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(200px,1fr));
+
+gap:8px;
+}
+
+/* INPUT */
+
+input,
+select{
+
+padding:8px;
+
+border:1px solid #808080;
+
+font-size:12px;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="main">
-
-<h1>Employee Masterlist</h1>
-
 <div class="top-bar">
+
+<h2>Employee Masterlist</h2>
+
+<button class="add-btn"
+onclick="openModal()">
+
++ Add Employee
+
+</button>
+
+</div>
+
+<div class="search-box">
 
 <input
 type="text"
 id="search"
-placeholder="Search Employee"
-onkeyup="searchEmployee()">
+placeholder="Search..."
+onkeyup="searchEmp()">
 
-<button onclick="openModal()">
-+ Add Employee
-</button>
+<span id="total"></span>
 
 </div>
-
-<h3 id="totalEmployee">
-Total Employees : 0
-</h3>
-
-<!-- MODAL -->
-
-<div id="modal"
-class="modal">
-
-<div class="modal-box">
-
-<h2>Employee Information</h2>
-
-<input
-id="fname"
-placeholder="First Name">
-
-<input
-id="lname"
-placeholder="Last Name">
-
-<input
-id="department"
-placeholder="Department">
-
-<input
-id="position"
-placeholder="Position">
-
-<select id="status">
-
-<option>Active</option>
-<option>Inactive</option>
-
-</select>
-
-<input
-type="date"
-id="datehired">
-
-<input
-type="file"
-id="photo">
-
-<br><br>
-
-<button onclick="saveEmployee()">
-Save Employee
-</button>
-
-<button onclick="closeModal()">
-Close
-</button>
-
-</div>
-
-</div>
-
-<!-- TABLE -->
 
 <div class="table-box">
 
@@ -97,14 +281,81 @@ Close
 
 <tr>
 
-<th>Photo</th>
-<th>Employee ID</th>
 <th>First Name</th>
+<th>Middle Name</th>
 <th>Last Name</th>
-<th>Department</th>
+<th>Birthdate</th>
+<th>Age</th>
+<th>Gender</th>
+<th>Civil Status</th>
+<th>Nationality</th>
+<th>Religion</th>
+
+<th>Mobile</th>
+<th>Email</th>
+<th>Current Address</th>
+<th>Permanent Address</th>
+<th>Emergency Contact</th>
+<th>Emergency Number</th>
+
+<th>Employee ID</th>
+<th>SSS</th>
+<th>PhilHealth</th>
+<th>Pag-IBIG</th>
+<th>TIN</th>
+<th>Passport</th>
+<th>National ID</th>
+<th>Health Card</th>
+
 <th>Position</th>
-<th>Status</th>
+<th>Department</th>
+<th>Branch</th>
+<th>Employment</th>
 <th>Date Hired</th>
+<th>Supervisor</th>
+<th>Schedule</th>
+<th>Salary Rate</th>
+
+<th>Meal Allowance</th>
+<th>Transportation</th>
+<th>Communication</th>
+<th>Rice Subsidy</th>
+<th>Other Allowance</th>
+
+<th>SSS Deduction</th>
+<th>Pag-IBIG Deduction</th>
+<th>PhilHealth Deduction</th>
+<th>Cash Advance</th>
+<th>Loans</th>
+<th>Late Deduction</th>
+
+<th>Vacation Leave</th>
+<th>Sick Leave</th>
+<th>Emergency Leave</th>
+<th>Maternity Leave</th>
+<th>Paternity Leave</th>
+<th>Leave Balance</th>
+
+<th>Bank Name</th>
+<th>Bank Account</th>
+<th>ATM Number</th>
+<th>Uniform Size</th>
+<th>Blood Type</th>
+<th>Notes</th>
+
+<th>Education</th>
+<th>Skills</th>
+<th>Experience</th>
+<th>Training</th>
+<th>Certificates</th>
+<th>References</th>
+
+<th>NBI</th>
+<th>Medical</th>
+<th>Contract</th>
+<th>Application Status</th>
+<th>Interview Date</th>
+
 <th>Action</th>
 
 </tr>
@@ -117,189 +368,599 @@ Close
 
 </div>
 
+<!-- MODAL -->
+
+<div class="modal"
+id="employeeModal">
+
+<div class="modal-box">
+
+<button
+class="close-btn"
+onclick="closeModal()">
+
+X
+
+</button>
+
+<h3>Employee Information</h3>
+
+<div class="classic-tabs">
+
+<button class="tab-btn active"
+onclick="openTab(event,'personal')">
+Personal
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'contact')">
+Contact
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'identification')">
+Identification
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'job')">
+Job
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'allowances')">
+Allowances
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'deductions')">
+Deductions
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'leaves')">
+Leaves
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'general')">
+General
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'additional')">
+Additional
+</button>
+
+<button class="tab-btn"
+onclick="openTab(event,'application')">
+Application
+</button>
+
+</div>
+
+<!-- PERSONAL -->
+
+<div id="personal"
+class="tab-content active">
+
+<div class="form-grid">
+
+<input id="fname" placeholder="First Name">
+<input id="mname" placeholder="Middle Name">
+<input id="lname" placeholder="Last Name">
+
+<input type="date"
+id="birthdate"
+onchange="calcAge()">
+
+<input id="age"
+placeholder="Age"
+readonly>
+
+<select id="gender">
+
+<option>Gender</option>
+<option>Male</option>
+<option>Female</option>
+
+</select>
+
+<select id="civilstatus">
+
+<option>Civil Status</option>
+<option>Single</option>
+<option>Married</option>
+
+</select>
+
+<input id="nationality"
+placeholder="Nationality">
+
+<input id="religion"
+placeholder="Religion">
+
+<input type="file"
+id="profilephoto">
+
+</div>
+
+</div>
+
+<!-- CONTACT -->
+
+<div id="contact"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="mobile"
+placeholder="Mobile Number">
+
+<input id="email"
+placeholder="Email Address">
+
+<input id="currentaddress"
+placeholder="Current Address">
+
+<input id="permanentaddress"
+placeholder="Permanent Address">
+
+<input id="emergencycontact"
+placeholder="Emergency Contact">
+
+<input id="emergencynumber"
+placeholder="Emergency Number">
+
+</div>
+
+</div>
+
+<!-- IDENTIFICATION -->
+
+<div id="identification"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="empid"
+placeholder="Employee ID">
+
+<input id="sss"
+placeholder="SSS">
+
+<input id="philhealth"
+placeholder="PhilHealth">
+
+<input id="pagibig"
+placeholder="Pag-IBIG">
+
+<input id="tin"
+placeholder="TIN">
+
+<input id="passport"
+placeholder="Passport">
+
+<input id="nationalid"
+placeholder="National ID">
+
+<input id="healthcard"
+placeholder="Health Card">
+
+</div>
+
+</div>
+
+<!-- JOB -->
+
+<div id="job"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="position"
+placeholder="Position">
+
+<input id="department"
+placeholder="Department">
+
+<input id="branch"
+placeholder="Branch">
+
+<select id="employment">
+
+<option>Employment Type</option>
+<option>Regular</option>
+<option>Probationary</option>
+<option>Contractual</option>
+
+</select>
+
+<input type="date"
+id="datehired">
+
+<input id="supervisor"
+placeholder="Supervisor">
+
+<input id="schedule"
+placeholder="Schedule">
+
+<input id="salaryrate"
+placeholder="Salary Rate">
+
+</div>
+
+</div>
+
+<!-- ALLOWANCES -->
+
+<div id="allowances"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="mealallowance"
+placeholder="Meal Allowance">
+
+<input id="transportation"
+placeholder="Transportation">
+
+<input id="communication"
+placeholder="Communication">
+
+<input id="ricesubsidy"
+placeholder="Rice Subsidy">
+
+<input id="otherallowance"
+placeholder="Other Allowance">
+
+</div>
+
+</div>
+
+<!-- DEDUCTIONS -->
+
+<div id="deductions"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="sssdeduction"
+placeholder="SSS Deduction">
+
+<input id="pagibigdeduction"
+placeholder="Pag-IBIG Deduction">
+
+<input id="philhealthdeduction"
+placeholder="PhilHealth Deduction">
+
+<input id="cashadvance"
+placeholder="Cash Advance">
+
+<input id="loans"
+placeholder="Loans">
+
+<input id="latededuction"
+placeholder="Late Deduction">
+
+</div>
+
+</div>
+
+<!-- LEAVES -->
+
+<div id="leaves"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="vacationleave"
+placeholder="Vacation Leave">
+
+<input id="sickleave"
+placeholder="Sick Leave">
+
+<input id="emergencyleave"
+placeholder="Emergency Leave">
+
+<input id="maternityleave"
+placeholder="Maternity Leave">
+
+<input id="paternityleave"
+placeholder="Paternity Leave">
+
+<input id="leavebalance"
+placeholder="Leave Balance">
+
+</div>
+
+</div>
+
+<!-- GENERAL -->
+
+<div id="general"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="bankname"
+placeholder="Bank Name">
+
+<input id="bankaccount"
+placeholder="Bank Account">
+
+<input id="atmnumber"
+placeholder="ATM Number">
+
+<input id="uniformsize"
+placeholder="Uniform Size">
+
+<input id="bloodtype"
+placeholder="Blood Type">
+
+<input id="notes"
+placeholder="Notes">
+
+</div>
+
+</div>
+
+<!-- ADDITIONAL -->
+
+<div id="additional"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="education"
+placeholder="Education">
+
+<input id="skills"
+placeholder="Skills">
+
+<input id="experience"
+placeholder="Experience">
+
+<input id="training"
+placeholder="Training">
+
+<input id="certificates"
+placeholder="Certificates">
+
+<input id="references"
+placeholder="References">
+
+</div>
+
+</div>
+
+<!-- APPLICATION -->
+
+<div id="application"
+class="tab-content">
+
+<div class="form-grid">
+
+<input id="nbi"
+placeholder="NBI">
+
+<input id="medical"
+placeholder="Medical">
+
+<input id="contract"
+placeholder="Contract">
+
+<select id="applicationstatus">
+
+<option>Application Status</option>
+<option>Pending</option>
+<option>Approved</option>
+<option>Rejected</option>
+
+</select>
+
+<input type="date"
+id="interviewdate">
+
+</div>
+
+</div>
+
+<button class="save-btn"
+onclick="addEmployee()">
+
+Save Employee
+
+</button>
+
+</div>
+
 </div>
 
 <script>
 
-let editIndex = null;
+let editRowIndex = null;
 
-window.onload = loadEmployees;
-
-/* OPEN */
+/* MODAL */
 
 function openModal(){
 
-modal.style.display='block';
+employeeModal.style.display='flex';
 
 }
 
-/* CLOSE */
-
 function closeModal(){
 
-modal.style.display='none';
+employeeModal.style.display='none';
 
-clearForm();
+}
+
+/* TAB */
+
+function openTab(evt,tabId){
+
+document
+.querySelectorAll('.tab-content')
+
+.forEach(tab=>{
+
+tab.classList.remove('active');
+
+});
+
+document
+.getElementById(tabId)
+
+.classList.add('active');
+
+document
+.querySelectorAll('.tab-btn')
+
+.forEach(btn=>{
+
+btn.classList.remove('active');
+
+});
+
+evt.currentTarget
+.classList.add('active');
+
+}
+
+/* AGE */
+
+function calcAge(){
+
+let birth =
+new Date(birthdate.value);
+
+let today =
+new Date();
+
+let years =
+today.getFullYear() -
+birth.getFullYear();
+
+let m =
+today.getMonth() -
+birth.getMonth();
+
+if(
+m < 0 ||
+
+(m === 0 &&
+today.getDate() <
+birth.getDate())
+
+){
+
+years--;
+
+}
+
+age.value = years;
 
 }
 
 /* SAVE */
 
-function saveEmployee(){
-
-let employees =
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-let reader =
-new FileReader();
-
-let file =
-photo.files[0];
-
-if(file){
-
-reader.readAsDataURL(file);
-
-reader.onload = function(){
-
-saveData(reader.result);
-
-};
-
-}else{
-
-saveData('');
-
-}
-
-}
-
-/* SAVE DATA */
-
-function saveData(photoData){
-
-let employees =
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-let employee = {
-
-id:
-'EMP-' +
-Date.now(),
-
-fname:fname.value,
-
-lname:lname.value,
-
-department:department.value,
-
-position:position.value,
-
-status:status.value,
-
-datehired:datehired.value,
-
-photo:photoData
-
-};
-
-/* EDIT */
-
-if(editIndex !== null){
-
-employee.id =
-employees[editIndex].id;
-
-employees[editIndex] =
-employee;
-
-editIndex = null;
-
-}
-
-/* ADD */
-
-else{
-
-employees.push(employee);
-
-}
-
-localStorage.setItem(
-'employees',
-JSON.stringify(employees)
-);
-
-loadEmployees();
-
-closeModal();
-
-}
-
-/* LOAD */
-
-function loadEmployees(){
-
-let employees =
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
+function addEmployee(){
 
 let table =
 document.querySelector(
 '#empTable tbody'
 );
 
-table.innerHTML='';
+let data = `
 
-employees.forEach((emp,index)=>{
+<td>${fname.value}</td>
+<td>${mname.value}</td>
+<td>${lname.value}</td>
+<td>${birthdate.value}</td>
+<td>${age.value}</td>
+<td>${gender.value}</td>
+<td>${civilstatus.value}</td>
+<td>${nationality.value}</td>
+<td>${religion.value}</td>
 
-table.innerHTML += `
+<td>${mobile.value}</td>
+<td>${email.value}</td>
+<td>${currentaddress.value}</td>
+<td>${permanentaddress.value}</td>
+<td>${emergencycontact.value}</td>
+<td>${emergencynumber.value}</td>
 
-<tr>
+<td>${empid.value}</td>
+<td>${sss.value}</td>
+<td>${philhealth.value}</td>
+<td>${pagibig.value}</td>
+<td>${tin.value}</td>
+<td>${passport.value}</td>
+<td>${nationalid.value}</td>
+<td>${healthcard.value}</td>
 
-<td>
+<td>${position.value}</td>
+<td>${department.value}</td>
+<td>${branch.value}</td>
+<td>${employment.value}</td>
+<td>${datehired.value}</td>
+<td>${supervisor.value}</td>
+<td>${schedule.value}</td>
+<td>${salaryrate.value}</td>
 
-<img
-src="${emp.photo}"
-width="50"
-height="50"
-style="
-object-fit:cover;
-border-radius:50%;
-">
+<td>${mealallowance.value}</td>
+<td>${transportation.value}</td>
+<td>${communication.value}</td>
+<td>${ricesubsidy.value}</td>
+<td>${otherallowance.value}</td>
 
-</td>
+<td>${sssdeduction.value}</td>
+<td>${pagibigdeduction.value}</td>
+<td>${philhealthdeduction.value}</td>
+<td>${cashadvance.value}</td>
+<td>${loans.value}</td>
+<td>${latededuction.value}</td>
 
-<td>${emp.id}</td>
+<td>${vacationleave.value}</td>
+<td>${sickleave.value}</td>
+<td>${emergencyleave.value}</td>
+<td>${maternityleave.value}</td>
+<td>${paternityleave.value}</td>
+<td>${leavebalance.value}</td>
 
-<td>${emp.fname}</td>
+<td>${bankname.value}</td>
+<td>${bankaccount.value}</td>
+<td>${atmnumber.value}</td>
+<td>${uniformsize.value}</td>
+<td>${bloodtype.value}</td>
+<td>${notes.value}</td>
 
-<td>${emp.lname}</td>
+<td>${education.value}</td>
+<td>${skills.value}</td>
+<td>${experience.value}</td>
+<td>${training.value}</td>
+<td>${certificates.value}</td>
+<td>${references.value}</td>
 
-<td>${emp.department}</td>
-
-<td>${emp.position}</td>
-
-<td>${emp.status}</td>
-
-<td>${emp.datehired}</td>
+<td>${nbi.value}</td>
+<td>${medical.value}</td>
+<td>${contract.value}</td>
+<td>${applicationstatus.value}</td>
+<td>${interviewdate.value}</td>
 
 <td>
 
 <button
-onclick="editEmployee(${index})">
+class='btn'
+onclick='editRow(this)'>
 
 Edit
 
 </button>
 
 <button
-onclick="deleteEmployee(${index})">
+class='btn'
+onclick='deleteRow(this)'>
 
 Delete
 
@@ -307,77 +968,143 @@ Delete
 
 </td>
 
-</tr>
-
 `;
 
-});
+if(editRowIndex){
 
-totalEmployee.innerText =
+editRowIndex.innerHTML = data;
 
-'Total Employees : ' +
-employees.length;
+alert('Employee Updated');
+
+editRowIndex = null;
+
+}else{
+
+let row =
+document.createElement('tr');
+
+row.innerHTML = data;
+
+table.appendChild(row);
+
+alert('Employee Saved');
 
 }
 
-/* DELETE */
+updateTotal();
 
-function deleteEmployee(index){
+closeModal();
 
-let employees =
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-employees.splice(index,1);
-
-localStorage.setItem(
-'employees',
-JSON.stringify(employees)
-);
-
-loadEmployees();
+clearForm();
 
 }
 
 /* EDIT */
 
-function editEmployee(index){
-
-let employees =
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-let emp = employees[index];
-
-fname.value = emp.fname;
-
-lname.value = emp.lname;
-
-department.value =
-emp.department;
-
-position.value =
-emp.position;
-
-status.value =
-emp.status;
-
-datehired.value =
-emp.datehired;
-
-editIndex = index;
+function editRow(btn){
 
 openModal();
+
+let row =
+btn.closest('tr');
+
+editRowIndex = row;
+
+let cells =
+row.querySelectorAll('td');
+
+fname.value = cells[0].innerText;
+mname.value = cells[1].innerText;
+lname.value = cells[2].innerText;
+birthdate.value = cells[3].innerText;
+age.value = cells[4].innerText;
+gender.value = cells[5].innerText;
+civilstatus.value = cells[6].innerText;
+nationality.value = cells[7].innerText;
+religion.value = cells[8].innerText;
+
+mobile.value = cells[9].innerText;
+email.value = cells[10].innerText;
+currentaddress.value = cells[11].innerText;
+permanentaddress.value = cells[12].innerText;
+emergencycontact.value = cells[13].innerText;
+emergencynumber.value = cells[14].innerText;
+
+empid.value = cells[15].innerText;
+sss.value = cells[16].innerText;
+philhealth.value = cells[17].innerText;
+pagibig.value = cells[18].innerText;
+tin.value = cells[19].innerText;
+passport.value = cells[20].innerText;
+nationalid.value = cells[21].innerText;
+healthcard.value = cells[22].innerText;
+
+position.value = cells[23].innerText;
+department.value = cells[24].innerText;
+branch.value = cells[25].innerText;
+employment.value = cells[26].innerText;
+datehired.value = cells[27].innerText;
+supervisor.value = cells[28].innerText;
+schedule.value = cells[29].innerText;
+salaryrate.value = cells[30].innerText;
+
+mealallowance.value = cells[31].innerText;
+transportation.value = cells[32].innerText;
+communication.value = cells[33].innerText;
+ricesubsidy.value = cells[34].innerText;
+otherallowance.value = cells[35].innerText;
+
+sssdeduction.value = cells[36].innerText;
+pagibigdeduction.value = cells[37].innerText;
+philhealthdeduction.value = cells[38].innerText;
+cashadvance.value = cells[39].innerText;
+loans.value = cells[40].innerText;
+latededuction.value = cells[41].innerText;
+
+vacationleave.value = cells[42].innerText;
+sickleave.value = cells[43].innerText;
+emergencyleave.value = cells[44].innerText;
+maternityleave.value = cells[45].innerText;
+paternityleave.value = cells[46].innerText;
+leavebalance.value = cells[47].innerText;
+
+bankname.value = cells[48].innerText;
+bankaccount.value = cells[49].innerText;
+atmnumber.value = cells[50].innerText;
+uniformsize.value = cells[51].innerText;
+bloodtype.value = cells[52].innerText;
+notes.value = cells[53].innerText;
+
+education.value = cells[54].innerText;
+skills.value = cells[55].innerText;
+experience.value = cells[56].innerText;
+training.value = cells[57].innerText;
+certificates.value = cells[58].innerText;
+references.value = cells[59].innerText;
+
+nbi.value = cells[60].innerText;
+medical.value = cells[61].innerText;
+contract.value = cells[62].innerText;
+applicationstatus.value = cells[63].innerText;
+interviewdate.value = cells[64].innerText;
+
+}
+
+/* DELETE */
+
+function deleteRow(btn){
+
+btn.closest('tr').remove();
+
+updateTotal();
 
 }
 
 /* SEARCH */
 
-function searchEmployee(){
+function searchEmp(){
 
-let value =
+let val =
 search.value.toLowerCase();
 
 let rows =
@@ -385,19 +1112,24 @@ document.querySelectorAll(
 '#empTable tbody tr'
 );
 
+let visible = 0;
+
 rows.forEach(row=>{
 
-row.style.display =
-
+let show =
 row.innerText
 .toLowerCase()
-.includes(value)
+.includes(val);
 
-? ''
+row.style.display =
+show ? '' : 'none';
 
-: 'none';
+if(show) visible++;
 
 });
+
+total.innerText =
+'Showing : ' + visible;
 
 }
 
@@ -405,17 +1137,32 @@ row.innerText
 
 function clearForm(){
 
-fname.value='';
+document
+.querySelectorAll('input,select')
 
-lname.value='';
+.forEach(el=>{
 
-department.value='';
+if(el.type!='button'){
 
-position.value='';
+el.value='';
 
-datehired.value='';
+}
 
-photo.value='';
+});
+
+}
+
+/* TOTAL */
+
+function updateTotal(){
+
+let rows =
+document.querySelectorAll(
+'#empTable tbody tr'
+);
+
+total.innerText =
+'Total : ' + rows.length;
 
 }
 
