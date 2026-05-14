@@ -7,43 +7,23 @@
 <style>
 
 *{
-margin:0;
-padding:0;
 box-sizing:border-box;
 font-family:Tahoma,sans-serif;
 }
 
 body{
-background:#d4d0c8;
-padding:15px;
+
+margin:0;
+padding:20px;
+
+background:#1f1f1f;
+
+color:white;
 }
 
-/* CONTAINER */
+/* TOP */
 
-.container{
-
-max-width:1300px;
-
-margin:auto;
-
-background:#c0c0c0;
-
-border:2px solid #808080;
-
-box-shadow:
-inset 1px 1px white,
-inset -1px -1px #808080;
-}
-
-/* HEADER */
-
-.header{
-
-padding:15px;
-
-background:#d4d0c8;
-
-border-bottom:2px solid #808080;
+.top-bar{
 
 display:flex;
 
@@ -51,55 +31,73 @@ justify-content:space-between;
 
 align-items:center;
 
+margin-bottom:20px;
+
 flex-wrap:wrap;
+
+gap:10px;
 }
 
-.title{
+h1{
 
-font-size:28px;
+margin:0;
 
-font-weight:bold;
+color:#ffcc00;
+
+text-shadow:2px 2px 5px black;
 }
 
-/* BUTTON */
+/* BUTTONS */
 
-.btn{
+button{
 
-padding:8px 18px;
+padding:10px 18px;
 
-background:#dcdcdc;
+border:none;
 
-border-top:1px solid white;
-border-left:1px solid white;
-
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
+border-radius:10px;
 
 cursor:pointer;
 
 font-weight:bold;
 
-font-size:12px;
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff6600
+);
+
+color:black;
+
+transition:0.3s;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
 
-.edit-btn{
-background:#0066cc;
-color:white;
-}
+button:hover{
 
-.delete-btn{
-background:#cc0000;
-color:white;
+transform:translateY(-2px);
+
+filter:brightness(1.1);
+
 }
 
 /* FORM */
 
-.form-section{
+.form-box{
 
-padding:15px;
+background:#2b2b2b;
+
+padding:20px;
+
+border-radius:15px;
+
+border:2px solid #ffcc00;
+
+margin-bottom:20px;
 }
 
-.form-grid{
+.grid{
 
 display:grid;
 
@@ -110,49 +108,59 @@ gap:10px;
 }
 
 input,
-select,
-textarea{
+select{
 
 width:100%;
 
 padding:10px;
 
-border:1px solid #808080;
+border:2px solid #555;
 
-font-size:13px;
+border-radius:8px;
+
+background:#1f1f1f;
+
+color:white;
 }
 
-/* COMPUTE BOX */
+input:focus,
+select:focus{
 
-.compute-box{
+outline:none;
 
-margin-top:20px;
-
-padding:15px;
-
-background:white;
-
-border:1px solid #808080;
-}
-
-.compute-box h3{
-
-margin-bottom:15px;
+border-color:#ffcc00;
 }
 
 /* TABLE */
 
-.table-wrapper{
+.table-box{
 
-margin-top:20px;
+background:#2b2b2b;
+
+border:2px solid #ffcc00;
+
+border-radius:12px;
 
 overflow:auto;
 
-max-height:450px;
+height:60vh;
+}
 
-background:white;
+.table-box::-webkit-scrollbar{
 
-border-top:2px solid #808080;
+height:12px;
+width:12px;
+}
+
+.table-box::-webkit-scrollbar-thumb{
+
+background:#ffcc00;
+border-radius:10px;
+}
+
+.table-box::-webkit-scrollbar-track{
+
+background:#333;
 }
 
 table{
@@ -161,68 +169,64 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:2200px;
-
-font-size:12px;
+min-width:2500px;
 }
 
 th,
 td{
 
-border:1px solid #808080;
+border:1px solid #555;
 
-padding:10px;
-
-text-align:center;
+padding:8px;
 
 white-space:nowrap;
+
+text-align:center;
 }
 
 th{
 
-background:#dcdcdc;
+background:#ffcc00;
+
+color:black;
 
 position:sticky;
 
 top:0;
-
-z-index:5;
 }
 
-/* TOTAL */
+tr:nth-child(even){
 
-.total-box{
+background:#242424;
+}
 
-margin-top:15px;
+tr:hover{
 
-font-size:18px;
+background:#3a3a3a;
+}
+
+/* DELETE BUTTON */
+
+.delete-btn{
+
+background:#cc0000;
+
+color:white;
+
+border:none;
+
+padding:6px 12px;
+
+border-radius:6px;
+
+cursor:pointer;
 
 font-weight:bold;
 }
 
-/* COLORS */
+.delete-btn:hover{
 
-.netpay{
-
-color:green;
-
-font-weight:bold;
-}
-
-.deduction{
-
-color:red;
-
-font-weight:bold;
-}
-
-.notes{
-
-text-align:left;
-
-white-space:normal;
-
-min-width:250px;
+background:#ff0000;
 }
 
 </style>
@@ -231,19 +235,14 @@ min-width:250px;
 
 <body>
 
-<div class="container">
+<div class="top-bar">
 
-<!-- HEADER -->
-
-<div class="header">
-
-<div class="title">
-PAYROLL SYSTEM
-</div>
+<h1>
+💰 Payroll System
+</h1>
 
 <button
-class="btn"
-onclick="window.history.back()">
+onclick="window.location.href='index.html'">
 
 ← BACK
 
@@ -253,11 +252,11 @@ onclick="window.history.back()">
 
 <!-- FORM -->
 
-<div class="form-section">
+<div class="form-box">
 
-<div class="form-grid">
+<div class="grid">
 
-<select id="employeeSelect">
+<select id="employeeName">
 
 <option value="">
 Select Employee
@@ -266,201 +265,192 @@ Select Employee
 </select>
 
 <input
+id="salaryRate"
 type="number"
-id="dailyRate"
-placeholder="Daily Rate">
+placeholder="Hourly Rate">
 
 <input
+id="totalHours"
 type="number"
-id="daysWorked"
-placeholder="Days Worked">
+placeholder="Total Hours">
 
 <input
+id="overtimeHours"
 type="number"
-id="overtime"
+placeholder="Overtime Hours">
+
+<input
+id="overtimePay"
+type="number"
 placeholder="Overtime Pay">
 
 <input
+id="holidayPay"
 type="number"
-id="cashAdvance"
-placeholder="Cash Advance">
+placeholder="Holiday Pay">
 
 <input
+id="sickLeave"
 type="number"
-id="lateDeduction"
-placeholder="Late Deduction">
+placeholder="Sick Leave Pay">
 
 <input
+id="birthdayLeave"
 type="number"
+placeholder="Birthday Leave Pay">
+
+<input
+id="vacationLeave"
+type="number"
+placeholder="Vacation Leave Pay">
+
+<input
 id="sss"
-placeholder="SSS">
+type="number"
+placeholder="SSS Deduction">
 
 <input
-type="number"
 id="philhealth"
-placeholder="PhilHealth">
+type="number"
+placeholder="PhilHealth Deduction">
 
 <input
-type="number"
 id="pagibig"
-placeholder="Pag-IBIG">
+type="number"
+placeholder="Pag-IBIG Deduction">
 
 <input
+id="healthcard"
 type="number"
-id="healthCard"
 placeholder="Health Card">
 
 <input
+id="others"
 type="number"
-id="otherDeduction"
 placeholder="Other Deduction">
 
-<textarea
-id="otherNote"
-placeholder="Reason / Notes for Other Deduction"></textarea>
+<input
+id="grossSalary"
+placeholder="Gross Salary"
+readonly>
+
+<input
+id="netSalary"
+placeholder="Net Salary"
+readonly>
 
 </div>
 
-<!-- COMPUTE -->
-
-<div class="compute-box">
-
-<h3>Payroll Computation</h3>
+<br>
 
 <button
-class="btn"
-onclick="savePayroll()">
+onclick="computePayroll()">
 
-SAVE PAYROLL
+🧮 Compute Payroll
 
 </button>
 
-<div class="total-box">
+<button
+onclick="savePayroll()">
 
-<p id="grossPay">
-Gross Pay : 0
-</p>
+💾 Save Payroll
 
-<p id="totalDeduction">
-Total Deduction : 0
-</p>
-
-<p class="netpay"
-id="netPay">
-
-Net Pay : 0
-
-</p>
-
-</div>
+</button>
 
 </div>
 
 <!-- TABLE -->
 
-<div class="table-wrapper">
+<div class="table-box">
 
-<table>
+<table id="payrollTable">
 
 <thead>
 
 <tr>
 
-<th>EMPLOYEE</th>
-<th>DAILY RATE</th>
-<th>DAYS WORKED</th>
-<th>GROSS PAY</th>
-<th>OVERTIME</th>
+<th>Employee</th>
+<th>Hours</th>
+<th>OT Hours</th>
+<th>Rate</th>
 
-<th>CASH ADVANCE</th>
-<th>LATE</th>
+<th>Gross</th>
+
+<th>OT Pay</th>
+<th>Holiday Pay</th>
+<th>Sick Leave</th>
+<th>Birthday Leave</th>
+<th>Vacation Leave</th>
+
 <th>SSS</th>
-<th>PHILHEALTH</th>
-<th>PAG-IBIG</th>
-<th>HEALTH CARD</th>
-<th>OTHER</th>
+<th>PhilHealth</th>
+<th>Pag-IBIG</th>
+<th>Health Card</th>
+<th>Others</th>
 
-<th>OTHER NOTE</th>
+<th>Net Salary</th>
 
-<th>TOTAL DEDUCTION</th>
-<th>NET PAY</th>
-
-<th>ACTION</th>
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-<tbody id="payrollBody">
-
-</tbody>
+<tbody></tbody>
 
 </table>
 
 </div>
 
-</div>
-
-</div>
-
 <script>
 
-let editIndex = null;
+/* STORAGE */
 
-/* ======================
-LOAD EMPLOYEES
-====================== */
+let payrolls =
+
+JSON.parse(
+localStorage.getItem('payrolls')
+) || [];
+
+/* LOAD EMPLOYEES */
 
 function loadEmployees(){
 
-let employees = [];
+let employees =
 
-try{
-
-employees = JSON.parse(
+JSON.parse(
 localStorage.getItem('employees')
 ) || [];
 
-}catch(error){
-
-employees = [];
-
-}
-
 let select =
+
 document.getElementById(
-'employeeSelect'
+'employeeName'
 );
 
 select.innerHTML =
-'<option value="">Select Employee</option>';
 
-employees.forEach((emp)=>{
+'<option value=\"\">Select Employee</option>';
 
-let first =
-emp[0] || '';
-
-let middle =
-emp[1] || '';
-
-let last =
-emp[2] || '';
-
-let fullName =
-first + ' ' +
-middle + ' ' +
-last;
-
-let empId =
-emp[18] || 'NO-ID';
+employees.forEach(emp=>{
 
 let option =
 document.createElement('option');
 
-option.value = fullName;
+option.value =
+
+(emp[0] || '') +
+' ' +
+(emp[2] || '');
 
 option.textContent =
-empId + ' - ' + fullName;
+
+(emp[18] || 'NO-ID') +
+' - ' +
+
+(emp[0] || '') +
+' ' +
+(emp[2] || '');
 
 select.appendChild(option);
 
@@ -468,285 +458,223 @@ select.appendChild(option);
 
 }
 
-/* ======================
-PAYROLL STORAGE
-====================== */
+/* COMPUTE */
 
-let payrollRecords = [];
-
-try{
-
-payrollRecords = JSON.parse(
-localStorage.getItem('payroll')
-) || [];
-
-}catch(error){
-
-payrollRecords = [];
-
-}
-
-/* ======================
-SAVE PAYROLL
-====================== */
-
-function savePayroll(){
-
-if(employeeSelect.value===''){
-
-alert('Select Employee');
-
-return;
-
-}
-
-let employee =
-employeeSelect.value;
+function computePayroll(){
 
 let rate =
-parseFloat(dailyRate.value) || 0;
+Number(salaryRate.value || 0);
 
-let days =
-parseFloat(daysWorked.value) || 0;
+let hours =
+Number(totalHours.value || 0);
 
-let overtimePay =
-parseFloat(overtime.value) || 0;
+let overtime =
+Number(overtimeHours.value || 0);
 
-let cash =
-parseFloat(cashAdvance.value) || 0;
+let overtimepay =
+Number(overtimePay.value || 0);
 
-let late =
-parseFloat(lateDeduction.value) || 0;
+let holiday =
+Number(holidayPay.value || 0);
+
+let sick =
+Number(sickLeave.value || 0);
+
+let birthday =
+Number(birthdayLeave.value || 0);
+
+let vacation =
+Number(vacationLeave.value || 0);
 
 let sssDed =
-parseFloat(sss.value) || 0;
+Number(sss.value || 0);
 
-let phil =
-parseFloat(philhealth.value) || 0;
+let philDed =
+Number(philhealth.value || 0);
 
 let pagibigDed =
-parseFloat(pagibig.value) || 0;
+Number(pagibig.value || 0);
 
-let health =
-parseFloat(healthCard.value) || 0;
+let healthDed =
+Number(healthcard.value || 0);
 
-let other =
-parseFloat(otherDeduction.value) || 0;
-
-let otherReason =
-otherNote.value || '-';
+let otherDed =
+Number(others.value || 0);
 
 /* COMPUTE */
 
 let gross =
-(rate * days) +
-overtimePay;
+
+(hours * rate) +
+
+(overtime * rate) +
+
+overtimepay +
+
+holiday +
+
+sick +
+
+birthday +
+
+vacation;
 
 let deductions =
 
-cash +
-late +
 sssDed +
-phil +
+philDed +
 pagibigDed +
-health +
-other;
+healthDed +
+otherDed;
 
-let net =
-gross - deductions;
+let net = gross - deductions;
 
 /* DISPLAY */
 
-grossPay.innerText =
-'Gross Pay : ' +
+grossSalary.value =
 gross.toFixed(2);
 
-totalDeduction.innerText =
-'Total Deduction : ' +
-deductions.toFixed(2);
-
-netPay.innerText =
-'Net Pay : ' +
+netSalary.value =
 net.toFixed(2);
 
-/* DATA */
+}
 
-let payrollData = {
+/* SAVE */
 
-employee:employee,
+function savePayroll(){
 
-rate:rate,
+let payroll = {
 
-days:days,
+employee:
+employeeName.value,
 
-gross:gross,
+hours:
+totalHours.value,
 
-overtime:overtimePay,
+ot:
+overtimeHours.value,
 
-cash:cash,
+rate:
+salaryRate.value,
 
-late:late,
+gross:
+grossSalary.value,
 
-sss:sssDed,
+otpay:
+overtimePay.value,
 
-philhealth:phil,
+holidaypay:
+holidayPay.value,
 
-pagibig:pagibigDed,
+sickleave:
+sickLeave.value,
 
-health:health,
+birthdayleave:
+birthdayLeave.value,
 
-other:other,
+vacationleave:
+vacationLeave.value,
 
-otherReason:otherReason,
+sss:
+sss.value,
 
-deductions:deductions,
+philhealth:
+philhealth.value,
 
-net:net
+pagibig:
+pagibig.value,
+
+healthcard:
+healthcard.value,
+
+others:
+others.value,
+
+net:
+netSalary.value
 
 };
 
-/* EDIT */
-
-if(editIndex !== null){
-
-payrollRecords[editIndex] =
-payrollData;
-
-editIndex = null;
-
-alert('Payroll Updated');
-
-}
-
-/* ADD */
-
-else{
-
-payrollRecords.push(
-payrollData
-);
-
-alert('Payroll Saved');
-
-}
-
-/* SAVE STORAGE */
+payrolls.push(payroll);
 
 localStorage.setItem(
-'payroll',
-JSON.stringify(payrollRecords)
-);
 
-/* REFRESH */
+'payrolls',
+
+JSON.stringify(payrolls)
+
+);
 
 renderPayroll();
 
-clearForm();
+alert(
+'Payroll Saved'
+);
 
 }
 
-/* ======================
-RENDER TABLE
-====================== */
+/* DELETE */
+
+function deletePayroll(index){
+
+if(confirm('Delete Payroll?')){
+
+payrolls.splice(index,1);
+
+localStorage.setItem(
+'payrolls',
+JSON.stringify(payrolls)
+);
+
+renderPayroll();
+
+}
+
+}
+
+/* RENDER */
 
 function renderPayroll(){
 
-let tbody =
-document.getElementById(
-'payrollBody'
+let table =
+
+document.querySelector(
+'#payrollTable tbody'
 );
 
-tbody.innerHTML = '';
+table.innerHTML='';
 
-if(payrollRecords.length === 0){
+payrolls.forEach((pay,index)=>{
 
-tbody.innerHTML = `
+table.innerHTML += `
 
 <tr>
 
-<td colspan="16">
+<td>${pay.employee}</td>
+<td>${pay.hours}</td>
+<td>${pay.ot}</td>
+<td>${pay.rate}</td>
 
-NO PAYROLL RECORD FOUND
+<td>${pay.gross}</td>
 
-</td>
+<td>${pay.otpay}</td>
+<td>${pay.holidaypay}</td>
+<td>${pay.sickleave}</td>
+<td>${pay.birthdayleave}</td>
+<td>${pay.vacationleave}</td>
 
-</tr>
+<td>${pay.sss}</td>
+<td>${pay.philhealth}</td>
+<td>${pay.pagibig}</td>
+<td>${pay.healthcard}</td>
+<td>${pay.others}</td>
 
-`;
-
-return;
-
-}
-
-payrollRecords.forEach((pay,index)=>{
-
-let row =
-document.createElement('tr');
-
-row.innerHTML = `
-
-<td>${pay.employee || ''}</td>
-
-<td>${Number(pay.rate || 0).toFixed(2)}</td>
-
-<td>${pay.days || 0}</td>
-
-<td>${Number(pay.gross || 0).toFixed(2)}</td>
-
-<td>${Number(pay.overtime || 0).toFixed(2)}</td>
-
-<td class="deduction">
-${Number(pay.cash || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.late || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.sss || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.philhealth || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.pagibig || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.health || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.other || 0).toFixed(2)}
-</td>
-
-<td class="notes">
-${pay.otherReason || '-'}
-</td>
-
-<td class="deduction">
-${Number(pay.deductions || 0).toFixed(2)}
-</td>
-
-<td class="netpay">
-${Number(pay.net || 0).toFixed(2)}
-</td>
+<td>${pay.net}</td>
 
 <td>
 
 <button
-class="btn edit-btn"
-onclick="editPayroll(${index})">
-
-EDIT
-
-</button>
-
-<button
-class="btn delete-btn"
+class="delete-btn"
 onclick="deletePayroll(${index})">
 
 DELETE
@@ -755,135 +683,15 @@ DELETE
 
 </td>
 
-`;
+</tr>
 
-tbody.appendChild(row);
+`;
 
 });
 
 }
 
-/* ======================
-EDIT
-====================== */
-
-function editPayroll(index){
-
-let pay =
-payrollRecords[index];
-
-editIndex = index;
-
-employeeSelect.value =
-pay.employee || '';
-
-dailyRate.value =
-pay.rate || '';
-
-daysWorked.value =
-pay.days || '';
-
-overtime.value =
-pay.overtime || '';
-
-cashAdvance.value =
-pay.cash || '';
-
-lateDeduction.value =
-pay.late || '';
-
-sss.value =
-pay.sss || '';
-
-philhealth.value =
-pay.philhealth || '';
-
-pagibig.value =
-pay.pagibig || '';
-
-healthCard.value =
-pay.health || '';
-
-otherDeduction.value =
-pay.other || '';
-
-otherNote.value =
-pay.otherReason || '';
-
-grossPay.innerText =
-'Gross Pay : ' +
-Number(pay.gross || 0).toFixed(2);
-
-totalDeduction.innerText =
-'Total Deduction : ' +
-Number(pay.deductions || 0).toFixed(2);
-
-netPay.innerText =
-'Net Pay : ' +
-Number(pay.net || 0).toFixed(2);
-
-}
-
-/* ======================
-DELETE
-====================== */
-
-function deletePayroll(index){
-
-let confirmDelete = confirm(
-'Delete Payroll Record?'
-);
-
-if(confirmDelete){
-
-payrollRecords.splice(index,1);
-
-localStorage.setItem(
-'payroll',
-JSON.stringify(payrollRecords)
-);
-
-renderPayroll();
-
-}
-
-}
-
-/* ======================
-CLEAR FORM
-====================== */
-
-function clearForm(){
-
-employeeSelect.value='';
-
-dailyRate.value='';
-
-daysWorked.value='';
-
-overtime.value='';
-
-cashAdvance.value='';
-
-lateDeduction.value='';
-
-sss.value='';
-
-philhealth.value='';
-
-pagibig.value='';
-
-healthCard.value='';
-
-otherDeduction.value='';
-
-otherNote.value='';
-
-}
-
-/* ======================
-AUTO LOAD
-====================== */
+/* AUTO LOAD */
 
 loadEmployees();
 
