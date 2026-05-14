@@ -148,7 +148,8 @@ flex-wrap:wrap;
 margin-top:15px;
 }
 
-select{
+select,
+input{
 
 padding:8px;
 
@@ -253,12 +254,29 @@ max-height:350px;
 background:white;
 
 margin-top:10px;
+
+border:1px solid #808080;
 }
 
+/* SCROLLBAR */
+
 .table-wrapper::-webkit-scrollbar{
-width:0;
-height:0;
+
+width:12px;
+height:12px;
 }
+
+.table-wrapper::-webkit-scrollbar-track{
+
+background:#dcdcdc;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb{
+
+background:#808080;
+}
+
+/* TABLE */
 
 table{
 
@@ -348,6 +366,8 @@ padding:0;
 zoom:85%;
 }
 
+/* HIDE BUTTONS */
+
 .back-btn,
 .print-btn,
 .button-group,
@@ -358,6 +378,8 @@ zoom:85%;
 display:none !important;
 }
 
+/* REMOVE BOARD */
+
 .container{
 
 border:none !important;
@@ -366,12 +388,23 @@ box-shadow:none !important;
 background:white;
 }
 
+/* REMOVE SCROLLBAR */
+
 .table-wrapper{
 
 overflow:visible !important;
 
 max-height:none !important;
+
+border:none !important;
 }
+
+.table-wrapper::-webkit-scrollbar{
+
+display:none;
+}
+
+/* AUTO FIT */
 
 table{
 
@@ -398,7 +431,8 @@ padding:4px;
 flex-direction:column;
 }
 
-select{
+select,
+input{
 width:100%;
 }
 
@@ -465,23 +499,15 @@ Select Employee
 
 </select>
 
-<select
-id="cutoffSelect"
+<input
+type="date"
+id="fromDate"
 onchange="filterAttendance()">
 
-<option value="">
-Select Cutoff
-</option>
-
-<option value="6-20">
-6 to 20
-</option>
-
-<option value="21-5">
-21 to 5
-</option>
-
-</select>
+<input
+type="date"
+id="toDate"
+onchange="filterAttendance()">
 
 </div>
 
@@ -714,6 +740,26 @@ return new Date()
 
 }
 
+/* FORMAT DATE */
+
+function formatDate(dateStr){
+
+let parts =
+dateStr.split('/');
+
+let month =
+parts[0].padStart(2,'0');
+
+let day =
+parts[1].padStart(2,'0');
+
+let year =
+parts[2];
+
+return `${year}-${month}-${day}`;
+
+}
+
 /* TIME IN */
 
 function timeIn(){
@@ -835,8 +881,15 @@ function filterAttendance(){
 let emp =
 employeeSelect.value;
 
-let cutoff =
-cutoffSelect.value;
+let fromDate =
+document.getElementById(
+'fromDate'
+).value;
+
+let toDate =
+document.getElementById(
+'toDate'
+).value;
 
 let tbody =
 document.getElementById(
@@ -851,33 +904,22 @@ let empMatch =
 emp === '' ||
 att.name === emp;
 
-if(cutoff===''){
+let attDate =
+formatDate(att.date);
 
-return empMatch;
+let fromMatch =
+fromDate === '' ||
+attDate >= fromDate;
 
-}
+let toMatch =
+toDate === '' ||
+attDate <= toDate;
 
-let dateParts =
-att.date.split('/');
-
-let day =
-parseInt(dateParts[1]);
-
-if(cutoff==='6-20'){
-
-return empMatch &&
-day >= 6 &&
-day <= 20;
-
-}
-
-if(cutoff==='21-5'){
-
-return empMatch &&
-(day >= 21 ||
-day <= 5);
-
-}
+return (
+empMatch &&
+fromMatch &&
+toMatch
+);
 
 });
 
