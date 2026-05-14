@@ -21,7 +21,7 @@ background:linear-gradient(
 #2b2b2b
 );
 
-padding:15px;
+padding:10px;
 }
 
 /* HEADER */
@@ -34,7 +34,7 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:15px;
+margin-bottom:10px;
 
 background:linear-gradient(
 135deg,
@@ -42,50 +42,44 @@ background:linear-gradient(
 #ff8800
 );
 
-padding:15px;
+padding:12px;
 
-border-radius:15px;
+border-radius:12px;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
 .title{
 
-font-size:30px;
+font-size:24px;
 
 font-weight:bold;
 
 color:black;
-
-text-shadow:1px 1px 3px white;
 }
 
 /* BUTTON */
 
 .btn{
 
-padding:10px 20px;
+padding:8px 16px;
 
 border:none;
 
-border-radius:10px;
+border-radius:8px;
 
 cursor:pointer;
 
 font-weight:bold;
 
-font-size:13px;
+font-size:12px;
 
 transition:0.3s;
-
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
 
 .btn:hover{
 
-transform:translateY(-2px);
-
-filter:brightness(1.1);
+transform:scale(1.03);
 }
 
 .back-btn{
@@ -106,15 +100,15 @@ color:white;
 
 .paper{
 
-width:210mm;
+width:190mm;
 
-min-height:297mm;
+height:270mm;
 
 margin:auto;
 
 background:white;
 
-padding:10mm;
+padding:5mm;
 
 display:grid;
 
@@ -122,22 +116,24 @@ grid-template-columns:1fr 1fr;
 
 grid-template-rows:1fr 1fr;
 
-gap:12px;
+gap:6px;
+
+overflow:hidden;
 
 border-radius:10px;
 
-box-shadow:0 10px 25px rgba(0,0,0,0.5);
+box-shadow:0 5px 20px rgba(0,0,0,0.5);
 }
 
 /* PAYSLIP */
 
 .payslip{
 
-border:3px solid #ffcc00;
+border:2px solid #ffcc00;
 
-border-radius:12px;
+border-radius:10px;
 
-padding:12px;
+padding:8px;
 
 display:flex;
 
@@ -147,13 +143,7 @@ justify-content:space-between;
 
 overflow:hidden;
 
-background:linear-gradient(
-135deg,
-#ffffff,
-#f5f5f5
-);
-
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
+background:#f9f9f9;
 }
 
 /* COMPANY */
@@ -162,44 +152,44 @@ box-shadow:0 4px 10px rgba(0,0,0,0.2);
 
 text-align:center;
 
-margin-bottom:10px;
+margin-bottom:5px;
 
-padding-bottom:8px;
+padding-bottom:4px;
 
 border-bottom:2px solid #ffcc00;
 }
 
 .company h2{
 
-font-size:18px;
+font-size:14px;
 
 color:#cc0000;
 }
 
 .company p{
 
-font-size:10px;
+font-size:9px;
 
 font-weight:bold;
 
-color:#555;
+color:#444;
 }
 
 /* INFO */
 
 .info{
 
-font-size:11px;
+font-size:10px;
 
-line-height:1.7;
+line-height:1.5;
 
-margin-bottom:8px;
+margin-bottom:5px;
 
 background:#fff8dc;
 
-padding:8px;
+padding:5px;
 
-border-radius:8px;
+border-radius:5px;
 
 border:1px solid #ffcc00;
 }
@@ -212,9 +202,9 @@ width:100%;
 
 border-collapse:collapse;
 
-font-size:10px;
+font-size:9px;
 
-margin-top:8px;
+margin-top:4px;
 }
 
 th,
@@ -222,7 +212,7 @@ td{
 
 border:1px solid #999;
 
-padding:4px;
+padding:3px;
 }
 
 th{
@@ -231,7 +221,7 @@ background:#ffcc00;
 
 color:black;
 
-font-size:10px;
+font-size:9px;
 }
 
 td{
@@ -243,17 +233,17 @@ background:white;
 
 .total{
 
-margin-top:10px;
+margin-top:6px;
 
-padding:8px;
+padding:5px;
 
 background:#008000;
 
 color:white;
 
-border-radius:8px;
+border-radius:5px;
 
-font-size:13px;
+font-size:11px;
 
 font-weight:bold;
 
@@ -264,26 +254,26 @@ text-align:right;
 
 .signature{
 
-margin-top:18px;
+margin-top:10px;
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:9px;
+font-size:8px;
 }
 
 .line{
 
-margin-top:18px;
+margin-top:12px;
 
 border-top:1px solid black;
 
-width:100px;
+width:90px;
 
 text-align:center;
 
-padding-top:3px;
+padding-top:2px;
 
 font-weight:bold;
 }
@@ -291,6 +281,11 @@ font-weight:bold;
 /* PRINT */
 
 @media print{
+
+@page{
+size:A4 portrait;
+margin:5mm;
+}
 
 body{
 
@@ -309,9 +304,15 @@ border:none;
 
 box-shadow:none;
 
+width:190mm;
+
+height:270mm;
+
 padding:0;
 
-width:100%;
+overflow:hidden;
+
+page-break-after:avoid;
 }
 
 .payslip{
@@ -386,12 +387,12 @@ payrollRecords = [];
 let paper =
 document.getElementById('paper');
 
-/* SHOW ONLY 4 STAFF */
+/* FIRST 4 STAFF */
 
 let firstFour =
 payrollRecords.slice(0,4);
 
-/* EMPTY */
+/* FILL EMPTY */
 
 while(firstFour.length < 4){
 
@@ -399,7 +400,7 @@ firstFour.push(null);
 
 }
 
-/* CREATE */
+/* CREATE PAYSLIP */
 
 firstFour.forEach(pay=>{
 
