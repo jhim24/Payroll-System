@@ -165,7 +165,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1900px;
+min-width:2200px;
 
 font-size:12px;
 }
@@ -640,14 +640,19 @@ table.innerHTML = '';
 
 payrollRecords.forEach((pay,index)=>{
 
-let row = `
+let tr =
+document.createElement('tr');
 
-<tr>
+tr.innerHTML = `
 
 <td>${pay.employee}</td>
+
 <td>${pay.rate}</td>
+
 <td>${pay.days}</td>
+
 <td>${pay.gross.toFixed(2)}</td>
+
 <td>${pay.overtimePay.toFixed(2)}</td>
 
 <td class="deduction">
@@ -710,11 +715,9 @@ DELETE
 
 </td>
 
-</tr>
-
 `;
 
-table.innerHTML += row;
+table.appendChild(tr);
 
 });
 
