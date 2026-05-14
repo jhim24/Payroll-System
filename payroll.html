@@ -14,11 +14,28 @@ font-family:Tahoma,sans-serif;
 body{
 
 margin:0;
-padding:20px;
+padding:15px;
 
-background:#1f1f1f;
+background:#d4d0c8;
+}
 
-color:white;
+/* CONTAINER */
+
+.container{
+
+max-width:1500px;
+
+margin:auto;
+
+background:#c0c0c0;
+
+border:2px solid #808080;
+
+box-shadow:
+inset 1px 1px white,
+inset -1px -1px #808080;
+
+padding:15px;
 }
 
 /* TOP */
@@ -31,7 +48,7 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
 flex-wrap:wrap;
 
@@ -42,59 +59,76 @@ h1{
 
 margin:0;
 
-color:#ffcc00;
+font-size:28px;
 
-text-shadow:2px 2px 5px black;
+color:#cc0000;
 }
 
 /* BUTTONS */
 
 button{
 
-padding:10px 18px;
-
-border:none;
-
-border-radius:10px;
+padding:8px 15px;
 
 cursor:pointer;
 
 font-weight:bold;
 
-background:linear-gradient(
-135deg,
-#ffcc00,
-#ff6600
-);
+border-top:1px solid white;
+border-left:1px solid white;
 
-color:black;
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
 
-transition:0.3s;
-
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
+transition:0.2s;
 }
 
 button:hover{
 
-transform:translateY(-2px);
-
 filter:brightness(1.1);
+}
 
+/* COLORS */
+
+.compute-btn{
+
+background:#ffcc00;
+
+color:black;
+}
+
+.save-btn{
+
+background:#008000;
+
+color:white;
+}
+
+.back-btn{
+
+background:#cc0000;
+
+color:white;
+}
+
+.delete-btn{
+
+background:#990000;
+
+color:white;
 }
 
 /* FORM */
 
 .form-box{
 
-background:#2b2b2b;
+background:#dcdcdc;
 
-padding:20px;
+padding:15px;
 
-border-radius:15px;
+border:1px solid #808080;
 
-border:2px solid #ffcc00;
-
-margin-bottom:20px;
+margin-bottom:15px;
 }
 
 .grid{
@@ -107,44 +141,34 @@ repeat(auto-fit,minmax(220px,1fr));
 gap:10px;
 }
 
+/* INPUT */
+
 input,
 select{
 
 width:100%;
 
-padding:10px;
+padding:8px;
 
-border:2px solid #555;
+border:1px solid #808080;
 
-border-radius:8px;
-
-background:#1f1f1f;
-
-color:white;
-}
-
-input:focus,
-select:focus{
-
-outline:none;
-
-border-color:#ffcc00;
+font-size:13px;
 }
 
 /* TABLE */
 
 .table-box{
 
-background:#2b2b2b;
+background:white;
 
-border:2px solid #ffcc00;
-
-border-radius:12px;
+border:1px solid #808080;
 
 overflow:auto;
 
 height:60vh;
 }
+
+/* SCROLLBAR */
 
 .table-box::-webkit-scrollbar{
 
@@ -154,13 +178,12 @@ width:12px;
 
 .table-box::-webkit-scrollbar-thumb{
 
-background:#ffcc00;
-border-radius:10px;
+background:#808080;
 }
 
 .table-box::-webkit-scrollbar-track{
 
-background:#333;
+background:#dcdcdc;
 }
 
 table{
@@ -170,18 +193,20 @@ width:100%;
 border-collapse:collapse;
 
 min-width:2500px;
+
+font-size:12px;
 }
 
 th,
 td{
 
-border:1px solid #555;
+border:1px solid #808080;
 
 padding:8px;
 
-white-space:nowrap;
-
 text-align:center;
+
+white-space:nowrap;
 }
 
 th{
@@ -197,36 +222,23 @@ top:0;
 
 tr:nth-child(even){
 
-background:#242424;
+background:#f2f2f2;
 }
 
 tr:hover{
 
-background:#3a3a3a;
+background:#ffe699;
 }
 
-/* DELETE BUTTON */
+/* MOBILE */
 
-.delete-btn{
+@media(max-width:768px){
 
-background:#cc0000;
+.grid{
 
-color:white;
-
-border:none;
-
-padding:6px 12px;
-
-border-radius:6px;
-
-cursor:pointer;
-
-font-weight:bold;
+grid-template-columns:1fr;
 }
 
-.delete-btn:hover{
-
-background:#ff0000;
 }
 
 </style>
@@ -235,6 +247,10 @@ background:#ff0000;
 
 <body>
 
+<div class="container">
+
+<!-- TOP -->
+
 <div class="top-bar">
 
 <h1>
@@ -242,6 +258,7 @@ background:#ff0000;
 </h1>
 
 <button
+class="back-btn"
 onclick="window.location.href='index.html'">
 
 ← BACK
@@ -265,19 +282,14 @@ Select Employee
 </select>
 
 <input
-id="salaryRate"
+id="dailyRate"
 type="number"
-placeholder="Hourly Rate">
+placeholder="Daily Rate">
 
 <input
-id="totalHours"
+id="daysWorked"
 type="number"
-placeholder="Total Hours">
-
-<input
-id="overtimeHours"
-type="number"
-placeholder="Overtime Hours">
+placeholder="Days Worked">
 
 <input
 id="overtimePay"
@@ -344,6 +356,7 @@ readonly>
 <br>
 
 <button
+class="compute-btn"
 onclick="computePayroll()">
 
 🧮 Compute Payroll
@@ -351,6 +364,7 @@ onclick="computePayroll()">
 </button>
 
 <button
+class="save-btn"
 onclick="savePayroll()">
 
 💾 Save Payroll
@@ -370,11 +384,11 @@ onclick="savePayroll()">
 <tr>
 
 <th>Employee</th>
-<th>Hours</th>
-<th>OT Hours</th>
-<th>Rate</th>
 
-<th>Gross</th>
+<th>Daily Rate</th>
+<th>Days Worked</th>
+
+<th>Gross Salary</th>
 
 <th>OT Pay</th>
 <th>Holiday Pay</th>
@@ -399,6 +413,8 @@ onclick="savePayroll()">
 <tbody></tbody>
 
 </table>
+
+</div>
 
 </div>
 
@@ -462,16 +478,13 @@ select.appendChild(option);
 
 function computePayroll(){
 
-let rate =
-Number(salaryRate.value || 0);
+let daily =
+Number(dailyRate.value || 0);
 
-let hours =
-Number(totalHours.value || 0);
+let days =
+Number(daysWorked.value || 0);
 
-let overtime =
-Number(overtimeHours.value || 0);
-
-let overtimepay =
+let ot =
 Number(overtimePay.value || 0);
 
 let holiday =
@@ -501,23 +514,19 @@ Number(healthcard.value || 0);
 let otherDed =
 Number(others.value || 0);
 
-/* COMPUTE */
+/* GROSS */
 
 let gross =
 
-(hours * rate) +
+(daily * days) +
 
-(overtime * rate) +
-
-overtimepay +
-
+ot +
 holiday +
-
 sick +
-
 birthday +
-
 vacation;
+
+/* DEDUCTIONS */
 
 let deductions =
 
@@ -527,7 +536,10 @@ pagibigDed +
 healthDed +
 otherDed;
 
-let net = gross - deductions;
+/* NET */
+
+let net =
+gross - deductions;
 
 /* DISPLAY */
 
@@ -548,31 +560,28 @@ let payroll = {
 employee:
 employeeName.value,
 
-hours:
-totalHours.value,
+daily:
+dailyRate.value,
 
-ot:
-overtimeHours.value,
-
-rate:
-salaryRate.value,
+days:
+daysWorked.value,
 
 gross:
 grossSalary.value,
 
-otpay:
+ot:
 overtimePay.value,
 
-holidaypay:
+holiday:
 holidayPay.value,
 
-sickleave:
+sick:
 sickLeave.value,
 
-birthdayleave:
+birthday:
 birthdayLeave.value,
 
-vacationleave:
+vacation:
 vacationLeave.value,
 
 sss:
@@ -651,17 +660,17 @@ table.innerHTML += `
 <tr>
 
 <td>${pay.employee}</td>
-<td>${pay.hours}</td>
-<td>${pay.ot}</td>
-<td>${pay.rate}</td>
+
+<td>${pay.daily}</td>
+<td>${pay.days}</td>
 
 <td>${pay.gross}</td>
 
-<td>${pay.otpay}</td>
-<td>${pay.holidaypay}</td>
-<td>${pay.sickleave}</td>
-<td>${pay.birthdayleave}</td>
-<td>${pay.vacationleave}</td>
+<td>${pay.ot}</td>
+<td>${pay.holiday}</td>
+<td>${pay.sick}</td>
+<td>${pay.birthday}</td>
+<td>${pay.vacation}</td>
 
 <td>${pay.sss}</td>
 <td>${pay.philhealth}</td>
