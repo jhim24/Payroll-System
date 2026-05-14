@@ -266,7 +266,12 @@ background:white;
 border-top:2px solid #808080;
 }
 
-/* TABLE */
+/* HIDE SCROLLBAR */
+
+.table-wrapper::-webkit-scrollbar{
+width:0;
+height:0;
+}
 
 table{
 
@@ -311,26 +316,87 @@ color:red;
 font-weight:bold;
 }
 
-/* PRINT */
+/* =========================
+PRINT SETTINGS
+========================= */
 
 @media print{
+
+@page{
+size:landscape;
+margin:10mm;
+}
+
+body{
+
+background:white;
+padding:0;
+
+zoom:85%;
+}
+
+/* REMOVE UI */
 
 .back-btn,
 .print-btn,
 .button-group,
 select{
 
-display:none;
+display:none !important;
 }
 
-body{
-background:white;
-padding:0;
-}
+/* REMOVE BOARD STYLE */
 
 .container{
-border:none;
-box-shadow:none;
+
+border:none !important;
+
+box-shadow:none !important;
+
+background:white !important;
+
+width:100%;
+
+max-width:100%;
+}
+
+/* REMOVE TABLE SCROLL */
+
+.table-wrapper{
+
+overflow:visible !important;
+
+max-height:none !important;
+
+border:none !important;
+}
+
+/* AUTO FIT TABLE */
+
+table{
+
+min-width:100% !important;
+
+width:100% !important;
+
+font-size:10px;
+}
+
+th,
+td{
+
+white-space:normal !important;
+
+padding:4px;
+}
+
+/* REMOVE HEADER COLOR */
+
+th{
+
+background:#eee !important;
+
+color:black;
 }
 
 }
