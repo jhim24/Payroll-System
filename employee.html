@@ -84,7 +84,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:2500px;
+min-width:3500px;
 
 font-size:12px;
 }
@@ -299,13 +299,23 @@ Total : 0
 <th>Birthdate</th>
 <th>Age</th>
 <th>Gender</th>
+
 <th>Mobile</th>
 <th>Email</th>
+
 <th>Employee ID</th>
 <th>Position</th>
 <th>Department</th>
 <th>Employment</th>
 <th>Salary Rate</th>
+
+<th>SSS</th>
+<th>PhilHealth</th>
+<th>Pag-IBIG</th>
+<th>Health Card</th>
+<th>Uniform</th>
+<th>Others</th>
+
 <th>Action</th>
 
 </tr>
@@ -361,6 +371,14 @@ class="tab-btn"
 onclick="openTab(event,'job')">
 
 Job
+
+</button>
+
+<button
+class="tab-btn"
+onclick="openTab(event,'deduction')">
+
+Deduction
 
 </button>
 
@@ -485,6 +503,48 @@ id="employment">
 class="emp-field"
 id="salaryrate"
 placeholder="Salary Rate">
+
+</div>
+
+</div>
+
+<!-- DEDUCTION -->
+
+<div
+id="deduction"
+class="tab-content">
+
+<div class="form-grid">
+
+<input
+class="emp-field"
+id="sssDeduction"
+placeholder="SSS">
+
+<input
+class="emp-field"
+id="philhealthDeduction"
+placeholder="PhilHealth">
+
+<input
+class="emp-field"
+id="pagibigDeduction"
+placeholder="Pag-IBIG">
+
+<input
+class="emp-field"
+id="healthcardDeduction"
+placeholder="Health Card">
+
+<input
+class="emp-field"
+id="uniformDeduction"
+placeholder="Uniform">
+
+<input
+class="emp-field"
+id="otherDeduction"
+placeholder="Others">
 
 </div>
 
@@ -674,13 +734,22 @@ table.innerHTML += `
 <td>${emp[3]}</td>
 <td>${emp[4]}</td>
 <td>${emp[5]}</td>
+
 <td>${emp[6]}</td>
 <td>${emp[7]}</td>
+
 <td>${emp[10]}</td>
 <td>${emp[11]}</td>
 <td>${emp[12]}</td>
 <td>${emp[13]}</td>
 <td>${emp[14]}</td>
+
+<td>${emp[15]}</td>
+<td>${emp[16]}</td>
+<td>${emp[17]}</td>
+<td>${emp[18]}</td>
+<td>${emp[19]}</td>
+<td>${emp[20]}</td>
 
 <td>
 
