@@ -47,6 +47,10 @@ padding:12px;
 border-radius:12px;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.5);
+
+flex-wrap:wrap;
+
+gap:10px;
 }
 
 .title{
@@ -92,6 +96,13 @@ color:white;
 .print-btn{
 
 background:#008000;
+
+color:white;
+}
+
+.next-btn{
+
+background:#0066cc;
 
 color:white;
 }
@@ -278,6 +289,17 @@ padding-top:2px;
 font-weight:bold;
 }
 
+/* PAGE NUMBER */
+
+.page-info{
+
+color:white;
+
+font-weight:bold;
+
+font-size:14px;
+}
+
 /* PRINT */
 
 @media print{
@@ -336,13 +358,35 @@ box-shadow:none;
 💰 PAYSLIP SYSTEM
 </div>
 
-<div>
+<div class="page-info" id="pageInfo">
+
+PAGE 1
+
+</div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
 
 <button
 class="btn back-btn"
 onclick="window.history.back()">
 
 ← BACK
+
+</button>
+
+<button
+class="btn next-btn"
+onclick="prevPage()">
+
+⬅ PREV
+
+</button>
+
+<button
+class="btn next-btn"
+onclick="nextPage()">
+
+NEXT ➡
 
 </button>
 
@@ -366,7 +410,9 @@ onclick="window.print()">
 
 <script>
 
-/* LOAD PAYROLL */
+/* =========================
+LOAD PAYROLL
+========================= */
 
 let payrollRecords = [];
 
@@ -382,27 +428,45 @@ payrollRecords = [];
 
 }
 
-/* PAPER */
+/* =========================
+VARIABLES
+========================= */
+
+let currentPage = 0;
+
+const perPage = 4;
+
+/* =========================
+RENDER PAYSLIP
+========================= */
+
+function renderPayslips(){
 
 let paper =
 document.getElementById('paper');
 
-/* FIRST 4 STAFF */
+paper.innerHTML = '';
 
-let firstFour =
-payrollRecords.slice(0,4);
+let start =
+currentPage * perPage;
+
+let end =
+start + perPage;
+
+let currentRecords =
+payrollRecords.slice(start,end);
 
 /* FILL EMPTY */
 
-while(firstFour.length < 4){
+while(currentRecords.length < 4){
 
-firstFour.push(null);
+currentRecords.push(null);
 
 }
 
-/* CREATE PAYSLIP */
+/* LOOP */
 
-firstFour.forEach(pay=>{
+currentRecords.forEach(pay=>{
 
 let div =
 document.createElement('div');
@@ -551,6 +615,55 @@ Employee
 paper.appendChild(div);
 
 });
+
+/* PAGE INFO */
+
+pageInfo.innerText =
+'PAGE ' + (currentPage + 1);
+
+}
+
+/* =========================
+NEXT PAGE
+========================= */
+
+function nextPage(){
+
+if(
+(currentPage + 1) * perPage
+<
+payrollRecords.length
+){
+
+currentPage++;
+
+renderPayslips();
+
+}
+
+}
+
+/* =========================
+PREV PAGE
+========================= */
+
+function prevPage(){
+
+if(currentPage > 0){
+
+currentPage--;
+
+renderPayslips();
+
+}
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
+
+renderPayslips();
 
 </script>
 
