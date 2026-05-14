@@ -15,34 +15,18 @@ font-family:Tahoma,sans-serif;
 
 body{
 
-background:linear-gradient(
-135deg,
-#1f1f1f,
-#2b2b2b
-);
+background:#d4d0c8;
 
 padding:15px;
-
-color:white;
 }
 
 /* CONTAINER */
 
 .container{
 
-max-width:1100px;
+max-width:1200px;
 
 margin:auto;
-
-background:#2b2b2b;
-
-border:3px solid #ffcc00;
-
-border-radius:15px;
-
-overflow:hidden;
-
-box-shadow:0 10px 30px rgba(0,0,0,0.6);
 
 }
 
@@ -50,13 +34,11 @@ box-shadow:0 10px 30px rgba(0,0,0,0.6);
 
 .header{
 
-padding:20px;
+background:#c0c0c0;
 
-background:linear-gradient(
-135deg,
-#ffcc00,
-#ff8800
-);
+padding:15px;
+
+border:2px solid #808080;
 
 display:flex;
 
@@ -64,120 +46,102 @@ justify-content:space-between;
 
 align-items:center;
 
-flex-wrap:wrap;
+margin-bottom:15px;
 }
 
 .title{
 
-font-size:32px;
+font-size:28px;
 
 font-weight:bold;
-
-color:black;
-
-text-shadow:1px 1px 3px white;
 }
 
 /* BUTTON */
 
 .btn{
 
-padding:10px 20px;
+padding:8px 18px;
 
-border:none;
+background:#dcdcdc;
 
-border-radius:10px;
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
 
 cursor:pointer;
 
 font-weight:bold;
 
-font-size:13px;
-
-transition:0.3s;
-
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
-}
-
-.btn:hover{
-
-transform:translateY(-2px);
-
-filter:brightness(1.1);
-}
-
-.back-btn{
-
-background:#cc0000;
-
-color:white;
+font-size:12px;
 }
 
 .print-btn{
-
 background:#008000;
-
 color:white;
 }
 
-.pdf-btn{
+/* SELECT */
 
-background:#0066cc;
+.select-box{
 
-color:white;
-}
+background:#c0c0c0;
 
-/* FORM */
+padding:15px;
 
-.form-section{
-padding:20px;
+border:2px solid #808080;
+
+margin-bottom:15px;
 }
 
 select{
 
 width:100%;
 
-padding:12px;
+padding:10px;
 
-border:2px solid #ffcc00;
-
-border-radius:10px;
+border:1px solid #808080;
 
 font-size:14px;
-
-background:#1f1f1f;
-
-color:white;
-
-margin-bottom:15px;
 }
 
-/* BUTTON GROUP */
+/* WHOLE PAGE */
 
-.button-group{
+.paper{
 
-display:flex;
+background:white;
 
-gap:10px;
+width:100%;
 
-flex-wrap:wrap;
+min-height:1123px;
 
-margin-bottom:20px;
+padding:20px;
+
+border:2px solid #808080;
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+grid-template-rows:1fr 1fr;
+
+gap:20px;
 }
 
 /* PAYSLIP */
 
 .payslip{
 
-background:white;
+border:2px dashed #808080;
 
-padding:30px;
+padding:15px;
 
-border-radius:15px;
+display:flex;
 
-color:black;
+flex-direction:column;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
+justify-content:space-between;
 }
 
 /* COMPANY */
@@ -186,66 +150,31 @@ box-shadow:0 5px 15px rgba(0,0,0,0.3);
 
 text-align:center;
 
-margin-bottom:25px;
-
-padding-bottom:15px;
-
-border-bottom:3px solid #ffcc00;
+margin-bottom:10px;
 }
 
-.company h1{
+.company h2{
 
-font-size:36px;
-
-color:#cc0000;
-
-margin-bottom:5px;
+font-size:20px;
 }
 
 .company p{
 
-font-size:16px;
-
-font-weight:bold;
-
-color:#555;
+font-size:12px;
 }
 
 /* INFO */
 
-.info-grid{
+.info{
 
-display:grid;
+margin-top:10px;
 
-grid-template-columns:1fr 1fr;
+font-size:12px;
 
-gap:15px;
-
-margin-bottom:25px;
-}
-
-.info-box{
-
-padding:15px;
-
-border:2px solid #dcdcdc;
-
-border-radius:10px;
-
-background:#f7f7f7;
-}
-
-.info-box strong{
-
-color:#cc0000;
+line-height:1.6;
 }
 
 /* TABLE */
-
-.table-wrapper{
-
-overflow:auto;
-}
 
 table{
 
@@ -253,7 +182,9 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:20px;
+margin-top:10px;
+
+font-size:11px;
 }
 
 th,
@@ -261,75 +192,51 @@ td{
 
 border:1px solid #808080;
 
-padding:12px;
-
-text-align:left;
+padding:5px;
 }
 
 th{
 
-background:#ffcc00;
-
-color:black;
-
-font-size:14px;
-}
-
-td{
-
-font-size:13px;
+background:#dcdcdc;
 }
 
 /* TOTAL */
 
 .total{
 
-margin-top:25px;
+margin-top:10px;
 
-padding:20px;
-
-background:#f5f5f5;
-
-border-radius:10px;
-
-text-align:right;
-
-font-size:20px;
+font-size:14px;
 
 font-weight:bold;
 
-line-height:1.8;
+text-align:right;
 }
 
-.total span{
-
-color:#008000;
-}
-
-/* SIGNATURE */
+/* SIGN */
 
 .signature{
 
-margin-top:60px;
+margin-top:20px;
 
 display:flex;
 
 justify-content:space-between;
 
-text-align:center;
+font-size:11px;
 }
 
 .line{
 
-margin-top:50px;
+margin-top:25px;
 
-border-top:2px solid black;
+border-top:1px solid black;
 
-padding-top:8px;
+padding-top:3px;
 
-width:250px;
+width:120px;
 
-font-weight:bold;
+text-align:center;
 }
 
 /* PRINT */
@@ -337,47 +244,27 @@ font-weight:bold;
 @media print{
 
 body{
-
 background:white;
 padding:0;
 }
 
 .header,
-.button-group,
-select{
-
-display:none !important;
+.select-box{
+display:none;
 }
 
-.container{
+.paper{
 
 border:none;
-box-shadow:none;
-background:white;
+
+padding:0;
+
+gap:10px;
 }
 
 .payslip{
 
-box-shadow:none;
-border:none;
-}
-
-}
-
-@media(max-width:768px){
-
-.info-grid{
-
-grid-template-columns:1fr;
-}
-
-.signature{
-
-flex-direction:column;
-
-gap:40px;
-
-align-items:center;
+break-inside:avoid;
 }
 
 }
@@ -395,20 +282,34 @@ align-items:center;
 <div class="header">
 
 <div class="title">
-💰 PAYSLIP SYSTEM
+PAYSLIP SYSTEM
 </div>
 
+<div>
+
 <button
-class="btn back-btn"
+class="btn"
 onclick="window.history.back()">
 
 ← BACK
 
 </button>
 
+<button
+class="btn print-btn"
+onclick="window.print()">
+
+🖨 PRINT
+
+</button>
+
 </div>
 
-<div class="form-section">
+</div>
+
+<!-- SELECT -->
+
+<div class="select-box">
 
 <select id="payrollSelect" onchange="loadPayslip()">
 
@@ -418,217 +319,140 @@ Select Payroll Record
 
 </select>
 
-<div class="button-group">
-
-<button
-class="btn print-btn"
-onclick="printPayslip()">
-
-🖨 PRINT PAYSLIP
-
-</button>
-
-<button
-class="btn pdf-btn"
-onclick="downloadPDF()">
-
-📄 SAVE AS PDF
-
-</button>
-
 </div>
 
-<!-- PAYSLIP -->
+<!-- WHOLE BOND -->
 
-<div class="payslip" id="payslipArea">
+<div class="paper">
+
+<!-- PAYSLIP 1 -->
+
+<div class="payslip">
+
+<div>
 
 <div class="company">
 
-<h1>COMPANY NAME</h1>
+<h2>COMPANY NAME</h2>
 
-<p>OFFICIAL EMPLOYEE PAYSLIP</p>
-
-</div>
-
-<div class="info-grid">
-
-<div class="info-box">
-
-<strong>Employee Name</strong>
-
-<div id="empName">-</div>
+<p>OFFICIAL PAYSLIP</p>
 
 </div>
 
-<div class="info-box">
+<div class="info">
 
-<strong>Date</strong>
+<b>Employee :</b>
+<span class="empName">-</span>
 
-<div id="payDate">-</div>
+<br>
+
+<b>Date :</b>
+<span class="payDate">-</span>
 
 </div>
-
-</div>
-
-<!-- EARNINGS -->
-
-<div class="table-wrapper">
 
 <table>
 
-<thead>
-
 <tr>
-
 <th>EARNINGS</th>
 <th>AMOUNT</th>
-
 </tr>
-
-</thead>
-
-<tbody>
 
 <tr>
 <td>Gross Pay</td>
-<td id="gross">0.00</td>
+<td class="gross">0.00</td>
 </tr>
 
 <tr>
-<td>Overtime Pay</td>
-<td id="overtime">0.00</td>
+<td>Overtime</td>
+<td class="overtime">0.00</td>
 </tr>
 
 <tr>
-<td>Holiday Pay</td>
-<td id="holiday">0.00</td>
+<td>Holiday</td>
+<td class="holiday">0.00</td>
 </tr>
 
 <tr>
 <td>Sick Leave</td>
-<td id="sick">0.00</td>
+<td class="sick">0.00</td>
 </tr>
 
 <tr>
 <td>Birthday Leave</td>
-<td id="birthday">0.00</td>
+<td class="birthday">0.00</td>
 </tr>
 
 <tr>
 <td>Vacation Leave</td>
-<td id="vacation">0.00</td>
+<td class="vacation">0.00</td>
 </tr>
-
-</tbody>
 
 </table>
 
-<!-- DEDUCTIONS -->
-
 <table>
 
-<thead>
-
 <tr>
-
 <th>DEDUCTIONS</th>
 <th>AMOUNT</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-<td>Cash Advance</td>
-<td id="cash">0.00</td>
-</tr>
-
-<tr>
-<td>Late Deduction</td>
-<td id="late">0.00</td>
 </tr>
 
 <tr>
 <td>SSS</td>
-<td id="sss">0.00</td>
+<td class="sss">0.00</td>
 </tr>
 
 <tr>
 <td>PhilHealth</td>
-<td id="philhealth">0.00</td>
+<td class="philhealth">0.00</td>
 </tr>
 
 <tr>
 <td>Pag-IBIG</td>
-<td id="pagibig">0.00</td>
+<td class="pagibig">0.00</td>
 </tr>
 
 <tr>
-<td>Health Card</td>
-<td id="health">0.00</td>
+<td>Other</td>
+<td class="other">0.00</td>
 </tr>
-
-<tr>
-<td>Other Deduction</td>
-<td id="other">0.00</td>
-</tr>
-
-<tr>
-<td>Other Note</td>
-<td id="otherNote">-</td>
-</tr>
-
-</tbody>
 
 </table>
 
-</div>
-
-<!-- TOTAL -->
-
 <div class="total">
 
-<div>
-Total Deduction :
-<span id="deduction">
-0.00
-</span>
-</div>
-
-<div>
 NET PAY :
-<span id="net">
-0.00
-</span>
-</div>
+<span class="net">0.00</span>
 
 </div>
 
-<!-- SIGNATURE -->
+</div>
 
 <div class="signature">
 
-<div>
+<div class="line">
+Employer
+</div>
 
 <div class="line">
-Employer Signature
-</div>
-
-</div>
-
-<div>
-
-<div class="line">
-Employee Signature
+Employee
 </div>
 
 </div>
 
 </div>
 
-</div>
+<!-- COPY 2 -->
+
+<div class="payslip copy"></div>
+
+<!-- COPY 3 -->
+
+<div class="payslip copy"></div>
+
+<!-- COPY 4 -->
+
+<div class="payslip copy"></div>
 
 </div>
 
@@ -636,9 +460,20 @@ Employee Signature
 
 <script>
 
-/* ======================
-LOAD PAYROLL RECORDS
-====================== */
+/* DUPLICATE */
+
+document.querySelectorAll('.copy')
+
+.forEach(copy=>{
+
+copy.innerHTML =
+
+document.querySelector('.payslip')
+.innerHTML;
+
+});
+
+/* STORAGE */
 
 let payrollRecords = [];
 
@@ -654,41 +489,27 @@ payrollRecords = [];
 
 }
 
-/* ======================
-LOAD DROPDOWN
-====================== */
+/* LOAD DROPDOWN */
 
-function loadPayrollDropdown(){
-
-let select =
-document.getElementById(
-'payrollSelect'
-);
-
-select.innerHTML =
-'<option value="">Select Payroll Record</option>';
+function loadDropdown(){
 
 payrollRecords.forEach((pay,index)=>{
 
-let option =
-document.createElement('option');
+payrollSelect.innerHTML += `
 
-option.value = index;
+<option value="${index}">
 
-option.textContent =
-pay.employee +
-' | NET : ' +
-Number(pay.net || 0).toFixed(2);
+${pay.employee}
 
-select.appendChild(option);
+</option>
+
+`;
 
 });
 
 }
 
-/* ======================
-LOAD PAYSLIP
-====================== */
+/* LOAD PAYSLIP */
 
 function loadPayslip(){
 
@@ -700,87 +521,152 @@ if(index==='') return;
 let pay =
 payrollRecords[index];
 
-empName.innerText =
+document
+.querySelectorAll('.empName')
+
+.forEach(el=>{
+
+el.innerText =
 pay.employee || '-';
 
-payDate.innerText =
+});
+
+document
+.querySelectorAll('.payDate')
+
+.forEach(el=>{
+
+el.innerText =
 new Date().toDateString();
 
-gross.innerText =
-Number(pay.gross || 0).toFixed(2);
+});
 
-overtime.innerText =
-Number(pay.overtime || 0).toFixed(2);
+document
+.querySelectorAll('.gross')
 
-holiday.innerText =
-Number(pay.holiday || 0).toFixed(2);
+.forEach(el=>{
 
-sick.innerText =
-Number(pay.sick || 0).toFixed(2);
+el.innerText =
+Number(pay.gross || 0)
+.toFixed(2);
 
-birthday.innerText =
-Number(pay.birthday || 0).toFixed(2);
+});
 
-vacation.innerText =
-Number(pay.vacation || 0).toFixed(2);
+document
+.querySelectorAll('.overtime')
 
-cash.innerText =
-Number(pay.cash || 0).toFixed(2);
+.forEach(el=>{
 
-late.innerText =
-Number(pay.late || 0).toFixed(2);
+el.innerText =
+Number(pay.overtime || 0)
+.toFixed(2);
 
-sss.innerText =
-Number(pay.sss || 0).toFixed(2);
+});
 
-philhealth.innerText =
-Number(pay.philhealth || 0).toFixed(2);
+document
+.querySelectorAll('.holiday')
 
-pagibig.innerText =
-Number(pay.pagibig || 0).toFixed(2);
+.forEach(el=>{
 
-health.innerText =
-Number(pay.health || 0).toFixed(2);
+el.innerText =
+Number(pay.holiday || 0)
+.toFixed(2);
 
-other.innerText =
-Number(pay.other || 0).toFixed(2);
+});
 
-otherNote.innerText =
-pay.otherReason || '-';
+document
+.querySelectorAll('.sick')
 
-deduction.innerText =
-Number(pay.deductions || 0).toFixed(2);
+.forEach(el=>{
 
-net.innerText =
-Number(pay.net || 0).toFixed(2);
+el.innerText =
+Number(pay.sick || 0)
+.toFixed(2);
+
+});
+
+document
+.querySelectorAll('.birthday')
+
+.forEach(el=>{
+
+el.innerText =
+Number(pay.birthday || 0)
+.toFixed(2);
+
+});
+
+document
+.querySelectorAll('.vacation')
+
+.forEach(el=>{
+
+el.innerText =
+Number(pay.vacation || 0)
+.toFixed(2);
+
+});
+
+document
+.querySelectorAll('.sss')
+
+.forEach(el=>{
+
+el.innerText =
+Number(pay.sss || 0)
+.toFixed(2);
+
+});
+
+document
+.querySelectorAll('.philhealth')
+
+.forEach(el=>{
+
+el.innerText =
+Number(pay.philhealth || 0)
+.toFixed(2);
+
+});
+
+document
+.querySelectorAll('.pagibig')
+
+.forEach(el=>{
+
+el.innerText =
+Number(pay.pagibig || 0)
+.toFixed(2);
+
+});
+
+document
+.querySelectorAll('.other')
+
+.forEach(el=>{
+
+el.innerText =
+Number(pay.other || 0)
+.toFixed(2);
+
+});
+
+document
+.querySelectorAll('.net')
+
+.forEach(el=>{
+
+el.innerText =
+Number(pay.net || 0)
+.toFixed(2);
+
+});
 
 }
 
-/* ======================
-PRINT
-====================== */
+/* AUTO LOAD */
 
-function printPayslip(){
-
-window.print();
-
-}
-
-/* ======================
-PDF
-====================== */
-
-function downloadPDF(){
-
-window.print();
-
-}
-
-/* ======================
-AUTO LOAD
-====================== */
-
-loadPayrollDropdown();
+loadDropdown();
 
 </script>
 
