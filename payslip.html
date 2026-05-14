@@ -14,32 +14,49 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
-background:#d4d0c8;
+
+background:linear-gradient(
+135deg,
+#1f1f1f,
+#2b2b2b
+);
+
 padding:15px;
+
+color:white;
 }
+
+/* CONTAINER */
 
 .container{
 
-max-width:1000px;
+max-width:1100px;
 
 margin:auto;
 
-background:#c0c0c0;
+background:#2b2b2b;
 
-border:2px solid #808080;
+border:3px solid #ffcc00;
 
-box-shadow:
-inset 1px 1px white,
-inset -1px -1px #808080;
+border-radius:15px;
+
+overflow:hidden;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+
 }
+
+/* HEADER */
 
 .header{
 
-padding:15px;
+padding:20px;
 
-background:#d4d0c8;
-
-border-bottom:2px solid #808080;
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff8800
+);
 
 display:flex;
 
@@ -51,65 +68,150 @@ flex-wrap:wrap;
 }
 
 .title{
-font-size:28px;
+
+font-size:32px;
+
 font-weight:bold;
+
+color:black;
+
+text-shadow:1px 1px 3px white;
 }
+
+/* BUTTON */
 
 .btn{
 
-padding:8px 18px;
+padding:10px 20px;
 
-background:#dcdcdc;
+border:none;
 
-border-top:1px solid white;
-border-left:1px solid white;
-
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
+border-radius:10px;
 
 cursor:pointer;
 
 font-weight:bold;
 
-font-size:12px;
+font-size:13px;
+
+transition:0.3s;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
 
+.btn:hover{
+
+transform:translateY(-2px);
+
+filter:brightness(1.1);
+}
+
+.back-btn{
+
+background:#cc0000;
+
+color:white;
+}
+
+.print-btn{
+
+background:#008000;
+
+color:white;
+}
+
+.pdf-btn{
+
+background:#0066cc;
+
+color:white;
+}
+
+/* FORM */
+
 .form-section{
-padding:15px;
+padding:20px;
 }
 
 select{
 
 width:100%;
 
-padding:10px;
+padding:12px;
 
-border:1px solid #808080;
+border:2px solid #ffcc00;
+
+border-radius:10px;
 
 font-size:14px;
+
+background:#1f1f1f;
+
+color:white;
+
+margin-bottom:15px;
+}
+
+/* BUTTON GROUP */
+
+.button-group{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-bottom:20px;
 }
 
 /* PAYSLIP */
 
 .payslip{
 
-margin-top:20px;
-
 background:white;
 
-padding:20px;
+padding:30px;
 
-border:1px solid #808080;
+border-radius:15px;
+
+color:black;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
+/* COMPANY */
+
 .company{
+
 text-align:center;
-margin-bottom:20px;
+
+margin-bottom:25px;
+
+padding-bottom:15px;
+
+border-bottom:3px solid #ffcc00;
 }
 
 .company h1{
-font-size:26px;
+
+font-size:36px;
+
+color:#cc0000;
+
+margin-bottom:5px;
 }
+
+.company p{
+
+font-size:16px;
+
+font-weight:bold;
+
+color:#555;
+}
+
+/* INFO */
 
 .info-grid{
 
@@ -117,28 +219,41 @@ display:grid;
 
 grid-template-columns:1fr 1fr;
 
-gap:10px;
+gap:15px;
 
-margin-bottom:20px;
+margin-bottom:25px;
 }
 
 .info-box{
 
-padding:10px;
+padding:15px;
 
-border:1px solid #808080;
+border:2px solid #dcdcdc;
 
-background:#f5f5f5;
+border-radius:10px;
+
+background:#f7f7f7;
 }
 
+.info-box strong{
+
+color:#cc0000;
+}
+
+/* TABLE */
+
 .table-wrapper{
+
 overflow:auto;
 }
 
 table{
+
 width:100%;
+
 border-collapse:collapse;
-margin-top:15px;
+
+margin-top:20px;
 }
 
 th,
@@ -146,29 +261,56 @@ td{
 
 border:1px solid #808080;
 
-padding:10px;
+padding:12px;
 
 text-align:left;
 }
 
 th{
-background:#dcdcdc;
+
+background:#ffcc00;
+
+color:black;
+
+font-size:14px;
 }
+
+td{
+
+font-size:13px;
+}
+
+/* TOTAL */
 
 .total{
 
-margin-top:20px;
+margin-top:25px;
+
+padding:20px;
+
+background:#f5f5f5;
+
+border-radius:10px;
 
 text-align:right;
 
-font-size:18px;
+font-size:20px;
 
 font-weight:bold;
+
+line-height:1.8;
 }
+
+.total span{
+
+color:#008000;
+}
+
+/* SIGNATURE */
 
 .signature{
 
-margin-top:50px;
+margin-top:60px;
 
 display:flex;
 
@@ -181,41 +323,61 @@ text-align:center;
 
 margin-top:50px;
 
-border-top:1px solid black;
+border-top:2px solid black;
 
-padding-top:5px;
+padding-top:8px;
 
 width:250px;
+
+font-weight:bold;
 }
 
-.button-group{
-
-margin-top:20px;
-
-display:flex;
-
-gap:10px;
-
-flex-wrap:wrap;
-}
+/* PRINT */
 
 @media print{
 
 body{
+
 background:white;
 padding:0;
 }
 
-.btn,
 .header,
-select,
-.button-group{
-display:none;
+.button-group,
+select{
+
+display:none !important;
 }
 
 .container{
+
 border:none;
 box-shadow:none;
+background:white;
+}
+
+.payslip{
+
+box-shadow:none;
+border:none;
+}
+
+}
+
+@media(max-width:768px){
+
+.info-grid{
+
+grid-template-columns:1fr;
+}
+
+.signature{
+
+flex-direction:column;
+
+gap:40px;
+
+align-items:center;
 }
 
 }
@@ -228,14 +390,16 @@ box-shadow:none;
 
 <div class="container">
 
+<!-- HEADER -->
+
 <div class="header">
 
 <div class="title">
-PAYSLIP SYSTEM
+💰 PAYSLIP SYSTEM
 </div>
 
 <button
-class="btn"
+class="btn back-btn"
 onclick="window.history.back()">
 
 ← BACK
@@ -257,18 +421,18 @@ Select Payroll Record
 <div class="button-group">
 
 <button
-class="btn"
+class="btn print-btn"
 onclick="printPayslip()">
 
-PRINT PAYSLIP
+🖨 PRINT PAYSLIP
 
 </button>
 
 <button
-class="btn"
+class="btn pdf-btn"
 onclick="downloadPDF()">
 
-SAVE AS PDF
+📄 SAVE AS PDF
 
 </button>
 
@@ -282,7 +446,7 @@ SAVE AS PDF
 
 <h1>COMPANY NAME</h1>
 
-<p>OFFICIAL PAYSLIP</p>
+<p>OFFICIAL EMPLOYEE PAYSLIP</p>
 
 </div>
 
@@ -290,19 +454,23 @@ SAVE AS PDF
 
 <div class="info-box">
 
-<strong>Employee :</strong>
+<strong>Employee Name</strong>
+
 <div id="empName">-</div>
 
 </div>
 
 <div class="info-box">
 
-<strong>Date :</strong>
+<strong>Date</strong>
+
 <div id="payDate">-</div>
 
 </div>
 
 </div>
+
+<!-- EARNINGS -->
 
 <div class="table-wrapper">
 
@@ -327,13 +495,35 @@ SAVE AS PDF
 </tr>
 
 <tr>
-<td>Overtime</td>
+<td>Overtime Pay</td>
 <td id="overtime">0.00</td>
+</tr>
+
+<tr>
+<td>Holiday Pay</td>
+<td id="holiday">0.00</td>
+</tr>
+
+<tr>
+<td>Sick Leave</td>
+<td id="sick">0.00</td>
+</tr>
+
+<tr>
+<td>Birthday Leave</td>
+<td id="birthday">0.00</td>
+</tr>
+
+<tr>
+<td>Vacation Leave</td>
+<td id="vacation">0.00</td>
 </tr>
 
 </tbody>
 
 </table>
+
+<!-- DEDUCTIONS -->
 
 <table>
 
@@ -356,7 +546,7 @@ SAVE AS PDF
 </tr>
 
 <tr>
-<td>Late</td>
+<td>Late Deduction</td>
 <td id="late">0.00</td>
 </tr>
 
@@ -381,7 +571,7 @@ SAVE AS PDF
 </tr>
 
 <tr>
-<td>Other</td>
+<td>Other Deduction</td>
 <td id="other">0.00</td>
 </tr>
 
@@ -396,30 +586,44 @@ SAVE AS PDF
 
 </div>
 
+<!-- TOTAL -->
+
 <div class="total">
 
 <div>
-Total Deduction : <span id="deduction">0.00</span>
+Total Deduction :
+<span id="deduction">
+0.00
+</span>
 </div>
 
 <div>
-NET PAY : <span id="net">0.00</span>
+NET PAY :
+<span id="net">
+0.00
+</span>
 </div>
 
 </div>
+
+<!-- SIGNATURE -->
 
 <div class="signature">
 
 <div>
+
 <div class="line">
 Employer Signature
 </div>
+
 </div>
 
 <div>
+
 <div class="line">
 Employee Signature
 </div>
+
 </div>
 
 </div>
@@ -507,6 +711,18 @@ Number(pay.gross || 0).toFixed(2);
 
 overtime.innerText =
 Number(pay.overtime || 0).toFixed(2);
+
+holiday.innerText =
+Number(pay.holiday || 0).toFixed(2);
+
+sick.innerText =
+Number(pay.sick || 0).toFixed(2);
+
+birthday.innerText =
+Number(pay.birthday || 0).toFixed(2);
+
+vacation.innerText =
+Number(pay.vacation || 0).toFixed(2);
 
 cash.innerText =
 Number(pay.cash || 0).toFixed(2);
