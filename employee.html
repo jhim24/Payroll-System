@@ -84,7 +84,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:5000px;
+min-width:4000px;
 
 font-size:12px;
 }
@@ -306,7 +306,7 @@ Total : 0
 <th>Health Card Number</th>
 
 <th>Bank Name</th>
-<th>Bank Account</th>
+<th>Bank Account Number</th>
 
 <th>ID Type</th>
 <th>ID Number</th>
@@ -319,13 +319,6 @@ Total : 0
 <th>Department</th>
 <th>Employment</th>
 <th>Salary Rate</th>
-
-<th>SSS</th>
-<th>PhilHealth</th>
-<th>Pag-IBIG</th>
-<th>Health Card</th>
-<th>Uniform</th>
-<th>Others</th>
 
 <th>Action</th>
 
@@ -758,15 +751,36 @@ table.innerHTML='';
 
 employees.forEach((emp,index)=>{
 
-let row = '<tr>';
+table.innerHTML += `
 
-emp.forEach(data=>{
+<tr>
 
-row += `<td>${data}</td>`;
+<td>${emp[0]}</td>
+<td>${emp[1]}</td>
+<td>${emp[2]}</td>
+<td>${emp[3]}</td>
+<td>${emp[4]}</td>
+<td>${emp[5]}</td>
 
-});
+<td>${emp[6]}</td>
+<td>${emp[7]}</td>
+<td>${emp[8]}</td>
+<td>${emp[9]}</td>
 
-row += `
+<td>${emp[10]}</td>
+<td>${emp[11]}</td>
+
+<td>${emp[12]}</td>
+<td>${emp[13]}</td>
+
+<td>${emp[14]}</td>
+<td>${emp[15]}</td>
+
+<td>${emp[18]}</td>
+<td>${emp[19]}</td>
+<td>${emp[20]}</td>
+<td>${emp[21]}</td>
+<td>${emp[22]}</td>
 
 <td>
 
@@ -788,11 +802,9 @@ Delete
 
 </td>
 
+</tr>
+
 `;
-
-row += '</tr>';
-
-table.innerHTML += row;
 
 });
 
