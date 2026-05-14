@@ -17,21 +17,14 @@ padding:15px;
 background:#d4d0c8;
 }
 
-/* CONTAINER */
-
 .container{
 
 max-width:1500px;
-
 margin:auto;
 
 background:#c0c0c0;
 
 border:2px solid #808080;
-
-box-shadow:
-inset 1px 1px white,
-inset -1px -1px #808080;
 
 padding:15px;
 }
@@ -41,28 +34,19 @@ padding:15px;
 .top-bar{
 
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
 
 margin-bottom:15px;
-
-flex-wrap:wrap;
-
-gap:10px;
 }
 
 h1{
 
 margin:0;
-
-font-size:28px;
-
 color:#cc0000;
 }
 
-/* BUTTONS */
+/* BUTTON */
 
 button{
 
@@ -77,42 +61,24 @@ border-left:1px solid white;
 
 border-right:1px solid #808080;
 border-bottom:1px solid #808080;
-
-transition:0.2s;
 }
-
-button:hover{
-
-filter:brightness(1.1);
-}
-
-/* COLORS */
 
 .compute-btn{
-
 background:#ffcc00;
-
-color:black;
 }
 
 .save-btn{
-
 background:#008000;
-
 color:white;
 }
 
 .back-btn{
-
 background:#cc0000;
-
 color:white;
 }
 
 .delete-btn{
-
 background:#990000;
-
 color:white;
 }
 
@@ -139,18 +105,13 @@ repeat(auto-fit,minmax(220px,1fr));
 gap:10px;
 }
 
-/* INPUT */
-
 input,
 select{
 
 width:100%;
-
 padding:8px;
 
 border:1px solid #808080;
-
-font-size:13px;
 }
 
 /* TABLE */
@@ -166,24 +127,6 @@ overflow:auto;
 height:60vh;
 }
 
-/* SCROLLBAR */
-
-.table-box::-webkit-scrollbar{
-
-height:12px;
-width:12px;
-}
-
-.table-box::-webkit-scrollbar-thumb{
-
-background:#808080;
-}
-
-.table-box::-webkit-scrollbar-track{
-
-background:#dcdcdc;
-}
-
 table{
 
 width:100%;
@@ -191,8 +134,6 @@ width:100%;
 border-collapse:collapse;
 
 min-width:2500px;
-
-font-size:12px;
 }
 
 th,
@@ -211,31 +152,8 @@ th{
 
 background:#ffcc00;
 
-color:black;
-
 position:sticky;
-
 top:0;
-}
-
-tr:nth-child(even){
-
-background:#f2f2f2;
-}
-
-tr:hover{
-
-background:#ffe699;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
 }
 
 </style>
@@ -245,8 +163,6 @@ grid-template-columns:1fr;
 <body>
 
 <div class="container">
-
-<!-- TOP -->
 
 <div class="top-bar">
 
@@ -354,19 +270,17 @@ readonly>
 
 <button
 class="compute-btn"
-type="button"
 onclick="computePayroll()">
 
-🧮 Compute Payroll
+COMPUTE
 
 </button>
 
 <button
 class="save-btn"
-type="button"
 onclick="savePayroll()">
 
-💾 Save Payroll
+SAVE
 
 </button>
 
@@ -376,31 +290,30 @@ onclick="savePayroll()">
 
 <div class="table-box">
 
-<table id="payrollTable">
+<table>
 
 <thead>
 
 <tr>
 
 <th>Employee</th>
-<th>Daily Rate</th>
-<th>Days Worked</th>
+<th>Daily</th>
+<th>Days</th>
+<th>Gross</th>
 
-<th>Gross Salary</th>
-
-<th>OT Pay</th>
-<th>Holiday Pay</th>
-<th>Sick Leave</th>
-<th>Birthday Leave</th>
-<th>Vacation Leave</th>
+<th>OT</th>
+<th>Holiday</th>
+<th>Sick</th>
+<th>Birthday</th>
+<th>Vacation</th>
 
 <th>SSS</th>
 <th>PhilHealth</th>
-<th>Pag-IBIG</th>
-<th>Health Card</th>
+<th>PagIBIG</th>
+<th>HealthCard</th>
 <th>Others</th>
 
-<th>Net Salary</th>
+<th>Net</th>
 
 <th>Action</th>
 
@@ -408,7 +321,7 @@ onclick="savePayroll()">
 
 </thead>
 
-<tbody>
+<tbody id="payrollBody">
 
 </tbody>
 
@@ -426,7 +339,7 @@ let payrolls = JSON.parse(
 localStorage.getItem('payrolls')
 ) || [];
 
-/* LOAD EMPLOYEES */
+/* LOAD EMPLOYEE */
 
 function loadEmployees(){
 
@@ -440,24 +353,24 @@ document.getElementById(
 );
 
 select.innerHTML =
-'<option value=\"\">Select Employee</option>';
+'<option value="">Select Employee</option>';
 
 employees.forEach(emp=>{
 
-let fullName =
+let fullname =
 
 (emp[0] || '') +
 ' ' +
 (emp[2] || '');
 
-let empId =
-emp[18] || 'NO-ID';
+let empid =
+emp[18] || '';
 
 select.innerHTML += `
 
-<option value="${fullName}">
+<option value="${fullname}">
 
-${empId} - ${fullName}
+${empid} - ${fullname}
 
 </option>
 
@@ -472,88 +385,40 @@ ${empId} - ${fullName}
 function computePayroll(){
 
 let daily =
-parseFloat(
-document.getElementById(
-'dailyRate'
-).value
-) || 0;
+Number(dailyRate.value) || 0;
 
 let days =
-parseFloat(
-document.getElementById(
-'daysWorked'
-).value
-) || 0;
+Number(daysWorked.value) || 0;
 
 let ot =
-parseFloat(
-document.getElementById(
-'overtimePay'
-).value
-) || 0;
+Number(overtimePay.value) || 0;
 
 let holiday =
-parseFloat(
-document.getElementById(
-'holidayPay'
-).value
-) || 0;
+Number(holidayPay.value) || 0;
 
 let sick =
-parseFloat(
-document.getElementById(
-'sickLeave'
-).value
-) || 0;
+Number(sickLeave.value) || 0;
 
 let birthday =
-parseFloat(
-document.getElementById(
-'birthdayLeave'
-).value
-) || 0;
+Number(birthdayLeave.value) || 0;
 
 let vacation =
-parseFloat(
-document.getElementById(
-'vacationLeave'
-).value
-) || 0;
+Number(vacationLeave.value) || 0;
 
-let sss =
-parseFloat(
-document.getElementById(
-'sss'
-).value
-) || 0;
+let sssded =
+Number(sss.value) || 0;
 
-let philhealth =
-parseFloat(
-document.getElementById(
-'philhealth'
-).value
-) || 0;
+let phded =
+Number(philhealth.value) || 0;
 
-let pagibig =
-parseFloat(
-document.getElementById(
-'pagibig'
-).value
-) || 0;
+let pagibigded =
+Number(pagibig.value) || 0;
 
-let healthcard =
-parseFloat(
-document.getElementById(
-'healthcard'
-).value
-) || 0;
+let healthded =
+Number(healthcard.value) || 0;
 
-let others =
-parseFloat(
-document.getElementById(
-'others'
-).value
-) || 0;
+let othersded =
+Number(others.value) || 0;
 
 /* GROSS */
 
@@ -571,27 +436,21 @@ vacation;
 
 let deductions =
 
-sss +
-philhealth +
-pagibig +
-healthcard +
-others;
+sssded +
+phded +
+pagibigded +
+healthded +
+othersded;
 
 /* NET */
 
 let net =
 gross - deductions;
 
-/* DISPLAY */
-
-document.getElementById(
-'grossSalary'
-).value =
+grossSalary.value =
 gross.toFixed(2);
 
-document.getElementById(
-'netSalary'
-).value =
+netSalary.value =
 net.toFixed(2);
 
 }
@@ -600,12 +459,7 @@ net.toFixed(2);
 
 function savePayroll(){
 
-let employee =
-document.getElementById(
-'employeeName'
-).value;
-
-if(employee===''){
+if(employeeName.value===''){
 
 alert('Select Employee');
 
@@ -615,7 +469,8 @@ return;
 
 let payroll = {
 
-employee: employee,
+employee:
+employeeName.value,
 
 daily:
 dailyRate.value,
@@ -661,18 +516,16 @@ netSalary.value
 
 };
 
-/* PUSH */
-
 payrolls.push(payroll);
 
-/* SAVE STORAGE */
+/* SAVE */
 
 localStorage.setItem(
 'payrolls',
 JSON.stringify(payrolls)
 );
 
-/* RENDER */
+/* UPDATE TABLE */
 
 renderPayroll();
 
@@ -680,40 +533,17 @@ renderPayroll();
 
 clearForm();
 
-alert(
-'Payroll Saved'
-);
+alert('Payroll Saved');
 
 }
 
-/* DELETE */
-
-function deletePayroll(index){
-
-if(confirm(
-'Delete Payroll?'
-)){
-
-payrolls.splice(index,1);
-
-localStorage.setItem(
-'payrolls',
-JSON.stringify(payrolls)
-);
-
-renderPayroll();
-
-}
-
-}
-
-/* RENDER TABLE */
+/* RENDER */
 
 function renderPayroll(){
 
 let tbody =
-document.querySelector(
-'#payrollTable tbody'
+document.getElementById(
+'payrollBody'
 );
 
 tbody.innerHTML = '';
@@ -725,10 +555,8 @@ tbody.innerHTML += `
 <tr>
 
 <td>${pay.employee}</td>
-
 <td>${pay.daily}</td>
 <td>${pay.days}</td>
-
 <td>${pay.gross}</td>
 
 <td>${pay.ot}</td>
@@ -765,38 +593,38 @@ DELETE
 
 }
 
-/* CLEAR FORM */
+/* DELETE */
+
+function deletePayroll(index){
+
+payrolls.splice(index,1);
+
+localStorage.setItem(
+'payrolls',
+JSON.stringify(payrolls)
+);
+
+renderPayroll();
+
+}
+
+/* CLEAR */
 
 function clearForm(){
 
-employeeName.value='';
-
 dailyRate.value='';
-
 daysWorked.value='';
-
 overtimePay.value='';
-
 holidayPay.value='';
-
 sickLeave.value='';
-
 birthdayLeave.value='';
-
 vacationLeave.value='';
-
 sss.value='';
-
 philhealth.value='';
-
 pagibig.value='';
-
 healthcard.value='';
-
 others.value='';
-
 grossSalary.value='';
-
 netSalary.value='';
 
 }
