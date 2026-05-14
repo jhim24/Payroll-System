@@ -122,6 +122,20 @@ background:#008000;
 color:white;
 }
 
+.edit-btn{
+
+background:#0066cc;
+
+color:white;
+}
+
+.delete-btn{
+
+background:#cc0000;
+
+color:white;
+}
+
 /* HEADER BUTTONS */
 
 .header-buttons{
@@ -197,7 +211,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1200px;
+min-width:1300px;
 
 font-size:12px;
 }
@@ -424,6 +438,8 @@ SUBMIT REQUEST
 
 <th>STATUS</th>
 
+<th>ACTION</th>
+
 </tr>
 
 </thead>
@@ -567,6 +583,12 @@ requests = [];
 }
 
 /* =========================
+EDIT INDEX
+========================= */
+
+let editIndex = null;
+
+/* =========================
 SUBMIT REQUEST
 ========================= */
 
@@ -614,14 +636,26 @@ status:'PENDING'
 
 };
 
+if(editIndex !== null){
+
+requests[editIndex] = data;
+
+editIndex = null;
+
+alert('Request Updated');
+
+}else{
+
 requests.push(data);
+
+alert('Request Submitted');
+
+}
 
 localStorage.setItem(
 'employeeRequests',
 JSON.stringify(requests)
 );
-
-alert('Request Submitted');
 
 renderRequests();
 
@@ -643,7 +677,7 @@ requestBody.innerHTML = `
 
 <tr>
 
-<td colspan="7">
+<td colspan="8">
 
 NO REQUEST FOUND
 
@@ -657,7 +691,7 @@ return;
 
 }
 
-requests.forEach((req)=>{
+requests.forEach((req,index)=>{
 
 let statusClass =
 req.status.toLowerCase();
@@ -682,11 +716,93 @@ requestBody.innerHTML += `
 ${req.status}
 </td>
 
+<td>
+
+<button
+class="btn edit-btn"
+onclick="editRequest(${index})">
+
+EDIT
+
+</button>
+
+<button
+class="btn delete-btn"
+onclick="deleteRequest(${index})">
+
+DELETE
+
+</button>
+
+</td>
+
 </tr>
 
 `;
 
 });
+
+}
+
+/* =========================
+EDIT REQUEST
+========================= */
+
+function editRequest(index){
+
+let req = requests[index];
+
+editIndex = index;
+
+employee.value =
+req.employee || '';
+
+requestType.value =
+req.type || '';
+
+requestDate.value =
+req.date || '';
+
+days.value =
+req.days || '';
+
+reason.value =
+req.reason || '';
+
+showEmployeeInfo();
+
+window.scrollTo({
+
+top:0,
+
+behavior:'smooth'
+
+});
+
+}
+
+/* =========================
+DELETE REQUEST
+========================= */
+
+function deleteRequest(index){
+
+let confirmDelete = confirm(
+'Delete this request?'
+);
+
+if(confirmDelete){
+
+requests.splice(index,1);
+
+localStorage.setItem(
+'employeeRequests',
+JSON.stringify(requests)
+);
+
+renderRequests();
+
+}
 
 }
 
