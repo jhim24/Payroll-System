@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Payslip System</title>
+<title>4 Payslip Bond Paper</title>
 
 <style>
 
@@ -14,31 +14,13 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
-
 background:#d4d0c8;
-
 padding:15px;
-}
-
-/* CONTAINER */
-
-.container{
-
-max-width:1200px;
-
-margin:auto;
-
 }
 
 /* HEADER */
 
-.header{
-
-background:#c0c0c0;
-
-padding:15px;
-
-border:2px solid #808080;
+.topbar{
 
 display:flex;
 
@@ -47,6 +29,12 @@ justify-content:space-between;
 align-items:center;
 
 margin-bottom:15px;
+
+background:#c0c0c0;
+
+padding:15px;
+
+border:2px solid #808080;
 }
 
 .title{
@@ -73,52 +61,21 @@ border-bottom:1px solid #808080;
 cursor:pointer;
 
 font-weight:bold;
-
-font-size:12px;
 }
 
-.print-btn{
-background:#008000;
-color:white;
-}
-
-/* SELECT */
-
-.select-box{
-
-background:#c0c0c0;
-
-padding:15px;
-
-border:2px solid #808080;
-
-margin-bottom:15px;
-}
-
-select{
-
-width:100%;
-
-padding:10px;
-
-border:1px solid #808080;
-
-font-size:14px;
-}
-
-/* WHOLE PAGE */
+/* PAPER */
 
 .paper{
 
+width:210mm;
+
+min-height:297mm;
+
+margin:auto;
+
 background:white;
 
-width:100%;
-
-min-height:1123px;
-
-padding:20px;
-
-border:2px solid #808080;
+padding:10mm;
 
 display:grid;
 
@@ -126,22 +83,26 @@ grid-template-columns:1fr 1fr;
 
 grid-template-rows:1fr 1fr;
 
-gap:20px;
+gap:10px;
+
+border:2px solid #808080;
 }
 
 /* PAYSLIP */
 
 .payslip{
 
-border:2px dashed #808080;
+border:1px dashed #808080;
 
-padding:15px;
+padding:10px;
 
 display:flex;
 
 flex-direction:column;
 
 justify-content:space-between;
+
+overflow:hidden;
 }
 
 /* COMPANY */
@@ -150,28 +111,28 @@ justify-content:space-between;
 
 text-align:center;
 
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .company h2{
 
-font-size:20px;
+font-size:16px;
 }
 
 .company p{
 
-font-size:12px;
+font-size:10px;
 }
 
 /* INFO */
 
 .info{
 
-margin-top:10px;
+font-size:11px;
 
-font-size:12px;
+line-height:1.5;
 
-line-height:1.6;
+margin-bottom:8px;
 }
 
 /* TABLE */
@@ -182,9 +143,9 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:10px;
+font-size:10px;
 
-font-size:11px;
+margin-top:5px;
 }
 
 th,
@@ -192,7 +153,7 @@ td{
 
 border:1px solid #808080;
 
-padding:5px;
+padding:3px;
 }
 
 th{
@@ -204,39 +165,39 @@ background:#dcdcdc;
 
 .total{
 
-margin-top:10px;
+margin-top:8px;
 
-font-size:14px;
+font-size:12px;
 
 font-weight:bold;
 
 text-align:right;
 }
 
-/* SIGN */
+/* SIGNATURE */
 
 .signature{
 
-margin-top:20px;
+margin-top:15px;
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:11px;
+font-size:9px;
 }
 
 .line{
 
-margin-top:25px;
+margin-top:18px;
 
 border-top:1px solid black;
 
-padding-top:3px;
-
-width:120px;
+width:100px;
 
 text-align:center;
+
+padding-top:2px;
 }
 
 /* PRINT */
@@ -248,8 +209,7 @@ background:white;
 padding:0;
 }
 
-.header,
-.select-box{
+.topbar{
 display:none;
 }
 
@@ -257,14 +217,11 @@ display:none;
 
 border:none;
 
+width:100%;
+
+min-height:auto;
+
 padding:0;
-
-gap:10px;
-}
-
-.payslip{
-
-break-inside:avoid;
 }
 
 }
@@ -275,11 +232,9 @@ break-inside:avoid;
 
 <body>
 
-<div class="container">
+<!-- TOP -->
 
-<!-- HEADER -->
-
-<div class="header">
+<div class="topbar">
 
 <div class="title">
 PAYSLIP SYSTEM
@@ -296,7 +251,7 @@ onclick="window.history.back()">
 </button>
 
 <button
-class="btn print-btn"
+class="btn"
 onclick="window.print()">
 
 🖨 PRINT
@@ -307,27 +262,60 @@ onclick="window.print()">
 
 </div>
 
-<!-- SELECT -->
+<!-- PAPER -->
 
-<div class="select-box">
-
-<select id="payrollSelect" onchange="loadPayslip()">
-
-<option value="">
-Select Payroll Record
-</option>
-
-</select>
+<div class="paper" id="paper">
 
 </div>
 
-<!-- WHOLE BOND -->
+<script>
 
-<div class="paper">
+/* LOAD PAYROLL */
 
-<!-- PAYSLIP 1 -->
+let payrollRecords = [];
 
-<div class="payslip">
+try{
+
+payrollRecords = JSON.parse(
+localStorage.getItem('payroll')
+) || [];
+
+}catch(error){
+
+payrollRecords = [];
+
+}
+
+/* PAPER */
+
+let paper =
+document.getElementById('paper');
+
+/* SHOW ONLY 4 STAFF */
+
+let firstFour =
+payrollRecords.slice(0,4);
+
+/* EMPTY BOXES */
+
+while(firstFour.length < 4){
+
+firstFour.push(null);
+
+}
+
+/* CREATE PAYSLIPS */
+
+firstFour.forEach(pay=>{
+
+let div =
+document.createElement('div');
+
+div.className = 'payslip';
+
+if(pay){
+
+div.innerHTML = `
 
 <div>
 
@@ -341,13 +329,13 @@ Select Payroll Record
 
 <div class="info">
 
-<b>Employee :</b>
-<span class="empName">-</span>
+<b>Employee:</b>
+${pay.employee || '-'}
 
 <br>
 
-<b>Date :</b>
-<span class="payDate">-</span>
+<b>Date:</b>
+${new Date().toDateString()}
 
 </div>
 
@@ -360,32 +348,44 @@ Select Payroll Record
 
 <tr>
 <td>Gross Pay</td>
-<td class="gross">0.00</td>
+<td>
+${Number(pay.gross || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>Overtime</td>
-<td class="overtime">0.00</td>
+<td>
+${Number(pay.overtime || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>Holiday</td>
-<td class="holiday">0.00</td>
+<td>
+${Number(pay.holiday || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>Sick Leave</td>
-<td class="sick">0.00</td>
+<td>
+${Number(pay.sick || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>Birthday Leave</td>
-<td class="birthday">0.00</td>
+<td>
+${Number(pay.birthday || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>Vacation Leave</td>
-<td class="vacation">0.00</td>
+<td>
+${Number(pay.vacation || 0).toFixed(2)}
+</td>
 </tr>
 
 </table>
@@ -399,22 +399,30 @@ Select Payroll Record
 
 <tr>
 <td>SSS</td>
-<td class="sss">0.00</td>
+<td>
+${Number(pay.sss || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>PhilHealth</td>
-<td class="philhealth">0.00</td>
+<td>
+${Number(pay.philhealth || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>Pag-IBIG</td>
-<td class="pagibig">0.00</td>
+<td>
+${Number(pay.pagibig || 0).toFixed(2)}
+</td>
 </tr>
 
 <tr>
 <td>Other</td>
-<td class="other">0.00</td>
+<td>
+${Number(pay.other || 0).toFixed(2)}
+</td>
 </tr>
 
 </table>
@@ -422,7 +430,7 @@ Select Payroll Record
 <div class="total">
 
 NET PAY :
-<span class="net">0.00</span>
+${Number(pay.net || 0).toFixed(2)}
 
 </div>
 
@@ -440,233 +448,17 @@ Employee
 
 </div>
 
-</div>
-
-<!-- COPY 2 -->
-
-<div class="payslip copy"></div>
-
-<!-- COPY 3 -->
-
-<div class="payslip copy"></div>
-
-<!-- COPY 4 -->
-
-<div class="payslip copy"></div>
-
-</div>
-
-</div>
-
-<script>
-
-/* DUPLICATE */
-
-document.querySelectorAll('.copy')
-
-.forEach(copy=>{
-
-copy.innerHTML =
-
-document.querySelector('.payslip')
-.innerHTML;
-
-});
-
-/* STORAGE */
-
-let payrollRecords = [];
-
-try{
-
-payrollRecords = JSON.parse(
-localStorage.getItem('payroll')
-) || [];
-
-}catch(error){
-
-payrollRecords = [];
-
-}
-
-/* LOAD DROPDOWN */
-
-function loadDropdown(){
-
-payrollRecords.forEach((pay,index)=>{
-
-payrollSelect.innerHTML += `
-
-<option value="${index}">
-
-${pay.employee}
-
-</option>
-
 `;
 
-});
+}else{
+
+div.innerHTML = '';
 
 }
 
-/* LOAD PAYSLIP */
-
-function loadPayslip(){
-
-let index =
-payrollSelect.value;
-
-if(index==='') return;
-
-let pay =
-payrollRecords[index];
-
-document
-.querySelectorAll('.empName')
-
-.forEach(el=>{
-
-el.innerText =
-pay.employee || '-';
+paper.appendChild(div);
 
 });
-
-document
-.querySelectorAll('.payDate')
-
-.forEach(el=>{
-
-el.innerText =
-new Date().toDateString();
-
-});
-
-document
-.querySelectorAll('.gross')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.gross || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.overtime')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.overtime || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.holiday')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.holiday || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.sick')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.sick || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.birthday')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.birthday || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.vacation')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.vacation || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.sss')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.sss || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.philhealth')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.philhealth || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.pagibig')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.pagibig || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.other')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.other || 0)
-.toFixed(2);
-
-});
-
-document
-.querySelectorAll('.net')
-
-.forEach(el=>{
-
-el.innerText =
-Number(pay.net || 0)
-.toFixed(2);
-
-});
-
-}
-
-/* AUTO LOAD */
-
-loadDropdown();
 
 </script>
 
