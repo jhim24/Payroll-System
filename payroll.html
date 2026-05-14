@@ -100,7 +100,8 @@ gap:10px;
 }
 
 input,
-select{
+select,
+textarea{
 
 width:100%;
 
@@ -148,7 +149,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1500px;
+min-width:1800px;
 
 font-size:12px;
 }
@@ -195,6 +196,13 @@ font-weight:bold;
 color:red;
 
 font-weight:bold;
+}
+
+.notes{
+
+text-align:left;
+white-space:normal;
+min-width:250px;
 }
 
 @media(max-width:768px){
@@ -285,6 +293,20 @@ type="number"
 id="pagibig"
 placeholder="Pag-IBIG">
 
+<input
+type="number"
+id="healthCard"
+placeholder="Health Card">
+
+<input
+type="number"
+id="otherDeduction"
+placeholder="Other Deduction">
+
+<textarea
+id="otherNote"
+placeholder="Reason / Notes for Other Deduction"></textarea>
+
 </div>
 
 <!-- COMPUTE -->
@@ -337,11 +359,17 @@ Net Pay : 0
 <th>DAYS WORKED</th>
 <th>GROSS PAY</th>
 <th>OVERTIME</th>
+
 <th>CASH ADVANCE</th>
 <th>LATE</th>
 <th>SSS</th>
 <th>PHILHEALTH</th>
 <th>PAG-IBIG</th>
+<th>HEALTH CARD</th>
+<th>OTHER</th>
+
+<th>OTHER NOTE</th>
+
 <th>TOTAL DEDUCTION</th>
 <th>NET PAY</th>
 
@@ -460,6 +488,15 @@ Number(philhealth.value) || 0;
 let pagibigDed =
 Number(pagibig.value) || 0;
 
+let health =
+Number(healthCard.value) || 0;
+
+let other =
+Number(otherDeduction.value) || 0;
+
+let otherReason =
+otherNote.value || '-';
+
 /* COMPUTE */
 
 let gross =
@@ -473,7 +510,9 @@ cash +
 late +
 sssDed +
 phil +
-pagibigDed;
+pagibigDed +
+health +
+other;
 
 let net =
 
@@ -519,6 +558,12 @@ sssDed,
 phil,
 
 pagibigDed,
+
+health,
+
+other,
+
+otherReason,
 
 deductions,
 
@@ -583,6 +628,18 @@ ${pay.phil.toFixed(2)}
 
 <td class="deduction">
 ${pay.pagibigDed.toFixed(2)}
+</td>
+
+<td class="deduction">
+${pay.health.toFixed(2)}
+</td>
+
+<td class="deduction">
+${pay.other.toFixed(2)}
+</td>
+
+<td class="notes">
+${pay.otherReason}
 </td>
 
 <td class="deduction">
