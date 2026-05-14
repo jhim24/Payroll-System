@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Employees</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="main">
+
+<h1>Employee Masterlist</h1>
+
+<button onclick="openModal()">
++ Add Employee
+</button>
+
+<div id="modal"
+style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.5);
+">
+
+<div style="
+background:white;
+width:90%;
+max-width:600px;
+margin:50px auto;
+padding:20px;
+">
+
+<input id="fname"
+placeholder="First Name">
+
+<button onclick="saveEmployee()">
+Save
+</button>
+
+</div>
+
+</div>
+
+<table border="1"
+width="100%"
+id="empTable">
+
+<thead>
+
+<tr>
+<th>First Name</th>
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+
+function openModal(){
+
+modal.style.display='block';
+
+}
+
+function saveEmployee(){
+
+let table =
+document.querySelector(
+'#empTable tbody'
+);
+
+table.innerHTML += `
+
+<tr>
+<td>${fname.value}</td>
+</tr>
+
+`;
+
+modal.style.display='none';
+
+}
+
+</script>
+
+</body>
+</html>
