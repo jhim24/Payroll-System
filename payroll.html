@@ -22,7 +22,7 @@ padding:15px;
 
 .container{
 
-max-width:1200px;
+max-width:1300px;
 
 margin:auto;
 
@@ -52,8 +52,6 @@ justify-content:space-between;
 align-items:center;
 
 flex-wrap:wrap;
-
-gap:10px;
 }
 
 .title{
@@ -148,11 +146,9 @@ margin-bottom:15px;
 
 margin-top:20px;
 
-overflow-x:auto;
+overflow:auto;
 
-overflow-y:auto;
-
-max-height:400px;
+max-height:450px;
 
 background:white;
 
@@ -189,6 +185,8 @@ background:#dcdcdc;
 position:sticky;
 
 top:0;
+
+z-index:5;
 }
 
 /* TOTAL */
@@ -202,7 +200,7 @@ font-size:18px;
 font-weight:bold;
 }
 
-/* STATUS */
+/* COLORS */
 
 .netpay{
 
@@ -362,7 +360,7 @@ Net Pay : 0
 
 <div class="table-wrapper">
 
-<table id="payrollTable">
+<table>
 
 <thead>
 
@@ -409,9 +407,9 @@ Net Pay : 0
 
 let editIndex = null;
 
-/* =========================
+/* ======================
 LOAD EMPLOYEES
-========================= */
+====================== */
 
 function loadEmployees(){
 
@@ -422,42 +420,40 @@ localStorage.getItem('employees')
 ) || [];
 
 let select =
-
 document.getElementById(
 'employeeSelect'
 );
 
 select.innerHTML =
-
 '<option value="">Select Employee</option>';
 
-employees.forEach((emp,index)=>{
+employees.forEach((emp)=>{
 
 let fullName =
+(emp[0] || '') + ' ' +
+(emp[1] || '') + ' ' +
+(emp[2] || '');
 
-emp[0] + ' ' +
-emp[1] + ' ' +
-emp[2];
+let empId =
+emp[18] || 'NO-ID';
 
-let empId = emp[18] || 'NO-ID';
+let option =
+document.createElement('option');
 
-select.innerHTML += `
+option.value = fullName;
 
-<option value="${fullName}">
+option.textContent =
+empId + ' - ' + fullName;
 
-${empId} - ${fullName}
-
-</option>
-
-`;
+select.appendChild(option);
 
 });
 
 }
 
-/* =========================
+/* ======================
 PAYROLL STORAGE
-========================= */
+====================== */
 
 let payrollRecords =
 
@@ -465,9 +461,9 @@ JSON.parse(
 localStorage.getItem('payroll')
 ) || [];
 
-/* =========================
+/* ======================
 SAVE PAYROLL
-========================= */
+====================== */
 
 function savePayroll(){
 
@@ -479,40 +475,38 @@ return;
 
 }
 
-/* VALUES */
-
 let employee =
 employeeSelect.value;
 
 let rate =
-Number(dailyRate.value) || 0;
+parseFloat(dailyRate.value) || 0;
 
 let days =
-Number(daysWorked.value) || 0;
+parseFloat(daysWorked.value) || 0;
 
 let overtimePay =
-Number(overtime.value) || 0;
+parseFloat(overtime.value) || 0;
 
 let cash =
-Number(cashAdvance.value) || 0;
+parseFloat(cashAdvance.value) || 0;
 
 let late =
-Number(lateDeduction.value) || 0;
+parseFloat(lateDeduction.value) || 0;
 
 let sssDed =
-Number(sss.value) || 0;
+parseFloat(sss.value) || 0;
 
 let phil =
-Number(philhealth.value) || 0;
+parseFloat(philhealth.value) || 0;
 
 let pagibigDed =
-Number(pagibig.value) || 0;
+parseFloat(pagibig.value) || 0;
 
 let health =
-Number(healthCard.value) || 0;
+parseFloat(healthCard.value) || 0;
 
 let other =
-Number(otherDeduction.value) || 0;
+parseFloat(otherDeduction.value) || 0;
 
 let otherReason =
 otherNote.value || '-';
@@ -520,7 +514,6 @@ otherNote.value || '-';
 /* COMPUTE */
 
 let gross =
-
 (rate * days) +
 overtimePay;
 
@@ -535,7 +528,6 @@ health +
 other;
 
 let net =
-
 gross - deductions;
 
 /* DISPLAY */
@@ -554,7 +546,7 @@ net.toFixed(2);
 
 /* DATA */
 
-let data = {
+let payrollData = {
 
 employee:employee,
 
@@ -564,17 +556,17 @@ days:days,
 
 gross:gross,
 
-overtimePay:overtimePay,
+overtime:overtimePay,
 
 cash:cash,
 
 late:late,
 
-sssDed:sssDed,
+sss:sssDed,
 
-phil:phil,
+philhealth:phil,
 
-pagibigDed:pagibigDed,
+pagibig:pagibigDed,
 
 health:health,
 
@@ -592,7 +584,8 @@ net:net
 
 if(editIndex !== null){
 
-payrollRecords[editIndex] = data;
+payrollRecords[editIndex] =
+payrollData;
 
 editIndex = null;
 
@@ -604,13 +597,15 @@ alert('Payroll Updated');
 
 else{
 
-payrollRecords.push(data);
+payrollRecords.push(
+payrollData
+);
 
 alert('Payroll Saved');
 
 }
 
-/* STORAGE */
+/* SAVE */
 
 localStorage.setItem(
 'payroll',
@@ -625,35 +620,35 @@ clearForm();
 
 }
 
-/* =========================
-RENDER PAYROLL
-========================= */
+/* ======================
+RENDER TABLE
+====================== */
 
 function renderPayroll(){
 
-let table =
+let tbody =
 document.getElementById(
 'payrollBody'
 );
 
-table.innerHTML = '';
+tbody.innerHTML = '';
 
 payrollRecords.forEach((pay,index)=>{
 
-let tr =
+let row =
 document.createElement('tr');
 
-tr.innerHTML = `
+row.innerHTML = `
 
 <td>${pay.employee}</td>
 
-<td>${pay.rate}</td>
+<td>${pay.rate.toFixed(2)}</td>
 
 <td>${pay.days}</td>
 
 <td>${pay.gross.toFixed(2)}</td>
 
-<td>${pay.overtimePay.toFixed(2)}</td>
+<td>${pay.overtime.toFixed(2)}</td>
 
 <td class="deduction">
 ${pay.cash.toFixed(2)}
@@ -664,15 +659,15 @@ ${pay.late.toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.sssDed.toFixed(2)}
+${pay.sss.toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.phil.toFixed(2)}
+${pay.philhealth.toFixed(2)}
 </td>
 
 <td class="deduction">
-${pay.pagibigDed.toFixed(2)}
+${pay.pagibig.toFixed(2)}
 </td>
 
 <td class="deduction">
@@ -717,15 +712,15 @@ DELETE
 
 `;
 
-table.appendChild(tr);
+tbody.appendChild(row);
 
 });
 
 }
 
-/* =========================
+/* ======================
 EDIT
-========================= */
+====================== */
 
 function editPayroll(index){
 
@@ -744,7 +739,7 @@ daysWorked.value =
 pay.days;
 
 overtime.value =
-pay.overtimePay;
+pay.overtime;
 
 cashAdvance.value =
 pay.cash;
@@ -753,13 +748,13 @@ lateDeduction.value =
 pay.late;
 
 sss.value =
-pay.sssDed;
+pay.sss;
 
 philhealth.value =
-pay.phil;
+pay.philhealth;
 
 pagibig.value =
-pay.pagibigDed;
+pay.pagibig;
 
 healthCard.value =
 pay.health;
@@ -784,15 +779,17 @@ pay.net.toFixed(2);
 
 }
 
-/* =========================
+/* ======================
 DELETE
-========================= */
+====================== */
 
 function deletePayroll(index){
 
-if(confirm(
+let confirmDelete = confirm(
 'Delete Payroll Record?'
-)){
+);
+
+if(confirmDelete){
 
 payrollRecords.splice(index,1);
 
@@ -807,9 +804,9 @@ renderPayroll();
 
 }
 
-/* =========================
+/* ======================
 CLEAR FORM
-========================= */
+====================== */
 
 function clearForm(){
 
@@ -839,9 +836,9 @@ otherNote.value='';
 
 }
 
-/* =========================
+/* ======================
 AUTO LOAD
-========================= */
+====================== */
 
 loadEmployees();
 
