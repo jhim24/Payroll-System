@@ -166,20 +166,6 @@ box-shadow:0 5px 15px rgba(0,0,0,0.5);
 
 }
 
-.table-box::-webkit-scrollbar{
-height:12px;
-width:12px;
-}
-
-.table-box::-webkit-scrollbar-thumb{
-background:#ffcc00;
-border-radius:10px;
-}
-
-.table-box::-webkit-scrollbar-track{
-background:#333;
-}
-
 table{
 width:100%;
 border-collapse:collapse;
@@ -220,7 +206,6 @@ background:#242424;
 
 tr:hover{
 background:#3a3a3a;
-transition:0.2s;
 }
 
 /* MODAL */
@@ -262,8 +247,6 @@ position:relative;
 
 border-radius:15px;
 
-box-shadow:0 5px 20px rgba(0,0,0,0.7);
-
 color:white;
 
 }
@@ -274,15 +257,10 @@ color:white;
 
 display:flex;
 flex-wrap:wrap;
-
 gap:4px;
-
 background:#1f1f1f;
-
 padding:6px;
-
 border-radius:8px;
-
 margin-top:10px;
 
 }
@@ -290,22 +268,13 @@ margin-top:10px;
 .tab-btn{
 
 background:#444;
-
 padding:8px 16px;
-
 cursor:pointer;
-
 font-size:12px;
-
 font-weight:bold;
-
 border:none;
-
 color:white;
-
 border-radius:6px;
-
-transition:0.3s;
 
 }
 
@@ -314,23 +283,14 @@ background:#ffcc00;
 color:black;
 }
 
-.tab-btn:hover{
-background:#ff9900;
-color:black;
-}
-
 /* CONTENT */
 
 .tab-content{
 
 display:none;
-
 padding:15px;
-
 background:#333;
-
 margin-top:10px;
-
 border-radius:8px;
 
 }
@@ -367,15 +327,6 @@ border-radius:8px;
 background:#1f1f1f;
 
 color:white;
-
-}
-
-input:focus,
-select:focus{
-
-outline:none;
-
-border-color:#ffcc00;
 
 }
 
@@ -492,8 +443,6 @@ X
 
 <h3>Employee Information</h3>
 
-<!-- TABS -->
-
 <div class="classic-tabs">
 
 <button
@@ -517,14 +466,6 @@ class="tab-btn"
 onclick="openTab(event,'job')">
 
 Job
-
-</button>
-
-<button
-class="tab-btn"
-onclick="openTab(event,'deduction')">
-
-Deduction
 
 </button>
 
@@ -572,10 +513,8 @@ readonly>
 <select class="emp-field">
 
 <option>Select ID</option>
-<option>PhilSys National ID</option>
 <option>Passport</option>
 <option>Driver's License</option>
-<option>UMID</option>
 
 </select>
 
@@ -624,25 +563,6 @@ class="tab-content">
 </select>
 
 <input class="emp-field" placeholder="Salary Rate">
-
-</div>
-
-</div>
-
-<!-- DEDUCTION -->
-
-<div
-id="deduction"
-class="tab-content">
-
-<div class="form-grid">
-
-<input class="emp-field" placeholder="SSS">
-<input class="emp-field" placeholder="PhilHealth">
-<input class="emp-field" placeholder="Pag-IBIG">
-<input class="emp-field" placeholder="Health Card">
-<input class="emp-field" placeholder="Uniform">
-<input class="emp-field" placeholder="Others">
 
 </div>
 
@@ -828,6 +748,7 @@ window.addEmployee =
 async function(){
 
 let fields =
+
 document.querySelectorAll(
 '.emp-field'
 );
@@ -840,26 +761,57 @@ employeeData.push(field.value);
 
 });
 
-/* LOCAL SAVE */
+/* EDIT */
 
 if(editRowIndex !== null){
 
 employees[editRowIndex] =
 employeeData;
 
+localStorage.setItem(
+'employees',
+JSON.stringify(employees)
+);
+
 editRowIndex = null;
 
 alert('Employee Updated');
 
-}else{
+renderTable();
 
-employees.push(employeeData);
+closeModal();
 
-alert('Employee Saved');
+clearForm();
+
+return;
 
 }
 
-/* LOCAL STORAGE */
+/* CHECK DUPLICATE */
+
+let employeeId =
+employeeData[18] || '';
+
+let duplicate =
+employees.find(emp =>
+
+(emp[18] || '') === employeeId
+
+);
+
+if(duplicate){
+
+alert(
+'Employee ID already exists!'
+);
+
+return;
+
+}
+
+/* SAVE NEW */
+
+employees.push(employeeData);
 
 localStorage.setItem(
 'employees',
@@ -904,8 +856,8 @@ salary: employeeData[22] || ''
 
 );
 
-console.log(
-'Firebase Save Success'
+alert(
+'Employee Saved Successfully'
 );
 
 }catch(error){
@@ -1118,7 +1070,11 @@ LOAD FIREBASE
 
 async function loadEmployeesFirebase(){
 
-employees = [];
+employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
 
 let querySnapshot =
 await getDocs(
@@ -1128,6 +1084,18 @@ collection(db,'employees')
 querySnapshot.forEach((doc)=>{
 
 let data = doc.data();
+
+let empId =
+data.employeeid || '';
+
+let exists =
+employees.find(emp =>
+
+(emp[18] || '') === empId
+
+);
+
+if(!exists){
 
 employees.push([
 
@@ -1157,7 +1125,16 @@ data.salary || ''
 
 ]);
 
+}
+
 });
+
+/* SAVE CLEAN */
+
+localStorage.setItem(
+'employees',
+JSON.stringify(employees)
+);
 
 renderTable();
 
