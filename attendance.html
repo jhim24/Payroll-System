@@ -14,8 +14,9 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
-background:#d4d0c8;
+background:#1f1f1f;
 padding:10px;
+color:white;
 }
 
 /* CONTAINER */
@@ -26,13 +27,15 @@ max-width:1300px;
 
 margin:auto;
 
-background:#c0c0c0;
+background:#2b2b2b;
 
-border:2px solid #808080;
+border:2px solid #ffcc00;
 
-box-shadow:
-inset 1px 1px white,
-inset -1px -1px #808080;
+border-radius:12px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+
+padding:10px;
 }
 
 /* HEADER */
@@ -43,8 +46,6 @@ padding:10px;
 
 text-align:center;
 
-background:#d4d0c8;
-
 position:relative;
 }
 
@@ -52,7 +53,7 @@ position:relative;
 
 .top-btn{
 
-padding:6px 14px;
+padding:10px 18px;
 
 cursor:pointer;
 
@@ -60,11 +61,20 @@ font-weight:bold;
 
 font-size:12px;
 
-border-top:1px solid white;
-border-left:1px solid white;
+border:none;
 
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
+border-radius:10px;
+
+transition:0.3s;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+.top-btn:hover{
+
+transform:translateY(-2px);
+
+filter:brightness(1.1);
 }
 
 .back-btn{
@@ -74,7 +84,13 @@ position:absolute;
 left:15px;
 top:15px;
 
-background:#dcdcdc;
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff6600
+);
+
+color:black;
 }
 
 .print-btn{
@@ -84,7 +100,11 @@ position:absolute;
 right:15px;
 top:15px;
 
-background:#008000;
+background:linear-gradient(
+135deg,
+#00cc66,
+#00994d
+);
 
 color:white;
 }
@@ -109,7 +129,7 @@ justify-content:center;
 
 overflow:hidden;
 
-border:2px solid #808080;
+border:2px solid #ffcc00;
 
 margin-bottom:8px;
 }
@@ -126,11 +146,15 @@ object-fit:cover;
 
 .title{
 
-font-size:28px;
+font-size:30px;
 
 font-weight:bold;
 
 margin-bottom:10px;
+
+color:#ffcc00;
+
+text-shadow:2px 2px 5px black;
 }
 
 /* FILTERS */
@@ -151,13 +175,27 @@ margin-top:15px;
 select,
 input{
 
-padding:8px;
+padding:10px;
 
-border:1px solid #808080;
+border:2px solid #555;
 
 font-size:13px;
 
 min-width:220px;
+
+border-radius:8px;
+
+background:#1f1f1f;
+
+color:white;
+}
+
+input:focus,
+select:focus{
+
+outline:none;
+
+border-color:#ffcc00;
 }
 
 /* EMPLOYEE INFO */
@@ -171,6 +209,8 @@ line-height:1.5;
 font-size:15px;
 
 font-weight:bold;
+
+color:#ffcc00;
 }
 
 /* CLOCK */
@@ -182,6 +222,8 @@ font-size:30px;
 font-weight:bold;
 
 margin-top:10px;
+
+color:#00ff99;
 }
 
 .date{
@@ -216,15 +258,24 @@ font-weight:bold;
 
 cursor:pointer;
 
-border-top:1px solid white;
-border-left:1px solid white;
+border:none;
 
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
+border-radius:10px;
 
 color:white;
 
 min-width:120px;
+
+transition:0.3s;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+.action-btn:hover{
+
+transform:translateY(-2px);
+
+filter:brightness(1.1);
 }
 
 .timein{
@@ -251,11 +302,13 @@ overflow:auto;
 
 max-height:350px;
 
-background:white;
+background:#2b2b2b;
 
 margin-top:10px;
 
-border:1px solid #808080;
+border:2px solid #ffcc00;
+
+border-radius:10px;
 }
 
 /* SCROLLBAR */
@@ -268,12 +321,14 @@ height:12px;
 
 .table-wrapper::-webkit-scrollbar-track{
 
-background:#dcdcdc;
+background:#333;
 }
 
 .table-wrapper::-webkit-scrollbar-thumb{
 
-background:#808080;
+background:#ffcc00;
+
+border-radius:10px;
 }
 
 /* TABLE */
@@ -292,7 +347,7 @@ font-size:12px;
 th,
 td{
 
-border:1px solid #808080;
+border:1px solid #555;
 
 padding:8px;
 
@@ -303,11 +358,23 @@ white-space:nowrap;
 
 th{
 
-background:#dcdcdc;
+background:#ffcc00;
+
+color:black;
 
 position:sticky;
 
 top:0;
+}
+
+tr:nth-child(even){
+
+background:#242424;
+}
+
+tr:hover{
+
+background:#3a3a3a;
 }
 
 /* SUMMARY */
@@ -316,15 +383,19 @@ top:0;
 
 margin-top:15px;
 
-background:white;
+background:#2b2b2b;
 
 padding:15px;
 
-border:1px solid #808080;
+border:2px solid #ffcc00;
 
 font-weight:bold;
 
 line-height:1.8;
+
+border-radius:10px;
+
+color:#ffcc00;
 }
 
 /* SIGNATURE */
@@ -344,7 +415,7 @@ text-align:center;
 
 margin-top:50px;
 
-border-top:1px solid black;
+border-top:1px solid white;
 
 padding-top:5px;
 
@@ -364,6 +435,7 @@ body{
 background:white;
 padding:0;
 zoom:85%;
+color:black;
 }
 
 /* HIDE BUTTONS */
@@ -861,9 +933,75 @@ function timeOut(){
 
 if(attendance.length===0) return;
 
+/* GET LAST RECORD */
+
+let last =
 attendance[
 attendance.length-1
-].timeout = getTime();
+];
+
+/* TIME OUT */
+
+last.timeout = getTime();
+
+/* COMPUTE HOURS */
+
+let inTime =
+new Date(
+'1/1/2024 ' + last.timein
+);
+
+let outTime =
+new Date(
+'1/1/2024 ' + last.timeout
+);
+
+/* TOTAL HOURS */
+
+let diff =
+
+(outTime - inTime)
+/ 1000 / 60 / 60;
+
+/* BREAK */
+
+let breakMinutes = 0;
+
+if(
+last.breakout !== '-' &&
+last.breakin !== '-'
+){
+
+let breakOut =
+new Date(
+'1/1/2024 ' + last.breakout
+);
+
+let breakIn =
+new Date(
+'1/1/2024 ' + last.breakin
+);
+
+breakMinutes =
+
+(breakIn - breakOut)
+/ 1000 / 60;
+
+}
+
+/* FINAL HOURS */
+
+let finalHours =
+
+diff - (breakMinutes / 60);
+
+/* SAVE */
+
+last.breakminutes =
+breakMinutes.toFixed(0) + ' mins';
+
+last.totalhours =
+finalHours.toFixed(2);
 
 localStorage.setItem(
 'attendance',
