@@ -80,6 +80,18 @@ border-bottom:1px solid #808080;
 cursor:pointer;
 
 font-weight:bold;
+
+font-size:12px;
+}
+
+.edit-btn{
+background:#0066cc;
+color:white;
+}
+
+.delete-btn{
+background:#cc0000;
+color:white;
 }
 
 /* FORM */
@@ -138,6 +150,10 @@ margin-top:20px;
 
 overflow-x:auto;
 
+overflow-y:auto;
+
+max-height:400px;
+
 background:white;
 
 border-top:2px solid #808080;
@@ -149,7 +165,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1800px;
+min-width:1900px;
 
 font-size:12px;
 }
@@ -169,6 +185,10 @@ white-space:nowrap;
 th{
 
 background:#dcdcdc;
+
+position:sticky;
+
+top:0;
 }
 
 /* TOTAL */
@@ -201,16 +221,10 @@ font-weight:bold;
 .notes{
 
 text-align:left;
+
 white-space:normal;
+
 min-width:250px;
-}
-
-@media(max-width:768px){
-
-.title{
-font-size:22px;
-}
-
 }
 
 </style>
@@ -319,7 +333,7 @@ placeholder="Reason / Notes for Other Deduction"></textarea>
 class="btn"
 onclick="computePayroll()">
 
-COMPUTE PAYROLL
+SAVE PAYROLL
 
 </button>
 
@@ -373,6 +387,8 @@ Net Pay : 0
 <th>TOTAL DEDUCTION</th>
 <th>NET PAY</th>
 
+<th>ACTION</th>
+
 </tr>
 
 </thead>
@@ -388,6 +404,8 @@ Net Pay : 0
 </div>
 
 <script>
+
+let editIndex = null;
 
 /* =========================
 LOAD EMPLOYEES
@@ -446,7 +464,7 @@ localStorage.getItem('payroll')
 ) || [];
 
 /* =========================
-COMPUTE PAYROLL
+SAVE / UPDATE PAYROLL
 ========================= */
 
 function computePayroll(){
@@ -521,21 +539,18 @@ gross - deductions;
 /* DISPLAY */
 
 grossPay.innerText =
-
 'Gross Pay : ' +
 gross.toFixed(2);
 
 totalDeduction.innerText =
-
 'Total Deduction : ' +
 deductions.toFixed(2);
 
 netPay.innerText =
-
 'Net Pay : ' +
 net.toFixed(2);
 
-/* SAVE */
+/* DATA */
 
 let data = {
 
@@ -571,16 +586,40 @@ net
 
 };
 
+/* EDIT */
+
+if(editIndex !== null){
+
+payrollRecords[editIndex] = data;
+
+editIndex = null;
+
+alert('Payroll Updated');
+
+}
+
+/* ADD */
+
+else{
+
 payrollRecords.push(data);
+
+alert('Payroll Saved');
+
+}
+
+/* STORAGE */
 
 localStorage.setItem(
 'payroll',
 JSON.stringify(payrollRecords)
 );
 
-/* RENDER */
+/* REFRESH */
 
 renderPayroll();
+
+clearForm();
 
 }
 
@@ -598,7 +637,7 @@ document.querySelector(
 
 table.innerHTML='';
 
-payrollRecords.forEach(pay=>{
+payrollRecords.forEach((pay,index)=>{
 
 table.innerHTML += `
 
@@ -650,11 +689,147 @@ ${pay.deductions.toFixed(2)}
 ${pay.net.toFixed(2)}
 </td>
 
+<td>
+
+<button
+class="btn edit-btn"
+onclick="editPayroll(${index})">
+
+EDIT
+
+</button>
+
+<button
+class="btn delete-btn"
+onclick="deletePayroll(${index})">
+
+DELETE
+
+</button>
+
+</td>
+
 </tr>
 
 `;
 
 });
+
+}
+
+/* =========================
+EDIT
+========================= */
+
+function editPayroll(index){
+
+let pay =
+payrollRecords[index];
+
+editIndex = index;
+
+employeeSelect.value =
+pay.employee;
+
+dailyRate.value =
+pay.rate;
+
+daysWorked.value =
+pay.days;
+
+overtime.value =
+pay.overtimePay;
+
+cashAdvance.value =
+pay.cash;
+
+lateDeduction.value =
+pay.late;
+
+sss.value =
+pay.sssDed;
+
+philhealth.value =
+pay.phil;
+
+pagibig.value =
+pay.pagibigDed;
+
+healthCard.value =
+pay.health;
+
+otherDeduction.value =
+pay.other;
+
+otherNote.value =
+pay.otherReason;
+
+grossPay.innerText =
+'Gross Pay : ' +
+pay.gross.toFixed(2);
+
+totalDeduction.innerText =
+'Total Deduction : ' +
+pay.deductions.toFixed(2);
+
+netPay.innerText =
+'Net Pay : ' +
+pay.net.toFixed(2);
+
+}
+
+/* =========================
+DELETE
+========================= */
+
+function deletePayroll(index){
+
+if(confirm(
+'Delete Payroll Record?'
+)){
+
+payrollRecords.splice(index,1);
+
+localStorage.setItem(
+'payroll',
+JSON.stringify(payrollRecords)
+);
+
+renderPayroll();
+
+}
+
+}
+
+/* =========================
+CLEAR FORM
+========================= */
+
+function clearForm(){
+
+employeeSelect.value='';
+
+dailyRate.value='';
+
+daysWorked.value='';
+
+overtime.value='';
+
+cashAdvance.value='';
+
+lateDeduction.value='';
+
+sss.value='';
+
+philhealth.value='';
+
+pagibig.value='';
+
+healthCard.value='';
+
+otherDeduction.value='';
+
+otherNote.value='';
 
 }
 
