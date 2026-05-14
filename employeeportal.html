@@ -115,13 +115,6 @@ background:#008000;
 color:white;
 }
 
-.delete-btn{
-
-background:#cc0000;
-
-color:white;
-}
-
 /* FORM */
 
 .form-section{
@@ -186,7 +179,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1200px;
+min-width:1000px;
 
 font-size:12px;
 }
@@ -362,8 +355,6 @@ SUBMIT REQUEST
 
 <th>STATUS</th>
 
-<th>ACTION</th>
-
 </tr>
 
 </thead>
@@ -511,7 +502,7 @@ requestBody.innerHTML = `
 
 <tr>
 
-<td colspan="7">
+<td colspan="6">
 
 NO REQUEST FOUND
 
@@ -525,7 +516,7 @@ return;
 
 }
 
-requests.forEach((req,index)=>{
+requests.forEach((req)=>{
 
 let statusClass =
 req.status.toLowerCase();
@@ -548,67 +539,11 @@ requestBody.innerHTML += `
 ${req.status}
 </td>
 
-<td>
-
-<button
-class="btn save-btn"
-onclick="approveRequest(${index})">
-
-APPROVE
-
-</button>
-
-<button
-class="btn delete-btn"
-onclick="rejectRequest(${index})">
-
-REJECT
-
-</button>
-
-</td>
-
 </tr>
 
 `;
 
 });
-
-}
-
-/* =========================
-APPROVE
-========================= */
-
-function approveRequest(index){
-
-requests[index].status =
-'APPROVED';
-
-localStorage.setItem(
-'employeeRequests',
-JSON.stringify(requests)
-);
-
-renderRequests();
-
-}
-
-/* =========================
-REJECT
-========================= */
-
-function rejectRequest(index){
-
-requests[index].status =
-'REJECTED';
-
-localStorage.setItem(
-'employeeRequests',
-JSON.stringify(requests)
-);
-
-renderRequests();
 
 }
 
