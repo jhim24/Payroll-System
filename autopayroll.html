@@ -146,6 +146,23 @@ overflow:auto;
 height:60vh;
 }
 
+.table-box::-webkit-scrollbar{
+
+height:12px;
+width:12px;
+}
+
+.table-box::-webkit-scrollbar-thumb{
+
+background:#ffcc00;
+border-radius:10px;
+}
+
+.table-box::-webkit-scrollbar-track{
+
+background:#333;
+}
+
 table{
 
 width:100%;
@@ -213,9 +230,13 @@ onclick="window.location.href='index.html'">
 
 <div class="grid">
 
-<input
-id="employeeName"
-placeholder="Employee Name">
+<select id="employeeName">
+
+<option value="">
+Select Employee
+</option>
+
+</select>
 
 <input
 id="salaryRate"
@@ -328,6 +349,45 @@ let payrolls =
 JSON.parse(
 localStorage.getItem('autopayroll')
 ) || [];
+
+/* LOAD EMPLOYEES */
+
+function loadEmployees(){
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let select =
+
+document.getElementById(
+'employeeName'
+);
+
+employees.forEach(emp=>{
+
+let option =
+document.createElement('option');
+
+option.value =
+
+(emp[0] || '') +
+' ' +
+(emp[2] || '');
+
+option.textContent =
+
+(emp[0] || '') +
+' ' +
+(emp[2] || '');
+
+select.appendChild(option);
+
+});
+
+}
 
 /* COMPUTE */
 
@@ -485,6 +545,8 @@ table.innerHTML += `
 }
 
 /* AUTO LOAD */
+
+loadEmployees();
 
 renderPayroll();
 
