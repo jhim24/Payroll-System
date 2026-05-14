@@ -446,7 +446,7 @@ document.getElementById(
 
 select.innerHTML =
 
-'<option value=\"\">Select Employee</option>';
+'<option value="">Select Employee</option>';
 
 employees.forEach(emp=>{
 
@@ -555,6 +555,14 @@ net.toFixed(2);
 
 function savePayroll(){
 
+if(employeeName.value===''){
+
+alert('Select Employee');
+
+return;
+
+}
+
 let payroll = {
 
 employee:
@@ -614,7 +622,13 @@ JSON.stringify(payrolls)
 
 );
 
+/* AUTO RENDER */
+
 renderPayroll();
+
+/* CLEAR FORM */
+
+clearForm();
 
 alert(
 'Payroll Saved'
@@ -697,6 +711,42 @@ DELETE
 `;
 
 });
+
+}
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+employeeName.value = '';
+
+dailyRate.value = '';
+
+daysWorked.value = '';
+
+overtimePay.value = '';
+
+holidayPay.value = '';
+
+sickLeave.value = '';
+
+birthdayLeave.value = '';
+
+vacationLeave.value = '';
+
+sss.value = '';
+
+philhealth.value = '';
+
+pagibig.value = '';
+
+healthcard.value = '';
+
+others.value = '';
+
+grossSalary.value = '';
+
+netSalary.value = '';
 
 }
 
