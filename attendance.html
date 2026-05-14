@@ -74,6 +74,34 @@ font-weight:bold;
 font-size:12px;
 }
 
+/* PRINT BUTTON */
+
+.print-btn{
+
+position:absolute;
+
+right:15px;
+top:15px;
+
+padding:6px 14px;
+
+background:#008000;
+
+color:white;
+
+border-top:1px solid #90ee90;
+border-left:1px solid #90ee90;
+
+border-right:1px solid #004d00;
+border-bottom:1px solid #004d00;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:12px;
+}
+
 /* LOGO */
 
 .logo{
@@ -238,21 +266,6 @@ background:white;
 border-top:2px solid #808080;
 }
 
-/* SCROLLBAR */
-
-.table-wrapper::-webkit-scrollbar{
-height:12px;
-width:12px;
-}
-
-.table-wrapper::-webkit-scrollbar-track{
-background:#d4d0c8;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb{
-background:#808080;
-}
-
 /* TABLE */
 
 table{
@@ -298,6 +311,30 @@ color:red;
 font-weight:bold;
 }
 
+/* PRINT */
+
+@media print{
+
+.back-btn,
+.print-btn,
+.button-group,
+select{
+
+display:none;
+}
+
+body{
+background:white;
+padding:0;
+}
+
+.container{
+border:none;
+box-shadow:none;
+}
+
+}
+
 @media(max-width:768px){
 
 .title{
@@ -341,6 +378,14 @@ class="back-btn"
 onclick="window.history.back()">
 
 ← BACK
+
+</button>
+
+<button
+class="print-btn"
+onclick="printAttendance()">
+
+🖨 PRINT
 
 </button>
 
@@ -467,7 +512,9 @@ TIME OUT
 
 </thead>
 
-<tbody></tbody>
+<tbody id="attendanceBody">
+
+</tbody>
 
 </table>
 
@@ -517,11 +564,11 @@ select.innerHTML =
 
 employees.forEach((emp,index)=>{
 
-let firstName = emp[0];
-let middleName = emp[1];
-let lastName = emp[2];
+let firstName = emp[0] || '';
+let middleName = emp[1] || '';
+let lastName = emp[2] || '';
 
-let empId = emp[18];
+let empId = emp[18] || 'NO-ID';
 
 let fullName =
 
@@ -562,15 +609,15 @@ let emp = employees[index];
 
 let fullName =
 
-emp[0] + ' ' +
-emp[1] + ' ' +
-emp[2];
+(emp[0] || '') + ' ' +
+(emp[1] || '') + ' ' +
+(emp[2] || '');
 
 document.getElementById(
 'employeeId'
 ).innerText =
 
-'EMPLOYEE ID : ' + emp[18];
+'EMPLOYEE ID : ' + (emp[18] || 'NO-ID');
 
 document.getElementById(
 'employeeName'
@@ -634,15 +681,15 @@ employees[employeeSelect.value];
 
 let fullName =
 
-emp[0] + ' ' +
-emp[1] + ' ' +
-emp[2];
+(emp[0] || '') + ' ' +
+(emp[1] || '') + ' ' +
+(emp[2] || '');
 
 let data = {
 
 date:getToday(),
 
-empid:emp[18],
+empid:emp[18] || 'NO-ID',
 
 name:fullName,
 
@@ -732,45 +779,73 @@ renderAttendance();
 
 }
 
+/* PRINT */
+
+function printAttendance(){
+
+window.print();
+
+}
+
 /* RENDER */
 
 function renderAttendance(){
 
 let table =
-
-document.querySelector(
-'#attendanceTable tbody'
+document.getElementById(
+'attendanceBody'
 );
 
 table.innerHTML='';
 
-attendance.forEach(att=>{
+if(attendance.length===0){
 
-table.innerHTML += `
+table.innerHTML = `
 
 <tr>
 
-<td>${att.date}</td>
-<td>${att.empid}</td>
-<td>${att.name}</td>
-<td>${att.timein}</td>
-<td>${att.breakout}</td>
-<td>${att.breakin}</td>
-<td>${att.timeout}</td>
-<td>${att.breakminutes}</td>
-<td>${att.totalhours}</td>
+<td colspan="11">
 
-<td class="late">
-${att.late}
-</td>
+NO ATTENDANCE RECORD
 
-<td class="late">
-${att.status}
 </td>
 
 </tr>
 
 `;
+
+return;
+
+}
+
+attendance.forEach(att=>{
+
+let row =
+document.createElement('tr');
+
+row.innerHTML = `
+
+<td>${att.date || '-'}</td>
+<td>${att.empid || '-'}</td>
+<td>${att.name || '-'}</td>
+<td>${att.timein || '-'}</td>
+<td>${att.breakout || '-'}</td>
+<td>${att.breakin || '-'}</td>
+<td>${att.timeout || '-'}</td>
+<td>${att.breakminutes || '-'}</td>
+<td>${att.totalhours || '-'}</td>
+
+<td class="late">
+${att.late || '-'}
+</td>
+
+<td class="late">
+${att.status || '-'}
+</td>
+
+`;
+
+table.appendChild(row);
 
 });
 
