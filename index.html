@@ -1,205 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Employee Master List</title>
-  <style>
-    body {font-family: Arial; padding:20px; background:#f0f4ff;}
-    h2 {border-bottom:3px solid blue;}
 
-    button {
-      padding:10px; margin:5px;
-      border:none; color:white;
-      border-radius:5px; cursor:pointer;
-    }
+<title>HR System</title>
 
-    .nav {background:green;}
-    .add {background:green;}
-    .update {background:orange;}
-    .delete {background:red;}
-    .edit {background:gray;}
+<link rel="stylesheet" href="style.css">
 
-    .box {
-      border:2px solid blue;
-      padding:15px;
-      border-radius:10px;
-      background:white;
-    }
-
-    input, select {
-      padding:8px; margin:5px; width:180px;
-    }
-
-    table {
-      width:100%; margin-top:20px;
-      border-collapse:collapse;
-      background:white;
-      border:2px solid blue;
-      font-size:12px;
-    }
-
-    th, td {
-      border:1px solid #ccc;
-      padding:8px;
-      text-align:center;
-    }
-
-    th {background:blue; color:white;}
-  </style>
 </head>
+
 <body>
 
-<h2>👥 Employee Master List</h2>
+<div class="sidebar">
 
-<button class="nav" onclick="goPayroll()">Go to Payroll 💰</button>
+<h2>HR SYSTEM</h2>
 
-<div class="box">
+<button onclick="openPage('employee.html')">
+Employees
+</button>
 
-<input id="fname" placeholder="First Name">
-<input id="mname" placeholder="Middle Name">
-<input id="lname" placeholder="Last Name"><br>
+<button onclick="openPage('attendance.html')">
+Attendance
+</button>
 
-<input type="date" id="birthday">
-<input id="age" placeholder="Age" readonly><br>
-
-<input id="empid" placeholder="Employee ID">
-
-<select id="bank">
-<option value="">Bank</option>
-<option>BDO</option>
-<option>BPI</option>
-<option>Metrobank</option>
-</select>
-
-<input id="bankAccount" placeholder="Account Number"><br>
-
-<!-- GOVERNMENT -->
-<input id="sss" placeholder="SSS">
-<input id="philhealth" placeholder="PhilHealth">
-<input id="pagibig" placeholder="Pag-IBIG"><br>
-
-<button class="add" onclick="add()">Add</button>
-<button class="update" onclick="update()">Update</button>
-<button onclick="location.reload()">Refresh</button>
+<button onclick="openPage('payroll.html')">
+Payroll
+</button>
 
 </div>
 
-<table>
-<tr>
-<th>First</th><th>Middle</th><th>Last</th>
-<th>Age</th><th>ID</th>
-<th>Bank</th><th>Account</th>
-<th>SSS</th><th>PhilHealth</th><th>Pag-IBIG</th>
-<th>Action</th>
-</tr>
-<tbody id="table"></tbody>
-</table>
+<div class="main">
 
-<script>
-let data = JSON.parse(localStorage.getItem("employees")) || [];
-let editIndex = -1;
+<h1>Dashboard</h1>
 
-// AGE AUTO
-birthday.onchange = function(){
-  let b = new Date(this.value);
-  let t = new Date();
-  age.value = t.getFullYear() - b.getFullYear();
-};
+<div class="cards">
 
-// SAVE
-function save(){
-  localStorage.setItem("employees", JSON.stringify(data));
-}
+<div class="card">
+Total Employees
+</div>
 
-// RENDER
-function render(){
-  table.innerHTML="";
-  data.forEach((e,i)=>{
-    table.innerHTML += `
-    <tr>
-      <td>${e.fname}</td>
-      <td>${e.mname}</td>
-      <td>${e.lname}</td>
-      <td>${e.age}</td>
-      <td>${e.empid}</td>
-      <td>${e.bank}</td>
-      <td>${e.bankAccount}</td>
-      <td>${e.sss}</td>
-      <td>${e.philhealth}</td>
-      <td>${e.pagibig}</td>
-      <td>
-        <button class="edit" onclick="edit(${i})">Edit</button>
-        <button class="delete" onclick="del(${i})">Delete</button>
-      </td>
-    </tr>`;
-  });
-}
+<div class="card">
+Attendance
+</div>
 
-// GET FORM
-function getForm(){
-  return {
-    fname: fname.value,
-    mname: mname.value,
-    lname: lname.value,
-    birthday: birthday.value,
-    age: age.value,
-    empid: empid.value,
-    bank: bank.value,
-    bankAccount: bankAccount.value,
-    sss: sss.value,
-    philhealth: philhealth.value,
-    pagibig: pagibig.value
-  };
-}
+<div class="card">
+Payroll
+</div>
 
-// ADD
-function add(){
-  data.push(getForm());
-  save(); render(); clear();
-}
+</div>
 
-// EDIT
-function edit(i){
-  let e=data[i]; editIndex=i;
-  fname.value=e.fname;
-  mname.value=e.mname;
-  lname.value=e.lname;
-  birthday.value=e.birthday;
-  age.value=e.age;
-  empid.value=e.empid;
-  bank.value=e.bank;
-  bankAccount.value=e.bankAccount;
-  sss.value=e.sss;
-  philhealth.value=e.philhealth;
-  pagibig.value=e.pagibig;
-}
+</div>
 
-// UPDATE
-function update(){
-  if(editIndex==-1)return;
-  data[editIndex]=getForm();
-  save(); render(); clear();
-  editIndex=-1;
-}
-
-// DELETE
-function del(i){
-  data.splice(i,1);
-  save(); render();
-}
-
-// CLEAR
-function clear(){
-  document.querySelectorAll("input").forEach(i=>i.value="");
-  bank.value="";
-}
-
-// NAV
-function goPayroll(){
-  window.location.href="payroll.html";
-}
-
-render();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
