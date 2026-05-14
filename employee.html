@@ -15,6 +15,8 @@ href="style.css">
 
 <h1>Employee Masterlist</h1>
 
+<div class="top-bar">
+
 <input
 type="text"
 id="search"
@@ -25,6 +27,12 @@ onkeyup="searchEmployee()">
 + Add Employee
 </button>
 
+</div>
+
+<h3 id="totalEmployee">
+Total Employees : 0
+</h3>
+
 <!-- MODAL -->
 
 <div id="modal"
@@ -32,7 +40,7 @@ class="modal">
 
 <div class="modal-box">
 
-<h2>Add Employee</h2>
+<h2>Employee Information</h2>
 
 <input
 id="fname"
@@ -43,13 +51,32 @@ id="lname"
 placeholder="Last Name">
 
 <input
+id="department"
+placeholder="Department">
+
+<input
 id="position"
 placeholder="Position">
+
+<select id="status">
+
+<option>Active</option>
+<option>Inactive</option>
+
+</select>
+
+<input
+type="date"
+id="datehired">
+
+<input
+type="file"
+id="photo">
 
 <br><br>
 
 <button onclick="saveEmployee()">
-Save
+Save Employee
 </button>
 
 <button onclick="closeModal()">
@@ -62,18 +89,22 @@ Close
 
 <!-- TABLE -->
 
-<table
-border="1"
-width="100%"
-id="empTable">
+<div class="table-box">
+
+<table id="empTable">
 
 <thead>
 
 <tr>
 
+<th>Photo</th>
+<th>Employee ID</th>
 <th>First Name</th>
 <th>Last Name</th>
+<th>Department</th>
 <th>Position</th>
+<th>Status</th>
+<th>Date Hired</th>
 <th>Action</th>
 
 </tr>
@@ -86,13 +117,11 @@ id="empTable">
 
 </div>
 
-<script src="script.js"></script>
+</div>
 
 <script>
 
 let editIndex = null;
-
-/* LOAD */
 
 window.onload = loadEmployees;
 
@@ -123,13 +152,58 @@ JSON.parse(
 localStorage.getItem('employees')
 ) || [];
 
+let reader =
+new FileReader();
+
+let file =
+photo.files[0];
+
+if(file){
+
+reader.readAsDataURL(file);
+
+reader.onload = function(){
+
+saveData(reader.result);
+
+};
+
+}else{
+
+saveData('');
+
+}
+
+}
+
+/* SAVE DATA */
+
+function saveData(photoData){
+
+let employees =
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
 let employee = {
+
+id:
+'EMP-' +
+Date.now(),
 
 fname:fname.value,
 
 lname:lname.value,
 
-position:position.value
+department:department.value,
+
+position:position.value,
+
+status:status.value,
+
+datehired:datehired.value,
+
+photo:photoData
 
 };
 
@@ -137,7 +211,11 @@ position:position.value
 
 if(editIndex !== null){
 
-employees[editIndex] = employee;
+employee.id =
+employees[editIndex].id;
+
+employees[editIndex] =
+employee;
 
 editIndex = null;
 
@@ -162,7 +240,7 @@ closeModal();
 
 }
 
-/* LOAD TABLE */
+/* LOAD */
 
 function loadEmployees(){
 
@@ -184,11 +262,32 @@ table.innerHTML += `
 
 <tr>
 
+<td>
+
+<img
+src="${emp.photo}"
+width="50"
+height="50"
+style="
+object-fit:cover;
+border-radius:50%;
+">
+
+</td>
+
+<td>${emp.id}</td>
+
 <td>${emp.fname}</td>
 
 <td>${emp.lname}</td>
 
+<td>${emp.department}</td>
+
 <td>${emp.position}</td>
+
+<td>${emp.status}</td>
+
+<td>${emp.datehired}</td>
 
 <td>
 
@@ -213,6 +312,11 @@ Delete
 `;
 
 });
+
+totalEmployee.innerText =
+
+'Total Employees : ' +
+employees.length;
 
 }
 
@@ -251,7 +355,17 @@ fname.value = emp.fname;
 
 lname.value = emp.lname;
 
-position.value = emp.position;
+department.value =
+emp.department;
+
+position.value =
+emp.position;
+
+status.value =
+emp.status;
+
+datehired.value =
+emp.datehired;
 
 editIndex = index;
 
@@ -295,7 +409,13 @@ fname.value='';
 
 lname.value='';
 
+department.value='';
+
 position.value='';
+
+datehired.value='';
+
+photo.value='';
 
 }
 
