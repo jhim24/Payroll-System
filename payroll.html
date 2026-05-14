@@ -1,1 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
 
+<title>Payroll System</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+background:#d4d0c8;
+padding:15px;
+}
+
+/* CONTAINER */
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+background:#c0c0c0;
+
+border:2px solid #808080;
+
+box-shadow:
+inset 1px 1px white,
+inset -1px -1px #808080;
+}
+
+/* HEADER */
+
+.header{
+
+padding:15px;
+
+background:#d4d0c8;
+
+border-bottom:2px solid #808080;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+gap:10px;
+}
+
+.title{
+
+font-size:28px;
+
+font-weight:bold;
+}
+
+/* BUTTON */
+
+.btn{
+
+padding:8px 18px;
+
+background:#dcdcdc;
+
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
+
+cursor:pointer;
+
+font-weight:bold;
+}
+
+/* FORM */
+
+.form-section{
+
+padding:15px;
+}
+
+.form-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:10px;
+}
+
+input,
+select{
+
+width:100%;
+
+padding:10px;
+
+border:1px solid #808080;
+
+font-size:13px;
+}
+
+/* COMPUTE BOX */
+
+.compute-box{
+
+margin-top:20px;
+
+padding:15px;
+
+background:white;
+
+border:1px solid #808080;
+}
+
+.compute-box h3{
+
+margin-bottom:15px;
+}
+
+/* TABLE */
+
+.table-wrapper{
+
+margin-top:20px;
+
+overflow-x:auto;
+
+background:white;
+
+border-top:2px solid #808080;
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:1500px;
+
+font-size:12px;
+}
+
+th,
+td{
+
+border:1px solid #808080;
+
+padding:10px;
+
+text-align:center;
+
+white-space:nowrap;
+}
+
+th{
+
+background:#dcdcdc;
+}
+
+/* TOTAL */
+
+.total-box{
+
+margin-top:15px;
+
+font-size:18px;
+
+font-weight:bold;
+}
+
+/* STATUS */
+
+.netpay{
+
+color:green;
+
+font-weight:bold;
+}
+
+.deduction{
+
+color:red;
+
+font-weight:bold;
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:22px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="title">
+PAYROLL SYSTEM
+</div>
+
+<button
+class="btn"
+onclick="window.history.back()">
+
+← BACK
+
+</button>
+
+</div>
+
+<!-- FORM -->
+
+<div class="form-section">
+
+<div class="form-grid">
+
+<select id="employeeSelect">
+
+<option value="">
+Select Employee
+</option>
+
+</select>
+
+<input
+type="number"
+id="dailyRate"
+placeholder="Daily Rate">
+
+<input
+type="number"
+id="daysWorked"
+placeholder="Days Worked">
+
+<input
+type="number"
+id="overtime"
+placeholder="Overtime Pay">
+
+<input
+type="number"
+id="cashAdvance"
+placeholder="Cash Advance">
+
+<input
+type="number"
+id="lateDeduction"
+placeholder="Late Deduction">
+
+<input
+type="number"
+id="sss"
+placeholder="SSS">
+
+<input
+type="number"
+id="philhealth"
+placeholder="PhilHealth">
+
+<input
+type="number"
+id="pagibig"
+placeholder="Pag-IBIG">
+
+</div>
+
+<!-- COMPUTE -->
+
+<div class="compute-box">
+
+<h3>Payroll Computation</h3>
+
+<button
+class="btn"
+onclick="computePayroll()">
+
+COMPUTE PAYROLL
+
+</button>
+
+<div class="total-box">
+
+<p id="grossPay">
+Gross Pay : 0
+</p>
+
+<p id="totalDeduction">
+Total Deduction : 0
+</p>
+
+<p class="netpay"
+id="netPay">
+
+Net Pay : 0
+
+</p>
+
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-wrapper">
+
+<table id="payrollTable">
+
+<thead>
+
+<tr>
+
+<th>EMPLOYEE</th>
+<th>DAILY RATE</th>
+<th>DAYS WORKED</th>
+<th>GROSS PAY</th>
+<th>OVERTIME</th>
+<th>CASH ADVANCE</th>
+<th>LATE</th>
+<th>SSS</th>
+<th>PHILHEALTH</th>
+<th>PAG-IBIG</th>
+<th>TOTAL DEDUCTION</th>
+<th>NET PAY</th>
+
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+LOAD EMPLOYEES
+========================= */
+
+function loadEmployees(){
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let select =
+
+document.getElementById(
+'employeeSelect'
+);
+
+select.innerHTML =
+
+'<option value="">Select Employee</option>';
+
+employees.forEach((emp,index)=>{
+
+let fullName =
+
+emp[0] + ' ' +
+emp[1] + ' ' +
+emp[2];
+
+let empId = emp[18];
+
+select.innerHTML += `
+
+<option value="${fullName}">
+
+${empId} - ${fullName}
+
+</option>
+
+`;
+
+});
+
+}
+
+/* =========================
+PAYROLL STORAGE
+========================= */
+
+let payrollRecords =
+
+JSON.parse(
+localStorage.getItem('payroll')
+) || [];
+
+/* =========================
+COMPUTE PAYROLL
+========================= */
+
+function computePayroll(){
+
+if(employeeSelect.value===''){
+
+alert('Select Employee');
+
+return;
+
+}
+
+/* VALUES */
+
+let employee =
+employeeSelect.value;
+
+let rate =
+Number(dailyRate.value) || 0;
+
+let days =
+Number(daysWorked.value) || 0;
+
+let overtimePay =
+Number(overtime.value) || 0;
+
+let cash =
+Number(cashAdvance.value) || 0;
+
+let late =
+Number(lateDeduction.value) || 0;
+
+let sssDed =
+Number(sss.value) || 0;
+
+let phil =
+Number(philhealth.value) || 0;
+
+let pagibigDed =
+Number(pagibig.value) || 0;
+
+/* COMPUTE */
+
+let gross =
+
+(rate * days) +
+overtimePay;
+
+let deductions =
+
+cash +
+late +
+sssDed +
+phil +
+pagibigDed;
+
+let net =
+
+gross - deductions;
+
+/* DISPLAY */
+
+grossPay.innerText =
+
+'Gross Pay : ' +
+gross.toFixed(2);
+
+totalDeduction.innerText =
+
+'Total Deduction : ' +
+deductions.toFixed(2);
+
+netPay.innerText =
+
+'Net Pay : ' +
+net.toFixed(2);
+
+/* SAVE */
+
+let data = {
+
+employee,
+
+rate,
+
+days,
+
+gross,
+
+overtimePay,
+
+cash,
+
+late,
+
+sssDed,
+
+phil,
+
+pagibigDed,
+
+deductions,
+
+net
+
+};
+
+payrollRecords.push(data);
+
+localStorage.setItem(
+'payroll',
+JSON.stringify(payrollRecords)
+);
+
+/* RENDER */
+
+renderPayroll();
+
+}
+
+/* =========================
+RENDER TABLE
+========================= */
+
+function renderPayroll(){
+
+let table =
+
+document.querySelector(
+'#payrollTable tbody'
+);
+
+table.innerHTML='';
+
+payrollRecords.forEach(pay=>{
+
+table.innerHTML += `
+
+<tr>
+
+<td>${pay.employee}</td>
+<td>${pay.rate}</td>
+<td>${pay.days}</td>
+<td>${pay.gross.toFixed(2)}</td>
+<td>${pay.overtimePay.toFixed(2)}</td>
+
+<td class="deduction">
+${pay.cash.toFixed(2)}
+</td>
+
+<td class="deduction">
+${pay.late.toFixed(2)}
+</td>
+
+<td class="deduction">
+${pay.sssDed.toFixed(2)}
+</td>
+
+<td class="deduction">
+${pay.phil.toFixed(2)}
+</td>
+
+<td class="deduction">
+${pay.pagibigDed.toFixed(2)}
+</td>
+
+<td class="deduction">
+${pay.deductions.toFixed(2)}
+</td>
+
+<td class="netpay">
+${pay.net.toFixed(2)}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
+
+loadEmployees();
+
+renderPayroll();
+
+</script>
+
+</body>
+</html>
