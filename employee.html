@@ -26,6 +26,8 @@ justify-content:space-between;
 align-items:center;
 
 margin-bottom:15px;
+gap:10px;
+flex-wrap:wrap;
 }
 
 h2{
@@ -54,11 +56,11 @@ cursor:pointer;
 font-weight:bold;
 }
 
-/* SEARCH */
-
-.search-box{
-margin-bottom:10px;
+.btn{
+font-size:11px;
 }
+
+/* SEARCH */
 
 .search-box input{
 
@@ -77,7 +79,9 @@ background:white;
 
 border:1px solid #808080;
 
-overflow-x:auto;
+overflow:auto;
+
+height:70vh;
 }
 
 table{
@@ -104,7 +108,14 @@ white-space:nowrap;
 }
 
 th{
+
 background:#dcdcdc;
+
+position:sticky;
+
+top:0;
+
+z-index:2;
 }
 
 /* MODAL */
@@ -240,6 +251,16 @@ padding:8px;
 border:1px solid #808080;
 
 font-size:12px;
+
+width:100%;
+}
+
+@media(max-width:768px){
+
+.table-box{
+height:60vh;
+}
+
 }
 
 </style>
@@ -252,14 +273,7 @@ font-size:12px;
 
 <h2>Employee Masterlist</h2>
 
-<button class="add-btn"
-onclick="openModal()">
-
-+ Add Employee
-
-</button>
-
-</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
 
 <div class="search-box">
 
@@ -269,9 +283,22 @@ id="search"
 placeholder="Search..."
 onkeyup="searchEmp()">
 
-<span id="total"></span>
+</div>
+
+<button class="add-btn"
+onclick="openModal()">
+
++ Add Employee
+
+</button>
 
 </div>
+
+</div>
+
+<h3 id="total">
+Total : 0
+</h3>
 
 <div class="table-box">
 
@@ -459,19 +486,15 @@ placeholder="Age"
 readonly>
 
 <select id="gender">
-
 <option>Gender</option>
 <option>Male</option>
 <option>Female</option>
-
 </select>
 
 <select id="civilstatus">
-
 <option>Civil Status</option>
 <option>Single</option>
 <option>Married</option>
-
 </select>
 
 <input id="nationality"
@@ -479,9 +502,6 @@ placeholder="Nationality">
 
 <input id="religion"
 placeholder="Religion">
-
-<input type="file"
-id="profilephoto">
 
 </div>
 
@@ -568,12 +588,10 @@ placeholder="Department">
 placeholder="Branch">
 
 <select id="employment">
-
 <option>Employment Type</option>
 <option>Regular</option>
 <option>Probationary</option>
 <option>Contractual</option>
-
 </select>
 
 <input type="date"
@@ -751,12 +769,10 @@ placeholder="Medical">
 placeholder="Contract">
 
 <select id="applicationstatus">
-
 <option>Application Status</option>
 <option>Pending</option>
 <option>Approved</option>
 <option>Rejected</option>
-
 </select>
 
 <input type="date"
@@ -765,6 +781,8 @@ id="interviewdate">
 </div>
 
 </div>
+
+<br>
 
 <button class="save-btn"
 onclick="addEmployee()">
@@ -780,6 +798,12 @@ Save Employee
 <script>
 
 let editRowIndex = null;
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
 
 /* MODAL */
 
@@ -866,93 +890,143 @@ age.value = years;
 
 function addEmployee(){
 
+let employeeData = [
+
+fname.value,
+mname.value,
+lname.value,
+birthdate.value,
+age.value,
+gender.value,
+civilstatus.value,
+nationality.value,
+religion.value,
+
+mobile.value,
+email.value,
+currentaddress.value,
+permanentaddress.value,
+emergencycontact.value,
+emergencynumber.value,
+
+empid.value,
+sss.value,
+philhealth.value,
+pagibig.value,
+tin.value,
+passport.value,
+nationalid.value,
+healthcard.value,
+
+position.value,
+department.value,
+branch.value,
+employment.value,
+datehired.value,
+supervisor.value,
+schedule.value,
+salaryrate.value,
+
+mealallowance.value,
+transportation.value,
+communication.value,
+ricesubsidy.value,
+otherallowance.value,
+
+sssdeduction.value,
+pagibigdeduction.value,
+philhealthdeduction.value,
+cashadvance.value,
+loans.value,
+latededuction.value,
+
+vacationleave.value,
+sickleave.value,
+emergencyleave.value,
+maternityleave.value,
+paternityleave.value,
+leavebalance.value,
+
+bankname.value,
+bankaccount.value,
+atmnumber.value,
+uniformsize.value,
+bloodtype.value,
+notes.value,
+
+education.value,
+skills.value,
+experience.value,
+training.value,
+certificates.value,
+references.value,
+
+nbi.value,
+medical.value,
+contract.value,
+applicationstatus.value,
+interviewdate.value
+
+];
+
+if(editRowIndex !== null){
+
+employees[editRowIndex] =
+employeeData;
+
+alert('Employee Updated');
+
+editRowIndex = null;
+
+}else{
+
+employees.push(employeeData);
+
+alert('Employee Saved');
+
+}
+
+localStorage.setItem(
+'employees',
+JSON.stringify(employees)
+);
+
+renderTable();
+
+closeModal();
+
+clearForm();
+
+}
+
+/* RENDER */
+
+function renderTable(){
+
 let table =
 document.querySelector(
 '#empTable tbody'
 );
 
-let data = `
+table.innerHTML = '';
 
-<td>${fname.value}</td>
-<td>${mname.value}</td>
-<td>${lname.value}</td>
-<td>${birthdate.value}</td>
-<td>${age.value}</td>
-<td>${gender.value}</td>
-<td>${civilstatus.value}</td>
-<td>${nationality.value}</td>
-<td>${religion.value}</td>
+employees.forEach((emp,index)=>{
 
-<td>${mobile.value}</td>
-<td>${email.value}</td>
-<td>${currentaddress.value}</td>
-<td>${permanentaddress.value}</td>
-<td>${emergencycontact.value}</td>
-<td>${emergencynumber.value}</td>
+let row = '<tr>';
 
-<td>${empid.value}</td>
-<td>${sss.value}</td>
-<td>${philhealth.value}</td>
-<td>${pagibig.value}</td>
-<td>${tin.value}</td>
-<td>${passport.value}</td>
-<td>${nationalid.value}</td>
-<td>${healthcard.value}</td>
+emp.forEach(data=>{
 
-<td>${position.value}</td>
-<td>${department.value}</td>
-<td>${branch.value}</td>
-<td>${employment.value}</td>
-<td>${datehired.value}</td>
-<td>${supervisor.value}</td>
-<td>${schedule.value}</td>
-<td>${salaryrate.value}</td>
+row += `<td>${data}</td>`;
 
-<td>${mealallowance.value}</td>
-<td>${transportation.value}</td>
-<td>${communication.value}</td>
-<td>${ricesubsidy.value}</td>
-<td>${otherallowance.value}</td>
+});
 
-<td>${sssdeduction.value}</td>
-<td>${pagibigdeduction.value}</td>
-<td>${philhealthdeduction.value}</td>
-<td>${cashadvance.value}</td>
-<td>${loans.value}</td>
-<td>${latededuction.value}</td>
-
-<td>${vacationleave.value}</td>
-<td>${sickleave.value}</td>
-<td>${emergencyleave.value}</td>
-<td>${maternityleave.value}</td>
-<td>${paternityleave.value}</td>
-<td>${leavebalance.value}</td>
-
-<td>${bankname.value}</td>
-<td>${bankaccount.value}</td>
-<td>${atmnumber.value}</td>
-<td>${uniformsize.value}</td>
-<td>${bloodtype.value}</td>
-<td>${notes.value}</td>
-
-<td>${education.value}</td>
-<td>${skills.value}</td>
-<td>${experience.value}</td>
-<td>${training.value}</td>
-<td>${certificates.value}</td>
-<td>${references.value}</td>
-
-<td>${nbi.value}</td>
-<td>${medical.value}</td>
-<td>${contract.value}</td>
-<td>${applicationstatus.value}</td>
-<td>${interviewdate.value}</td>
+row += `
 
 <td>
 
 <button
 class='btn'
-onclick='editRow(this)'>
+onclick='editRow(${index})'>
 
 Edit
 
@@ -960,7 +1034,7 @@ Edit
 
 <button
 class='btn'
-onclick='deleteRow(this)'>
+onclick='deleteRow(${index})'>
 
 Delete
 
@@ -970,133 +1044,53 @@ Delete
 
 `;
 
-if(editRowIndex){
+row += '</tr>';
 
-editRowIndex.innerHTML = data;
+table.innerHTML += row;
 
-alert('Employee Updated');
-
-editRowIndex = null;
-
-}else{
-
-let row =
-document.createElement('tr');
-
-row.innerHTML = data;
-
-table.appendChild(row);
-
-alert('Employee Saved');
-
-}
+});
 
 updateTotal();
-
-closeModal();
-
-clearForm();
 
 }
 
 /* EDIT */
 
-function editRow(btn){
+function editRow(index){
 
 openModal();
 
-let row =
-btn.closest('tr');
+editRowIndex = index;
 
-editRowIndex = row;
+let emp = employees[index];
 
-let cells =
-row.querySelectorAll('td');
+document
+.querySelectorAll('input,select')
 
-fname.value = cells[0].innerText;
-mname.value = cells[1].innerText;
-lname.value = cells[2].innerText;
-birthdate.value = cells[3].innerText;
-age.value = cells[4].innerText;
-gender.value = cells[5].innerText;
-civilstatus.value = cells[6].innerText;
-nationality.value = cells[7].innerText;
-religion.value = cells[8].innerText;
+.forEach((el,i)=>{
 
-mobile.value = cells[9].innerText;
-email.value = cells[10].innerText;
-currentaddress.value = cells[11].innerText;
-permanentaddress.value = cells[12].innerText;
-emergencycontact.value = cells[13].innerText;
-emergencynumber.value = cells[14].innerText;
+if(emp[i] !== undefined){
 
-empid.value = cells[15].innerText;
-sss.value = cells[16].innerText;
-philhealth.value = cells[17].innerText;
-pagibig.value = cells[18].innerText;
-tin.value = cells[19].innerText;
-passport.value = cells[20].innerText;
-nationalid.value = cells[21].innerText;
-healthcard.value = cells[22].innerText;
+el.value = emp[i];
 
-position.value = cells[23].innerText;
-department.value = cells[24].innerText;
-branch.value = cells[25].innerText;
-employment.value = cells[26].innerText;
-datehired.value = cells[27].innerText;
-supervisor.value = cells[28].innerText;
-schedule.value = cells[29].innerText;
-salaryrate.value = cells[30].innerText;
+}
 
-mealallowance.value = cells[31].innerText;
-transportation.value = cells[32].innerText;
-communication.value = cells[33].innerText;
-ricesubsidy.value = cells[34].innerText;
-otherallowance.value = cells[35].innerText;
-
-sssdeduction.value = cells[36].innerText;
-pagibigdeduction.value = cells[37].innerText;
-philhealthdeduction.value = cells[38].innerText;
-cashadvance.value = cells[39].innerText;
-loans.value = cells[40].innerText;
-latededuction.value = cells[41].innerText;
-
-vacationleave.value = cells[42].innerText;
-sickleave.value = cells[43].innerText;
-emergencyleave.value = cells[44].innerText;
-maternityleave.value = cells[45].innerText;
-paternityleave.value = cells[46].innerText;
-leavebalance.value = cells[47].innerText;
-
-bankname.value = cells[48].innerText;
-bankaccount.value = cells[49].innerText;
-atmnumber.value = cells[50].innerText;
-uniformsize.value = cells[51].innerText;
-bloodtype.value = cells[52].innerText;
-notes.value = cells[53].innerText;
-
-education.value = cells[54].innerText;
-skills.value = cells[55].innerText;
-experience.value = cells[56].innerText;
-training.value = cells[57].innerText;
-certificates.value = cells[58].innerText;
-references.value = cells[59].innerText;
-
-nbi.value = cells[60].innerText;
-medical.value = cells[61].innerText;
-contract.value = cells[62].innerText;
-applicationstatus.value = cells[63].innerText;
-interviewdate.value = cells[64].innerText;
+});
 
 }
 
 /* DELETE */
 
-function deleteRow(btn){
+function deleteRow(index){
 
-btn.closest('tr').remove();
+employees.splice(index,1);
 
-updateTotal();
+localStorage.setItem(
+'employees',
+JSON.stringify(employees)
+);
+
+renderTable();
 
 }
 
@@ -1117,6 +1111,7 @@ let visible = 0;
 rows.forEach(row=>{
 
 let show =
+
 row.innerText
 .toLowerCase()
 .includes(val);
@@ -1142,11 +1137,7 @@ document
 
 .forEach(el=>{
 
-if(el.type!='button'){
-
 el.value='';
-
-}
 
 });
 
@@ -1165,6 +1156,10 @@ total.innerText =
 'Total : ' + rows.length;
 
 }
+
+/* AUTO LOAD */
+
+renderTable();
 
 </script>
 
