@@ -103,6 +103,13 @@ transform:scale(1.03);
 
 .back-btn{
 
+background:#0066cc;
+
+color:white;
+}
+
+.logout-btn{
+
 background:#cc0000;
 
 color:white;
@@ -113,6 +120,17 @@ color:white;
 background:#008000;
 
 color:white;
+}
+
+/* HEADER BUTTONS */
+
+.header-buttons{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
 }
 
 /* FORM */
@@ -262,6 +280,8 @@ color:#ffcc00;
 👨‍💼 EMPLOYEE PORTAL
 </div>
 
+<div class="header-buttons">
+
 <button
 class="btn back-btn"
 onclick="window.location.href='index.html'">
@@ -269,6 +289,16 @@ onclick="window.location.href='index.html'">
 ← BACK
 
 </button>
+
+<button
+class="btn logout-btn"
+onclick="logout()">
+
+🚪 LOG OUT
+
+</button>
+
+</div>
 
 </div>
 
@@ -372,6 +402,29 @@ SUBMIT REQUEST
 </div>
 
 <script>
+
+/* =========================
+LOGOUT
+========================= */
+
+function logout(){
+
+let confirmLogout = confirm(
+'Are you sure you want to logout?'
+);
+
+if(confirmLogout){
+
+localStorage.removeItem(
+'userRole'
+);
+
+window.location.href =
+'login.html';
+
+}
+
+}
 
 /* =========================
 LOAD EMPLOYEES
@@ -480,100 +533,4 @@ localStorage.setItem(
 JSON.stringify(requests)
 );
 
-alert('Request Submitted');
-
-renderRequests();
-
-clearForm();
-
-}
-
-/* =========================
-RENDER
-========================= */
-
-function renderRequests(){
-
-requestBody.innerHTML='';
-
-if(requests.length===0){
-
-requestBody.innerHTML = `
-
-<tr>
-
-<td colspan="6">
-
-NO REQUEST FOUND
-
-</td>
-
-</tr>
-
-`;
-
-return;
-
-}
-
-requests.forEach((req)=>{
-
-let statusClass =
-req.status.toLowerCase();
-
-requestBody.innerHTML += `
-
-<tr>
-
-<td>${req.employee}</td>
-
-<td>${req.type}</td>
-
-<td>${req.date}</td>
-
-<td>${req.days}</td>
-
-<td>${req.reason}</td>
-
-<td class="${statusClass}">
-${req.status}
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-/* =========================
-CLEAR
-========================= */
-
-function clearForm(){
-
-employee.value='';
-
-requestType.value='';
-
-requestDate.value='';
-
-days.value='';
-
-reason.value='';
-
-}
-
-/* =========================
-AUTO LOAD
-========================= */
-
-loadEmployees();
-
-renderRequests();
-
-</script>
-
-</body>
-</html>
+alert('Request Submitted
