@@ -4,29 +4,190 @@
 
 <title>HR System</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+display:flex;
+height:100vh;
+background:#d4d0c8;
+overflow:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+
+width:240px;
+
+background:#c0c0c0;
+
+border-right:2px solid #808080;
+
+padding:15px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+}
+
+.sidebar h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
+font-size:24px;
+}
+
+/* BUTTON */
+
+.sidebar button{
+
+padding:12px;
+
+background:#dcdcdc;
+
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
+
+cursor:pointer;
+
+font-size:14px;
+
+font-weight:bold;
+
+text-align:left;
+}
+
+.sidebar button:hover{
+
+background:#bfbfbf;
+}
+
+/* MAIN */
+
+.main{
+
+flex:1;
+
+padding:20px;
+
+overflow:auto;
+}
+
+.main h1{
+
+margin-bottom:20px;
+
+font-size:32px;
+}
+
+/* CARDS */
+
+.cards{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+}
+
+.card{
+
+background:white;
+
+padding:25px;
+
+border:2px solid #808080;
+
+box-shadow:
+inset 1px 1px white,
+inset -1px -1px #808080;
+
+font-size:18px;
+
+font-weight:bold;
+
+min-height:120px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+text-align:center;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+body{
+flex-direction:column;
+}
+
+.sidebar{
+
+width:100%;
+
+border-right:none;
+
+border-bottom:2px solid #808080;
+}
+
+.cards{
+
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
 
 </head>
 
 <body>
+
+<!-- SIDEBAR -->
 
 <div class="sidebar">
 
 <h2>HR SYSTEM</h2>
 
 <button onclick="openPage('employee.html')">
-Employees
+👥 Employees
 </button>
 
 <button onclick="openPage('attendance.html')">
-Attendance
+🕒 Attendance
 </button>
 
 <button onclick="openPage('payroll.html')">
-Payroll
+💰 Payroll
+</button>
+
+<button onclick="openPage('payslip.html')">
+🧾 Payslip
 </button>
 
 </div>
+
+<!-- MAIN -->
 
 <div class="main">
 
@@ -35,22 +196,34 @@ Payroll
 <div class="cards">
 
 <div class="card">
-Total Employees
+👥 Employee Management
 </div>
 
 <div class="card">
-Attendance
+🕒 Attendance Monitoring
 </div>
 
 <div class="card">
-Payroll
+💰 Payroll Processing
+</div>
+
+<div class="card">
+🧾 Payslip Generator
 </div>
 
 </div>
 
 </div>
 
-<script src="script.js"></script>
+<script>
+
+function openPage(page){
+
+window.location.href = page;
+
+}
+
+</script>
 
 </body>
 </html>
