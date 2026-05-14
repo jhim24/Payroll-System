@@ -294,6 +294,34 @@ background:#0066cc;
 background:#cc0000;
 }
 
+/* DELETE BUTTON */
+
+.delete-btn{
+
+background:#cc0000;
+
+color:white;
+
+border:none;
+
+padding:6px 12px;
+
+border-radius:6px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+transition:0.3s;
+}
+
+.delete-btn:hover{
+
+background:#ff0000;
+
+transform:scale(1.05);
+}
+
 /* TABLE */
 
 .table-wrapper{
@@ -339,7 +367,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1400px;
+min-width:1600px;
 
 font-size:12px;
 }
@@ -445,7 +473,8 @@ color:black;
 .button-group,
 .filter-section,
 .clock,
-.date{
+.date,
+.delete-btn{
 
 display:none !important;
 }
@@ -674,6 +703,7 @@ TIME OUT
 <th>TOTAL HOURS</th>
 <th>LATE</th>
 <th>STATUS</th>
+<th>ACTION</th>
 
 </tr>
 
@@ -933,18 +963,12 @@ function timeOut(){
 
 if(attendance.length===0) return;
 
-/* GET LAST RECORD */
-
 let last =
 attendance[
 attendance.length-1
 ];
 
-/* TIME OUT */
-
 last.timeout = getTime();
-
-/* COMPUTE HOURS */
 
 let inTime =
 new Date(
@@ -956,14 +980,10 @@ new Date(
 '1/1/2024 ' + last.timeout
 );
 
-/* TOTAL HOURS */
-
 let diff =
 
 (outTime - inTime)
 / 1000 / 60 / 60;
-
-/* BREAK */
 
 let breakMinutes = 0;
 
@@ -989,13 +1009,9 @@ breakMinutes =
 
 }
 
-/* FINAL HOURS */
-
 let finalHours =
 
 diff - (breakMinutes / 60);
-
-/* SAVE */
 
 last.breakminutes =
 breakMinutes.toFixed(0) + ' mins';
@@ -1067,7 +1083,7 @@ tbody.innerHTML = `
 
 <tr>
 
-<td colspan="11">
+<td colspan="12">
 
 NO ATTENDANCE RECORD
 
@@ -1106,6 +1122,18 @@ row.innerHTML = `
 <td>${att.late}</td>
 <td>${att.status}</td>
 
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteAttendance(${attendance.indexOf(att)})">
+
+DELETE
+
+</button>
+
+</td>
+
 `;
 
 tbody.appendChild(row);
@@ -1126,6 +1154,29 @@ employeeId.innerText =
 employeeName.innerText =
 'EMPLOYEE NAME : ' +
 (emp || 'ALL');
+
+}
+
+/* DELETE */
+
+function deleteAttendance(index){
+
+if(
+confirm(
+'Delete Attendance Record?'
+)
+){
+
+attendance.splice(index,1);
+
+localStorage.setItem(
+'attendance',
+JSON.stringify(attendance)
+);
+
+filterAttendance();
+
+}
 
 }
 
