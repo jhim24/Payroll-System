@@ -209,6 +209,10 @@ color:black;
 background:linear-gradient(135deg,#333,#111);
 }
 
+.green{
+background:linear-gradient(135deg,#00aa00,#006600);
+}
+
 /* =========================
 CARDS
 ========================= */
@@ -375,6 +379,10 @@ font-size:35px;
 🧾 Payslip
 </button>
 
+<button onclick="openPage('hrapproval.html')">
+✅ HR Approval Request
+</button>
+
 <button onclick="openPage('employeeportal.html')">
 👨‍💼 Employee Portal
 </button>
@@ -431,6 +439,16 @@ onclick="logout()">
 
 </div>
 
+<div class="stat-card green">
+
+<h2 id="totalRequests">
+0
+</h2>
+
+<p>Employee Requests</p>
+
+</div>
+
 </div>
 
 <!-- MODULE CARDS -->
@@ -481,6 +499,32 @@ and payroll history.
 Generate printable payslips
 with PDF-ready professional
 layout and deductions.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>✅ HR Approval Request</h3>
+
+<p>
+Approve or reject employee
+leave requests such as
+vacation leave, sick leave,
+birthday leave and day off.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>👨‍💼 Employee Portal</h3>
+
+<p>
+Employees can submit leave
+requests directly connected
+to HR approval and employee
+masterlist database.
 </p>
 
 </div>
@@ -590,6 +634,12 @@ JSON.parse(
 localStorage.getItem('payroll')
 ) || [];
 
+let requests =
+
+JSON.parse(
+localStorage.getItem('employeeRequests')
+) || [];
+
 document.getElementById(
 'totalEmployees'
 ).innerText =
@@ -604,6 +654,11 @@ document.getElementById(
 'totalPayroll'
 ).innerText =
 payroll.length;
+
+document.getElementById(
+'totalRequests'
+).innerText =
+requests.length;
 
 }
 
