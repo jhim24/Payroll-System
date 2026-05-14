@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Payslip System</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+background:#d4d0c8;
+padding:15px;
+}
+
+.container{
+
+max-width:1000px;
+
+margin:auto;
+
+background:#c0c0c0;
+
+border:2px solid #808080;
+
+box-shadow:
+inset 1px 1px white,
+inset -1px -1px #808080;
+}
+
+.header{
+
+padding:15px;
+
+background:#d4d0c8;
+
+border-bottom:2px solid #808080;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+}
+
+.btn{
+
+padding:8px 18px;
+
+background:#dcdcdc;
+
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:12px;
+}
+
+.form-section{
+padding:15px;
+}
+
+select{
+
+width:100%;
+
+padding:10px;
+
+border:1px solid #808080;
+
+font-size:14px;
+}
+
+/* PAYSLIP */
+
+.payslip{
+
+margin-top:20px;
+
+background:white;
+
+padding:20px;
+
+border:1px solid #808080;
+}
+
+.company{
+text-align:center;
+margin-bottom:20px;
+}
+
+.company h1{
+font-size:26px;
+}
+
+.info-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:10px;
+
+margin-bottom:20px;
+}
+
+.info-box{
+
+padding:10px;
+
+border:1px solid #808080;
+
+background:#f5f5f5;
+}
+
+.table-wrapper{
+overflow:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th,
+td{
+
+border:1px solid #808080;
+
+padding:10px;
+
+text-align:left;
+}
+
+th{
+background:#dcdcdc;
+}
+
+.total{
+
+margin-top:20px;
+
+text-align:right;
+
+font-size:18px;
+
+font-weight:bold;
+}
+
+.signature{
+
+margin-top:50px;
+
+display:flex;
+
+justify-content:space-between;
+
+text-align:center;
+}
+
+.line{
+
+margin-top:50px;
+
+border-top:1px solid black;
+
+padding-top:5px;
+
+width:250px;
+}
+
+.button-group{
+
+margin-top:20px;
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+}
+
+@media print{
+
+body{
+background:white;
+padding:0;
+}
+
+.btn,
+.header,
+select,
+.button-group{
+display:none;
+}
+
+.container{
+border:none;
+box-shadow:none;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div class="title">
+PAYSLIP SYSTEM
+</div>
+
+<button
+class="btn"
+onclick="window.history.back()">
+
+← BACK
+
+</button>
+
+</div>
+
+<div class="form-section">
+
+<select id="payrollSelect" onchange="loadPayslip()">
+
+<option value="">
+Select Payroll Record
+</option>
+
+</select>
+
+<div class="button-group">
+
+<button
+class="btn"
+onclick="printPayslip()">
+
+PRINT PAYSLIP
+
+</button>
+
+<button
+class="btn"
+onclick="downloadPDF()">
+
+SAVE AS PDF
+
+</button>
+
+</div>
+
+<!-- PAYSLIP -->
+
+<div class="payslip" id="payslipArea">
+
+<div class="company">
+
+<h1>COMPANY NAME</h1>
+
+<p>OFFICIAL PAYSLIP</p>
+
+</div>
+
+<div class="info-grid">
+
+<div class="info-box">
+
+<strong>Employee :</strong>
+<div id="empName">-</div>
+
+</div>
+
+<div class="info-box">
+
+<strong>Date :</strong>
+<div id="payDate">-</div>
+
+</div>
+
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>EARNINGS</th>
+<th>AMOUNT</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>Gross Pay</td>
+<td id="gross">0.00</td>
+</tr>
+
+<tr>
+<td>Overtime</td>
+<td id="overtime">0.00</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>DEDUCTIONS</th>
+<th>AMOUNT</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>Cash Advance</td>
+<td id="cash">0.00</td>
+</tr>
+
+<tr>
+<td>Late</td>
+<td id="late">0.00</td>
+</tr>
+
+<tr>
+<td>SSS</td>
+<td id="sss">0.00</td>
+</tr>
+
+<tr>
+<td>PhilHealth</td>
+<td id="philhealth">0.00</td>
+</tr>
+
+<tr>
+<td>Pag-IBIG</td>
+<td id="pagibig">0.00</td>
+</tr>
+
+<tr>
+<td>Health Card</td>
+<td id="health">0.00</td>
+</tr>
+
+<tr>
+<td>Other</td>
+<td id="other">0.00</td>
+</tr>
+
+<tr>
+<td>Other Note</td>
+<td id="otherNote">-</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="total">
+
+<div>
+Total Deduction : <span id="deduction">0.00</span>
+</div>
+
+<div>
+NET PAY : <span id="net">0.00</span>
+</div>
+
+</div>
+
+<div class="signature">
+
+<div>
+<div class="line">
+Employer Signature
+</div>
+</div>
+
+<div>
+<div class="line">
+Employee Signature
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* ======================
+LOAD PAYROLL RECORDS
+====================== */
+
+let payrollRecords = [];
+
+try{
+
+payrollRecords = JSON.parse(
+localStorage.getItem('payroll')
+) || [];
+
+}catch(error){
+
+payrollRecords = [];
+
+}
+
+/* ======================
+LOAD DROPDOWN
+====================== */
+
+function loadPayrollDropdown(){
+
+let select =
+document.getElementById(
+'payrollSelect'
+);
+
+select.innerHTML =
+'<option value="">Select Payroll Record</option>';
+
+payrollRecords.forEach((pay,index)=>{
+
+let option =
+document.createElement('option');
+
+option.value = index;
+
+option.textContent =
+pay.employee +
+' | NET : ' +
+Number(pay.net || 0).toFixed(2);
+
+select.appendChild(option);
+
+});
+
+}
+
+/* ======================
+LOAD PAYSLIP
+====================== */
+
+function loadPayslip(){
+
+let index =
+payrollSelect.value;
+
+if(index==='') return;
+
+let pay =
+payrollRecords[index];
+
+empName.innerText =
+pay.employee || '-';
+
+payDate.innerText =
+new Date().toDateString();
+
+gross.innerText =
+Number(pay.gross || 0).toFixed(2);
+
+overtime.innerText =
+Number(pay.overtime || 0).toFixed(2);
+
+cash.innerText =
+Number(pay.cash || 0).toFixed(2);
+
+late.innerText =
+Number(pay.late || 0).toFixed(2);
+
+sss.innerText =
+Number(pay.sss || 0).toFixed(2);
+
+philhealth.innerText =
+Number(pay.philhealth || 0).toFixed(2);
+
+pagibig.innerText =
+Number(pay.pagibig || 0).toFixed(2);
+
+health.innerText =
+Number(pay.health || 0).toFixed(2);
+
+other.innerText =
+Number(pay.other || 0).toFixed(2);
+
+otherNote.innerText =
+pay.otherReason || '-';
+
+deduction.innerText =
+Number(pay.deductions || 0).toFixed(2);
+
+net.innerText =
+Number(pay.net || 0).toFixed(2);
+
+}
+
+/* ======================
+PRINT
+====================== */
+
+function printPayslip(){
+
+window.print();
+
+}
+
+/* ======================
+PDF
+====================== */
+
+function downloadPDF(){
+
+window.print();
+
+}
+
+/* ======================
+AUTO LOAD
+====================== */
+
+loadPayrollDropdown();
+
+</script>
+
+</body>
+</html>
