@@ -12,19 +12,14 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
-
 margin:0;
-
 padding:15px;
-
 background:linear-gradient(
 135deg,
 #1f1f1f,
 #2b2b2b
 );
-
 color:white;
-
 }
 
 /* TOP */
@@ -39,15 +34,10 @@ margin-bottom:15px;
 }
 
 h2{
-
 margin:0;
-
 font-size:30px;
-
 color:#ffcc00;
-
 text-shadow:2px 2px 5px black;
-
 }
 
 /* BUTTONS */
@@ -79,18 +69,15 @@ color:white;
 }
 
 .add-btn{
-
 background:linear-gradient(
 135deg,
 #ffcc00,
 #ff9900
 );
-
 color:black;
 }
 
 .save-btn{
-
 background:linear-gradient(
 135deg,
 #00cc66,
@@ -99,7 +86,6 @@ background:linear-gradient(
 }
 
 .btn{
-
 background:linear-gradient(
 135deg,
 #ff4444,
@@ -108,7 +94,6 @@ background:linear-gradient(
 }
 
 .close-btn{
-
 background:linear-gradient(
 135deg,
 #ff0000,
@@ -122,7 +107,6 @@ right:10px;
 }
 
 .back-btn{
-
 background:linear-gradient(
 135deg,
 #ffcc00,
@@ -131,6 +115,8 @@ background:linear-gradient(
 
 color:black;
 }
+
+/* HOVER */
 
 .add-btn:hover,
 .save-btn:hover,
@@ -181,34 +167,23 @@ box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
 .table-box::-webkit-scrollbar{
-
 height:12px;
 width:12px;
-
 }
 
 .table-box::-webkit-scrollbar-thumb{
-
 background:#ffcc00;
-
 border-radius:10px;
-
 }
 
 .table-box::-webkit-scrollbar-track{
-
 background:#333;
-
 }
 
 table{
-
 width:100%;
-
 border-collapse:collapse;
-
 min-width:4000px;
-
 font-size:12px;
 }
 
@@ -240,17 +215,12 @@ z-index:2;
 }
 
 tr:nth-child(even){
-
 background:#242424;
-
 }
 
 tr:hover{
-
 background:#3a3a3a;
-
 transition:0.2s;
-
 }
 
 /* MODAL */
@@ -340,19 +310,13 @@ transition:0.3s;
 }
 
 .tab-btn.active{
-
 background:#ffcc00;
-
 color:black;
-
 }
 
 .tab-btn:hover{
-
 background:#ff9900;
-
 color:black;
-
 }
 
 /* CONTENT */
@@ -372,9 +336,7 @@ border-radius:8px;
 }
 
 .tab-content.active{
-
 display:block;
-
 }
 
 /* GRID */
@@ -700,19 +662,72 @@ Save Employee
 
 </div>
 
-<script>
+<script type="module">
+
+/* =========================
+FIREBASE IMPORT
+========================= */
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* =========================
+FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain: "hr-system-38fc3.firebaseapp.com",
+
+projectId: "hr-system-38fc3",
+
+storageBucket: "hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId: "615471610834",
+
+appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b",
+
+measurementId: "G-TGBXWWZWE0"
+
+};
+
+/* =========================
+INIT FIREBASE
+========================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+VARIABLES
+========================= */
 
 let editRowIndex = null;
 
-let employees =
+let employees = [];
 
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
+/* =========================
+MODAL
+========================= */
 
-/* MODAL */
-
-function openModal(){
+window.openModal = function(){
 
 document.getElementById(
 'employeeModal'
@@ -720,7 +735,7 @@ document.getElementById(
 
 }
 
-function closeModal(){
+window.closeModal = function(){
 
 document.getElementById(
 'employeeModal'
@@ -728,9 +743,11 @@ document.getElementById(
 
 }
 
-/* TAB */
+/* =========================
+TAB
+========================= */
 
-function openTab(evt,tabId){
+window.openTab = function(evt,tabId){
 
 document
 .querySelectorAll('.tab-content')
@@ -757,9 +774,11 @@ evt.currentTarget
 
 }
 
-/* AGE */
+/* =========================
+AGE
+========================= */
 
-function calcAge(){
+window.calcAge = function(){
 
 let birthInput =
 document.getElementById(
@@ -801,9 +820,12 @@ ageInput.value = years;
 
 }
 
-/* SAVE */
+/* =========================
+SAVE EMPLOYEE
+========================= */
 
-function addEmployee(){
+window.addEmployee =
+async function(){
 
 let fields =
 document.querySelectorAll(
@@ -817,6 +839,8 @@ fields.forEach(field=>{
 employeeData.push(field.value);
 
 });
+
+/* LOCAL SAVE */
 
 if(editRowIndex !== null){
 
@@ -835,10 +859,64 @@ alert('Employee Saved');
 
 }
 
+/* LOCAL STORAGE */
+
 localStorage.setItem(
 'employees',
 JSON.stringify(employees)
 );
+
+/* FIREBASE SAVE */
+
+try{
+
+await addDoc(
+
+collection(db,'employees'),
+
+{
+
+firstname: employeeData[0] || '',
+middlename: employeeData[1] || '',
+lastname: employeeData[2] || '',
+birthdate: employeeData[3] || '',
+age: employeeData[4] || '',
+gender: employeeData[5] || '',
+sss: employeeData[6] || '',
+philhealth: employeeData[7] || '',
+pagibig: employeeData[8] || '',
+healthcard: employeeData[9] || '',
+bankname: employeeData[10] || '',
+bankaccount: employeeData[11] || '',
+idtype: employeeData[12] || '',
+idnumber: employeeData[13] || '',
+mobile: employeeData[14] || '',
+email: employeeData[15] || '',
+currentaddress: employeeData[16] || '',
+permanentaddress: employeeData[17] || '',
+employeeid: employeeData[18] || '',
+position: employeeData[19] || '',
+department: employeeData[20] || '',
+employment: employeeData[21] || '',
+salary: employeeData[22] || ''
+
+}
+
+);
+
+console.log(
+'Firebase Save Success'
+);
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Firebase Save Error'
+);
+
+}
 
 renderTable();
 
@@ -848,7 +926,9 @@ clearForm();
 
 }
 
-/* RENDER */
+/* =========================
+RENDER TABLE
+========================= */
 
 function renderTable(){
 
@@ -917,9 +997,11 @@ updateTotal();
 
 }
 
-/* EDIT */
+/* =========================
+EDIT
+========================= */
 
-function editRow(index){
+window.editRow = function(index){
 
 openModal();
 
@@ -940,9 +1022,11 @@ field.value = emp[i] || '';
 
 }
 
-/* DELETE */
+/* =========================
+DELETE
+========================= */
 
-function deleteRow(index){
+window.deleteRow = function(index){
 
 employees.splice(index,1);
 
@@ -955,9 +1039,11 @@ renderTable();
 
 }
 
-/* SEARCH */
+/* =========================
+SEARCH
+========================= */
 
-function searchEmp(){
+window.searchEmp = function(){
 
 let val =
 document.getElementById(
@@ -992,7 +1078,9 @@ document.getElementById(
 
 }
 
-/* CLEAR */
+/* =========================
+CLEAR
+========================= */
 
 function clearForm(){
 
@@ -1006,7 +1094,9 @@ el.value='';
 
 }
 
-/* TOTAL */
+/* =========================
+TOTAL
+========================= */
 
 function updateTotal(){
 
@@ -1022,9 +1112,62 @@ document.getElementById(
 
 }
 
-/* AUTO LOAD */
+/* =========================
+LOAD FIREBASE
+========================= */
+
+async function loadEmployeesFirebase(){
+
+employees = [];
+
+let querySnapshot =
+await getDocs(
+collection(db,'employees')
+);
+
+querySnapshot.forEach((doc)=>{
+
+let data = doc.data();
+
+employees.push([
+
+data.firstname || '',
+data.middlename || '',
+data.lastname || '',
+data.birthdate || '',
+data.age || '',
+data.gender || '',
+data.sss || '',
+data.philhealth || '',
+data.pagibig || '',
+data.healthcard || '',
+data.bankname || '',
+data.bankaccount || '',
+data.idtype || '',
+data.idnumber || '',
+data.mobile || '',
+data.email || '',
+data.currentaddress || '',
+data.permanentaddress || '',
+data.employeeid || '',
+data.position || '',
+data.department || '',
+data.employment || '',
+data.salary || ''
+
+]);
+
+});
 
 renderTable();
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
+
+loadEmployeesFirebase();
 
 </script>
 
