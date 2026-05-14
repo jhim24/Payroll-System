@@ -331,7 +331,7 @@ placeholder="Reason / Notes for Other Deduction"></textarea>
 
 <button
 class="btn"
-onclick="computePayroll()">
+onclick="savePayroll()">
 
 SAVE PAYROLL
 
@@ -393,7 +393,9 @@ Net Pay : 0
 
 </thead>
 
-<tbody></tbody>
+<tbody id="payrollBody">
+
+</tbody>
 
 </table>
 
@@ -437,7 +439,7 @@ emp[0] + ' ' +
 emp[1] + ' ' +
 emp[2];
 
-let empId = emp[18];
+let empId = emp[18] || 'NO-ID';
 
 select.innerHTML += `
 
@@ -464,10 +466,10 @@ localStorage.getItem('payroll')
 ) || [];
 
 /* =========================
-SAVE / UPDATE PAYROLL
+SAVE PAYROLL
 ========================= */
 
-function computePayroll(){
+function savePayroll(){
 
 if(employeeSelect.value===''){
 
@@ -554,35 +556,35 @@ net.toFixed(2);
 
 let data = {
 
-employee,
+employee:employee,
 
-rate,
+rate:rate,
 
-days,
+days:days,
 
-gross,
+gross:gross,
 
-overtimePay,
+overtimePay:overtimePay,
 
-cash,
+cash:cash,
 
-late,
+late:late,
 
-sssDed,
+sssDed:sssDed,
 
-phil,
+phil:phil,
 
-pagibigDed,
+pagibigDed:pagibigDed,
 
-health,
+health:health,
 
-other,
+other:other,
 
-otherReason,
+otherReason:otherReason,
 
-deductions,
+deductions:deductions,
 
-net
+net:net
 
 };
 
@@ -624,22 +626,21 @@ clearForm();
 }
 
 /* =========================
-RENDER TABLE
+RENDER PAYROLL
 ========================= */
 
 function renderPayroll(){
 
 let table =
-
-document.querySelector(
-'#payrollTable tbody'
+document.getElementById(
+'payrollBody'
 );
 
-table.innerHTML='';
+table.innerHTML = '';
 
 payrollRecords.forEach((pay,index)=>{
 
-table.innerHTML += `
+let row = `
 
 <tr>
 
@@ -712,6 +713,8 @@ DELETE
 </tr>
 
 `;
+
+table.innerHTML += row;
 
 });
 
