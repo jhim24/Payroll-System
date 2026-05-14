@@ -13,28 +13,26 @@ font-family:Tahoma,sans-serif;
 
 body{
 margin:0;
-background:#d4d0c8;
 padding:15px;
+background:#d4d0c8;
 }
 
 /* TOP */
 
 .top-bar{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-margin-bottom:15px;
-gap:10px;
 flex-wrap:wrap;
+gap:10px;
+margin-bottom:15px;
 }
 
 h2{
 margin:0;
 }
 
-/* BUTTON */
+/* BUTTONS */
 
 .add-btn,
 .save-btn,
@@ -56,19 +54,15 @@ cursor:pointer;
 font-weight:bold;
 }
 
-.btn{
-font-size:11px;
-}
-
 /* SEARCH */
 
 .search-box input{
 
 padding:8px;
 
-border:1px solid #808080;
-
 width:250px;
+
+border:1px solid #808080;
 }
 
 /* TABLE */
@@ -90,7 +84,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:5000px;
+min-width:2500px;
 
 font-size:12px;
 }
@@ -114,8 +108,6 @@ background:#dcdcdc;
 position:sticky;
 
 top:0;
-
-z-index:2;
 }
 
 /* MODAL */
@@ -134,7 +126,7 @@ justify-content:center;
 
 align-items:center;
 
-z-index:9999;
+z-index:999;
 }
 
 .modal-box{
@@ -143,15 +135,15 @@ background:white;
 
 width:95%;
 
-max-width:1300px;
+max-width:1200px;
 
 height:95vh;
 
 overflow:auto;
 
-border:2px solid #808080;
-
 padding:15px;
+
+border:2px solid #808080;
 
 position:relative;
 }
@@ -190,19 +182,19 @@ margin-top:10px;
 
 background:#dcdcdc;
 
-border-top:1px solid white;
-border-left:1px solid white;
-
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
-
 padding:6px 14px;
+
+cursor:pointer;
 
 font-size:12px;
 
 font-weight:bold;
 
-cursor:pointer;
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
 }
 
 .tab-btn.active{
@@ -212,7 +204,7 @@ background:white;
 border-bottom:1px solid white;
 }
 
-/* TAB CONTENT */
+/* CONTENT */
 
 .tab-content{
 
@@ -229,7 +221,7 @@ background:white;
 display:block;
 }
 
-/* FORM GRID */
+/* GRID */
 
 .form-grid{
 
@@ -246,21 +238,11 @@ gap:8px;
 input,
 select{
 
+width:100%;
+
 padding:8px;
 
 border:1px solid #808080;
-
-font-size:12px;
-
-width:100%;
-}
-
-@media(max-width:768px){
-
-.table-box{
-height:60vh;
-}
-
 }
 
 </style>
@@ -273,7 +255,7 @@ height:60vh;
 
 <h2>Employee Masterlist</h2>
 
-<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<div style="display:flex;gap:10px;">
 
 <div class="search-box">
 
@@ -285,7 +267,8 @@ onkeyup="searchEmp()">
 
 </div>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="openModal()">
 
 + Add Employee
@@ -299,6 +282,8 @@ onclick="openModal()">
 <h3 id="total">
 Total : 0
 </h3>
+
+<!-- TABLE -->
 
 <div class="table-box">
 
@@ -314,75 +299,13 @@ Total : 0
 <th>Birthdate</th>
 <th>Age</th>
 <th>Gender</th>
-<th>Civil Status</th>
-<th>Nationality</th>
-<th>Religion</th>
-
 <th>Mobile</th>
 <th>Email</th>
-<th>Current Address</th>
-<th>Permanent Address</th>
-<th>Emergency Contact</th>
-<th>Emergency Number</th>
-
 <th>Employee ID</th>
-<th>SSS</th>
-<th>PhilHealth</th>
-<th>Pag-IBIG</th>
-<th>TIN</th>
-<th>Passport</th>
-<th>National ID</th>
-<th>Health Card</th>
-
 <th>Position</th>
 <th>Department</th>
-<th>Branch</th>
 <th>Employment</th>
-<th>Date Hired</th>
-<th>Supervisor</th>
-<th>Schedule</th>
 <th>Salary Rate</th>
-
-<th>Meal Allowance</th>
-<th>Transportation</th>
-<th>Communication</th>
-<th>Rice Subsidy</th>
-<th>Other Allowance</th>
-
-<th>SSS Deduction</th>
-<th>Pag-IBIG Deduction</th>
-<th>PhilHealth Deduction</th>
-<th>Cash Advance</th>
-<th>Loans</th>
-<th>Late Deduction</th>
-
-<th>Vacation Leave</th>
-<th>Sick Leave</th>
-<th>Emergency Leave</th>
-<th>Maternity Leave</th>
-<th>Paternity Leave</th>
-<th>Leave Balance</th>
-
-<th>Bank Name</th>
-<th>Bank Account</th>
-<th>ATM Number</th>
-<th>Uniform Size</th>
-<th>Blood Type</th>
-<th>Notes</th>
-
-<th>Education</th>
-<th>Skills</th>
-<th>Experience</th>
-<th>Training</th>
-<th>Certificates</th>
-<th>References</th>
-
-<th>NBI</th>
-<th>Medical</th>
-<th>Contract</th>
-<th>Application Status</th>
-<th>Interview Date</th>
-
 <th>Action</th>
 
 </tr>
@@ -397,7 +320,8 @@ Total : 0
 
 <!-- MODAL -->
 
-<div class="modal"
+<div
+class="modal"
 id="employeeModal">
 
 <div class="modal-box">
@@ -412,96 +336,80 @@ X
 
 <h3>Employee Information</h3>
 
+<!-- TABS -->
+
 <div class="classic-tabs">
 
-<button class="tab-btn active"
+<button
+class="tab-btn active"
 onclick="openTab(event,'personal')">
+
 Personal
+
 </button>
 
-<button class="tab-btn"
+<button
+class="tab-btn"
 onclick="openTab(event,'contact')">
+
 Contact
+
 </button>
 
-<button class="tab-btn"
-onclick="openTab(event,'identification')">
-Identification
-</button>
-
-<button class="tab-btn"
+<button
+class="tab-btn"
 onclick="openTab(event,'job')">
+
 Job
-</button>
 
-<button class="tab-btn"
-onclick="openTab(event,'allowances')">
-Allowances
-</button>
-
-<button class="tab-btn"
-onclick="openTab(event,'deductions')">
-Deductions
-</button>
-
-<button class="tab-btn"
-onclick="openTab(event,'leaves')">
-Leaves
-</button>
-
-<button class="tab-btn"
-onclick="openTab(event,'general')">
-General
-</button>
-
-<button class="tab-btn"
-onclick="openTab(event,'additional')">
-Additional
-</button>
-
-<button class="tab-btn"
-onclick="openTab(event,'application')">
-Application
 </button>
 
 </div>
 
 <!-- PERSONAL -->
 
-<div id="personal"
+<div
+id="personal"
 class="tab-content active">
 
 <div class="form-grid">
 
-<input id="fname" placeholder="First Name">
-<input id="mname" placeholder="Middle Name">
-<input id="lname" placeholder="Last Name">
+<input
+class="emp-field"
+id="fname"
+placeholder="First Name">
 
-<input type="date"
+<input
+class="emp-field"
+id="mname"
+placeholder="Middle Name">
+
+<input
+class="emp-field"
+id="lname"
+placeholder="Last Name">
+
+<input
+class="emp-field"
+type="date"
 id="birthdate"
 onchange="calcAge()">
 
-<input id="age"
+<input
+class="emp-field"
+id="age"
 placeholder="Age"
 readonly>
 
-<select id="gender">
+<select
+class="emp-field"
+id="gender">
+
 <option>Gender</option>
 <option>Male</option>
 <option>Female</option>
+
 </select>
-
-<select id="civilstatus">
-<option>Civil Status</option>
-<option>Single</option>
-<option>Married</option>
-</select>
-
-<input id="nationality"
-placeholder="Nationality">
-
-<input id="religion"
-placeholder="Religion">
 
 </div>
 
@@ -509,63 +417,31 @@ placeholder="Religion">
 
 <!-- CONTACT -->
 
-<div id="contact"
+<div
+id="contact"
 class="tab-content">
 
 <div class="form-grid">
 
-<input id="mobile"
-placeholder="Mobile Number">
+<input
+class="emp-field"
+id="mobile"
+placeholder="Mobile">
 
-<input id="email"
-placeholder="Email Address">
+<input
+class="emp-field"
+id="email"
+placeholder="Email">
 
-<input id="currentaddress"
+<input
+class="emp-field"
+id="currentaddress"
 placeholder="Current Address">
 
-<input id="permanentaddress"
+<input
+class="emp-field"
+id="permanentaddress"
 placeholder="Permanent Address">
-
-<input id="emergencycontact"
-placeholder="Emergency Contact">
-
-<input id="emergencynumber"
-placeholder="Emergency Number">
-
-</div>
-
-</div>
-
-<!-- IDENTIFICATION -->
-
-<div id="identification"
-class="tab-content">
-
-<div class="form-grid">
-
-<input id="empid"
-placeholder="Employee ID">
-
-<input id="sss"
-placeholder="SSS">
-
-<input id="philhealth"
-placeholder="PhilHealth">
-
-<input id="pagibig"
-placeholder="Pag-IBIG">
-
-<input id="tin"
-placeholder="TIN">
-
-<input id="passport"
-placeholder="Passport">
-
-<input id="nationalid"
-placeholder="National ID">
-
-<input id="healthcard"
-placeholder="Health Card">
 
 </div>
 
@@ -573,210 +449,42 @@ placeholder="Health Card">
 
 <!-- JOB -->
 
-<div id="job"
+<div
+id="job"
 class="tab-content">
 
 <div class="form-grid">
 
-<input id="position"
+<input
+class="emp-field"
+id="empid"
+placeholder="Employee ID">
+
+<input
+class="emp-field"
+id="position"
 placeholder="Position">
 
-<input id="department"
+<input
+class="emp-field"
+id="department"
 placeholder="Department">
 
-<input id="branch"
-placeholder="Branch">
+<select
+class="emp-field"
+id="employment">
 
-<select id="employment">
-<option>Employment Type</option>
+<option>Employment</option>
 <option>Regular</option>
 <option>Probationary</option>
 <option>Contractual</option>
+
 </select>
 
-<input type="date"
-id="datehired">
-
-<input id="supervisor"
-placeholder="Supervisor">
-
-<input id="schedule"
-placeholder="Schedule">
-
-<input id="salaryrate"
+<input
+class="emp-field"
+id="salaryrate"
 placeholder="Salary Rate">
-
-</div>
-
-</div>
-
-<!-- ALLOWANCES -->
-
-<div id="allowances"
-class="tab-content">
-
-<div class="form-grid">
-
-<input id="mealallowance"
-placeholder="Meal Allowance">
-
-<input id="transportation"
-placeholder="Transportation">
-
-<input id="communication"
-placeholder="Communication">
-
-<input id="ricesubsidy"
-placeholder="Rice Subsidy">
-
-<input id="otherallowance"
-placeholder="Other Allowance">
-
-</div>
-
-</div>
-
-<!-- DEDUCTIONS -->
-
-<div id="deductions"
-class="tab-content">
-
-<div class="form-grid">
-
-<input id="sssdeduction"
-placeholder="SSS Deduction">
-
-<input id="pagibigdeduction"
-placeholder="Pag-IBIG Deduction">
-
-<input id="philhealthdeduction"
-placeholder="PhilHealth Deduction">
-
-<input id="cashadvance"
-placeholder="Cash Advance">
-
-<input id="loans"
-placeholder="Loans">
-
-<input id="latededuction"
-placeholder="Late Deduction">
-
-</div>
-
-</div>
-
-<!-- LEAVES -->
-
-<div id="leaves"
-class="tab-content">
-
-<div class="form-grid">
-
-<input id="vacationleave"
-placeholder="Vacation Leave">
-
-<input id="sickleave"
-placeholder="Sick Leave">
-
-<input id="emergencyleave"
-placeholder="Emergency Leave">
-
-<input id="maternityleave"
-placeholder="Maternity Leave">
-
-<input id="paternityleave"
-placeholder="Paternity Leave">
-
-<input id="leavebalance"
-placeholder="Leave Balance">
-
-</div>
-
-</div>
-
-<!-- GENERAL -->
-
-<div id="general"
-class="tab-content">
-
-<div class="form-grid">
-
-<input id="bankname"
-placeholder="Bank Name">
-
-<input id="bankaccount"
-placeholder="Bank Account">
-
-<input id="atmnumber"
-placeholder="ATM Number">
-
-<input id="uniformsize"
-placeholder="Uniform Size">
-
-<input id="bloodtype"
-placeholder="Blood Type">
-
-<input id="notes"
-placeholder="Notes">
-
-</div>
-
-</div>
-
-<!-- ADDITIONAL -->
-
-<div id="additional"
-class="tab-content">
-
-<div class="form-grid">
-
-<input id="education"
-placeholder="Education">
-
-<input id="skills"
-placeholder="Skills">
-
-<input id="experience"
-placeholder="Experience">
-
-<input id="training"
-placeholder="Training">
-
-<input id="certificates"
-placeholder="Certificates">
-
-<input id="references"
-placeholder="References">
-
-</div>
-
-</div>
-
-<!-- APPLICATION -->
-
-<div id="application"
-class="tab-content">
-
-<div class="form-grid">
-
-<input id="nbi"
-placeholder="NBI">
-
-<input id="medical"
-placeholder="Medical">
-
-<input id="contract"
-placeholder="Contract">
-
-<select id="applicationstatus">
-<option>Application Status</option>
-<option>Pending</option>
-<option>Approved</option>
-<option>Rejected</option>
-</select>
-
-<input type="date"
-id="interviewdate">
 
 </div>
 
@@ -784,7 +492,8 @@ id="interviewdate">
 
 <br>
 
-<button class="save-btn"
+<button
+class="save-btn"
 onclick="addEmployee()">
 
 Save Employee
@@ -875,7 +584,6 @@ m < 0 ||
 (m === 0 &&
 today.getDate() <
 birth.getDate())
-
 ){
 
 years--;
@@ -890,101 +598,44 @@ age.value = years;
 
 function addEmployee(){
 
-let employeeData = [
+let fields =
 
-fname.value,
-mname.value,
-lname.value,
-birthdate.value,
-age.value,
-gender.value,
-civilstatus.value,
-nationality.value,
-religion.value,
+document.querySelectorAll(
+'.emp-field'
+);
 
-mobile.value,
-email.value,
-currentaddress.value,
-permanentaddress.value,
-emergencycontact.value,
-emergencynumber.value,
+let employeeData = [];
 
-empid.value,
-sss.value,
-philhealth.value,
-pagibig.value,
-tin.value,
-passport.value,
-nationalid.value,
-healthcard.value,
+fields.forEach(field=>{
 
-position.value,
-department.value,
-branch.value,
-employment.value,
-datehired.value,
-supervisor.value,
-schedule.value,
-salaryrate.value,
+employeeData.push(field.value);
 
-mealallowance.value,
-transportation.value,
-communication.value,
-ricesubsidy.value,
-otherallowance.value,
+});
 
-sssdeduction.value,
-pagibigdeduction.value,
-philhealthdeduction.value,
-cashadvance.value,
-loans.value,
-latededuction.value,
-
-vacationleave.value,
-sickleave.value,
-emergencyleave.value,
-maternityleave.value,
-paternityleave.value,
-leavebalance.value,
-
-bankname.value,
-bankaccount.value,
-atmnumber.value,
-uniformsize.value,
-bloodtype.value,
-notes.value,
-
-education.value,
-skills.value,
-experience.value,
-training.value,
-certificates.value,
-references.value,
-
-nbi.value,
-medical.value,
-contract.value,
-applicationstatus.value,
-interviewdate.value
-
-];
+/* EDIT */
 
 if(editRowIndex !== null){
 
 employees[editRowIndex] =
 employeeData;
 
-alert('Employee Updated');
-
 editRowIndex = null;
 
-}else{
+alert('Employee Updated');
+
+}
+
+/* ADD */
+
+else{
 
 employees.push(employeeData);
 
 alert('Employee Saved');
 
 }
+
+/* STORAGE */
 
 localStorage.setItem(
 'employees',
@@ -1004,23 +655,32 @@ clearForm();
 function renderTable(){
 
 let table =
+
 document.querySelector(
 '#empTable tbody'
 );
 
-table.innerHTML = '';
+table.innerHTML='';
 
 employees.forEach((emp,index)=>{
 
-let row = '<tr>';
+table.innerHTML += `
 
-emp.forEach(data=>{
+<tr>
 
-row += `<td>${data}</td>`;
-
-});
-
-row += `
+<td>${emp[0]}</td>
+<td>${emp[1]}</td>
+<td>${emp[2]}</td>
+<td>${emp[3]}</td>
+<td>${emp[4]}</td>
+<td>${emp[5]}</td>
+<td>${emp[6]}</td>
+<td>${emp[7]}</td>
+<td>${emp[10]}</td>
+<td>${emp[11]}</td>
+<td>${emp[12]}</td>
+<td>${emp[13]}</td>
+<td>${emp[14]}</td>
 
 <td>
 
@@ -1042,11 +702,9 @@ Delete
 
 </td>
 
+</tr>
+
 `;
-
-row += '</tr>';
-
-table.innerHTML += row;
 
 });
 
@@ -1064,16 +722,15 @@ editRowIndex = index;
 
 let emp = employees[index];
 
-document
-.querySelectorAll('input,select')
+let fields =
 
-.forEach((el,i)=>{
+document.querySelectorAll(
+'.emp-field'
+);
 
-if(emp[i] !== undefined){
+fields.forEach((field,i)=>{
 
-el.value = emp[i];
-
-}
+field.value = emp[i] || '';
 
 });
 
@@ -1102,6 +759,7 @@ let val =
 search.value.toLowerCase();
 
 let rows =
+
 document.querySelectorAll(
 '#empTable tbody tr'
 );
@@ -1133,7 +791,7 @@ total.innerText =
 function clearForm(){
 
 document
-.querySelectorAll('input,select')
+.querySelectorAll('.emp-field')
 
 .forEach(el=>{
 
@@ -1148,6 +806,7 @@ el.value='';
 function updateTotal(){
 
 let rows =
+
 document.querySelectorAll(
 '#empTable tbody tr'
 );
