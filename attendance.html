@@ -1,1 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
 
+<title>Employee Attendance</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#d9d9d9;
+padding:20px;
+}
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+background:#e30613;
+
+border-radius:15px;
+
+overflow:hidden;
+
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+/* HEADER */
+
+.header{
+
+padding:20px;
+
+text-align:center;
+
+color:white;
+
+position:relative;
+}
+
+.back-btn{
+
+position:absolute;
+
+left:20px;
+top:20px;
+
+background:white;
+
+color:#e30613;
+
+border:none;
+
+padding:10px 20px;
+
+border-radius:6px;
+
+font-weight:bold;
+
+cursor:pointer;
+}
+
+.logo{
+
+width:120px;
+
+height:120px;
+
+border-radius:50%;
+
+background:white;
+
+margin:auto;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:10px;
+}
+
+.title{
+
+font-size:50px;
+
+font-weight:bold;
+
+margin-bottom:20px;
+}
+
+/* SELECT */
+
+select{
+
+width:320px;
+
+padding:12px;
+
+border:none;
+
+border-radius:5px;
+
+font-size:16px;
+}
+
+/* EMPLOYEE INFO */
+
+.employee-info{
+
+margin-top:20px;
+
+line-height:2;
+
+font-size:22px;
+
+font-weight:bold;
+}
+
+/* CLOCK */
+
+.clock{
+
+font-size:60px;
+
+font-weight:bold;
+
+margin-top:20px;
+}
+
+.date{
+
+font-size:25px;
+
+margin-top:10px;
+}
+
+/* BUTTONS */
+
+.button-group{
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+margin:30px 0;
+}
+
+.action-btn{
+
+border:none;
+
+padding:15px 35px;
+
+font-size:18px;
+
+font-weight:bold;
+
+color:white;
+
+border-radius:5px;
+
+cursor:pointer;
+}
+
+.timein{
+background:#18b53c;
+}
+
+.breakout{
+background:#f39c12;
+}
+
+.breakin{
+background:#3498db;
+}
+
+.timeout{
+background:red;
+}
+
+/* TABLE */
+
+.table-wrapper{
+
+overflow:auto;
+
+background:white;
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:1200px;
+}
+
+th,
+td{
+
+border:1px solid #999;
+
+padding:12px;
+
+text-align:center;
+}
+
+th{
+
+background:yellow;
+
+font-weight:bold;
+}
+
+.late{
+color:red;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<button
+class="back-btn"
+onclick="window.history.back()">
+
+← BACK
+
+</button>
+
+<div class="logo">
+HR
+</div>
+
+<div class="title">
+EMPLOYEE ATTENDANCE
+</div>
+
+<!-- EMPLOYEE SELECT -->
+
+<select
+id="employeeSelect"
+onchange="selectEmployee()">
+
+<option value="">
+Select Employee
+</option>
+
+</select>
+
+<!-- EMPLOYEE INFO -->
+
+<div class="employee-info">
+
+<div id="employeeId">
+EMPLOYEE ID :
+</div>
+
+<div id="employeeName">
+EMPLOYEE NAME :
+</div>
+
+</div>
+
+<!-- CLOCK -->
+
+<div
+class="clock"
+id="clock">
+
+00:00:00
+
+</div>
+
+<div
+class="date"
+id="dateToday">
+
+DATE
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="button-group">
+
+<button
+class="action-btn timein"
+onclick="timeIn()">
+
+TIME IN
+
+</button>
+
+<button
+class="action-btn breakout"
+onclick="breakOut()">
+
+BREAK OUT
+
+</button>
+
+<button
+class="action-btn breakin"
+onclick="breakIn()">
+
+BREAK IN
+
+</button>
+
+<button
+class="action-btn timeout"
+onclick="timeOut()">
+
+TIME OUT
+
+</button>
+
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-wrapper">
+
+<table id="attendanceTable">
+
+<thead>
+
+<tr>
+
+<th>DATE</th>
+<th>EMP ID</th>
+<th>EMPLOYEE NAME</th>
+<th>TIME IN</th>
+<th>BREAK OUT</th>
+<th>BREAK IN</th>
+<th>TIME OUT</th>
+<th>BREAK MINUTES</th>
+<th>TOTAL HOURS</th>
+<th>LATE</th>
+<th>STATUS</th>
+
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+CLOCK
+========================= */
+
+function updateClock(){
+
+let now = new Date();
+
+clock.innerText =
+
+now.toLocaleTimeString();
+
+dateToday.innerText =
+
+now.toDateString();
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* =========================
+LOAD EMPLOYEES
+========================= */
+
+function loadEmployees(){
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let select =
+
+document.getElementById(
+'employeeSelect'
+);
+
+select.innerHTML =
+
+'<option value="">Select Employee</option>';
+
+employees.forEach((emp,index)=>{
+
+let firstName = emp[0];
+let middleName = emp[1];
+let lastName = emp[2];
+
+let empId = emp[18];
+
+let fullName =
+
+firstName + ' ' +
+middleName + ' ' +
+lastName;
+
+select.innerHTML += `
+
+<option value="${index}">
+
+${empId} - ${fullName}
+
+</option>
+
+`;
+
+});
+
+}
+
+/* =========================
+SELECT EMPLOYEE
+========================= */
+
+function selectEmployee(){
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let index =
+employeeSelect.value;
+
+if(index === '') return;
+
+let emp = employees[index];
+
+let fullName =
+
+emp[0] + ' ' +
+emp[1] + ' ' +
+emp[2];
+
+document.getElementById(
+'employeeId'
+).innerText =
+
+'EMPLOYEE ID : ' + emp[18];
+
+document.getElementById(
+'employeeName'
+).innerText =
+
+'EMPLOYEE NAME : ' + fullName;
+
+}
+
+/* =========================
+ATTENDANCE STORAGE
+========================= */
+
+let attendance =
+
+JSON.parse(
+localStorage.getItem('attendance')
+) || [];
+
+/* =========================
+GET TODAY
+========================= */
+
+function getToday(){
+
+let d = new Date();
+
+return (
+d.getMonth()+1
+) + '/' +
+d.getDate() + '/' +
+d.getFullYear();
+
+}
+
+/* =========================
+GET TIME
+========================= */
+
+function getTime(){
+
+return new Date()
+.toLocaleTimeString();
+
+}
+
+/* =========================
+TIME IN
+========================= */
+
+function timeIn(){
+
+if(employeeSelect.value===''){
+
+alert('Select Employee');
+
+return;
+
+}
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let emp =
+employees[employeeSelect.value];
+
+let fullName =
+
+emp[0] + ' ' +
+emp[1] + ' ' +
+emp[2];
+
+let data = {
+
+date:getToday(),
+
+empid:emp[18],
+
+name:fullName,
+
+timein:getTime(),
+
+breakout:'-',
+
+breakin:'-',
+
+timeout:'-',
+
+breakminutes:'0 mins',
+
+totalhours:'0',
+
+late:'0 mins',
+
+status:'PRESENT'
+
+};
+
+attendance.push(data);
+
+localStorage.setItem(
+'attendance',
+JSON.stringify(attendance)
+);
+
+renderAttendance();
+
+}
+
+/* =========================
+BREAK OUT
+========================= */
+
+function breakOut(){
+
+if(attendance.length===0) return;
+
+attendance[
+attendance.length-1
+].breakout = getTime();
+
+localStorage.setItem(
+'attendance',
+JSON.stringify(attendance)
+);
+
+renderAttendance();
+
+}
+
+/* =========================
+BREAK IN
+========================= */
+
+function breakIn(){
+
+if(attendance.length===0) return;
+
+attendance[
+attendance.length-1
+].breakin = getTime();
+
+localStorage.setItem(
+'attendance',
+JSON.stringify(attendance)
+);
+
+renderAttendance();
+
+}
+
+/* =========================
+TIME OUT
+========================= */
+
+function timeOut(){
+
+if(attendance.length===0) return;
+
+attendance[
+attendance.length-1
+].timeout = getTime();
+
+localStorage.setItem(
+'attendance',
+JSON.stringify(attendance)
+);
+
+renderAttendance();
+
+}
+
+/* =========================
+RENDER TABLE
+========================= */
+
+function renderAttendance(){
+
+let table =
+
+document.querySelector(
+'#attendanceTable tbody'
+);
+
+table.innerHTML='';
+
+attendance.forEach(att=>{
+
+table.innerHTML += `
+
+<tr>
+
+<td>${att.date}</td>
+<td>${att.empid}</td>
+<td>${att.name}</td>
+<td>${att.timein}</td>
+<td>${att.breakout}</td>
+<td>${att.breakin}</td>
+<td>${att.timeout}</td>
+<td>${att.breakminutes}</td>
+<td>${att.totalhours}</td>
+
+<td class="late">
+${att.late}
+</td>
+
+<td class="late">
+${att.status}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
+
+loadEmployees();
+
+renderAttendance();
+
+</script>
+
+</body>
+</html>
