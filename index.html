@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>HR System</title>
+<title>HR System Dashboard</title>
 
 <style>
 
@@ -16,19 +16,22 @@ font-family:Tahoma,sans-serif;
 body{
 display:flex;
 height:100vh;
-background:#d4d0c8;
+background:#1e1e1e;
 overflow:hidden;
+color:white;
 }
 
-/* SIDEBAR */
+/* =========================
+SIDEBAR
+========================= */
 
 .sidebar{
 
-width:240px;
+width:250px;
 
-background:#c0c0c0;
+background:#2b2b2b;
 
-border-right:2px solid #808080;
+border-right:3px solid #ffcc00;
 
 padding:15px;
 
@@ -37,6 +40,8 @@ display:flex;
 flex-direction:column;
 
 gap:10px;
+
+box-shadow:4px 0 10px rgba(0,0,0,0.4);
 }
 
 .sidebar h2{
@@ -45,22 +50,26 @@ text-align:center;
 
 margin-bottom:20px;
 
-font-size:24px;
+font-size:26px;
+
+color:#ffcc00;
+
+text-shadow:1px 1px 2px black;
 }
 
-/* BUTTON */
+/* =========================
+BUTTON
+========================= */
 
 .sidebar button{
 
-padding:12px;
+padding:14px;
 
-background:#dcdcdc;
+background:#3a3a3a;
 
-border-top:1px solid white;
-border-left:1px solid white;
+border:none;
 
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
+border-left:5px solid #ffcc00;
 
 cursor:pointer;
 
@@ -69,14 +78,26 @@ font-size:14px;
 font-weight:bold;
 
 text-align:left;
+
+color:white;
+
+transition:0.3s;
+
+border-radius:6px;
 }
 
 .sidebar button:hover{
 
-background:#bfbfbf;
+background:#ffcc00;
+
+color:black;
+
+transform:translateX(5px);
 }
 
-/* MAIN */
+/* =========================
+MAIN
+========================= */
 
 .main{
 
@@ -85,18 +106,26 @@ flex:1;
 padding:20px;
 
 overflow:auto;
+
+background:#252525;
 }
 
 .main h1{
 
 margin-bottom:20px;
 
-font-size:32px;
+font-size:36px;
+
+color:#ffcc00;
+
+text-shadow:2px 2px 3px black;
 }
 
-/* CARDS */
+/* =========================
+TOP STATS
+========================= */
 
-.cards{
+.stats{
 
 display:grid;
 
@@ -104,36 +133,148 @@ grid-template-columns:
 repeat(auto-fit,minmax(220px,1fr));
 
 gap:15px;
+
+margin-bottom:20px;
+}
+
+.stat-card{
+
+padding:20px;
+
+border-radius:10px;
+
+color:white;
+
+box-shadow:0 5px 10px rgba(0,0,0,0.4);
+
+position:relative;
+
+overflow:hidden;
+}
+
+.stat-card h2{
+
+font-size:35px;
+
+margin-bottom:10px;
+}
+
+.stat-card p{
+
+font-size:15px;
+
+font-weight:bold;
+}
+
+.red{
+background:linear-gradient(135deg,#ff0000,#990000);
+}
+
+.yellow{
+background:linear-gradient(135deg,#ffcc00,#cc9900);
+color:black;
+}
+
+.dark{
+background:linear-gradient(135deg,#333,#111);
+}
+
+/* =========================
+CARDS
+========================= */
+
+.cards{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
 }
 
 .card{
 
-background:white;
+background:#2f2f2f;
 
 padding:25px;
 
-border:2px solid #808080;
+border-radius:12px;
 
-box-shadow:
-inset 1px 1px white,
-inset -1px -1px #808080;
+border-left:6px solid #ffcc00;
 
-font-size:18px;
+box-shadow:0 5px 10px rgba(0,0,0,0.5);
+
+transition:0.3s;
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+
+box-shadow:0 8px 15px rgba(0,0,0,0.6);
+}
+
+.card h3{
+
+font-size:22px;
+
+margin-bottom:15px;
+
+color:#ffcc00;
+}
+
+.card p{
+
+font-size:14px;
+
+line-height:1.6;
+
+color:#ddd;
+}
+
+/* =========================
+LIVE CLOCK
+========================= */
+
+.clock-box{
+
+margin-top:25px;
+
+background:#111;
+
+padding:20px;
+
+border-radius:12px;
+
+text-align:center;
+
+border:2px solid #ffcc00;
+
+box-shadow:0 0 10px rgba(255,204,0,0.3);
+}
+
+.clock{
+
+font-size:45px;
 
 font-weight:bold;
 
-min-height:120px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-text-align:center;
+color:#ff3333;
 }
 
-/* MOBILE */
+.date{
+
+margin-top:10px;
+
+font-size:18px;
+
+color:#ffcc00;
+}
+
+/* =========================
+MOBILE
+========================= */
 
 @media(max-width:768px){
 
@@ -147,12 +288,23 @@ width:100%;
 
 border-right:none;
 
-border-bottom:2px solid #808080;
+border-bottom:3px solid #ffcc00;
 }
 
-.cards{
+.cards,
+.stats{
 
 grid-template-columns:1fr;
+}
+
+.main h1{
+
+font-size:28px;
+}
+
+.clock{
+
+font-size:35px;
 }
 
 }
@@ -181,10 +333,10 @@ grid-template-columns:1fr;
 💰 Payroll
 </button>
 
-  <button onclick="openPage('autoattendance.html')">
+<button onclick="openPage('autoattendance.html')">
 🧮 Auto Attendance
 </button>
-  
+
 <button onclick="openPage('payslip.html')">
 🧾 Payslip
 </button>
@@ -197,22 +349,114 @@ grid-template-columns:1fr;
 
 <h1>Dashboard</h1>
 
+<!-- TOP STATS -->
+
+<div class="stats">
+
+<div class="stat-card yellow">
+
+<h2 id="totalEmployees">
+0
+</h2>
+
+<p>Total Employees</p>
+
+</div>
+
+<div class="stat-card red">
+
+<h2 id="totalAttendance">
+0
+</h2>
+
+<p>Attendance Records</p>
+
+</div>
+
+<div class="stat-card dark">
+
+<h2 id="totalPayroll">
+0
+</h2>
+
+<p>Payroll Records</p>
+
+</div>
+
+</div>
+
+<!-- MODULE CARDS -->
+
 <div class="cards">
 
 <div class="card">
-👥 Employee Management
+
+<h3>👥 Employee Management</h3>
+
+<p>
+Manage employee records,
+profiles, IDs, departments,
+and company information.
+</p>
+
 </div>
 
 <div class="card">
-🕒 Attendance Monitoring
+
+<h3>🕒 Attendance Monitoring</h3>
+
+<p>
+Track time in, break out,
+break in, timeout,
+and attendance reports.
+</p>
+
 </div>
 
 <div class="card">
-💰 Payroll Processing
+
+<h3>💰 Payroll Processing</h3>
+
+<p>
+Compute salaries, deductions,
+overtime, allowances,
+and payroll history.
+</p>
+
 </div>
 
 <div class="card">
-🧾 Payslip Generator
+
+<h3>🧾 Payslip Generator</h3>
+
+<p>
+Generate printable payslips
+with PDF-ready professional
+layout and deductions.
+</p>
+
+</div>
+
+</div>
+
+<!-- CLOCK -->
+
+<div class="clock-box">
+
+<div
+class="clock"
+id="clock">
+
+00:00:00
+
+</div>
+
+<div
+class="date"
+id="dateToday">
+
+DATE
+
 </div>
 
 </div>
@@ -221,11 +465,80 @@ grid-template-columns:1fr;
 
 <script>
 
+/* =========================
+OPEN PAGE
+========================= */
+
 function openPage(page){
 
 window.location.href = page;
 
 }
+
+/* =========================
+LIVE CLOCK
+========================= */
+
+function updateClock(){
+
+let now = new Date();
+
+clock.innerText =
+now.toLocaleTimeString();
+
+dateToday.innerText =
+now.toDateString();
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* =========================
+LOAD DASHBOARD COUNTS
+========================= */
+
+function loadDashboard(){
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+let attendance =
+
+JSON.parse(
+localStorage.getItem('attendance')
+) || [];
+
+let payroll =
+
+JSON.parse(
+localStorage.getItem('payroll')
+) || [];
+
+document.getElementById(
+'totalEmployees'
+).innerText =
+employees.length;
+
+document.getElementById(
+'totalAttendance'
+).innerText =
+attendance.length;
+
+document.getElementById(
+'totalPayroll'
+).innerText =
+payroll.length;
+
+}
+
+/* AUTO LOAD */
+
+loadDashboard();
 
 </script>
 
