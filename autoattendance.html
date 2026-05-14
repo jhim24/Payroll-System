@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Auto Attendance Computation</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+background:#d4d0c8;
+padding:15px;
+}
+
+/* CONTAINER */
+
+.container{
+
+max-width:1100px;
+
+margin:auto;
+
+background:#c0c0c0;
+
+border:2px solid #808080;
+
+box-shadow:
+inset 1px 1px white,
+inset -1px -1px #808080;
+}
+
+/* HEADER */
+
+.header{
+
+padding:15px;
+
+background:#d4d0c8;
+
+border-bottom:2px solid #808080;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+}
+
+.title{
+
+font-size:28px;
+
+font-weight:bold;
+}
+
+/* BUTTON */
+
+.btn{
+
+padding:8px 18px;
+
+background:#dcdcdc;
+
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:12px;
+}
+
+/* FORM */
+
+.form-section{
+
+padding:15px;
+}
+
+.form-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:10px;
+}
+
+input,
+select{
+
+width:100%;
+
+padding:10px;
+
+border:1px solid #808080;
+
+font-size:13px;
+}
+
+/* RESULT */
+
+.result-box{
+
+margin-top:20px;
+
+background:white;
+
+padding:20px;
+
+border:1px solid #808080;
+
+line-height:2;
+
+font-size:16px;
+
+font-weight:bold;
+}
+
+/* TABLE */
+
+.table-wrapper{
+
+margin-top:20px;
+
+overflow:auto;
+
+max-height:400px;
+
+background:white;
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:1500px;
+
+font-size:12px;
+}
+
+th,
+td{
+
+border:1px solid #808080;
+
+padding:10px;
+
+text-align:center;
+
+white-space:nowrap;
+}
+
+th{
+
+background:#dcdcdc;
+
+position:sticky;
+
+top:0;
+}
+
+/* COLORS */
+
+.late{
+color:red;
+font-weight:bold;
+}
+
+.ot{
+color:green;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="title">
+AUTO ATTENDANCE COMPUTATION
+</div>
+
+<button
+class="btn"
+onclick="window.history.back()">
+
+← BACK
+
+</button>
+
+</div>
+
+<!-- FORM -->
+
+<div class="form-section">
+
+<div class="form-grid">
+
+<select id="employeeSelect">
+
+<option value="">
+Select Employee
+</option>
+
+</select>
+
+<input
+type="time"
+id="shiftIn"
+value="08:00">
+
+<input
+type="time"
+id="shiftOut"
+value="17:00">
+
+<input
+type="time"
+id="timeIn">
+
+<input
+type="time"
+id="breakOut">
+
+<input
+type="time"
+id="breakIn">
+
+<input
+type="time"
+id="timeOut">
+
+</div>
+
+<div style="margin-top:15px;">
+
+<button
+class="btn"
+onclick="computeAttendance()">
+
+COMPUTE ATTENDANCE
+
+</button>
+
+</div>
+
+<!-- RESULT -->
+
+<div class="result-box">
+
+<div id="lateResult">
+LATE : 0 mins
+</div>
+
+<div id="breakResult">
+BREAK : 0 mins
+</div>
+
+<div id="hoursResult">
+TOTAL HOURS : 0 hrs
+</div>
+
+<div id="otResult">
+OVERTIME : 0 hrs
+</div>
+
+<div id="statusResult">
+STATUS : -
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>EMPLOYEE</th>
+<th>SHIFT IN</th>
+<th>SHIFT OUT</th>
+<th>TIME IN</th>
+<th>BREAK OUT</th>
+<th>BREAK IN</th>
+<th>TIME OUT</th>
+<th>LATE</th>
+<th>BREAK</th>
+<th>TOTAL HOURS</th>
+<th>OVERTIME</th>
+<th>STATUS</th>
+
+</tr>
+
+</thead>
+
+<tbody id="attendanceBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* STORAGE */
+
+let attendanceComputation =
+
+JSON.parse(
+localStorage.getItem(
+'autoAttendance'
+)
+) || [];
+
+/* LOAD EMPLOYEES */
+
+function loadEmployees(){
+
+let employees =
+
+JSON.parse(
+localStorage.getItem(
+'employees'
+)
+) || [];
+
+employeeSelect.innerHTML =
+
+'<option value="">Select Employee</option>';
+
+employees.forEach((emp)=>{
+
+let fullName =
+
+(emp[0] || '') + ' ' +
+(emp[1] || '') + ' ' +
+(emp[2] || '');
+
+let option =
+document.createElement('option');
+
+option.value = fullName;
+
+option.textContent = fullName;
+
+employeeSelect.appendChild(option);
+
+});
+
+}
+
+/* TIME TO MINUTES */
+
+function timeToMinutes(time){
+
+if(!time) return 0;
+
+let parts = time.split(':');
+
+return (
+parseInt(parts[0]) * 60
+) + parseInt(parts[1]);
+
+}
+
+/* COMPUTE */
+
+function computeAttendance(){
+
+if(employeeSelect.value===''){
+
+alert('Select Employee');
+
+return;
+
+}
+
+let employee =
+employeeSelect.value;
+
+let sIn =
+timeToMinutes(
+shiftIn.value
+);
+
+let sOut =
+timeToMinutes(
+shiftOut.value
+);
+
+let tIn =
+timeToMinutes(
+timeIn.value
+);
+
+let bOut =
+timeToMinutes(
+breakOut.value
+);
+
+let bIn =
+timeToMinutes(
+breakIn.value
+);
+
+let tOut =
+timeToMinutes(
+timeOut.value
+);
+
+/* LATE */
+
+let late = 0;
+
+if(tIn > sIn){
+
+late = tIn - sIn;
+
+}
+
+/* BREAK */
+
+let breakMinutes = 0;
+
+if(bIn > bOut){
+
+breakMinutes =
+bIn - bOut;
+
+}
+
+/* TOTAL HOURS */
+
+let totalMinutes =
+tOut - tIn - breakMinutes;
+
+let totalHours =
+(totalMinutes / 60)
+.toFixed(2);
+
+/* OVERTIME */
+
+let shiftHours =
+(sOut - sIn) / 60;
+
+let overtime = 0;
+
+if(totalHours > shiftHours){
+
+overtime =
+(
+totalHours -
+shiftHours
+).toFixed(2);
+
+}
+
+/* STATUS */
+
+let status =
+'PRESENT';
+
+if(late > 0){
+
+status = 'LATE';
+
+}
+
+/* DISPLAY */
+
+lateResult.innerText =
+'LATE : ' +
+late + ' mins';
+
+breakResult.innerText =
+'BREAK : ' +
+breakMinutes + ' mins';
+
+hoursResult.innerText =
+'TOTAL HOURS : ' +
+totalHours + ' hrs';
+
+otResult.innerText =
+'OVERTIME : ' +
+overtime + ' hrs';
+
+statusResult.innerText =
+'STATUS : ' +
+status;
+
+/* SAVE */
+
+let data = {
+
+employee,
+
+shiftIn:shiftIn.value,
+
+shiftOut:shiftOut.value,
+
+timeIn:timeIn.value,
+
+breakOut:breakOut.value,
+
+breakIn:breakIn.value,
+
+timeOut:timeOut.value,
+
+late,
+
+breakMinutes,
+
+totalHours,
+
+overtime,
+
+status
+
+};
+
+attendanceComputation.push(data);
+
+localStorage.setItem(
+'autoAttendance',
+JSON.stringify(
+attendanceComputation
+)
+);
+
+/* RENDER */
+
+renderAttendance();
+
+}
+
+/* RENDER */
+
+function renderAttendance(){
+
+let tbody =
+document.getElementById(
+'attendanceBody'
+);
+
+tbody.innerHTML = '';
+
+if(
+attendanceComputation.length===0
+){
+
+tbody.innerHTML = `
+
+<tr>
+
+<td colspan="12">
+
+NO RECORD FOUND
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+attendanceComputation.forEach((att)=>{
+
+let row =
+document.createElement('tr');
+
+row.innerHTML = `
+
+<td>${att.employee}</td>
+
+<td>${att.shiftIn}</td>
+
+<td>${att.shiftOut}</td>
+
+<td>${att.timeIn}</td>
+
+<td>${att.breakOut}</td>
+
+<td>${att.breakIn}</td>
+
+<td>${att.timeOut}</td>
+
+<td class="late">
+${att.late} mins
+</td>
+
+<td>
+${att.breakMinutes} mins
+</td>
+
+<td>
+${att.totalHours} hrs
+</td>
+
+<td class="ot">
+${att.overtime} hrs
+</td>
+
+<td>
+${att.status}
+</td>
+
+`;
+
+tbody.appendChild(row);
+
+});
+
+}
+
+/* AUTO LOAD */
+
+loadEmployees();
+
+renderAttendance();
+
+</script>
+
+</body>
+</html>
