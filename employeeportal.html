@@ -197,7 +197,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1000px;
+min-width:1200px;
 
 font-size:12px;
 }
@@ -264,6 +264,30 @@ font-size:22px;
 color:#ffcc00;
 }
 
+/* EMPLOYEE INFO */
+
+.employee-info{
+
+background:#1f1f1f;
+
+padding:15px;
+
+border-radius:10px;
+
+margin-bottom:20px;
+
+border:2px solid #ffcc00;
+
+line-height:1.8;
+}
+
+.employee-info span{
+
+color:#ffcc00;
+
+font-weight:bold;
+}
+
 </style>
 
 </head>
@@ -306,6 +330,19 @@ onclick="logout()">
 
 <div class="form-section">
 
+<!-- EMPLOYEE INFO -->
+
+<div class="employee-info">
+
+<div>
+<span>Connected Employee:</span>
+<div id="employeeConnected">
+No Employee Selected
+</div>
+</div>
+
+</div>
+
 <div class="section-title">
 
 Employee Request Form
@@ -314,7 +351,7 @@ Employee Request Form
 
 <div class="form-grid">
 
-<select id="employee">
+<select id="employee" onchange="showEmployeeInfo()">
 
 <option value="">
 Select Employee
@@ -373,6 +410,8 @@ SUBMIT REQUEST
 
 <tr>
 
+<th>EMPLOYEE ID</th>
+
 <th>EMPLOYEE</th>
 
 <th>REQUEST TYPE</th>
@@ -427,29 +466,33 @@ window.location.href =
 }
 
 /* =========================
-LOAD EMPLOYEES
+EMPLOYEE STORAGE
 ========================= */
 
-function loadEmployees(){
-
-let employees = [];
+let employeeMasterlist = [];
 
 try{
 
-employees = JSON.parse(
+employeeMasterlist = JSON.parse(
 localStorage.getItem('employees')
 ) || [];
 
 }catch(error){
 
-employees = [];
+employeeMasterlist = [];
 
 }
+
+/* =========================
+LOAD EMPLOYEES
+========================= */
+
+function loadEmployees(){
 
 employee.innerHTML =
 '<option value="">Select Employee</option>';
 
-employees.forEach(emp=>{
+employeeMasterlist.forEach(emp=>{
 
 let fullname =
 
@@ -457,12 +500,19 @@ let fullname =
 (emp[1] || '') + ' ' +
 (emp[2] || '');
 
+let empId =
+emp[18] || 'NO-ID';
+
 let option =
 document.createElement('option');
 
 option.value = fullname;
 
-option.textContent = fullname;
+option.textContent =
+empId + ' - ' + fullname;
+
+option.dataset.empid =
+empId;
 
 employee.appendChild(option);
 
@@ -471,7 +521,35 @@ employee.appendChild(option);
 }
 
 /* =========================
-STORAGE
+SHOW EMPLOYEE INFO
+========================= */
+
+function showEmployeeInfo(){
+
+let selected =
+employee.options[
+employee.selectedIndex
+];
+
+if(employee.value===''){
+
+employeeConnected.innerText =
+'No Employee Selected';
+
+return;
+
+}
+
+employeeConnected.innerText =
+
+selected.dataset.empid +
+' - ' +
+employee.value;
+
+}
+
+/* =========================
+REQUEST STORAGE
 ========================= */
 
 let requests = [];
@@ -489,7 +567,7 @@ requests = [];
 }
 
 /* =========================
-SUBMIT
+SUBMIT REQUEST
 ========================= */
 
 function submitRequest(){
@@ -510,7 +588,17 @@ return;
 
 }
 
+let selected =
+employee.options[
+employee.selectedIndex
+];
+
+let empId =
+selected.dataset.empid || 'NO-ID';
+
 let data = {
+
+empid:empId,
 
 employee:employee.value,
 
@@ -533,4 +621,105 @@ localStorage.setItem(
 JSON.stringify(requests)
 );
 
-alert('Request Submitted
+alert('Request Submitted');
+
+renderRequests();
+
+clearForm();
+
+}
+
+/* =========================
+RENDER REQUESTS
+========================= */
+
+function renderRequests(){
+
+requestBody.innerHTML='';
+
+if(requests.length===0){
+
+requestBody.innerHTML = `
+
+<tr>
+
+<td colspan="7">
+
+NO REQUEST FOUND
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+requests.forEach((req)=>{
+
+let statusClass =
+req.status.toLowerCase();
+
+requestBody.innerHTML += `
+
+<tr>
+
+<td>${req.empid}</td>
+
+<td>${req.employee}</td>
+
+<td>${req.type}</td>
+
+<td>${req.date}</td>
+
+<td>${req.days}</td>
+
+<td>${req.reason}</td>
+
+<td class="${statusClass}">
+${req.status}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* =========================
+CLEAR
+========================= */
+
+function clearForm(){
+
+employee.value='';
+
+requestType.value='';
+
+requestDate.value='';
+
+days.value='';
+
+reason.value='';
+
+employeeConnected.innerText =
+'No Employee Selected';
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
+
+loadEmployees();
+
+renderRequests();
+
+</script>
+
+</body>
+</html>
