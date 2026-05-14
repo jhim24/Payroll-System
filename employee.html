@@ -919,6 +919,100 @@ total.innerText =
 renderTable();
 
 </script>
+<script type="module">
 
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain: "hr-system-38fc3.firebaseapp.com",
+
+projectId: "hr-system-38fc3",
+
+storageBucket: "hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId: "615471610834",
+
+appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b",
+
+measurementId: "G-TGBXWWZWE0"
+
+};
+
+/* INIT */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* SAVE EMPLOYEE */
+
+window.saveEmployeeFirebase =
+async function(employeeData){
+
+try{
+
+await addDoc(
+
+collection(db,'employees'),
+
+employeeData
+
+);
+
+alert(
+'Employee Saved Online'
+);
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Firebase Save Error'
+);
+
+}
+
+}
+
+/* LOAD EMPLOYEE */
+
+window.loadEmployeeFirebase =
+async function(){
+
+let querySnapshot =
+await getDocs(
+collection(db,'employees')
+);
+
+querySnapshot.forEach((doc)=>{
+
+console.log(doc.data());
+
+});
+
+}
+
+</script>
 </body>
 </html>
