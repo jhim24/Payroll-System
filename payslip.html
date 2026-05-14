@@ -14,7 +14,13 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
-background:#d4d0c8;
+
+background:linear-gradient(
+135deg,
+#1f1f1f,
+#2b2b2b
+);
+
 padding:15px;
 }
 
@@ -30,37 +36,70 @@ align-items:center;
 
 margin-bottom:15px;
 
-background:#c0c0c0;
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff8800
+);
 
 padding:15px;
 
-border:2px solid #808080;
+border-radius:15px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
 .title{
 
-font-size:28px;
+font-size:30px;
 
 font-weight:bold;
+
+color:black;
+
+text-shadow:1px 1px 3px white;
 }
 
 /* BUTTON */
 
 .btn{
 
-padding:8px 18px;
+padding:10px 20px;
 
-background:#dcdcdc;
+border:none;
 
-border-top:1px solid white;
-border-left:1px solid white;
-
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
+border-radius:10px;
 
 cursor:pointer;
 
 font-weight:bold;
+
+font-size:13px;
+
+transition:0.3s;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+.btn:hover{
+
+transform:translateY(-2px);
+
+filter:brightness(1.1);
+}
+
+.back-btn{
+
+background:#cc0000;
+
+color:white;
+}
+
+.print-btn{
+
+background:#008000;
+
+color:white;
 }
 
 /* PAPER */
@@ -83,18 +122,22 @@ grid-template-columns:1fr 1fr;
 
 grid-template-rows:1fr 1fr;
 
-gap:10px;
+gap:12px;
 
-border:2px solid #808080;
+border-radius:10px;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 
 /* PAYSLIP */
 
 .payslip{
 
-border:1px dashed #808080;
+border:3px solid #ffcc00;
 
-padding:10px;
+border-radius:12px;
+
+padding:12px;
 
 display:flex;
 
@@ -103,6 +146,14 @@ flex-direction:column;
 justify-content:space-between;
 
 overflow:hidden;
+
+background:linear-gradient(
+135deg,
+#ffffff,
+#f5f5f5
+);
+
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* COMPANY */
@@ -111,17 +162,27 @@ overflow:hidden;
 
 text-align:center;
 
-margin-bottom:8px;
+margin-bottom:10px;
+
+padding-bottom:8px;
+
+border-bottom:2px solid #ffcc00;
 }
 
 .company h2{
 
-font-size:16px;
+font-size:18px;
+
+color:#cc0000;
 }
 
 .company p{
 
 font-size:10px;
+
+font-weight:bold;
+
+color:#555;
 }
 
 /* INFO */
@@ -130,9 +191,17 @@ font-size:10px;
 
 font-size:11px;
 
-line-height:1.5;
+line-height:1.7;
 
 margin-bottom:8px;
+
+background:#fff8dc;
+
+padding:8px;
+
+border-radius:8px;
+
+border:1px solid #ffcc00;
 }
 
 /* TABLE */
@@ -145,29 +214,46 @@ border-collapse:collapse;
 
 font-size:10px;
 
-margin-top:5px;
+margin-top:8px;
 }
 
 th,
 td{
 
-border:1px solid #808080;
+border:1px solid #999;
 
-padding:3px;
+padding:4px;
 }
 
 th{
 
-background:#dcdcdc;
+background:#ffcc00;
+
+color:black;
+
+font-size:10px;
+}
+
+td{
+
+background:white;
 }
 
 /* TOTAL */
 
 .total{
 
-margin-top:8px;
+margin-top:10px;
 
-font-size:12px;
+padding:8px;
+
+background:#008000;
+
+color:white;
+
+border-radius:8px;
+
+font-size:13px;
 
 font-weight:bold;
 
@@ -178,7 +264,7 @@ text-align:right;
 
 .signature{
 
-margin-top:15px;
+margin-top:18px;
 
 display:flex;
 
@@ -197,7 +283,9 @@ width:100px;
 
 text-align:center;
 
-padding-top:2px;
+padding-top:3px;
+
+font-weight:bold;
 }
 
 /* PRINT */
@@ -205,11 +293,13 @@ padding-top:2px;
 @media print{
 
 body{
+
 background:white;
 padding:0;
 }
 
 .topbar{
+
 display:none;
 }
 
@@ -217,11 +307,16 @@ display:none;
 
 border:none;
 
-width:100%;
-
-min-height:auto;
+box-shadow:none;
 
 padding:0;
+
+width:100%;
+}
+
+.payslip{
+
+box-shadow:none;
 }
 
 }
@@ -232,18 +327,18 @@ padding:0;
 
 <body>
 
-<!-- TOP -->
+<!-- HEADER -->
 
 <div class="topbar">
 
 <div class="title">
-PAYSLIP SYSTEM
+💰 PAYSLIP SYSTEM
 </div>
 
 <div>
 
 <button
-class="btn"
+class="btn back-btn"
 onclick="window.history.back()">
 
 ← BACK
@@ -251,7 +346,7 @@ onclick="window.history.back()">
 </button>
 
 <button
-class="btn"
+class="btn print-btn"
 onclick="window.print()">
 
 🖨 PRINT
@@ -296,7 +391,7 @@ document.getElementById('paper');
 let firstFour =
 payrollRecords.slice(0,4);
 
-/* EMPTY BOXES */
+/* EMPTY */
 
 while(firstFour.length < 4){
 
@@ -304,7 +399,7 @@ firstFour.push(null);
 
 }
 
-/* CREATE PAYSLIPS */
+/* CREATE */
 
 firstFour.forEach(pay=>{
 
@@ -323,7 +418,7 @@ div.innerHTML = `
 
 <h2>COMPANY NAME</h2>
 
-<p>OFFICIAL PAYSLIP</p>
+<p>OFFICIAL EMPLOYEE PAYSLIP</p>
 
 </div>
 
@@ -449,10 +544,6 @@ Employee
 </div>
 
 `;
-
-}else{
-
-div.innerHTML = '';
 
 }
 
