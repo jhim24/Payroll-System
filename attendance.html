@@ -22,7 +22,7 @@ padding:10px;
 
 .container{
 
-max-width:1200px;
+max-width:1300px;
 
 margin:auto;
 
@@ -48,7 +48,24 @@ background:#d4d0c8;
 position:relative;
 }
 
-/* BACK BUTTON */
+/* BUTTONS */
+
+.top-btn{
+
+padding:6px 14px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:12px;
+
+border-top:1px solid white;
+border-left:1px solid white;
+
+border-right:1px solid #808080;
+border-bottom:1px solid #808080;
+}
 
 .back-btn{
 
@@ -57,24 +74,8 @@ position:absolute;
 left:15px;
 top:15px;
 
-padding:6px 14px;
-
 background:#dcdcdc;
-
-border-top:1px solid white;
-border-left:1px solid white;
-
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
-
-cursor:pointer;
-
-font-weight:bold;
-
-font-size:12px;
 }
-
-/* PRINT BUTTON */
 
 .print-btn{
 
@@ -83,23 +84,9 @@ position:absolute;
 right:15px;
 top:15px;
 
-padding:6px 14px;
-
 background:#008000;
 
 color:white;
-
-border-top:1px solid #90ee90;
-border-left:1px solid #90ee90;
-
-border-right:1px solid #004d00;
-border-bottom:1px solid #004d00;
-
-cursor:pointer;
-
-font-weight:bold;
-
-font-size:12px;
 }
 
 /* LOGO */
@@ -144,15 +131,24 @@ font-size:28px;
 font-weight:bold;
 
 margin-bottom:10px;
-
-color:#000;
 }
 
-/* SELECT */
+/* FILTERS */
+
+.filter-section{
+
+display:flex;
+
+justify-content:center;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-top:15px;
+}
 
 select{
-
-width:320px;
 
 padding:8px;
 
@@ -160,35 +156,31 @@ border:1px solid #808080;
 
 font-size:13px;
 
-background:white;
+min-width:220px;
 }
 
 /* EMPLOYEE INFO */
 
 .employee-info{
 
-margin-top:10px;
+margin-top:15px;
 
 line-height:1.5;
 
 font-size:15px;
 
 font-weight:bold;
-
-color:#000;
 }
 
 /* CLOCK */
 
 .clock{
 
-font-size:32px;
+font-size:30px;
 
 font-weight:bold;
 
 margin-top:10px;
-
-color:#000;
 }
 
 .date{
@@ -196,11 +188,9 @@ color:#000;
 font-size:18px;
 
 margin-top:3px;
-
-color:#000;
 }
 
-/* BUTTONS */
+/* ACTION BUTTONS */
 
 .button-group{
 
@@ -256,17 +246,14 @@ background:#cc0000;
 
 .table-wrapper{
 
-overflow-x:auto;
-overflow-y:auto;
+overflow:auto;
 
-max-height:300px;
+max-height:350px;
 
 background:white;
 
-border-top:2px solid #808080;
+margin-top:10px;
 }
-
-/* HIDE SCROLLBAR */
 
 .table-wrapper::-webkit-scrollbar{
 width:0;
@@ -303,22 +290,50 @@ background:#dcdcdc;
 position:sticky;
 
 top:0;
-
-z-index:2;
 }
 
-/* STATUS */
+/* SUMMARY */
 
-.late{
+.summary{
 
-color:red;
+margin-top:15px;
+
+background:white;
+
+padding:15px;
+
+border:1px solid #808080;
 
 font-weight:bold;
+
+line-height:1.8;
 }
 
-/* =========================
-PRINT SETTINGS
-========================= */
+/* SIGNATURE */
+
+.signature{
+
+margin-top:50px;
+
+display:flex;
+
+justify-content:space-between;
+
+text-align:center;
+}
+
+.line{
+
+margin-top:50px;
+
+border-top:1px solid black;
+
+padding-top:5px;
+
+width:250px;
+}
+
+/* PRINT */
 
 @media print{
 
@@ -328,56 +343,39 @@ margin:10mm;
 }
 
 body{
-
 background:white;
 padding:0;
-
 zoom:85%;
 }
-
-/* REMOVE UI */
 
 .back-btn,
 .print-btn,
 .button-group,
-select{
+.filter-section,
+.clock,
+.date{
 
 display:none !important;
 }
 
-/* REMOVE BOARD STYLE */
-
 .container{
 
 border:none !important;
-
 box-shadow:none !important;
 
-background:white !important;
-
-width:100%;
-
-max-width:100%;
+background:white;
 }
-
-/* REMOVE TABLE SCROLL */
 
 .table-wrapper{
 
 overflow:visible !important;
 
 max-height:none !important;
-
-border:none !important;
 }
-
-/* AUTO FIT TABLE */
 
 table{
 
 min-width:100% !important;
-
-width:100% !important;
 
 font-size:10px;
 }
@@ -390,29 +388,14 @@ white-space:normal !important;
 padding:4px;
 }
 
-/* REMOVE HEADER COLOR */
-
-th{
-
-background:#eee !important;
-
-color:black;
 }
 
-}
+/* MOBILE */
 
 @media(max-width:768px){
 
-.title{
-font-size:22px;
-}
-
-.clock{
-font-size:26px;
-}
-
-.employee-info{
-font-size:13px;
+.filter-section{
+flex-direction:column;
 }
 
 select{
@@ -437,10 +420,12 @@ width:100%;
 
 <div class="container">
 
+<!-- HEADER -->
+
 <div class="header">
 
 <button
-class="back-btn"
+class="top-btn back-btn"
 onclick="window.history.back()">
 
 ← BACK
@@ -448,14 +433,12 @@ onclick="window.history.back()">
 </button>
 
 <button
-class="print-btn"
+class="top-btn print-btn"
 onclick="printAttendance()">
 
-🖨 PRINT
+🖨 PRINT DTR
 
 </button>
-
-<!-- SMALL LOGO -->
 
 <div class="logo">
 
@@ -468,11 +451,13 @@ src="https://i.imgur.com/8Km9tLL.png">
 EMPLOYEE ATTENDANCE
 </div>
 
-<!-- EMPLOYEE SELECT -->
+<!-- FILTER -->
+
+<div class="filter-section">
 
 <select
 id="employeeSelect"
-onchange="selectEmployee()">
+onchange="filterAttendance()">
 
 <option value="">
 Select Employee
@@ -480,7 +465,27 @@ Select Employee
 
 </select>
 
-<!-- EMPLOYEE INFO -->
+<select
+id="cutoffSelect"
+onchange="filterAttendance()">
+
+<option value="">
+Select Cutoff
+</option>
+
+<option value="6-20">
+6 to 20
+</option>
+
+<option value="21-5">
+21 to 5
+</option>
+
+</select>
+
+</div>
+
+<!-- INFO -->
 
 <div class="employee-info">
 
@@ -550,13 +555,11 @@ TIME OUT
 
 </div>
 
-</div>
-
 <!-- TABLE -->
 
 <div class="table-wrapper">
 
-<table id="attendanceTable">
+<table>
 
 <thead>
 
@@ -586,6 +589,42 @@ TIME OUT
 
 </div>
 
+<!-- SUMMARY -->
+
+<div class="summary">
+
+<div id="totalDays">
+TOTAL DAYS : 0
+</div>
+
+<div id="totalRecords">
+TOTAL RECORDS : 0
+</div>
+
+</div>
+
+<!-- SIGNATURE -->
+
+<div class="signature">
+
+<div>
+
+<div class="line">
+EMPLOYER SIGNATURE
+</div>
+
+</div>
+
+<div>
+
+<div class="line">
+EMPLOYEE SIGNATURE
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <script>
@@ -608,7 +647,7 @@ setInterval(updateClock,1000);
 
 updateClock();
 
-/* LOAD EMPLOYEES */
+/* EMPLOYEES */
 
 function loadEmployees(){
 
@@ -618,33 +657,23 @@ JSON.parse(
 localStorage.getItem('employees')
 ) || [];
 
-let select =
-
-document.getElementById(
-'employeeSelect'
-);
-
-select.innerHTML =
-
+employeeSelect.innerHTML =
 '<option value="">Select Employee</option>';
 
 employees.forEach((emp,index)=>{
 
-let firstName = emp[0] || '';
-let middleName = emp[1] || '';
-let lastName = emp[2] || '';
-
-let empId = emp[18] || 'NO-ID';
-
 let fullName =
 
-firstName + ' ' +
-middleName + ' ' +
-lastName;
+(emp[0] || '') + ' ' +
+(emp[1] || '') + ' ' +
+(emp[2] || '');
 
-select.innerHTML += `
+let empId =
+emp[18] || 'NO-ID';
 
-<option value="${index}">
+employeeSelect.innerHTML += `
+
+<option value="${fullName}">
 
 ${empId} - ${fullName}
 
@@ -656,44 +685,7 @@ ${empId} - ${fullName}
 
 }
 
-/* SELECT EMPLOYEE */
-
-function selectEmployee(){
-
-let employees =
-
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-let index =
-employeeSelect.value;
-
-if(index === '') return;
-
-let emp = employees[index];
-
-let fullName =
-
-(emp[0] || '') + ' ' +
-(emp[1] || '') + ' ' +
-(emp[2] || '');
-
-document.getElementById(
-'employeeId'
-).innerText =
-
-'EMPLOYEE ID : ' + (emp[18] || 'NO-ID');
-
-document.getElementById(
-'employeeName'
-).innerText =
-
-'EMPLOYEE NAME : ' + fullName;
-
-}
-
-/* ATTENDANCE STORAGE */
+/* STORAGE */
 
 let attendance =
 
@@ -701,7 +693,7 @@ JSON.parse(
 localStorage.getItem('attendance')
 ) || [];
 
-/* GET TODAY */
+/* DATE */
 
 function getToday(){
 
@@ -714,8 +706,6 @@ d.getDate() + '/' +
 d.getFullYear();
 
 }
-
-/* GET TIME */
 
 function getTime(){
 
@@ -736,26 +726,19 @@ return;
 
 }
 
-let employees =
-
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-let emp =
-employees[employeeSelect.value];
-
 let fullName =
+employeeSelect.value;
 
-(emp[0] || '') + ' ' +
-(emp[1] || '') + ' ' +
-(emp[2] || '');
+let empId =
+'EMP-' + Math.floor(
+Math.random()*9999
+);
 
 let data = {
 
 date:getToday(),
 
-empid:emp[18] || 'NO-ID',
+empid:empId,
 
 name:fullName,
 
@@ -784,7 +767,7 @@ localStorage.setItem(
 JSON.stringify(attendance)
 );
 
-renderAttendance();
+filterAttendance();
 
 }
 
@@ -803,7 +786,7 @@ localStorage.setItem(
 JSON.stringify(attendance)
 );
 
-renderAttendance();
+filterAttendance();
 
 }
 
@@ -822,7 +805,7 @@ localStorage.setItem(
 JSON.stringify(attendance)
 );
 
-renderAttendance();
+filterAttendance();
 
 }
 
@@ -841,32 +824,66 @@ localStorage.setItem(
 JSON.stringify(attendance)
 );
 
-renderAttendance();
+filterAttendance();
 
 }
 
-/* PRINT */
+/* FILTER */
 
-function printAttendance(){
+function filterAttendance(){
 
-window.print();
+let emp =
+employeeSelect.value;
 
-}
+let cutoff =
+cutoffSelect.value;
 
-/* RENDER */
-
-function renderAttendance(){
-
-let table =
+let tbody =
 document.getElementById(
 'attendanceBody'
 );
 
-table.innerHTML='';
+tbody.innerHTML = '';
 
-if(attendance.length===0){
+let filtered = attendance.filter(att=>{
 
-table.innerHTML = `
+let empMatch =
+emp === '' ||
+att.name === emp;
+
+if(cutoff===''){
+
+return empMatch;
+
+}
+
+let dateParts =
+att.date.split('/');
+
+let day =
+parseInt(dateParts[1]);
+
+if(cutoff==='6-20'){
+
+return empMatch &&
+day >= 6 &&
+day <= 20;
+
+}
+
+if(cutoff==='21-5'){
+
+return empMatch &&
+(day >= 21 ||
+day <= 5);
+
+}
+
+});
+
+if(filtered.length===0){
+
+tbody.innerHTML = `
 
 <tr>
 
@@ -880,40 +897,63 @@ NO ATTENDANCE RECORD
 
 `;
 
+totalDays.innerText =
+'TOTAL DAYS : 0';
+
+totalRecords.innerText =
+'TOTAL RECORDS : 0';
+
 return;
 
 }
 
-attendance.forEach(att=>{
+filtered.forEach(att=>{
 
 let row =
 document.createElement('tr');
 
 row.innerHTML = `
 
-<td>${att.date || '-'}</td>
-<td>${att.empid || '-'}</td>
-<td>${att.name || '-'}</td>
-<td>${att.timein || '-'}</td>
-<td>${att.breakout || '-'}</td>
-<td>${att.breakin || '-'}</td>
-<td>${att.timeout || '-'}</td>
-<td>${att.breakminutes || '-'}</td>
-<td>${att.totalhours || '-'}</td>
-
-<td class="late">
-${att.late || '-'}
-</td>
-
-<td class="late">
-${att.status || '-'}
-</td>
+<td>${att.date}</td>
+<td>${att.empid}</td>
+<td>${att.name}</td>
+<td>${att.timein}</td>
+<td>${att.breakout}</td>
+<td>${att.breakin}</td>
+<td>${att.timeout}</td>
+<td>${att.breakminutes}</td>
+<td>${att.totalhours}</td>
+<td>${att.late}</td>
+<td>${att.status}</td>
 
 `;
 
-table.appendChild(row);
+tbody.appendChild(row);
 
 });
+
+totalDays.innerText =
+'TOTAL DAYS : ' +
+filtered.length;
+
+totalRecords.innerText =
+'TOTAL RECORDS : ' +
+filtered.length;
+
+employeeId.innerText =
+'EMPLOYEE ID : FILTERED';
+
+employeeName.innerText =
+'EMPLOYEE NAME : ' +
+(emp || 'ALL');
+
+}
+
+/* PRINT */
+
+function printAttendance(){
+
+window.print();
 
 }
 
@@ -921,7 +961,7 @@ table.appendChild(row);
 
 loadEmployees();
 
-renderAttendance();
+filterAttendance();
 
 </script>
 
