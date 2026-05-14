@@ -84,7 +84,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:3500px;
+min-width:5000px;
 
 font-size:12px;
 }
@@ -300,6 +300,17 @@ Total : 0
 <th>Age</th>
 <th>Gender</th>
 
+<th>SSS Number</th>
+<th>PhilHealth Number</th>
+<th>Pag-IBIG Number</th>
+<th>Health Card Number</th>
+
+<th>Bank Name</th>
+<th>Bank Account</th>
+
+<th>ID Type</th>
+<th>ID Number</th>
+
 <th>Mobile</th>
 <th>Email</th>
 
@@ -394,17 +405,14 @@ class="tab-content active">
 
 <input
 class="emp-field"
-id="fname"
 placeholder="First Name">
 
 <input
 class="emp-field"
-id="mname"
 placeholder="Middle Name">
 
 <input
 class="emp-field"
-id="lname"
 placeholder="Last Name">
 
 <input
@@ -420,14 +428,63 @@ placeholder="Age"
 readonly>
 
 <select
-class="emp-field"
-id="gender">
+class="emp-field">
 
 <option>Gender</option>
 <option>Male</option>
 <option>Female</option>
 
 </select>
+
+<input
+class="emp-field"
+placeholder="SSS Number">
+
+<input
+class="emp-field"
+placeholder="PhilHealth Number">
+
+<input
+class="emp-field"
+placeholder="Pag-IBIG Number">
+
+<input
+class="emp-field"
+placeholder="Health Card Number">
+
+<input
+class="emp-field"
+placeholder="Bank Name">
+
+<input
+class="emp-field"
+placeholder="Bank Account Number">
+
+<select class="emp-field">
+
+<option>Select ID</option>
+
+<option>PhilSys National ID</option>
+<option>Passport</option>
+<option>Driver's License</option>
+<option>UMID</option>
+<option>Postal ID</option>
+<option>Voter's ID</option>
+<option>PRC ID</option>
+<option>Senior Citizen ID</option>
+<option>PWD ID</option>
+<option>TIN ID</option>
+<option>Barangay ID</option>
+<option>Company ID</option>
+<option>School ID</option>
+<option>Seaman's Book</option>
+<option>OFW ID</option>
+
+</select>
+
+<input
+class="emp-field"
+placeholder="ID Number">
 
 </div>
 
@@ -443,22 +500,18 @@ class="tab-content">
 
 <input
 class="emp-field"
-id="mobile"
 placeholder="Mobile">
 
 <input
 class="emp-field"
-id="email"
 placeholder="Email">
 
 <input
 class="emp-field"
-id="currentaddress"
 placeholder="Current Address">
 
 <input
 class="emp-field"
-id="permanentaddress"
 placeholder="Permanent Address">
 
 </div>
@@ -475,22 +528,18 @@ class="tab-content">
 
 <input
 class="emp-field"
-id="empid"
 placeholder="Employee ID">
 
 <input
 class="emp-field"
-id="position"
 placeholder="Position">
 
 <input
 class="emp-field"
-id="department"
 placeholder="Department">
 
 <select
-class="emp-field"
-id="employment">
+class="emp-field">
 
 <option>Employment</option>
 <option>Regular</option>
@@ -501,7 +550,6 @@ id="employment">
 
 <input
 class="emp-field"
-id="salaryrate"
 placeholder="Salary Rate">
 
 </div>
@@ -518,32 +566,26 @@ class="tab-content">
 
 <input
 class="emp-field"
-id="sssDeduction"
 placeholder="SSS">
 
 <input
 class="emp-field"
-id="philhealthDeduction"
 placeholder="PhilHealth">
 
 <input
 class="emp-field"
-id="pagibigDeduction"
 placeholder="Pag-IBIG">
 
 <input
 class="emp-field"
-id="healthcardDeduction"
 placeholder="Health Card">
 
 <input
 class="emp-field"
-id="uniformDeduction"
 placeholder="Uniform">
 
 <input
 class="emp-field"
-id="otherDeduction"
 placeholder="Others">
 
 </div>
@@ -672,8 +714,6 @@ employeeData.push(field.value);
 
 });
 
-/* EDIT */
-
 if(editRowIndex !== null){
 
 employees[editRowIndex] =
@@ -683,19 +723,13 @@ editRowIndex = null;
 
 alert('Employee Updated');
 
-}
-
-/* ADD */
-
-else{
+}else{
 
 employees.push(employeeData);
 
 alert('Employee Saved');
 
 }
-
-/* STORAGE */
 
 localStorage.setItem(
 'employees',
@@ -724,32 +758,15 @@ table.innerHTML='';
 
 employees.forEach((emp,index)=>{
 
-table.innerHTML += `
+let row = '<tr>';
 
-<tr>
+emp.forEach(data=>{
 
-<td>${emp[0]}</td>
-<td>${emp[1]}</td>
-<td>${emp[2]}</td>
-<td>${emp[3]}</td>
-<td>${emp[4]}</td>
-<td>${emp[5]}</td>
+row += `<td>${data}</td>`;
 
-<td>${emp[6]}</td>
-<td>${emp[7]}</td>
+});
 
-<td>${emp[10]}</td>
-<td>${emp[11]}</td>
-<td>${emp[12]}</td>
-<td>${emp[13]}</td>
-<td>${emp[14]}</td>
-
-<td>${emp[15]}</td>
-<td>${emp[16]}</td>
-<td>${emp[17]}</td>
-<td>${emp[18]}</td>
-<td>${emp[19]}</td>
-<td>${emp[20]}</td>
+row += `
 
 <td>
 
@@ -771,9 +788,11 @@ Delete
 
 </td>
 
-</tr>
-
 `;
+
+row += '</tr>';
+
+table.innerHTML += row;
 
 });
 
@@ -884,8 +903,6 @@ total.innerText =
 'Total : ' + rows.length;
 
 }
-
-/* AUTO LOAD */
 
 renderTable();
 
