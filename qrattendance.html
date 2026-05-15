@@ -275,6 +275,19 @@ try{
 let data =
 JSON.parse(decodedText);
 
+/* VALIDATE QR */
+
+if(
+!data.employeeid ||
+!data.name
+){
+
+throw new Error(
+'Invalid QR Structure'
+);
+
+}
+
 let currentScan =
 data.employeeid;
 
