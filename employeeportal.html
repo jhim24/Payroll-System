@@ -402,7 +402,7 @@ color:white;
 
 border-radius:6px;
 
-font-size:12px;
+font-size:10px;
 
 font-weight:bold;
 
@@ -455,9 +455,16 @@ padding:8px;
 .payroll-table th,
 .payroll-table td{
 
+border:1px solid #999;
+
+padding:2px;
+
 font-size:8px;
 
-padding:3px;
+line-height:1.2;
+
+word-break:break-word;
+
 }
 
 .line{
@@ -744,6 +751,11 @@ id="payslipArea">
 <td id="payAllowance">0.00</td>
 </tr>
 
+  <tr>
+<td><b>TOTAL GROSS</b></td>
+<td id="payGross"><b>0.00</b></td>
+</tr>
+  
 </table>
 
 <table class="payroll-table">
@@ -779,9 +791,9 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Total Deduction</td>
-<td id="payDeduction">0.00</td>
-</tr>
+<td><b>Total Deduction</b></td>
+<td id="payDeduction"><b>0.00</b></td>
+</tr>>
 
 </table>
 
@@ -1204,11 +1216,11 @@ payAllowance.innerText =
 Number(pay.allowance || 0)
 .toFixed(2);
 
-paySSS.innerText =
-Number(pay.sss || 0)
+payGross.innerText =
+Number(pay.gross || 0)
 .toFixed(2);
 
-payPhilhealth.innerText =
+paySSS.innerText =
 Number(pay.philhealth || 0)
 .toFixed(2);
 
