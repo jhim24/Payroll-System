@@ -238,23 +238,23 @@ margin-top:25px;
 
 background:white;
 
-padding:10px;
+padding:12px;
 
-border-radius:12px;
+border-radius:20px;
 
 color:black;
 
 display:none;
 
-border:2px solid #ffcc00;
+border:3px solid #cc9900;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
 
-/* 1/4 SIZE */
+/* EXACT 1/4 BOND SIZE */
 
-width:90mm;
+width:95mm;
 
-min-height:130mm;
+height:135mm;
 
 margin-left:auto;
 margin-right:auto;
@@ -269,46 +269,48 @@ overflow:hidden;
 
 text-align:center;
 
-margin-bottom:6px;
+margin-bottom:8px;
 
-padding-bottom:5px;
+padding-bottom:6px;
 
-border-bottom:2px solid #ffcc00;
+border-bottom:3px solid #ffcc00;
 }
 
 .company h2{
 
-font-size:16px;
+font-size:20px;
 
-color:#cc0000;
+font-weight:bold;
+
+color:#660000;
 }
 
 .company p{
 
-font-size:8px;
+font-size:10px;
 
 font-weight:bold;
 
-color:#555;
+letter-spacing:1px;
 }
 
 /* INFO */
 
 .info{
 
-font-size:9px;
+font-size:10px;
 
-line-height:1.5;
+line-height:1.7;
 
-margin-bottom:6px;
+margin-bottom:8px;
 
-background:#fff8dc;
+background:#fff5f0;
 
-padding:6px;
+padding:8px;
 
-border-radius:6px;
+border-radius:10px;
 
-border:1px solid #ffcc00;
+border:2px solid #e6a36d;
 }
 
 /* TABLE */
@@ -319,27 +321,29 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:5px;
+margin-top:6px;
 
-font-size:8px;
+font-size:9px;
 }
 
 .payroll-table th{
 
-background:#ffcc00;
+background:#e6a000;
 
 color:black;
 
-padding:4px;
+padding:5px;
+
+font-size:9px;
 }
 
 .payroll-table td{
 
+padding:5px;
+
+border:1px solid #999;
+
 background:white;
-
-padding:4px;
-
-word-break:break-word;
 }
 
 /* TOTAL */
@@ -350,13 +354,13 @@ margin-top:8px;
 
 padding:8px;
 
-background:#008000;
+background:#009900;
 
 color:white;
 
-border-radius:6px;
+border-radius:8px;
 
-font-size:13px;
+font-size:15px;
 
 font-weight:bold;
 
@@ -367,42 +371,80 @@ text-align:right;
 
 .signature{
 
-margin-top:18px;
+margin-top:28px;
 
 display:flex;
 
 justify-content:space-between;
 
-gap:8px;
-
-font-size:8px;
+font-size:9px;
 }
 
 .line{
 
-margin-top:18px;
+margin-top:20px;
 
 border-top:1px solid black;
 
-width:80px;
+width:90px;
 
 text-align:center;
 
-padding-top:3px;
+padding-top:4px;
 
 font-weight:bold;
 }
 
-/* MOBILE */
+/* PRINT */
 
-@media(max-width:768px){
+@media print{
+
+@page{
+size:A4 portrait;
+margin:5mm;
+}
+
+body{
+background:white;
+padding:0;
+}
+
+.header,
+.form-grid,
+.save-btn,
+.table-wrapper,
+.back-btn,
+.view-btn,
+.print-btn,
+.logout-btn,
+.close-btn{
+display:none !important;
+}
+
+.container{
+
+border:none;
+
+background:white;
+
+box-shadow:none;
+}
 
 .payslip{
 
-width:100%;
+display:block !important;
 
-min-height:auto;
+width:95mm;
 
+height:135mm;
+
+margin:auto;
+
+border:2px solid #cc9900;
+
+box-shadow:none;
+
+page-break-inside:avoid;
 }
 
 }
