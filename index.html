@@ -147,13 +147,48 @@ background:#252525;
 
 .main h1{
 
-margin-bottom:20px;
+margin-bottom:10px;
 
 font-size:36px;
 
 color:#ffcc00;
 
 text-shadow:2px 2px 3px black;
+}
+
+/* =========================
+TOP CLOCK
+========================= */
+
+.top-time{
+
+margin-bottom:20px;
+
+display:flex;
+
+gap:15px;
+
+align-items:center;
+
+flex-wrap:wrap;
+}
+
+#clock{
+
+font-size:30px;
+
+font-weight:bold;
+
+color:#ff3333;
+}
+
+#dateToday{
+
+font-size:18px;
+
+font-weight:bold;
+
+color:#ffcc00;
 }
 
 /* =========================
@@ -273,45 +308,6 @@ color:#ddd;
 }
 
 /* =========================
-LIVE CLOCK
-========================= */
-
-.clock-box{
-
-margin-top:25px;
-
-background:#111;
-
-padding:20px;
-
-border-radius:12px;
-
-text-align:center;
-
-border:2px solid #ffcc00;
-
-box-shadow:0 0 10px rgba(255,204,0,0.3);
-}
-
-.clock{
-
-font-size:45px;
-
-font-weight:bold;
-
-color:#ff3333;
-}
-
-.date{
-
-margin-top:10px;
-
-font-size:18px;
-
-color:#ffcc00;
-}
-
-/* =========================
 MOBILE
 ========================= */
 
@@ -343,9 +339,14 @@ grid-template-columns:1fr;
 font-size:28px;
 }
 
-.clock{
+#clock{
 
-font-size:35px;
+font-size:24px;
+}
+
+#dateToday{
+
+font-size:15px;
 }
 
 }
@@ -415,6 +416,20 @@ onclick="logout()">
 <div class="main">
 
 <h1>Dashboard</h1>
+
+<!-- TOP TIME -->
+
+<div class="top-time">
+
+<div id="clock">
+00:00:00
+</div>
+
+<div id="dateToday">
+DATE
+</div>
+
+</div>
 
 <!-- TOP STATS -->
 
@@ -537,28 +552,6 @@ requests directly connected
 to Firebase database and
 HR approval system.
 </p>
-
-</div>
-
-</div>
-
-<!-- CLOCK -->
-
-<div class="clock-box">
-
-<div
-class="clock"
-id="clock">
-
-00:00:00
-
-</div>
-
-<div
-class="date"
-id="dateToday">
-
-DATE
 
 </div>
 
