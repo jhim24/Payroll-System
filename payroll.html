@@ -2,7 +2,10 @@
 <html>
 <head>
 
-<title>Payroll System</title>
+<title>Payroll Management</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <style>
 
@@ -14,36 +17,40 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
-background:#d4d0c8;
+background:#1f1f1f;
 padding:15px;
+color:white;
 }
 
 /* CONTAINER */
 
 .container{
 
-max-width:1300px;
+max-width:1400px;
 
 margin:auto;
 
-background:#c0c0c0;
+background:#2b2b2b;
 
-border:2px solid #808080;
+border:3px solid #ffcc00;
 
-box-shadow:
-inset 1px 1px white,
-inset -1px -1px #808080;
+border-radius:15px;
+
+overflow:hidden;
 }
 
 /* HEADER */
 
 .header{
 
+background:
+linear-gradient(
+135deg,
+#ffcc00,
+#ff8800
+);
+
 padding:15px;
-
-background:#d4d0c8;
-
-border-bottom:2px solid #808080;
 
 display:flex;
 
@@ -60,37 +67,40 @@ font-size:28px;
 
 font-weight:bold;
 
-color:#cc0000;
+color:black;
 }
 
 /* BUTTON */
 
 .btn{
 
-padding:8px 18px;
+padding:10px 18px;
 
-background:#dcdcdc;
+border:none;
 
-border-top:1px solid white;
-border-left:1px solid white;
-
-border-right:1px solid #808080;
-border-bottom:1px solid #808080;
+border-radius:10px;
 
 cursor:pointer;
 
 font-weight:bold;
 
-font-size:12px;
+font-size:13px;
+
+transition:0.3s;
+}
+
+.btn:hover{
+
+transform:scale(1.03);
+}
+
+.back-btn{
+background:#0066cc;
+color:white;
 }
 
 .save-btn{
 background:#008000;
-color:white;
-}
-
-.edit-btn{
-background:#0066cc;
 color:white;
 }
 
@@ -99,15 +109,15 @@ background:#cc0000;
 color:white;
 }
 
-.compute-btn{
-background:#ffcc00;
+.print-btn{
+background:#ff8800;
+color:black;
 }
 
 /* FORM */
 
 .form-section{
-
-padding:15px;
+padding:20px;
 }
 
 .form-grid{
@@ -117,38 +127,23 @@ display:grid;
 grid-template-columns:
 repeat(auto-fit,minmax(220px,1fr));
 
-gap:10px;
+gap:12px;
 }
 
 input,
-select,
-textarea{
+select{
 
 width:100%;
 
 padding:10px;
 
-border:1px solid #808080;
+border-radius:10px;
 
-font-size:13px;
-}
+border:2px solid #555;
 
-/* COMPUTE BOX */
+background:#1f1f1f;
 
-.compute-box{
-
-margin-top:20px;
-
-padding:15px;
-
-background:white;
-
-border:1px solid #808080;
-}
-
-.compute-box h3{
-
-margin-bottom:15px;
+color:white;
 }
 
 /* TABLE */
@@ -159,11 +154,9 @@ margin-top:20px;
 
 overflow:auto;
 
-max-height:450px;
-
 background:white;
 
-border-top:2px solid #808080;
+border-radius:10px;
 }
 
 table{
@@ -172,32 +165,32 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:2600px;
-
-font-size:12px;
+min-width:1600px;
 }
 
 th,
 td{
 
-border:1px solid #808080;
+border:1px solid #999;
 
 padding:10px;
 
 text-align:center;
-
-white-space:nowrap;
 }
 
 th{
 
 background:#ffcc00;
 
+color:black;
+
 position:sticky;
 
 top:0;
+}
 
-z-index:5;
+td{
+color:black;
 }
 
 /* TOTAL */
@@ -206,34 +199,28 @@ z-index:5;
 
 margin-top:15px;
 
+padding:15px;
+
+background:#1a1a1a;
+
+border:2px solid #ffcc00;
+
+border-radius:10px;
+
 font-size:18px;
 
 font-weight:bold;
 }
 
-/* COLORS */
+/* MOBILE */
 
-.netpay{
+@media(max-width:768px){
 
-color:green;
+.title{
 
-font-weight:bold;
+font-size:22px;
 }
 
-.deduction{
-
-color:red;
-
-font-weight:bold;
-}
-
-.notes{
-
-text-align:left;
-
-white-space:normal;
-
-min-width:250px;
 }
 
 </style>
@@ -249,16 +236,28 @@ min-width:250px;
 <div class="header">
 
 <div class="title">
-PAYROLL SYSTEM
+💰 PAYROLL MANAGEMENT
 </div>
 
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
 <button
-class="btn"
-onclick="window.history.back()">
+class="btn print-btn"
+onclick="window.print()">
+
+🖨 PRINT
+
+</button>
+
+<button
+class="btn back-btn"
+onclick="window.location.href='index.html'">
 
 ← BACK
 
 </button>
+
+</div>
 
 </div>
 
@@ -278,48 +277,23 @@ Select Employee
 
 <input
 type="number"
-id="dailyRate"
-placeholder="Daily Rate">
-
-<input
-type="number"
-id="daysWorked"
-placeholder="Days Worked">
+id="gross"
+placeholder="Gross Pay">
 
 <input
 type="number"
 id="overtime"
-placeholder="Overtime Pay">
+placeholder="Overtime">
 
 <input
 type="number"
-id="holidayPay"
+id="holiday"
 placeholder="Holiday Pay">
 
 <input
 type="number"
-id="sickLeave"
-placeholder="Sick Leave Pay">
-
-<input
-type="number"
-id="birthdayLeave"
-placeholder="Birthday Leave Pay">
-
-<input
-type="number"
-id="vacationLeave"
-placeholder="Vacation Leave Pay">
-
-<input
-type="number"
-id="cashAdvance"
-placeholder="Cash Advance">
-
-<input
-type="number"
-id="lateDeduction"
-placeholder="Late Deduction">
+id="allowance"
+placeholder="Allowance">
 
 <input
 type="number"
@@ -336,62 +310,26 @@ type="number"
 id="pagibig"
 placeholder="Pag-IBIG">
 
-<input
-type="number"
-id="healthCard"
-placeholder="Health Card">
-
-<input
-type="number"
-id="otherDeduction"
-placeholder="Other Deduction">
-
-<textarea
-id="otherNote"
-placeholder="Reason / Notes for Other Deduction"></textarea>
-
 </div>
 
-<!-- COMPUTE -->
-
-<div class="compute-box">
-
-<h3>Payroll Computation</h3>
-
-<button
-class="btn compute-btn"
-onclick="computePayroll()">
-
-COMPUTE PAYROLL
-
-</button>
+<br>
 
 <button
 class="btn save-btn"
 onclick="savePayroll()">
 
-SAVE PAYROLL
+💾 SAVE PAYROLL
 
 </button>
 
+<!-- TOTAL -->
+
 <div class="total-box">
 
-<p id="grossPay">
-Gross Pay : 0
-</p>
-
-<p id="totalDeduction">
-Total Deduction : 0
-</p>
-
-<p class="netpay"
-id="netPay">
-
-Net Pay : 0
-
-</p>
-
-</div>
+TOTAL NET PAY :
+₱ <span id="totalNet">
+0.00
+</span>
 
 </div>
 
@@ -405,31 +343,17 @@ Net Pay : 0
 
 <tr>
 
+<th>EMPLOYEE ID</th>
 <th>EMPLOYEE</th>
-<th>DAILY RATE</th>
-<th>DAYS WORKED</th>
-
-<th>GROSS PAY</th>
-
+<th>GROSS</th>
 <th>OVERTIME</th>
 <th>HOLIDAY</th>
-<th>SICK LEAVE</th>
-<th>BIRTHDAY LEAVE</th>
-<th>VACATION LEAVE</th>
-
-<th>CASH ADVANCE</th>
-<th>LATE</th>
+<th>ALLOWANCE</th>
 <th>SSS</th>
 <th>PHILHEALTH</th>
 <th>PAG-IBIG</th>
-<th>HEALTH CARD</th>
-<th>OTHER</th>
-
-<th>OTHER NOTE</th>
-
 <th>TOTAL DEDUCTION</th>
 <th>NET PAY</th>
-
 <th>ACTION</th>
 
 </tr>
@@ -448,375 +372,327 @@ Net Pay : 0
 
 </div>
 
-<script>
+<script type="module">
 
-let editIndex = null;
+/* =========================
+FIREBASE
+========================= */
 
-/* ======================
-LOAD EMPLOYEES
-====================== */
+import {
 
-function loadEmployees(){
-
-let employees = [];
-
-try{
-
-employees = JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-}catch(error){
-
-employees = [];
+initializeApp
 
 }
 
-let select =
-document.getElementById(
-'employeeSelect'
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+/* CONFIG */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
+
+projectId:
+"hr-system-38fc3",
+
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+LOAD EMPLOYEES
+========================= */
+
+async function loadEmployees(){
+
+employeeSelect.innerHTML =
+
+`
+<option value="">
+Select Employee
+</option>
+`;
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'employees')
 );
 
-select.innerHTML =
-'<option value="">Select Employee</option>';
+querySnapshot.forEach(doc=>{
 
-employees.forEach((emp)=>{
+let emp = doc.data();
 
-let first =
-emp[0] || '';
+let fullname =
 
-let middle =
-emp[1] || '';
+(emp.firstname || '') + ' ' +
 
-let last =
-emp[2] || '';
+(emp.middlename || '') + ' ' +
 
-let fullName =
-first + ' ' +
-middle + ' ' +
-last;
+(emp.lastname || '');
 
-let empId =
-emp[18] || 'NO-ID';
+employeeSelect.innerHTML += `
 
-let option =
-document.createElement('option');
+<option
+value="${fullname}"
+data-id="${emp.employeeid}">
 
-option.value = fullName;
+${emp.employeeid}
+-
+${fullname}
 
-option.textContent =
-empId + ' - ' + fullName;
+</option>
 
-select.appendChild(option);
+`;
 
 });
 
 }
 
-/* ======================
-PAYROLL STORAGE
-====================== */
+loadEmployees();
 
-let payrollRecords = [];
-
-try{
-
-payrollRecords = JSON.parse(
-localStorage.getItem('payroll')
-) || [];
-
-}catch(error){
-
-payrollRecords = [];
-
-}
-
-/* ======================
-COMPUTE PAYROLL
-====================== */
-
-function computePayroll(){
-
-let rate =
-parseFloat(dailyRate.value) || 0;
-
-let days =
-parseFloat(daysWorked.value) || 0;
-
-let overtimePay =
-parseFloat(overtime.value) || 0;
-
-let holiday =
-parseFloat(holidayPay.value) || 0;
-
-let sick =
-parseFloat(sickLeave.value) || 0;
-
-let birthday =
-parseFloat(birthdayLeave.value) || 0;
-
-let vacation =
-parseFloat(vacationLeave.value) || 0;
-
-let cash =
-parseFloat(cashAdvance.value) || 0;
-
-let late =
-parseFloat(lateDeduction.value) || 0;
-
-let sssDed =
-parseFloat(sss.value) || 0;
-
-let phil =
-parseFloat(philhealth.value) || 0;
-
-let pagibigDed =
-parseFloat(pagibig.value) || 0;
-
-let health =
-parseFloat(healthCard.value) || 0;
-
-let other =
-parseFloat(otherDeduction.value) || 0;
-
-/* COMPUTE */
-
-let gross =
-(rate * days) +
-overtimePay +
-holiday +
-sick +
-birthday +
-vacation;
-
-let deductions =
-
-cash +
-late +
-sssDed +
-phil +
-pagibigDed +
-health +
-other;
-
-let net =
-gross - deductions;
-
-/* DISPLAY */
-
-grossPay.innerText =
-'Gross Pay : ' +
-gross.toFixed(2);
-
-totalDeduction.innerText =
-'Total Deduction : ' +
-deductions.toFixed(2);
-
-netPay.innerText =
-'Net Pay : ' +
-net.toFixed(2);
-
-}
-
-/* ======================
+/* =========================
 SAVE PAYROLL
-====================== */
+========================= */
 
-function savePayroll(){
+window.savePayroll =
+async function(){
 
 if(employeeSelect.value===''){
 
-alert('Select Employee');
+alert(
+'Select Employee'
+);
 
 return;
 
 }
 
-let rate =
-parseFloat(dailyRate.value) || 0;
+let selected =
 
-let days =
-parseFloat(daysWorked.value) || 0;
+employeeSelect.options[
+employeeSelect.selectedIndex
+];
+
+let empid =
+selected.dataset.id;
+
+let employee =
+employeeSelect.value;
+
+let grossPay =
+Number(gross.value || 0);
 
 let overtimePay =
-parseFloat(overtime.value) || 0;
+Number(overtime.value || 0);
 
-let holiday =
-parseFloat(holidayPay.value) || 0;
+let holidayPay =
+Number(holiday.value || 0);
 
-let sick =
-parseFloat(sickLeave.value) || 0;
-
-let birthday =
-parseFloat(birthdayLeave.value) || 0;
-
-let vacation =
-parseFloat(vacationLeave.value) || 0;
-
-let cash =
-parseFloat(cashAdvance.value) || 0;
-
-let late =
-parseFloat(lateDeduction.value) || 0;
+let allowancePay =
+Number(allowance.value || 0);
 
 let sssDed =
-parseFloat(sss.value) || 0;
+Number(sss.value || 0);
 
-let phil =
-parseFloat(philhealth.value) || 0;
+let philhealthDed =
+Number(philhealth.value || 0);
 
 let pagibigDed =
-parseFloat(pagibig.value) || 0;
-
-let health =
-parseFloat(healthCard.value) || 0;
-
-let other =
-parseFloat(otherDeduction.value) || 0;
-
-let otherReason =
-otherNote.value || '-';
-
-/* COMPUTE */
-
-let gross =
-(rate * days) +
-overtimePay +
-holiday +
-sick +
-birthday +
-vacation;
+Number(pagibig.value || 0);
 
 let deductions =
 
-cash +
-late +
 sssDed +
-phil +
-pagibigDed +
-health +
-other;
+philhealthDed +
+pagibigDed;
 
 let net =
-gross - deductions;
 
-/* DATA */
+grossPay +
+overtimePay +
+holidayPay +
+allowancePay -
 
-let payrollData = {
+deductions;
 
-employee:employeeSelect.value,
+try{
 
-rate:rate,
+await addDoc(
+collection(db,'payroll'),
 
-days:days,
+{
 
-gross:gross,
+empid: empid,
 
-overtime:overtimePay,
+employee: employee,
 
-holiday:holiday,
+gross: grossPay,
 
-sick:sick,
+overtime: overtimePay,
 
-birthday:birthday,
+holiday: holidayPay,
 
-vacation:vacation,
+allowance: allowancePay,
 
-cash:cash,
+sss: sssDed,
 
-late:late,
+philhealth: philhealthDed,
 
-sss:sssDed,
+pagibig: pagibigDed,
 
-philhealth:phil,
+deductions: deductions,
 
-pagibig:pagibigDed,
+net: net,
 
-health:health,
-
-other:other,
-
-otherReason:otherReason,
-
-deductions:deductions,
-
-net:net
-
-};
-
-/* EDIT */
-
-if(editIndex !== null){
-
-payrollRecords[editIndex] =
-payrollData;
-
-editIndex = null;
-
-alert('Payroll Updated');
+date:
+new Date()
+.toLocaleDateString()
 
 }
 
-/* ADD */
-
-else{
-
-payrollRecords.push(
-payrollData
 );
 
-alert('Payroll Saved');
-
-}
-
-/* SAVE STORAGE */
-
-localStorage.setItem(
-'payroll',
-JSON.stringify(payrollRecords)
+alert(
+'Payroll Saved'
 );
-
-/* REFRESH */
-
-renderPayroll();
 
 clearForm();
 
-/* RESET DISPLAY */
+loadPayroll();
 
-grossPay.innerText =
-'Gross Pay : 0';
+}catch(error){
 
-totalDeduction.innerText =
-'Total Deduction : 0';
+console.log(error);
 
-netPay.innerText =
-'Net Pay : 0';
+alert(
+'Firebase Error'
+);
 
 }
 
-/* ======================
-RENDER TABLE
-====================== */
+}
 
-function renderPayroll(){
+/* =========================
+LOAD PAYROLL
+========================= */
 
-let tbody =
-document.getElementById(
-'payrollBody'
+async function loadPayroll(){
+
+payrollBody.innerHTML='';
+
+let total = 0;
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'payroll')
 );
 
-tbody.innerHTML = '';
+querySnapshot.forEach(async(payrollDoc)=>{
 
-if(payrollRecords.length === 0){
+let pay =
+payrollDoc.data();
 
-tbody.innerHTML = `
+total +=
+Number(pay.net || 0);
+
+payrollBody.innerHTML += `
 
 <tr>
 
-<td colspan="20">
+<td>${pay.empid || ''}</td>
 
-NO PAYROLL RECORD FOUND
+<td>${pay.employee || ''}</td>
+
+<td>
+₱ ${Number(pay.gross || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.overtime || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.holiday || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.allowance || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.sss || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.philhealth || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.pagibig || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.deductions || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.net || 0)
+.toFixed(2)}
+</td>
+
+<td>
+
+<button
+class="btn delete-btn"
+onclick="deletePayroll(
+'${payrollDoc.id}'
+)">
+
+DELETE
+
+</button>
 
 </td>
 
@@ -824,226 +700,54 @@ NO PAYROLL RECORD FOUND
 
 `;
 
-return;
-
-}
-
-payrollRecords.forEach((pay,index)=>{
-
-let row =
-document.createElement('tr');
-
-row.innerHTML = `
-
-<td>${pay.employee || ''}</td>
-
-<td>${Number(pay.rate || 0).toFixed(2)}</td>
-
-<td>${pay.days || 0}</td>
-
-<td>${Number(pay.gross || 0).toFixed(2)}</td>
-
-<td>${Number(pay.overtime || 0).toFixed(2)}</td>
-
-<td>${Number(pay.holiday || 0).toFixed(2)}</td>
-
-<td>${Number(pay.sick || 0).toFixed(2)}</td>
-
-<td>${Number(pay.birthday || 0).toFixed(2)}</td>
-
-<td>${Number(pay.vacation || 0).toFixed(2)}</td>
-
-<td class="deduction">
-${Number(pay.cash || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.late || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.sss || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.philhealth || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.pagibig || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.health || 0).toFixed(2)}
-</td>
-
-<td class="deduction">
-${Number(pay.other || 0).toFixed(2)}
-</td>
-
-<td class="notes">
-${pay.otherReason || '-'}
-</td>
-
-<td class="deduction">
-${Number(pay.deductions || 0).toFixed(2)}
-</td>
-
-<td class="netpay">
-${Number(pay.net || 0).toFixed(2)}
-</td>
-
-<td>
-
-<button
-class="btn edit-btn"
-onclick="editPayroll(${index})">
-
-EDIT
-
-</button>
-
-<button
-class="btn delete-btn"
-onclick="deletePayroll(${index})">
-
-DELETE
-
-</button>
-
-</td>
-
-`;
-
-tbody.appendChild(row);
-
 });
 
-}
-
-/* ======================
-EDIT
-====================== */
-
-function editPayroll(index){
-
-let pay =
-payrollRecords[index];
-
-editIndex = index;
-
-employeeSelect.value =
-pay.employee || '';
-
-dailyRate.value =
-pay.rate || '';
-
-daysWorked.value =
-pay.days || '';
-
-overtime.value =
-pay.overtime || '';
-
-holidayPay.value =
-pay.holiday || '';
-
-sickLeave.value =
-pay.sick || '';
-
-birthdayLeave.value =
-pay.birthday || '';
-
-vacationLeave.value =
-pay.vacation || '';
-
-cashAdvance.value =
-pay.cash || '';
-
-lateDeduction.value =
-pay.late || '';
-
-sss.value =
-pay.sss || '';
-
-philhealth.value =
-pay.philhealth || '';
-
-pagibig.value =
-pay.pagibig || '';
-
-healthCard.value =
-pay.health || '';
-
-otherDeduction.value =
-pay.other || '';
-
-otherNote.value =
-pay.otherReason || '';
-
-grossPay.innerText =
-'Gross Pay : ' +
-Number(pay.gross || 0).toFixed(2);
-
-totalDeduction.innerText =
-'Total Deduction : ' +
-Number(pay.deductions || 0).toFixed(2);
-
-netPay.innerText =
-'Net Pay : ' +
-Number(pay.net || 0).toFixed(2);
+totalNet.innerText =
+total.toFixed(2);
 
 }
 
-/* ======================
-DELETE
-====================== */
+loadPayroll();
 
-function deletePayroll(index){
+/* =========================
+DELETE PAYROLL
+========================= */
 
-let confirmDelete = confirm(
-'Delete Payroll Record?'
+window.deletePayroll =
+async function(id){
+
+let confirmDelete =
+confirm(
+'Delete Payroll?'
 );
 
 if(confirmDelete){
 
-payrollRecords.splice(index,1);
-
-localStorage.setItem(
-'payroll',
-JSON.stringify(payrollRecords)
+await deleteDoc(
+doc(db,'payroll',id)
 );
 
-renderPayroll();
+loadPayroll();
 
 }
 
 }
 
-/* ======================
+/* =========================
 CLEAR FORM
-====================== */
+========================= */
 
 function clearForm(){
 
 employeeSelect.value='';
 
-dailyRate.value='';
-
-daysWorked.value='';
+gross.value='';
 
 overtime.value='';
 
-holidayPay.value='';
+holiday.value='';
 
-sickLeave.value='';
-
-birthdayLeave.value='';
-
-vacationLeave.value='';
-
-cashAdvance.value='';
-
-lateDeduction.value='';
+allowance.value='';
 
 sss.value='';
 
@@ -1051,21 +755,7 @@ philhealth.value='';
 
 pagibig.value='';
 
-healthCard.value='';
-
-otherDeduction.value='';
-
-otherNote.value='';
-
 }
-
-/* ======================
-AUTO LOAD
-====================== */
-
-loadEmployees();
-
-renderPayroll();
 
 </script>
 
