@@ -238,28 +238,28 @@ margin-top:25px;
 
 background:white;
 
-padding:15px;
+padding:10px;
 
-border-radius:15px;
+border-radius:12px;
 
 color:black;
 
 display:none;
 
-border:3px solid #ffcc00;
+border:2px solid #ffcc00;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
 
-/* FIX SIZE */
+/* 1/4 SIZE */
 
-width:100%;
+width:90mm;
 
-max-width:520px;
+min-height:130mm;
 
 margin-left:auto;
 margin-right:auto;
 
-overflow:auto;
+overflow:hidden;
 
 }
 
@@ -269,23 +269,23 @@ overflow:auto;
 
 text-align:center;
 
-margin-bottom:10px;
+margin-bottom:6px;
 
-padding-bottom:8px;
+padding-bottom:5px;
 
 border-bottom:2px solid #ffcc00;
 }
 
 .company h2{
 
-font-size:22px;
+font-size:16px;
 
 color:#cc0000;
 }
 
 .company p{
 
-font-size:11px;
+font-size:8px;
 
 font-weight:bold;
 
@@ -296,17 +296,17 @@ color:#555;
 
 .info{
 
-font-size:11px;
+font-size:9px;
 
-line-height:1.6;
+line-height:1.5;
 
-margin-bottom:8px;
+margin-bottom:6px;
 
 background:#fff8dc;
 
-padding:8px;
+padding:6px;
 
-border-radius:8px;
+border-radius:6px;
 
 border:1px solid #ffcc00;
 }
@@ -319,9 +319,9 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:8px;
+margin-top:5px;
 
-font-size:10px;
+font-size:8px;
 }
 
 .payroll-table th{
@@ -329,11 +329,15 @@ font-size:10px;
 background:#ffcc00;
 
 color:black;
+
+padding:4px;
 }
 
 .payroll-table td{
 
 background:white;
+
+padding:4px;
 
 word-break:break-word;
 }
@@ -342,17 +346,17 @@ word-break:break-word;
 
 .netpay{
 
-margin-top:10px;
+margin-top:8px;
 
-padding:10px;
+padding:8px;
 
 background:#008000;
 
 color:white;
 
-border-radius:8px;
+border-radius:6px;
 
-font-size:18px;
+font-size:13px;
 
 font-weight:bold;
 
@@ -363,35 +367,33 @@ text-align:right;
 
 .signature{
 
-margin-top:25px;
+margin-top:18px;
 
 display:flex;
 
 justify-content:space-between;
 
-gap:10px;
+gap:8px;
 
-font-size:10px;
-
-flex-wrap:wrap;
+font-size:8px;
 }
 
 .line{
 
-margin-top:25px;
+margin-top:18px;
 
 border-top:1px solid black;
 
-width:120px;
+width:80px;
 
 text-align:center;
 
-padding-top:4px;
+padding-top:3px;
 
 font-weight:bold;
 }
 
-/* MOBILE FIX */
+/* MOBILE */
 
 @media(max-width:768px){
 
@@ -399,29 +401,65 @@ font-weight:bold;
 
 width:100%;
 
-max-width:100%;
+min-height:auto;
 
-padding:10px;
-
-}
-
-.payroll-table{
-
-font-size:9px;
-}
-
-.company h2{
-
-font-size:18px;
-}
-
-.netpay{
-
-font-size:15px;
 }
 
 }
 
+/* PRINT */
+
+@media print{
+
+@page{
+size:A4 portrait;
+margin:5mm;
+}
+
+body{
+background:white;
+padding:0;
+}
+
+.header,
+.form-grid,
+.save-btn,
+.table-wrapper,
+.back-btn,
+.view-btn,
+.print-btn,
+.logout-btn,
+.close-btn{
+display:none !important;
+}
+
+.container{
+
+border:none;
+
+background:white;
+
+box-shadow:none;
+}
+
+.payslip{
+
+display:block !important;
+
+width:90mm;
+
+min-height:130mm;
+
+margin:auto;
+
+border:1px solid #999;
+
+box-shadow:none;
+
+page-break-inside:avoid;
+}
+
+}
 /* PRINT */
 
 @media print{
