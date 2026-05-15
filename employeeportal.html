@@ -119,6 +119,16 @@ background:#0066cc;
 color:white;
 }
 
+.edit-btn{
+background:#0099cc;
+color:white;
+}
+
+.delete-btn{
+background:#990000;
+color:white;
+}
+
 /* FORM */
 
 .form-section{
@@ -192,7 +202,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1200px;
+min-width:1400px;
 }
 
 th,
@@ -567,6 +577,7 @@ onclick="printPayslip()">
 <th>DAYS</th>
 <th>REASON</th>
 <th>STATUS</th>
+<th>ACTION</th>
 
 </tr>
 
@@ -709,19 +720,22 @@ initializeApp
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
 
 getFirestore,
 collection,
 getDocs,
-addDoc
+addDoc,
+updateDoc,
+deleteDoc,
+doc
 
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 /* CONFIG */
 
@@ -758,12 +772,13 @@ CURRENT USER
 ========================= */
 
 let currentUser =
-
 localStorage.getItem(
 'loggedInUser'
 ) || '';
 
 let currentEmployee = null;
+
+let editId = null;
 
 /* =========================
 LOAD EMPLOYEE
@@ -772,38 +787,29 @@ LOAD EMPLOYEE
 async function loadEmployee(){
 
 let querySnapshot =
-
 await getDocs(
 collection(db,'employees')
 );
 
-querySnapshot.forEach(doc=>{
+querySnapshot.forEach(docSnap=>{
 
-let emp = doc.data();
+let emp = docSnap.data();
 
 let fullname =
 
 (emp.firstname || '') + ' ' +
-
 (emp.middlename || '') + ' ' +
-
 (emp.lastname || '');
 
 if(
-
-(emp.employeeid || '')
-.trim()
-
+(emp.employeeid || '').trim()
 ===
-
 currentUser.trim()
-
 ){
 
 currentEmployee = {
 
 id: emp.employeeid,
-
 name: fullname
 
 };
@@ -851,6 +857,29 @@ return;
 
 }
 
+if(editId){
+
+await updateDoc(
+
+doc(db,'employeeRequests',editId),
+
+{
+
+type:requestType.value,
+date:requestDate.value,
+days:days.value,
+reason:reason.value
+
+}
+
+);
+
+alert('Request Updated');
+
+editId = null;
+
+}else{
+
 await addDoc(
 
 collection(db,'employeeRequests'),
@@ -886,6 +915,10 @@ alert(
 'Request Submitted'
 );
 
+}
+
+clearForm();
+
 loadRequests();
 
 }
@@ -899,22 +932,19 @@ async function loadRequests(){
 requestBody.innerHTML='';
 
 let querySnapshot =
-
 await getDocs(
 collection(db,'employeeRequests')
 );
 
-querySnapshot.forEach(doc=>{
+querySnapshot.forEach(docSnap=>{
 
-let req = doc.data();
+let req = docSnap.data();
 
-if(
-req.empid ===
-currentEmployee.id
-){
+let id = docSnap.id;
+
+if(req.empid === currentEmployee.id){
 
 let statusClass =
-
 (req.status || '')
 .toLowerCase();
 
@@ -938,6 +968,32 @@ requestBody.innerHTML += `
 ${req.status}
 </td>
 
+<td>
+
+<button
+class="btn edit-btn"
+onclick="editRequest(
+'${id}',
+'${req.type}',
+'${req.date}',
+'${req.days}',
+'${req.reason}'
+)">
+
+EDIT
+
+</button>
+
+<button
+class="btn delete-btn"
+onclick="deleteRequest('${id}')">
+
+DELETE
+
+</button>
+
+</td>
+
 </tr>
 
 `;
@@ -949,6 +1005,61 @@ ${req.status}
 }
 
 /* =========================
+EDIT REQUEST
+========================= */
+
+window.editRequest =
+function(id,type,date,daysValue,reasonText){
+
+editId = id;
+
+requestType.value = type;
+requestDate.value = date;
+days.value = daysValue;
+reason.value = reasonText;
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+}
+
+/* =========================
+DELETE REQUEST
+========================= */
+
+window.deleteRequest =
+async function(id){
+
+if(confirm(
+'Delete Request?'
+)){
+
+await deleteDoc(
+doc(db,'employeeRequests',id)
+);
+
+loadRequests();
+
+}
+
+}
+
+/* =========================
+CLEAR FORM
+========================= */
+
+function clearForm(){
+
+requestType.value='';
+requestDate.value='';
+days.value='';
+reason.value='';
+
+}
+
+/* =========================
 LOAD PAYSLIP
 ========================= */
 
@@ -956,16 +1067,15 @@ window.loadPayslip =
 async function(){
 
 let querySnapshot =
-
 await getDocs(
 collection(db,'payroll')
 );
 
 let found = false;
 
-querySnapshot.forEach(doc=>{
+querySnapshot.forEach(docSnap=>{
 
-let pay = doc.data();
+let pay = docSnap.data();
 
 if(
 pay.empid ===
