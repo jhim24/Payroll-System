@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>HR Settings</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+
+background:#1f1f1f;
+
+padding:20px;
+
+color:white;
+}
+
+.container{
+
+max-width:700px;
+
+margin:auto;
+
+background:#2b2b2b;
+
+border:3px solid #ffcc00;
+
+border-radius:15px;
+
+overflow:hidden;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+
+/* HEADER */
+
+.header{
+
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff8800
+);
+
+padding:15px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+}
+
+.title{
+
+font-size:28px;
+
+font-weight:bold;
+
+color:black;
+}
+
+/* FORM */
+
+.form-section{
+
+padding:20px;
+}
+
+.form-grid{
+
+display:grid;
+
+grid-template-columns:1fr;
+
+gap:15px;
+}
+
+input,
+select{
+
+width:100%;
+
+padding:12px;
+
+border-radius:10px;
+
+border:2px solid #555;
+
+background:#1f1f1f;
+
+color:white;
+
+font-size:14px;
+}
+
+/* BUTTON */
+
+.btn{
+
+padding:12px 18px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:14px;
+
+transition:0.3s;
+}
+
+.save-btn{
+
+background:#008000;
+
+color:white;
+}
+
+.back-btn{
+
+background:#0066cc;
+
+color:white;
+}
+
+.delete-btn{
+
+background:#cc0000;
+
+color:white;
+}
+
+.btn:hover{
+
+transform:scale(1.03);
+}
+
+/* TABLE */
+
+.table-wrapper{
+
+margin-top:25px;
+
+overflow:auto;
+
+background:white;
+
+border-radius:10px;
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+}
+
+th,
+td{
+
+border:1px solid #999;
+
+padding:10px;
+
+text-align:center;
+}
+
+th{
+
+background:#ffcc00;
+
+color:black;
+}
+
+td{
+color:black;
+}
+
+.role-admin{
+color:red;
+font-weight:bold;
+}
+
+.role-employee{
+color:green;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="title">
+⚙️ USER SETTINGS
+</div>
+
+<button
+class="btn back-btn"
+onclick="window.location.href='index.html'">
+
+← BACK
+
+</button>
+
+</div>
+
+<!-- FORM -->
+
+<div class="form-section">
+
+<div class="form-grid">
+
+<input
+type="text"
+id="username"
+placeholder="Username">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<select id="role">
+
+<option value="">
+Select Role
+</option>
+
+<option value="admin">
+ADMIN
+</option>
+
+<option value="employee">
+EMPLOYEE
+</option>
+
+</select>
+
+<button
+class="btn save-btn"
+onclick="saveUser()">
+
+SAVE USER
+
+</button>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>USERNAME</th>
+<th>PASSWORD</th>
+<th>ROLE</th>
+<th>ACTION</th>
+
+</tr>
+
+</thead>
+
+<tbody id="userBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+STORAGE
+========================= */
+
+let users =
+
+JSON.parse(
+localStorage.getItem('users')
+) || [];
+
+/* =========================
+SAVE USER
+========================= */
+
+function saveUser(){
+
+if(
+username.value === '' ||
+password.value === '' ||
+role.value === ''
+){
+
+alert('Complete all fields');
+
+return;
+
+}
+
+let data = {
+
+username:username.value,
+
+password:password.value,
+
+role:role.value
+
+};
+
+users.push(data);
+
+localStorage.setItem(
+'users',
+JSON.stringify(users)
+);
+
+alert('User Saved');
+
+renderUsers();
+
+clearForm();
+
+}
+
+/* =========================
+RENDER USERS
+========================= */
+
+function renderUsers(){
+
+userBody.innerHTML='';
+
+if(users.length===0){
+
+userBody.innerHTML=`
+
+<tr>
+
+<td colspan="4">
+
+NO USER FOUND
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+users.forEach((user,index)=>{
+
+let roleClass =
+
+user.role === 'admin'
+? 'role-admin'
+: 'role-employee';
+
+userBody.innerHTML += `
+
+<tr>
+
+<td>
+${user.username}
+</td>
+
+<td>
+${user.password}
+</td>
+
+<td class="${roleClass}">
+${user.role.toUpperCase()}
+</td>
+
+<td>
+
+<button
+class="btn delete-btn"
+onclick="deleteUser(${index})">
+
+DELETE
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* =========================
+DELETE USER
+========================= */
+
+function deleteUser(index){
+
+let confirmDelete = confirm(
+'Delete User?'
+);
+
+if(confirmDelete){
+
+users.splice(index,1);
+
+localStorage.setItem(
+'users',
+JSON.stringify(users)
+);
+
+renderUsers();
+
+}
+
+}
+
+/* =========================
+CLEAR
+========================= */
+
+function clearForm(){
+
+username.value='';
+
+password.value='';
+
+role.value='';
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
+
+renderUsers();
+
+</script>
+
+</body>
+</html>
