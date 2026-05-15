@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="manifest" href="manifest.json">
 
+<meta name="theme-color" content="#ffcc00">
+
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>HR System Dashboard</title>
 
 <meta name="viewport"
@@ -758,6 +762,16 @@ AUTO LOAD
 loadDashboard();
 
 </script>
+<script>
 
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register(
+"service-worker.js"
+);
+
+}
+
+</script>
 </body>
 </html>
