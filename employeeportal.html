@@ -9,6 +9,10 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+/* =========================
+GLOBAL
+========================= */
+
 *{
 margin:0;
 padding:0;
@@ -20,9 +24,12 @@ body{
 background:#1f1f1f;
 padding:15px;
 color:white;
+overflow-x:hidden;
 }
 
-/* CONTAINER */
+/* =========================
+CONTAINER
+========================= */
 
 .container{
 
@@ -39,7 +46,9 @@ border-radius:15px;
 overflow:hidden;
 }
 
-/* HEADER */
+/* =========================
+HEADER
+========================= */
 
 .header{
 
@@ -59,6 +68,8 @@ justify-content:space-between;
 align-items:center;
 
 flex-wrap:wrap;
+
+gap:10px;
 }
 
 .title{
@@ -70,7 +81,9 @@ font-weight:bold;
 color:black;
 }
 
-/* BUTTON */
+/* =========================
+BUTTON
+========================= */
 
 .btn{
 
@@ -129,13 +142,13 @@ background:#990000;
 color:white;
 }
 
-/* FORM */
+/* =========================
+FORM
+========================= */
 
 .form-section{
 padding:20px;
 }
-
-/* EMPLOYEE INFO */
 
 .emp-info{
 
@@ -153,8 +166,6 @@ line-height:1.8;
 
 font-size:15px;
 }
-
-/* GRID */
 
 .form-grid{
 
@@ -183,7 +194,9 @@ background:#1f1f1f;
 color:white;
 }
 
-/* TABLE */
+/* =========================
+TABLE
+========================= */
 
 .table-wrapper{
 
@@ -226,7 +239,9 @@ td{
 color:black;
 }
 
-/* STATUS */
+/* =========================
+STATUS
+========================= */
 
 .pending{
 color:orange;
@@ -243,7 +258,9 @@ color:red;
 font-weight:bold;
 }
 
-/* PAYSLIP */
+/* =========================
+PAYSLIP FIXED
+========================= */
 
 .payslip{
 
@@ -251,24 +268,30 @@ display:none;
 
 margin:30px auto;
 
-width:85mm;
+width:100%;
 
-min-height:130mm;
+max-width:340px;
 
 background:white;
 
 color:black;
 
-padding:10px;
+padding:12px;
 
 border-radius:15px;
 
 border:2px solid #cc9900;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
+
+overflow:hidden;
+
+word-wrap:break-word;
 }
 
-/* COMPANY */
+/* =========================
+COMPANY
+========================= */
 
 .company{
 
@@ -295,13 +318,15 @@ font-size:9px;
 font-weight:bold;
 }
 
-/* INFO */
+/* =========================
+INFO
+========================= */
 
 .info{
 
 font-size:9px;
 
-line-height:1.5;
+line-height:1.6;
 
 padding:6px;
 
@@ -312,9 +337,13 @@ border:1px solid #ffcc00;
 border-radius:8px;
 
 margin-bottom:8px;
+
+overflow-wrap:break-word;
 }
 
-/* PAY TABLE */
+/* =========================
+PAY TABLE FIX
+========================= */
 
 .payroll-table{
 
@@ -325,6 +354,8 @@ border-collapse:collapse;
 font-size:8px;
 
 margin-top:5px;
+
+table-layout:fixed;
 }
 
 .payroll-table th{
@@ -333,17 +364,43 @@ background:#ffcc00;
 
 color:black;
 
-padding:4px;
+padding:5px;
+
+font-size:8px;
 }
 
 .payroll-table td{
 
 border:1px solid #999;
 
-padding:4px;
+padding:5px;
+
+font-size:8px;
+
+overflow:hidden;
+
+word-break:break-word;
 }
 
-/* NET PAY */
+.payroll-table td:first-child,
+.payroll-table th:first-child{
+
+width:60%;
+
+text-align:left;
+}
+
+.payroll-table td:last-child,
+.payroll-table th:last-child{
+
+width:40%;
+
+text-align:right;
+}
+
+/* =========================
+NET PAY
+========================= */
 
 .netpay{
 
@@ -355,24 +412,30 @@ background:#008000;
 
 color:white;
 
-font-size:12px;
+font-size:11px;
 
 font-weight:bold;
 
 border-radius:8px;
 
 text-align:right;
+
+overflow:hidden;
 }
 
-/* SIGN */
+/* =========================
+SIGNATURE
+========================= */
 
 .signature{
 
-margin-top:20px;
+margin-top:18px;
 
 display:flex;
 
 justify-content:space-between;
+
+gap:10px;
 
 font-size:8px;
 }
@@ -381,14 +444,58 @@ font-size:8px;
 
 border-top:1px solid black;
 
-width:70px;
+width:80px;
 
 padding-top:4px;
 
 text-align:center;
 }
 
-/* PRINT */
+/* =========================
+MOBILE FIX
+========================= */
+
+@media(max-width:768px){
+
+.title{
+font-size:22px;
+}
+
+.payslip{
+
+max-width:100%;
+
+padding:10px;
+}
+
+.payroll-table{
+
+font-size:7px;
+}
+
+.payroll-table th,
+.payroll-table td{
+
+padding:4px;
+}
+
+.netpay{
+
+font-size:10px;
+}
+
+.line{
+
+width:65px;
+
+font-size:7px;
+}
+
+}
+
+/* =========================
+PRINT FIX
+========================= */
 
 @media print{
 
@@ -417,16 +524,24 @@ display:block !important;
 margin:auto;
 
 box-shadow:none;
+
+width:85mm;
+
+max-width:85mm;
+
+min-height:auto;
+
+overflow:visible;
 }
 
+.payroll-table{
+
+font-size:8px;
 }
 
-/* MOBILE */
+.payroll-table td{
 
-@media(max-width:768px){
-
-.title{
-font-size:22px;
+white-space:normal;
 }
 
 }
@@ -630,8 +745,8 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Gross Pay</td>
-<td id="payGross">0.00</td>
+<td>Basic Pay</td>
+<td id="payBasic">0.00</td>
 </tr>
 
 <tr>
@@ -640,7 +755,7 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Holiday</td>
+<td>Holiday Pay</td>
 <td id="payHoliday">0.00</td>
 </tr>
 
@@ -674,7 +789,7 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Total</td>
+<td>Total Deduction</td>
 <td id="payDeduction">0.00</td>
 </tr>
 
@@ -1095,8 +1210,8 @@ pay.employee || '';
 payDate.innerText =
 pay.date || '';
 
-payGross.innerText =
-Number(pay.gross || 0)
+payBasic.innerText =
+Number(pay.basicpay || 0)
 .toFixed(2);
 
 payOvertime.innerText =
