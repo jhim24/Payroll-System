@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="manifest" href="manifest.json">
+
+<title>HR SYSTEM LOGIN</title>
+
+<link rel="manifest" href="/manifest.json">
+
+<link rel="icon" href="/logo.png">
+
+<link rel="apple-touch-icon" href="/icon-192.png">
 
 <meta name="theme-color" content="#ffcc00">
-
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>HR SYSTEM LOGIN</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -282,7 +286,7 @@ HR SYSTEM
 </div>
 
 <div class="subtitle">
-Professional Firebase Login
+Professional Firebase Authentication Login
 </div>
 
 <select id="role">
@@ -302,9 +306,9 @@ EMPLOYEE
 </select>
 
 <input
-type="text"
-id="username"
-placeholder="Username">
+type="email"
+id="email"
+placeholder="Email">
 
 <div class="password-box">
 
@@ -355,7 +359,7 @@ Please wait...
 
 <div class="footer">
 
-Powered by Firebase Realtime HR System
+Powered by Firebase Authentication HR System
 
 </div>
 
@@ -374,18 +378,18 @@ initializeApp
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
 
-getFirestore,
-collection,
-getDocs
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged
 
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 /* =========================
 FIREBASE CONFIG
@@ -420,33 +424,28 @@ INIT
 const app =
 initializeApp(firebaseConfig);
 
-const db =
-getFirestore(app);
+const auth =
+getAuth(app);
 
 /* =========================
 AUTO LOGIN CHECK
 ========================= */
 
-let savedUser =
+onAuthStateChanged(auth,(user)=>{
 
-localStorage.getItem(
-'loggedInUser'
-);
+if(user){
 
-let savedRole =
-
+let role =
 localStorage.getItem(
 'userRole'
 );
 
-if(savedUser && savedRole){
-
-if(savedRole === 'admin'){
+if(role === 'admin'){
 
 window.location.href =
 'index.html';
 
-}else{
+}else if(role === 'employee'){
 
 window.location.href =
 'employeeportal.html';
@@ -454,6 +453,8 @@ window.location.href =
 }
 
 }
+
+});
 
 /* =========================
 SHOW PASSWORD
@@ -483,7 +484,8 @@ pass.type = 'password';
 LOGIN
 ========================= */
 
-window.login = async function(){
+window.login =
+async function(){
 
 let role =
 
@@ -491,10 +493,10 @@ document.getElementById(
 'role'
 ).value;
 
-let username =
+let email =
 
 document.getElementById(
-'username'
+'email'
 ).value.trim();
 
 let password =
@@ -505,7 +507,7 @@ document.getElementById(
 
 if(
 role === '' ||
-username === '' ||
+email === '' ||
 password === ''
 ){
 
@@ -524,40 +526,24 @@ loading.style.display =
 
 try{
 
-let querySnapshot =
+await signInWithEmailAndPassword(
 
-await getDocs(
-collection(db,'users')
+auth,
+email,
+password
+
 );
 
-let found = false;
-
-querySnapshot.forEach(doc=>{
-
-let user = doc.data();
-
-if(
-
-user.role === role &&
-
-user.username === username &&
-
-user.password === password
-
-){
-
-found = true;
-
-/* SAVE SESSION */
-
-localStorage.setItem(
-'loggedInUser',
-username
-);
+/* SAVE ROLE */
 
 localStorage.setItem(
 'userRole',
 role
+);
+
+localStorage.setItem(
+'loggedInUser',
+email
 );
 
 /* REMEMBER */
@@ -568,7 +554,7 @@ remember.checked
 
 localStorage.setItem(
 'rememberUser',
-username
+email
 );
 
 }
@@ -587,31 +573,14 @@ window.location.href =
 
 }
 
-}
-
-});
-
-loading.style.display =
-'none';
-
-if(!found){
-
-alert(
-'Invalid Login'
-);
-
-}
-
 }catch(error){
 
-console.log(error);
+alert(
+error.message
+);
 
 loading.style.display =
 'none';
-
-alert(
-'Firebase Connection Error'
-);
 
 }
 
@@ -629,10 +598,22 @@ localStorage.getItem(
 
 if(remembered){
 
-username.value =
+email.value =
 remembered;
 
 remember.checked = true;
+
+}
+
+/* =========================
+SERVICE WORKER
+========================= */
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register(
+"/service-worker.js"
+);
 
 }
 
