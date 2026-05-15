@@ -204,7 +204,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1400px;
+min-width:1100px;
 }
 
 th,
@@ -253,19 +253,19 @@ PAYSLIP FINAL FIX
 
 display:none;
 
-margin:30px auto;
+margin:20px auto;
 
-width:100%;
+width:95mm;
 
-max-width:360px;
+min-height:145mm;
 
 background:white;
 
 color:black;
 
-padding:12px;
+padding:10px;
 
-border-radius:15px;
+border-radius:18px;
 
 border:2px solid #cc9900;
 
@@ -274,8 +274,8 @@ box-shadow:0 5px 15px rgba(0,0,0,0.4);
 overflow:visible;
 
 word-break:break-word;
-}
 
+}
 /* COMPANY */
 
 .company{
@@ -332,11 +332,12 @@ width:100%;
 
 border-collapse:collapse;
 
-font-size:9px;
+font-size:8px;
 
-margin-top:6px;
+margin-top:5px;
 
-table-layout:auto;
+table-layout:fixed;
+
 }
 
 .payroll-table th{
@@ -354,13 +355,12 @@ font-size:9px;
 
 border:1px solid #999;
 
-padding:6px;
+padding:4px;
 
-font-size:9px;
-
-white-space:normal;
+font-size:8px;
 
 word-break:break-word;
+
 }
 
 /* COLUMN SIZE */
@@ -368,17 +368,21 @@ word-break:break-word;
 .payroll-table td:first-child,
 .payroll-table th:first-child{
 
-width:65%;
+width:68%;
 
 text-align:left;
+
 }
 
 .payroll-table td:last-child,
 .payroll-table th:last-child{
 
-width:35%;
+width:32%;
 
 text-align:right;
+
+font-weight:bold;
+
 }
 
 /* NETPAY */
@@ -460,13 +464,14 @@ margin:auto;
 
 box-shadow:none;
 
-width:90mm;
+width:95mm;
 
-max-width:90mm;
+max-width:95mm;
 
-overflow:visible;
+min-height:145mm;
 
-page-break-inside:avoid;
+overflow:hidden;
+
 }
 
 .payroll-table{
@@ -493,35 +498,42 @@ font-size:22px;
 
 .payslip{
 
-max-width:100%;
+width:95mm;
 
-padding:10px;
+max-width:95mm;
+
+padding:8px;
+
+margin:auto;
+
 }
 
 .payroll-table{
 
-font-size:8px;
+font-size:7px;
+
 }
 
 .payroll-table th,
 .payroll-table td{
 
-padding:5px;
+padding:3px;
+
 }
 
 .netpay{
 
 font-size:11px;
+
 }
 
 .line{
 
 width:70px;
-}
 
 }
 
-</style>
+}
 
 </head>
 
