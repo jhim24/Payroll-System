@@ -3,7 +3,7 @@
 <head>
 <title>HR System Dashboard</title>
 
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="/manifest.json">
 
 <link rel="icon" href="logo.png">
 
@@ -765,14 +765,17 @@ loadDashboard();
 </script>
 <script>
 
-if("serviceWorker" in navigator){
+window.addEventListener(
+'beforeinstallprompt',
+(e)=>{
 
-navigator.serviceWorker.register(
-"service-worker.js"
+console.log(
+'INSTALL READY'
 );
 
-}
+});
 
+</script>
 </script>
 </body>
 </html>
