@@ -5,8 +5,7 @@
 
 <link rel="manifest" href="/manifest.json">
 
-<link rel="icon" href="logo.png">
-
+<link rel="icon" href="/logo.png">
 <meta name="theme-color" content="#ffcc00">
 
 <meta name="viewport"
@@ -765,6 +764,14 @@ loadDashboard();
 </script>
 <script>
 
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register(
+"/service-worker.js"
+);
+
+}
+
 window.addEventListener(
 'beforeinstallprompt',
 (e)=>{
@@ -775,7 +782,6 @@ console.log(
 
 });
 
-</script>
 </script>
 </body>
 </html>
