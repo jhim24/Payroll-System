@@ -22,9 +22,11 @@ padding:15px;
 color:white;
 }
 
+/* CONTAINER */
+
 .container{
 
-max-width:1200px;
+max-width:1400px;
 
 margin:auto;
 
@@ -93,11 +95,11 @@ transform:scale(1.03);
 }
 
 .logout-btn{
-background:#990000;
+background:#cc0000;
 color:white;
 }
 
-.save-btn{
+.submit-btn{
 background:#008000;
 color:white;
 }
@@ -107,21 +109,23 @@ background:#ff8800;
 color:black;
 }
 
-.print-btn{
-background:#0066cc;
-color:white;
-}
-
 .close-btn{
 background:#444;
 color:white;
 }
 
-/* EMPLOYEE INFO */
+.print-btn{
+background:#0066cc;
+color:white;
+}
+
+/* FORM */
 
 .form-section{
 padding:20px;
 }
+
+/* EMPLOYEE INFO */
 
 .emp-info{
 
@@ -133,12 +137,14 @@ border-radius:10px;
 
 border:2px solid #ffcc00;
 
-margin-bottom:15px;
+margin-bottom:20px;
 
 line-height:1.8;
+
+font-size:15px;
 }
 
-/* FORM */
+/* GRID */
 
 .form-grid{
 
@@ -171,7 +177,7 @@ color:white;
 
 .table-wrapper{
 
-margin-top:20px;
+margin-top:25px;
 
 overflow:auto;
 
@@ -180,17 +186,17 @@ background:white;
 border-radius:10px;
 }
 
-.main-table{
+table{
 
 width:100%;
 
 border-collapse:collapse;
 
-min-width:1000px;
+min-width:1200px;
 }
 
-.main-table th,
-.main-table td{
+th,
+td{
 
 border:1px solid #999;
 
@@ -199,14 +205,14 @@ padding:10px;
 text-align:center;
 }
 
-.main-table th{
+th{
 
 background:#ffcc00;
 
 color:black;
 }
 
-.main-table td{
+td{
 color:black;
 }
 
@@ -231,31 +237,25 @@ font-weight:bold;
 
 .payslip{
 
-margin-top:25px;
+display:none;
+
+margin:30px auto;
+
+width:85mm;
+
+min-height:130mm;
 
 background:white;
 
-padding:12px;
-
-border-radius:18px;
-
 color:black;
 
-display:none;
+padding:10px;
 
-border:3px solid #cc9900;
+border-radius:15px;
 
-box-shadow:
-0 5px 15px rgba(0,0,0,0.4);
+border:2px solid #cc9900;
 
-width:340px;
-
-min-height:520px;
-
-margin-left:auto;
-margin-right:auto;
-
-overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
 }
 
 /* COMPANY */
@@ -264,25 +264,23 @@ overflow:hidden;
 
 text-align:center;
 
-margin-bottom:10px;
-
-padding-bottom:8px;
-
 border-bottom:2px solid #ffcc00;
+
+padding-bottom:5px;
+
+margin-bottom:8px;
 }
 
 .company h2{
 
-font-size:24px;
-
-font-weight:bold;
+font-size:18px;
 
 color:#660000;
 }
 
 .company p{
 
-font-size:11px;
+font-size:9px;
 
 font-weight:bold;
 }
@@ -291,22 +289,22 @@ font-weight:bold;
 
 .info{
 
-font-size:11px;
+font-size:9px;
 
-line-height:1.7;
+line-height:1.5;
 
-margin-bottom:10px;
+padding:6px;
 
 background:#fff5f0;
 
-padding:10px;
+border:1px solid #ffcc00;
 
-border-radius:10px;
+border-radius:8px;
 
-border:2px solid #e6a36d;
+margin-bottom:8px;
 }
 
-/* PAYROLL TABLE */
+/* PAY TABLE */
 
 .payroll-table{
 
@@ -314,119 +312,75 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:8px;
+font-size:8px;
 
-font-size:11px;
-
-table-layout:fixed;
+margin-top:5px;
 }
 
 .payroll-table th{
 
-background:#e6a000;
+background:#ffcc00;
 
 color:black;
 
-padding:7px;
-
-border:1px solid #999;
+padding:4px;
 }
 
 .payroll-table td{
 
-padding:7px;
-
 border:1px solid #999;
 
-font-size:11px;
-
-font-weight:bold;
-
-word-break:break-word;
+padding:4px;
 }
 
-.payroll-table td:first-child{
-
-width:65%;
-}
-
-.payroll-table td:last-child{
-
-width:35%;
-
-text-align:right;
-}
-
-/* NET */
+/* NET PAY */
 
 .netpay{
 
-margin-top:10px;
+margin-top:8px;
 
-padding:10px;
+padding:8px;
 
-background:#009900;
+background:#008000;
 
 color:white;
 
-border-radius:8px;
-
-font-size:18px;
+font-size:12px;
 
 font-weight:bold;
+
+border-radius:8px;
 
 text-align:right;
 }
 
-/* SIGNATURE */
+/* SIGN */
 
 .signature{
 
-margin-top:35px;
+margin-top:20px;
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:10px;
+font-size:8px;
 }
 
 .line{
 
-margin-top:25px;
-
 border-top:1px solid black;
 
-width:110px;
-
-text-align:center;
+width:70px;
 
 padding-top:4px;
 
-font-weight:bold;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.payslip{
-
-width:100%;
-
-max-width:340px;
-}
-
+text-align:center;
 }
 
 /* PRINT */
 
 @media print{
-
-@page{
-size:A4 portrait;
-margin:5mm;
-}
 
 body{
 background:white;
@@ -436,18 +390,13 @@ padding:0;
 .header,
 .form-grid,
 .table-wrapper,
-.logout-btn,
-.save-btn,
-.view-btn,
-.print-btn,
-.close-btn{
+.emp-info,
+.action-buttons{
 display:none !important;
 }
 
 .container{
-
 border:none;
-
 background:white;
 }
 
@@ -458,6 +407,16 @@ display:block !important;
 margin:auto;
 
 box-shadow:none;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.title{
+font-size:22px;
 }
 
 }
@@ -478,16 +437,6 @@ box-shadow:none;
 👨‍💼 EMPLOYEE PORTAL
 </div>
 
-<div style="display:flex;gap:10px;flex-wrap:wrap;">
-
-<button
-class="btn print-btn"
-onclick="printPayslip()">
-
-🖨 PRINT
-
-</button>
-
 <button
 class="btn logout-btn"
 onclick="logout()">
@@ -498,10 +447,6 @@ onclick="logout()">
 
 </div>
 
-</div>
-
-<!-- FORM -->
-
 <div class="form-section">
 
 <!-- EMPLOYEE INFO -->
@@ -509,22 +454,28 @@ onclick="logout()">
 <div class="emp-info">
 
 <div>
+
 <b>EMPLOYEE ID :</b>
+
 <span id="empIdDisplay">
 -
 </span>
+
 </div>
 
 <div>
+
 <b>EMPLOYEE NAME :</b>
+
 <span id="empNameDisplay">
 -
 </span>
-</div>
 
 </div>
 
-<!-- REQUEST -->
+</div>
+
+<!-- FORM -->
 
 <div class="form-grid">
 
@@ -551,7 +502,7 @@ id="requestDate">
 <input
 type="number"
 id="days"
-placeholder="Number of Days">
+placeholder="Days">
 
 <textarea
 id="reason"
@@ -561,10 +512,12 @@ placeholder="Reason"></textarea>
 
 <br>
 
-<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<div
+class="action-buttons"
+style="display:flex;gap:10px;flex-wrap:wrap;">
 
 <button
-class="btn save-btn"
+class="btn submit-btn"
 onclick="submitRequest()">
 
 SUBMIT REQUEST
@@ -583,7 +536,15 @@ onclick="loadPayslip()">
 class="btn close-btn"
 onclick="closePayslip()">
 
-❌ CLOSE
+❌ CLOSE PAYSLIP
+
+</button>
+
+<button
+class="btn print-btn"
+onclick="printPayslip()">
+
+🖨 PRINT PAYSLIP
 
 </button>
 
@@ -593,7 +554,7 @@ onclick="closePayslip()">
 
 <div class="table-wrapper">
 
-<table class="main-table">
+<table>
 
 <thead>
 
@@ -668,7 +629,7 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Holiday Pay</td>
+<td>Holiday</td>
 <td id="payHoliday">0.00</td>
 </tr>
 
@@ -702,7 +663,7 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Total Deduction</td>
+<td>Total</td>
 <td id="payDeduction">0.00</td>
 </tr>
 
@@ -711,7 +672,7 @@ id="payslipArea">
 <div class="netpay">
 
 NET PAY :
-<span id="payNet">
+₱ <span id="payNet">
 0.00
 </span>
 
@@ -720,11 +681,11 @@ NET PAY :
 <div class="signature">
 
 <div class="line">
-Employer
+HR Signature
 </div>
 
 <div class="line">
-Employee
+Employee Signature
 </div>
 
 </div>
@@ -754,8 +715,8 @@ import {
 
 getFirestore,
 collection,
-addDoc,
-getDocs
+getDocs,
+addDoc
 
 }
 
@@ -820,19 +781,30 @@ querySnapshot.forEach(doc=>{
 
 let emp = doc.data();
 
-if(emp.employeeid === currentUser){
-
-currentEmployee = {
-
-id: emp.employeeid,
-
-name:
+let fullname =
 
 (emp.firstname || '') + ' ' +
 
 (emp.middlename || '') + ' ' +
 
-(emp.lastname || '')
+(emp.lastname || '');
+
+if(
+
+(emp.employeeid || '')
+.trim()
+
+===
+
+currentUser.trim()
+
+){
+
+currentEmployee = {
+
+id: emp.employeeid,
+
+name: fullname
 
 };
 
@@ -850,6 +822,12 @@ currentEmployee.name;
 
 loadRequests();
 
+}else{
+
+alert(
+'Employee account not found'
+);
+
 }
 
 }
@@ -863,7 +841,7 @@ SUBMIT REQUEST
 window.submitRequest =
 async function(){
 
-if(requestType.value === ''){
+if(requestType.value===''){
 
 alert(
 'Select Request Type'
@@ -873,9 +851,8 @@ return;
 
 }
 
-try{
-
 await addDoc(
+
 collection(db,'employeeRequests'),
 
 {
@@ -911,16 +888,6 @@ alert(
 
 loadRequests();
 
-}catch(error){
-
-console.log(error);
-
-alert(
-'Firebase Error'
-);
-
-}
-
 }
 
 /* =========================
@@ -941,20 +908,30 @@ querySnapshot.forEach(doc=>{
 
 let req = doc.data();
 
-if(req.empid === currentEmployee.id){
+if(
+req.empid ===
+currentEmployee.id
+){
 
 let statusClass =
-req.status.toLowerCase();
+
+(req.status || '')
+.toLowerCase();
 
 requestBody.innerHTML += `
 
 <tr>
 
 <td>${req.empid}</td>
+
 <td>${req.employee}</td>
+
 <td>${req.type}</td>
+
 <td>${req.date}</td>
+
 <td>${req.days}</td>
+
 <td>${req.reason}</td>
 
 <td class="${statusClass}">
@@ -991,30 +968,22 @@ querySnapshot.forEach(doc=>{
 let pay = doc.data();
 
 if(
-
-(pay.employee || '')
-.trim()
-
-===
-
-currentEmployee.name
-.trim()
-
+pay.empid ===
+currentEmployee.id
 ){
 
 found = true;
 
-payslipArea.style.display =
-'block';
+payslipArea.style.display='block';
 
 payEmpId.innerText =
-currentEmployee.id;
+pay.empid || '';
 
 payEmp.innerText =
-pay.employee || '-';
+pay.employee || '';
 
 payDate.innerText =
-new Date().toDateString();
+pay.date || '';
 
 payGross.innerText =
 Number(pay.gross || 0)
@@ -1073,8 +1042,7 @@ CLOSE PAYSLIP
 window.closePayslip =
 function(){
 
-payslipArea.style.display =
-'none';
+payslipArea.style.display='none';
 
 }
 
@@ -1093,11 +1061,8 @@ window.print();
 LOGOUT
 ========================= */
 
-window.logout = function(){
-
-if(confirm(
-'Logout Account?'
-)){
+window.logout =
+function(){
 
 localStorage.removeItem(
 'loggedInUser'
@@ -1109,8 +1074,6 @@ localStorage.removeItem(
 
 window.location.href =
 'login.html';
-
-}
 
 }
 
