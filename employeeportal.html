@@ -2,7 +2,10 @@
 <html>
 <head>
 
-<title>Employee Request Portal</title>
+<title>Employee Portal</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <style>
 
@@ -38,7 +41,8 @@ overflow:hidden;
 
 .header{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ffcc00,
 #ff8800
@@ -88,8 +92,8 @@ transition:0.3s;
 transform:scale(1.03);
 }
 
-.back-btn{
-background:#0066cc;
+.logout-btn{
+background:#990000;
 color:white;
 }
 
@@ -98,18 +102,13 @@ background:#008000;
 color:white;
 }
 
-.print-btn{
-background:#cc0000;
-color:white;
-}
-
 .view-btn{
 background:#ff8800;
 color:black;
 }
 
-.logout-btn{
-background:#990000;
+.print-btn{
+background:#0066cc;
 color:white;
 }
 
@@ -118,11 +117,28 @@ background:#444;
 color:white;
 }
 
-/* FORM */
+/* EMPLOYEE INFO */
 
 .form-section{
 padding:20px;
 }
+
+.emp-info{
+
+background:#1a1a1a;
+
+padding:15px;
+
+border-radius:10px;
+
+border:2px solid #ffcc00;
+
+margin-bottom:15px;
+
+line-height:1.8;
+}
+
+/* FORM */
 
 .form-grid{
 
@@ -151,26 +167,7 @@ background:#1f1f1f;
 color:white;
 }
 
-/* EMPLOYEE INFO */
-
-.emp-info{
-
-background:#1a1a1a;
-
-padding:15px;
-
-border-radius:10px;
-
-border:2px solid #ffcc00;
-
-margin-bottom:15px;
-
-line-height:1.8;
-
-font-size:15px;
-}
-
-/* REQUEST TABLE */
+/* TABLE */
 
 .table-wrapper{
 
@@ -230,9 +227,7 @@ color:red;
 font-weight:bold;
 }
 
-/* =========================
-PAYSLIP
-========================= */
+/* PAYSLIP */
 
 .payslip{
 
@@ -250,7 +245,8 @@ display:none;
 
 border:3px solid #cc9900;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.4);
+box-shadow:
+0 5px 15px rgba(0,0,0,0.4);
 
 width:340px;
 
@@ -260,7 +256,6 @@ margin-left:auto;
 margin-right:auto;
 
 overflow:hidden;
-
 }
 
 /* COMPANY */
@@ -290,8 +285,6 @@ color:#660000;
 font-size:11px;
 
 font-weight:bold;
-
-letter-spacing:1px;
 }
 
 /* INFO */
@@ -311,8 +304,6 @@ padding:10px;
 border-radius:10px;
 
 border:2px solid #e6a36d;
-
-word-break:break-word;
 }
 
 /* PAYROLL TABLE */
@@ -328,7 +319,6 @@ margin-top:8px;
 font-size:11px;
 
 table-layout:fixed;
-
 }
 
 .payroll-table th{
@@ -339,10 +329,6 @@ color:black;
 
 padding:7px;
 
-font-size:11px;
-
-text-align:center;
-
 border:1px solid #999;
 }
 
@@ -352,13 +338,9 @@ padding:7px;
 
 border:1px solid #999;
 
-background:white;
-
-font-weight:bold;
-
 font-size:11px;
 
-overflow:hidden;
+font-weight:bold;
 
 word-break:break-word;
 }
@@ -366,8 +348,6 @@ word-break:break-word;
 .payroll-table td:first-child{
 
 width:65%;
-
-text-align:left;
 }
 
 .payroll-table td:last-child{
@@ -375,11 +355,9 @@ text-align:left;
 width:35%;
 
 text-align:right;
-
-white-space:nowrap;
 }
 
-/* NET PAY */
+/* NET */
 
 .netpay{
 
@@ -437,9 +415,6 @@ font-weight:bold;
 width:100%;
 
 max-width:340px;
-
-min-height:auto;
-
 }
 
 }
@@ -460,12 +435,11 @@ padding:0;
 
 .header,
 .form-grid,
-.save-btn,
 .table-wrapper,
-.back-btn,
+.logout-btn,
+.save-btn,
 .view-btn,
 .print-btn,
-.logout-btn,
 .close-btn{
 display:none !important;
 }
@@ -475,21 +449,13 @@ display:none !important;
 border:none;
 
 background:white;
-
-box-shadow:none;
 }
 
 .payslip{
 
 display:block !important;
 
-width:340px;
-
-min-height:520px;
-
 margin:auto;
-
-border:2px solid #cc9900;
 
 box-shadow:none;
 }
@@ -504,27 +470,21 @@ box-shadow:none;
 
 <div class="container">
 
+<!-- HEADER -->
+
 <div class="header">
 
 <div class="title">
-👨‍💼 EMPLOYEE REQUEST
+👨‍💼 EMPLOYEE PORTAL
 </div>
 
 <div style="display:flex;gap:10px;flex-wrap:wrap;">
 
 <button
-class="btn back-btn"
-onclick="window.location.href='index.html'">
-
-← BACK
-
-</button>
-
-<button
 class="btn print-btn"
 onclick="printPayslip()">
 
-🖨 PRINT PAYSLIP
+🖨 PRINT
 
 </button>
 
@@ -539,6 +499,8 @@ onclick="logout()">
 </div>
 
 </div>
+
+<!-- FORM -->
 
 <div class="form-section">
 
@@ -621,7 +583,7 @@ onclick="loadPayslip()">
 class="btn close-btn"
 onclick="closePayslip()">
 
-❌ CLOSE PAYSLIP
+❌ CLOSE
 
 </button>
 
@@ -711,18 +673,8 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Sick Leave</td>
-<td id="paySick">0.00</td>
-</tr>
-
-<tr>
-<td>Birthday Leave</td>
-<td id="payBirthday">0.00</td>
-</tr>
-
-<tr>
-<td>Vacation Leave</td>
-<td id="payVacation">0.00</td>
+<td>Allowance</td>
+<td id="payAllowance">0.00</td>
 </tr>
 
 </table>
@@ -747,16 +699,6 @@ id="payslipArea">
 <tr>
 <td>Pag-IBIG</td>
 <td id="payPagibig">0.00</td>
-</tr>
-
-<tr>
-<td>Health Card</td>
-<td id="payHealth">0.00</td>
-</tr>
-
-<tr>
-<td>Other Deduction</td>
-<td id="payOther">0.00</td>
 </tr>
 
 <tr>
@@ -793,57 +735,110 @@ Employee
 
 </div>
 
-<script>
+<script type="module">
 
-/* CURRENT USER */
+/* =========================
+FIREBASE
+========================= */
+
+import {
+
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+getDocs
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+/* CONFIG */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
+
+projectId:
+"hr-system-38fc3",
+
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+CURRENT USER
+========================= */
 
 let currentUser =
+
 localStorage.getItem(
 'loggedInUser'
 ) || '';
 
-/* EMPLOYEES */
-
-let employees =
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
 let currentEmployee = null;
 
-employees.forEach(emp=>{
+/* =========================
+LOAD EMPLOYEE
+========================= */
 
-let fullname = [
+async function loadEmployee(){
 
-emp[0] || '',
-emp[1] || '',
-emp[2] || ''
+let querySnapshot =
 
-].join(' ')
-.replace(/\s+/g,' ')
-.trim();
+await getDocs(
+collection(db,'employees')
+);
 
-let username =
+querySnapshot.forEach(doc=>{
 
-(emp[18] || '')
-.replace(/\s+/g,' ')
-.trim();
+let emp = doc.data();
 
-if(username === currentUser){
+if(emp.employeeid === currentUser){
 
 currentEmployee = {
 
-id: emp[18] || 'NO-ID',
+id: emp.employeeid,
 
-name: fullname
+name:
+
+(emp.firstname || '') + ' ' +
+
+(emp.middlename || '') + ' ' +
+
+(emp.lastname || '')
 
 };
 
 }
 
 });
-
-/* DISPLAY */
 
 if(currentEmployee){
 
@@ -853,93 +848,100 @@ currentEmployee.id;
 empNameDisplay.innerText =
 currentEmployee.name;
 
+loadRequests();
+
 }
 
-/* REQUEST STORAGE */
+}
 
-let requests =
+loadEmployee();
 
-JSON.parse(
-localStorage.getItem('employeeRequests')
-) || [];
+/* =========================
+SUBMIT REQUEST
+========================= */
 
-/* SUBMIT */
+window.submitRequest =
+async function(){
 
-function submitRequest(){
+if(requestType.value === ''){
 
-if(requestType.value===''){
-
-alert('Select Request Type');
+alert(
+'Select Request Type'
+);
 
 return;
 
 }
 
-let data = {
+try{
 
-empid:currentEmployee.id,
+await addDoc(
+collection(db,'employeeRequests'),
 
-employee:currentEmployee.name,
+{
 
-type:requestType.value,
+empid:
+currentEmployee.id,
 
-date:requestDate.value,
+employee:
+currentEmployee.name,
 
-days:days.value,
+type:
+requestType.value,
 
-reason:reason.value,
+date:
+requestDate.value,
 
-status:'PENDING'
+days:
+days.value,
 
-};
+reason:
+reason.value,
 
-requests.push(data);
-
-localStorage.setItem(
-'employeeRequests',
-JSON.stringify(requests)
-);
-
-alert('Request Submitted');
-
-renderRequests();
+status:
+'PENDING'
 
 }
 
-/* RENDER */
+);
 
-function renderRequests(){
+alert(
+'Request Submitted'
+);
+
+loadRequests();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Firebase Error'
+);
+
+}
+
+}
+
+/* =========================
+LOAD REQUESTS
+========================= */
+
+async function loadRequests(){
 
 requestBody.innerHTML='';
 
-let filtered = requests.filter(req=>{
+let querySnapshot =
 
-return req.empid ===
-currentEmployee.id;
+await getDocs(
+collection(db,'employeeRequests')
+);
 
-});
+querySnapshot.forEach(doc=>{
 
-if(filtered.length===0){
+let req = doc.data();
 
-requestBody.innerHTML=`
-
-<tr>
-
-<td colspan="7">
-
-NO REQUEST FOUND
-
-</td>
-
-</tr>
-
-`;
-
-return;
-
-}
-
-filtered.forEach(req=>{
+if(req.empid === currentEmployee.id){
 
 let statusClass =
 req.status.toLowerCase();
@@ -963,43 +965,47 @@ ${req.status}
 
 `;
 
+}
+
 });
 
 }
 
-/* PAYSLIP */
+/* =========================
+LOAD PAYSLIP
+========================= */
 
-function loadPayslip(){
+window.loadPayslip =
+async function(){
 
-let payroll =
+let querySnapshot =
 
-JSON.parse(
-localStorage.getItem('payroll')
-) || [];
+await getDocs(
+collection(db,'payroll')
+);
 
-let pay = payroll.find(p=>{
+let found = false;
 
-return (p.employee || '')
-.replace(/\s+/g,' ')
+querySnapshot.forEach(doc=>{
+
+let pay = doc.data();
+
+if(
+
+(pay.employee || '')
 .trim()
 
 ===
 
 currentEmployee.name
-.replace(/\s+/g,' ')
-.trim();
+.trim()
 
-});
+){
 
-if(!pay){
+found = true;
 
-alert('No Payslip Found');
-
-return;
-
-}
-
-payslipArea.style.display='block';
+payslipArea.style.display =
+'block';
 
 payEmpId.innerText =
 currentEmployee.id;
@@ -1011,70 +1017,86 @@ payDate.innerText =
 new Date().toDateString();
 
 payGross.innerText =
-Number(pay.gross || 0).toFixed(2);
+Number(pay.gross || 0)
+.toFixed(2);
 
 payOvertime.innerText =
-Number(pay.overtime || 0).toFixed(2);
+Number(pay.overtime || 0)
+.toFixed(2);
 
 payHoliday.innerText =
-Number(pay.holiday || 0).toFixed(2);
+Number(pay.holiday || 0)
+.toFixed(2);
 
-paySick.innerText =
-Number(pay.sick || 0).toFixed(2);
-
-payBirthday.innerText =
-Number(pay.birthday || 0).toFixed(2);
-
-payVacation.innerText =
-Number(pay.vacation || 0).toFixed(2);
+payAllowance.innerText =
+Number(pay.allowance || 0)
+.toFixed(2);
 
 paySSS.innerText =
-Number(pay.sss || 0).toFixed(2);
+Number(pay.sss || 0)
+.toFixed(2);
 
 payPhilhealth.innerText =
-Number(pay.philhealth || 0).toFixed(2);
+Number(pay.philhealth || 0)
+.toFixed(2);
 
 payPagibig.innerText =
-Number(pay.pagibig || 0).toFixed(2);
-
-payHealth.innerText =
-Number(pay.health || 0).toFixed(2);
-
-payOther.innerText =
-Number(pay.other || 0).toFixed(2);
+Number(pay.pagibig || 0)
+.toFixed(2);
 
 payDeduction.innerText =
-Number(pay.deductions || 0).toFixed(2);
+Number(pay.deductions || 0)
+.toFixed(2);
 
 payNet.innerText =
-Number(pay.net || 0).toFixed(2);
+Number(pay.net || 0)
+.toFixed(2);
 
 }
 
-/* CLOSE */
+});
 
-function closePayslip(){
+if(!found){
 
-payslipArea.style.display='none';
+alert(
+'No Payslip Found'
+);
 
 }
 
-/* PRINT */
+}
 
-function printPayslip(){
+/* =========================
+CLOSE PAYSLIP
+========================= */
 
-loadPayslip();
+window.closePayslip =
+function(){
+
+payslipArea.style.display =
+'none';
+
+}
+
+/* =========================
+PRINT
+========================= */
+
+window.printPayslip =
+function(){
 
 window.print();
 
 }
 
-/* LOGOUT */
+/* =========================
+LOGOUT
+========================= */
 
-function logout(){
+window.logout = function(){
 
 if(confirm(
-'Are you sure you want to logout?'
+'Logout Account?'
 )){
 
 localStorage.removeItem(
@@ -1091,10 +1113,6 @@ window.location.href =
 }
 
 }
-
-/* AUTO LOAD */
-
-renderRequests();
 
 </script>
 
