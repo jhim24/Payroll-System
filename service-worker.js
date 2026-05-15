@@ -1,4 +1,4 @@
-const CACHE_NAME = "papprito-hr-v2";
+const CACHE_NAME = "papprito-hr-v5";
 
 const urlsToCache = [
 
