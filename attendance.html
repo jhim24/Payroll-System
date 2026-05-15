@@ -1173,6 +1173,7 @@ let filtered = attendance.filter(att=>{
 
 let empMatch =
 emp === '' ||
+att.employee === emp ||
 att.name === emp;
 
 let attDate =
@@ -1228,8 +1229,8 @@ document.createElement('tr');
 row.innerHTML = `
 
 <td>${att.date}</td>
-<td>${att.empid}</td>
-<td>${att.name}</td>
+<td>${att.employeeid || att.empid || '-'}</td>
+<td>${att.employee || att.name || '-'}</td>
 <td>${att.timein}</td>
 <td>${att.breakout}</td>
 <td>${att.breakin}</td>
@@ -1267,7 +1268,9 @@ filtered.length;
 
 employeeId.innerText =
 'EMPLOYEE ID : ' +
-(filtered[0]?.empid || '-');
+(filtered[0]?.employeeid ||
+filtered[0]?.empid ||
+'-');
 
 employeeName.innerText =
 'EMPLOYEE NAME : ' +
