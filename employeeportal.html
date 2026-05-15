@@ -252,54 +252,30 @@ font-weight:bold;
 }
 
 /* =========================
-PAPER
+PAYSLIP 1/4 BOND PAPER
 ========================= */
-
-.paper{
-
-width:190mm;
-
-min-height:270mm;
-
-margin:20px auto;
-
-background:white;
-
-padding:5mm;
-
-display:none;
-
-grid-template-columns:1fr 1fr;
-
-gap:6px;
-
-border-radius:10px;
-
-box-shadow:0 5px 20px rgba(0,0,0,0.5);
-
-}
-
-/* PAYSLIP */
 
 .payslip{
 
-border:2px solid #ffcc00;
+display:none;
 
-border-radius:10px;
+width:95mm;
 
-padding:6px;
+min-height:135mm;
+
+margin:20px auto;
 
 background:#f9f9f9;
 
+border:2px solid #ffcc00;
+
+border-radius:12px;
+
+padding:8px;
+
 color:black;
 
-display:flex;
-
-flex-direction:column;
-
-justify-content:space-between;
-
-min-height:125mm;
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
 
 overflow:hidden;
 
@@ -311,20 +287,18 @@ overflow:hidden;
 
 text-align:center;
 
-margin-bottom:4px;
+padding-bottom:4px;
 
-padding-bottom:3px;
+margin-bottom:5px;
 
 border-bottom:2px solid #ffcc00;
-
 }
 
 .company h2{
 
-font-size:13px;
+font-size:14px;
 
 color:#cc0000;
-
 }
 
 .company p{
@@ -341,17 +315,17 @@ font-weight:bold;
 
 font-size:8px;
 
-line-height:1.4;
+line-height:1.5;
 
 background:#fff8dc;
 
-padding:4px;
+padding:5px;
 
-border-radius:4px;
+border-radius:5px;
 
 border:1px solid #ffcc00;
 
-margin-bottom:4px;
+margin-bottom:5px;
 
 }
 
@@ -365,7 +339,7 @@ border-collapse:collapse;
 
 font-size:7px;
 
-margin-top:3px;
+margin-top:4px;
 
 }
 
@@ -398,7 +372,7 @@ background:white;
 
 margin-top:5px;
 
-padding:5px;
+padding:6px;
 
 background:#008000;
 
@@ -418,7 +392,7 @@ text-align:right;
 
 .signature{
 
-margin-top:8px;
+margin-top:10px;
 
 display:flex;
 
@@ -464,29 +438,21 @@ border:none;
 background:white;
 }
 
-.paper{
-
-display:grid !important;
-
-border:none;
-
-box-shadow:none;
-
-width:190mm;
-
-min-height:270mm;
-
-padding:0;
-
-margin:auto;
-
-}
-
 .payslip{
 
+display:block !important;
+
+width:95mm;
+
+min-height:135mm;
+
+margin:0 auto;
+
 box-shadow:none;
 
-break-inside:avoid;
+border:2px solid #000;
+
+page-break-inside:avoid;
 
 }
 
@@ -500,17 +466,11 @@ break-inside:avoid;
 font-size:22px;
 }
 
-.paper{
+.payslip{
 
 width:100%;
 
-grid-template-columns:1fr;
-
-}
-
-.payslip{
-
-min-height:auto;
+max-width:95mm;
 
 }
 
@@ -682,11 +642,143 @@ onclick="printPayslip()">
 
 </div>
 
-<!-- PAPER -->
+<!-- PAYSLIP -->
 
 <div
-class="paper"
-id="paper">
+class="payslip"
+id="payslipArea">
+
+<div class="company">
+
+<h2>PAPPRITO</h2>
+
+<p>OFFICIAL EMPLOYEE PAYSLIP</p>
+
+</div>
+
+<div class="info">
+
+<b>ID:</b>
+<span id="payEmpId">-</span>
+
+<br>
+
+<b>Name:</b>
+<span id="payEmp">-</span>
+
+<br>
+
+<b>Date:</b>
+<span id="payDate">-</span>
+
+</div>
+
+<table class="payroll-table">
+
+<tr>
+<th>EARNINGS</th>
+<th>AMOUNT</th>
+</tr>
+
+<tr>
+<td>Daily Rate</td>
+<td id="payDailyRate">0.00</td>
+</tr>
+
+<tr>
+<td>Total Days</td>
+<td id="payTotalDays">0</td>
+</tr>
+
+<tr>
+<td>Overtime</td>
+<td id="payOvertime">0.00</td>
+</tr>
+
+<tr>
+<td>Holiday</td>
+<td id="payHoliday">0.00</td>
+</tr>
+
+<tr>
+<td>Sick Leave</td>
+<td id="paySick">0.00</td>
+</tr>
+
+<tr>
+<td>Vacation Leave</td>
+<td id="payVacation">0.00</td>
+</tr>
+
+<tr>
+<td>Birthday Leave</td>
+<td id="payBirthday">0.00</td>
+</tr>
+
+<tr>
+<td>Allowance</td>
+<td id="payAllowance">0.00</td>
+</tr>
+
+</table>
+
+<table class="payroll-table">
+
+<tr>
+<th>DEDUCTIONS</th>
+<th>AMOUNT</th>
+</tr>
+
+<tr>
+<td>SSS</td>
+<td id="paySSS">0.00</td>
+</tr>
+
+<tr>
+<td>PhilHealth</td>
+<td id="payPhilhealth">0.00</td>
+</tr>
+
+<tr>
+<td>Pag-IBIG</td>
+<td id="payPagibig">0.00</td>
+</tr>
+
+<tr>
+<td>Health Card</td>
+<td id="payHealth">0.00</td>
+</tr>
+
+<tr>
+<td>Others</td>
+<td id="payOther">0.00</td>
+</tr>
+
+<tr>
+<td>Total Deduction</td>
+<td id="payDeduction">0.00</td>
+</tr>
+
+</table>
+
+<div class="total">
+
+NET PAY :
+₱ <span id="payNet">0.00</span>
+
+</div>
+
+<div class="signature">
+
+<div class="line">
+HR
+</div>
+
+<div class="line">
+Employee
+</div>
+
+</div>
 
 </div>
 
@@ -1026,7 +1118,7 @@ await getDocs(
 collection(db,'payroll')
 );
 
-let payrollRecords = [];
+let found = false;
 
 querySnapshot.forEach(docSnap=>{
 
@@ -1037,184 +1129,87 @@ pay.empid ===
 currentEmployee.id
 ){
 
-payrollRecords.push(pay);
+found = true;
+
+payslipArea.style.display='block';
+
+payEmpId.innerText =
+pay.empid || '';
+
+payEmp.innerText =
+pay.employee || '';
+
+payDate.innerText =
+pay.date || '';
+
+payDailyRate.innerText =
+Number(pay.dailyrate || 0)
+.toFixed(2);
+
+payTotalDays.innerText =
+Number(pay.totaldays || 0);
+
+payOvertime.innerText =
+Number(pay.overtime || 0)
+.toFixed(2);
+
+payHoliday.innerText =
+Number(pay.holiday || 0)
+.toFixed(2);
+
+paySick.innerText =
+Number(pay.sick || 0)
+.toFixed(2);
+
+payVacation.innerText =
+Number(pay.vacation || 0)
+.toFixed(2);
+
+payBirthday.innerText =
+Number(pay.birthday || 0)
+.toFixed(2);
+
+payAllowance.innerText =
+Number(pay.allowance || 0)
+.toFixed(2);
+
+paySSS.innerText =
+Number(pay.sss || 0)
+.toFixed(2);
+
+payPhilhealth.innerText =
+Number(pay.philhealth || 0)
+.toFixed(2);
+
+payPagibig.innerText =
+Number(pay.pagibig || 0)
+.toFixed(2);
+
+payHealth.innerText =
+Number(pay.health || 0)
+.toFixed(2);
+
+payOther.innerText =
+Number(pay.other || 0)
+.toFixed(2);
+
+payDeduction.innerText =
+Number(pay.deductions || 0)
+.toFixed(2);
+
+payNet.innerText =
+Number(pay.net || 0)
+.toFixed(2);
 
 }
 
 });
 
-if(payrollRecords.length === 0){
+if(!found){
 
 alert('No Payslip Found');
 
-return;
-
 }
-
-paper.style.display='grid';
-
-paper.innerHTML='';
-
-while(payrollRecords.length < 4){
-
-payrollRecords.push(null);
-
-}
-
-payrollRecords.forEach(pay=>{
-
-let div =
-document.createElement('div');
-
-div.className='payslip';
-
-if(pay){
-
-div.innerHTML = `
-
-<div>
-
-<div class="company">
-
-<h2>PAPPRITO</h2>
-
-<p>OFFICIAL EMPLOYEE PAYSLIP</p>
-
-</div>
-
-<div class="info">
-
-<b>ID:</b>
-${pay.empid || '-'}
-
-<br>
-
-<b>Name:</b>
-${pay.employee || '-'}
-
-<br>
-
-<b>Date:</b>
-${pay.date || '-'}
-
-</div>
-
-<table class="payroll-table">
-
-<tr>
-<th>EARNINGS</th>
-<th>AMOUNT</th>
-</tr>
-
-<tr>
-<td>Daily Rate</td>
-<td>₱ ${Number(pay.dailyrate || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Total Days</td>
-<td>${Number(pay.totaldays || 0)}</td>
-</tr>
-
-<tr>
-<td>Overtime</td>
-<td>₱ ${Number(pay.overtime || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Holiday</td>
-<td>₱ ${Number(pay.holiday || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Sick Leave</td>
-<td>₱ ${Number(pay.sick || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Vacation Leave</td>
-<td>₱ ${Number(pay.vacation || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Birthday Leave</td>
-<td>₱ ${Number(pay.birthday || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Allowance</td>
-<td>₱ ${Number(pay.allowance || 0).toFixed(2)}</td>
-</tr>
-
-</table>
-
-<table class="payroll-table">
-
-<tr>
-<th>DEDUCTIONS</th>
-<th>AMOUNT</th>
-</tr>
-
-<tr>
-<td>SSS</td>
-<td>₱ ${Number(pay.sss || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>PhilHealth</td>
-<td>₱ ${Number(pay.philhealth || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Pag-IBIG</td>
-<td>₱ ${Number(pay.pagibig || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Health Card</td>
-<td>₱ ${Number(pay.health || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Others</td>
-<td>₱ ${Number(pay.other || 0).toFixed(2)}</td>
-</tr>
-
-<tr>
-<td>Total Deduction</td>
-<td>₱ ${Number(pay.deductions || 0).toFixed(2)}</td>
-</tr>
-
-</table>
-
-<div class="total">
-
-NET PAY :
-₱ ${Number(pay.net || 0).toFixed(2)}
-
-</div>
-
-</div>
-
-<div class="signature">
-
-<div class="line">
-HR
-</div>
-
-<div class="line">
-Employee
-</div>
-
-</div>
-
-`;
-
-}
-
-paper.appendChild(div);
-
-});
 
 }
 
@@ -1223,7 +1218,7 @@ paper.appendChild(div);
 window.closePayslip =
 function(){
 
-paper.style.display='none';
+payslipArea.style.display='none';
 
 }
 
