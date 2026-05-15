@@ -2,7 +2,10 @@
 <html>
 <head>
 
-<title>HR Approval</title>
+<title>Payroll Management</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <style>
 
@@ -19,9 +22,11 @@ padding:15px;
 color:white;
 }
 
+/* CONTAINER */
+
 .container{
 
-max-width:1300px;
+max-width:1400px;
 
 margin:auto;
 
@@ -38,7 +43,8 @@ overflow:hidden;
 
 .header{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ffcc00,
 #ff8800
@@ -51,6 +57,8 @@ display:flex;
 justify-content:space-between;
 
 align-items:center;
+
+flex-wrap:wrap;
 }
 
 .title{
@@ -76,7 +84,14 @@ cursor:pointer;
 
 font-weight:bold;
 
-font-size:12px;
+font-size:13px;
+
+transition:0.3s;
+}
+
+.btn:hover{
+
+transform:scale(1.03);
 }
 
 .back-btn{
@@ -84,13 +99,50 @@ background:#0066cc;
 color:white;
 }
 
-.approve-btn{
+.save-btn{
 background:#008000;
 color:white;
 }
 
-.reject-btn{
+.delete-btn{
 background:#cc0000;
+color:white;
+}
+
+.print-btn{
+background:#ff8800;
+color:black;
+}
+
+/* FORM */
+
+.form-section{
+padding:20px;
+}
+
+.form-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:12px;
+}
+
+input,
+select{
+
+width:100%;
+
+padding:10px;
+
+border-radius:10px;
+
+border:2px solid #555;
+
+background:#1f1f1f;
+
 color:white;
 }
 
@@ -98,9 +150,13 @@ color:white;
 
 .table-wrapper{
 
-padding:20px;
+margin-top:20px;
 
 overflow:auto;
+
+background:white;
+
+border-radius:10px;
 }
 
 table{
@@ -109,9 +165,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1200px;
-
-background:white;
+min-width:1600px;
 }
 
 th,
@@ -129,27 +183,44 @@ th{
 background:#ffcc00;
 
 color:black;
+
+position:sticky;
+
+top:0;
 }
 
 td{
 color:black;
 }
 
-/* STATUS */
+/* TOTAL */
 
-.pending{
-color:orange;
+.total-box{
+
+margin-top:15px;
+
+padding:15px;
+
+background:#1a1a1a;
+
+border:2px solid #ffcc00;
+
+border-radius:10px;
+
+font-size:18px;
+
 font-weight:bold;
 }
 
-.approved{
-color:green;
-font-weight:bold;
+/* MOBILE */
+
+@media(max-width:768px){
+
+.title{
+
+font-size:22px;
 }
 
-.rejected{
-color:red;
-font-weight:bold;
 }
 
 </style>
@@ -160,11 +231,23 @@ font-weight:bold;
 
 <div class="container">
 
+<!-- HEADER -->
+
 <div class="header">
 
 <div class="title">
-✅ HR APPROVAL
+💰 PAYROLL MANAGEMENT
 </div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+<button
+class="btn print-btn"
+onclick="window.print()">
+
+🖨 PRINT
+
+</button>
 
 <button
 class="btn back-btn"
@@ -176,6 +259,82 @@ onclick="window.location.href='index.html'">
 
 </div>
 
+</div>
+
+<!-- FORM -->
+
+<div class="form-section">
+
+<div class="form-grid">
+
+<select id="employeeSelect">
+
+<option value="">
+Select Employee
+</option>
+
+</select>
+
+<input
+type="number"
+id="gross"
+placeholder="Gross Pay">
+
+<input
+type="number"
+id="overtime"
+placeholder="Overtime">
+
+<input
+type="number"
+id="holiday"
+placeholder="Holiday Pay">
+
+<input
+type="number"
+id="allowance"
+placeholder="Allowance">
+
+<input
+type="number"
+id="sss"
+placeholder="SSS">
+
+<input
+type="number"
+id="philhealth"
+placeholder="PhilHealth">
+
+<input
+type="number"
+id="pagibig"
+placeholder="Pag-IBIG">
+
+</div>
+
+<br>
+
+<button
+class="btn save-btn"
+onclick="savePayroll()">
+
+💾 SAVE PAYROLL
+
+</button>
+
+<!-- TOTAL -->
+
+<div class="total-box">
+
+TOTAL NET PAY :
+₱ <span id="totalNet">
+0.00
+</span>
+
+</div>
+
+<!-- TABLE -->
+
 <div class="table-wrapper">
 
 <table>
@@ -186,18 +345,22 @@ onclick="window.location.href='index.html'">
 
 <th>EMPLOYEE ID</th>
 <th>EMPLOYEE</th>
-<th>REQUEST</th>
-<th>DATE</th>
-<th>DAYS</th>
-<th>REASON</th>
-<th>STATUS</th>
+<th>GROSS</th>
+<th>OVERTIME</th>
+<th>HOLIDAY</th>
+<th>ALLOWANCE</th>
+<th>SSS</th>
+<th>PHILHEALTH</th>
+<th>PAG-IBIG</th>
+<th>TOTAL DEDUCTION</th>
+<th>NET PAY</th>
 <th>ACTION</th>
 
 </tr>
 
 </thead>
 
-<tbody id="requestBody">
+<tbody id="payrollBody">
 
 </tbody>
 
@@ -207,62 +370,327 @@ onclick="window.location.href='index.html'">
 
 </div>
 
-<script>
+</div>
 
-/* STORAGE */
+<script type="module">
 
-let requests =
+/* =========================
+FIREBASE
+========================= */
 
-JSON.parse(
-localStorage.getItem('employeeRequests')
-) || [];
+import {
 
-/* RENDER */
+initializeApp
 
-function renderRequests(){
+}
 
-requestBody.innerHTML='';
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-requests.forEach((req,index)=>{
+import {
 
-let statusClass =
-req.status.toLowerCase();
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
 
-requestBody.innerHTML += `
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+/* CONFIG */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
+
+projectId:
+"hr-system-38fc3",
+
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+LOAD EMPLOYEES
+========================= */
+
+async function loadEmployees(){
+
+employeeSelect.innerHTML =
+
+`
+<option value="">
+Select Employee
+</option>
+`;
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'employees')
+);
+
+querySnapshot.forEach(doc=>{
+
+let emp = doc.data();
+
+let fullname =
+
+(emp.firstname || '') + ' ' +
+
+(emp.middlename || '') + ' ' +
+
+(emp.lastname || '');
+
+employeeSelect.innerHTML += `
+
+<option
+value="${fullname}"
+data-id="${emp.employeeid}">
+
+${emp.employeeid}
+-
+${fullname}
+
+</option>
+
+`;
+
+});
+
+}
+
+loadEmployees();
+
+/* =========================
+SAVE PAYROLL
+========================= */
+
+window.savePayroll =
+async function(){
+
+if(employeeSelect.value===''){
+
+alert(
+'Select Employee'
+);
+
+return;
+
+}
+
+let selected =
+
+employeeSelect.options[
+employeeSelect.selectedIndex
+];
+
+let empid =
+selected.dataset.id;
+
+let employee =
+employeeSelect.value;
+
+let grossPay =
+Number(gross.value || 0);
+
+let overtimePay =
+Number(overtime.value || 0);
+
+let holidayPay =
+Number(holiday.value || 0);
+
+let allowancePay =
+Number(allowance.value || 0);
+
+let sssDed =
+Number(sss.value || 0);
+
+let philhealthDed =
+Number(philhealth.value || 0);
+
+let pagibigDed =
+Number(pagibig.value || 0);
+
+let deductions =
+
+sssDed +
+philhealthDed +
+pagibigDed;
+
+let net =
+
+grossPay +
+overtimePay +
+holidayPay +
+allowancePay -
+
+deductions;
+
+try{
+
+await addDoc(
+collection(db,'payroll'),
+
+{
+
+empid: empid,
+
+employee: employee,
+
+gross: grossPay,
+
+overtime: overtimePay,
+
+holiday: holidayPay,
+
+allowance: allowancePay,
+
+sss: sssDed,
+
+philhealth: philhealthDed,
+
+pagibig: pagibigDed,
+
+deductions: deductions,
+
+net: net,
+
+date:
+new Date()
+.toLocaleDateString()
+
+}
+
+);
+
+alert(
+'Payroll Saved'
+);
+
+clearForm();
+
+loadPayroll();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Firebase Error'
+);
+
+}
+
+}
+
+/* =========================
+LOAD PAYROLL
+========================= */
+
+async function loadPayroll(){
+
+payrollBody.innerHTML='';
+
+let total = 0;
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'payroll')
+);
+
+querySnapshot.forEach(async(payrollDoc)=>{
+
+let pay =
+payrollDoc.data();
+
+total +=
+Number(pay.net || 0);
+
+payrollBody.innerHTML += `
 
 <tr>
 
-<td>${req.empid}</td>
+<td>${pay.empid || ''}</td>
 
-<td>${req.employee}</td>
+<td>${pay.employee || ''}</td>
 
-<td>${req.type}</td>
+<td>
+₱ ${Number(pay.gross || 0)
+.toFixed(2)}
+</td>
 
-<td>${req.date}</td>
+<td>
+₱ ${Number(pay.overtime || 0)
+.toFixed(2)}
+</td>
 
-<td>${req.days}</td>
+<td>
+₱ ${Number(pay.holiday || 0)
+.toFixed(2)}
+</td>
 
-<td>${req.reason}</td>
+<td>
+₱ ${Number(pay.allowance || 0)
+.toFixed(2)}
+</td>
 
-<td class="${statusClass}">
-${req.status}
+<td>
+₱ ${Number(pay.sss || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.philhealth || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.pagibig || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.deductions || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.net || 0)
+.toFixed(2)}
 </td>
 
 <td>
 
 <button
-class="btn approve-btn"
-onclick="approveRequest(${index})">
+class="btn delete-btn"
+onclick="deletePayroll(
+'${payrollDoc.id}'
+)">
 
-APPROVE
-
-</button>
-
-<button
-class="btn reject-btn"
-onclick="rejectRequest(${index})">
-
-REJECT
+DELETE
 
 </button>
 
@@ -274,43 +702,60 @@ REJECT
 
 });
 
+totalNet.innerText =
+total.toFixed(2);
+
 }
 
-/* APPROVE */
+loadPayroll();
 
-function approveRequest(index){
+/* =========================
+DELETE PAYROLL
+========================= */
 
-requests[index].status =
-'APPROVED';
+window.deletePayroll =
+async function(id){
 
-localStorage.setItem(
-'employeeRequests',
-JSON.stringify(requests)
+let confirmDelete =
+confirm(
+'Delete Payroll?'
 );
 
-renderRequests();
+if(confirmDelete){
 
-}
-
-/* REJECT */
-
-function rejectRequest(index){
-
-requests[index].status =
-'REJECTED';
-
-localStorage.setItem(
-'employeeRequests',
-JSON.stringify(requests)
+await deleteDoc(
+doc(db,'payroll',id)
 );
 
-renderRequests();
+loadPayroll();
 
 }
 
-/* AUTO LOAD */
+}
 
-renderRequests();
+/* =========================
+CLEAR FORM
+========================= */
+
+function clearForm(){
+
+employeeSelect.value='';
+
+gross.value='';
+
+overtime.value='';
+
+holiday.value='';
+
+allowance.value='';
+
+sss.value='';
+
+philhealth.value='';
+
+pagibig.value='';
+
+}
 
 </script>
 
