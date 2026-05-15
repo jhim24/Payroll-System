@@ -4,6 +4,9 @@
 
 <title>Employee Masterlist</title>
 
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <style>
 
 *{
@@ -12,41 +15,53 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
+
 margin:0;
+
 padding:15px;
-background:linear-gradient(
+
+background:
+linear-gradient(
 135deg,
 #1f1f1f,
 #2b2b2b
 );
+
 color:white;
 }
 
 /* TOP */
 
 .top-bar{
+
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
 flex-wrap:wrap;
+
 gap:10px;
+
 margin-bottom:15px;
 }
 
 h2{
+
 margin:0;
+
 font-size:30px;
+
 color:#ffcc00;
-text-shadow:2px 2px 5px black;
+
+text-shadow:
+2px 2px 5px black;
 }
 
-/* BUTTONS */
+/* BUTTON */
 
-.add-btn,
-.save-btn,
-.btn,
-.close-btn,
-.back-btn{
+.btn{
 
 padding:10px 18px;
 
@@ -62,72 +77,49 @@ font-size:13px;
 
 transition:0.3s;
 
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
-
 color:white;
+}
 
+.btn:hover{
+
+transform:scale(1.03);
 }
 
 .add-btn{
-background:linear-gradient(
+
+background:
+linear-gradient(
 135deg,
 #ffcc00,
 #ff9900
 );
+
 color:black;
 }
 
 .save-btn{
-background:linear-gradient(
+
+background:
+linear-gradient(
 135deg,
 #00cc66,
 #00994d
 );
 }
 
-.btn{
-background:linear-gradient(
-135deg,
-#ff4444,
-#cc0000
-);
+.edit-btn{
+
+background:#0066cc;
 }
 
-.close-btn{
-background:linear-gradient(
-135deg,
-#ff0000,
-#990000
-);
+.delete-btn{
 
-position:absolute;
-
-top:10px;
-right:10px;
+background:#cc0000;
 }
 
 .back-btn{
-background:linear-gradient(
-135deg,
-#ffcc00,
-#ff6600
-);
 
-color:black;
-}
-
-/* HOVER */
-
-.add-btn:hover,
-.save-btn:hover,
-.btn:hover,
-.close-btn:hover,
-.back-btn:hover{
-
-transform:translateY(-2px) scale(1.03);
-
-filter:brightness(1.1);
-
+background:#444;
 }
 
 /* SEARCH */
@@ -145,7 +137,6 @@ border-radius:8px;
 background:#2f2f2f;
 
 color:white;
-
 }
 
 /* TABLE */
@@ -162,14 +153,18 @@ height:70vh;
 
 border-radius:12px;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
-
+box-shadow:
+0 5px 15px rgba(0,0,0,0.5);
 }
 
 table{
+
 width:100%;
+
 border-collapse:collapse;
-min-width:4000px;
+
+min-width:1800px;
+
 font-size:12px;
 }
 
@@ -183,7 +178,6 @@ padding:8px;
 text-align:left;
 
 white-space:nowrap;
-
 }
 
 th{
@@ -195,16 +189,15 @@ color:black;
 position:sticky;
 
 top:0;
-
-z-index:2;
-
 }
 
 tr:nth-child(even){
+
 background:#242424;
 }
 
 tr:hover{
+
 background:#3a3a3a;
 }
 
@@ -218,7 +211,7 @@ position:fixed;
 
 inset:0;
 
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.7);
 
 justify-content:center;
 
@@ -233,85 +226,32 @@ background:#2b2b2b;
 
 width:95%;
 
-max-width:1200px;
+max-width:1100px;
 
 height:95vh;
 
 overflow:auto;
 
-padding:15px;
+padding:20px;
 
 border:3px solid #ffcc00;
 
-position:relative;
-
 border-radius:15px;
 
-color:white;
-
+position:relative;
 }
 
-/* TABS */
-
-.classic-tabs{
-
-display:flex;
-flex-wrap:wrap;
-gap:4px;
-background:#1f1f1f;
-padding:6px;
-border-radius:8px;
-margin-top:10px;
-
-}
-
-.tab-btn{
-
-background:#444;
-padding:8px 16px;
-cursor:pointer;
-font-size:12px;
-font-weight:bold;
-border:none;
-color:white;
-border-radius:6px;
-
-}
-
-.tab-btn.active{
-background:#ffcc00;
-color:black;
-}
-
-/* CONTENT */
-
-.tab-content{
-
-display:none;
-padding:15px;
-background:#333;
-margin-top:10px;
-border-radius:8px;
-
-}
-
-.tab-content.active{
-display:block;
-}
-
-/* GRID */
+/* FORM */
 
 .form-grid{
 
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(200px,1fr));
+repeat(auto-fit,minmax(220px,1fr));
 
-gap:8px;
+gap:10px;
 }
-
-/* INPUT */
 
 input,
 select{
@@ -320,13 +260,40 @@ width:100%;
 
 padding:10px;
 
-border:2px solid #555;
-
 border-radius:8px;
+
+border:2px solid #555;
 
 background:#1f1f1f;
 
 color:white;
+}
+
+/* CLOSE */
+
+.close-btn{
+
+position:absolute;
+
+top:10px;
+right:10px;
+
+background:#cc0000;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+table{
+
+font-size:11px;
+}
+
+h2{
+
+font-size:24px;
+}
 
 }
 
@@ -339,14 +306,16 @@ color:white;
 <div class="top-bar">
 
 <button
-class="back-btn"
+class="btn back-btn"
 onclick="window.location.href='index.html'">
 
 ← BACK
 
 </button>
 
-<h2>Employee Masterlist</h2>
+<h2>
+EMPLOYEE MASTERLIST
+</h2>
 
 <div style="display:flex;gap:10px;">
 
@@ -355,16 +324,16 @@ onclick="window.location.href='index.html'">
 <input
 type="text"
 id="search"
-placeholder="Search..."
-onkeyup="searchEmp()">
+placeholder="Search Employee"
+onkeyup="searchEmployee()">
 
 </div>
 
 <button
-class="add-btn"
+class="btn add-btn"
 onclick="openModal()">
 
-+ Add Employee
++ ADD EMPLOYEE
 
 </button>
 
@@ -372,54 +341,42 @@ onclick="openModal()">
 
 </div>
 
-<h3 id="total"
-style="
-color:#ff4444;
-font-size:20px;
-">
-
+<h3 id="total">
 Total : 0
-
 </h3>
 
 <!-- TABLE -->
 
 <div class="table-box">
 
-<table id="empTable">
+<table id="employeeTable">
 
 <thead>
 
 <tr>
 
-<th>First Name</th>
-<th>Middle Name</th>
-<th>Last Name</th>
-<th>Birthdate</th>
-<th>Age</th>
-<th>Gender</th>
-<th>SSS Number</th>
-<th>PhilHealth Number</th>
-<th>Pag-IBIG Number</th>
-<th>Health Card Number</th>
-<th>Bank Name</th>
-<th>Bank Account Number</th>
-<th>ID Type</th>
-<th>ID Number</th>
-<th>Mobile</th>
-<th>Email</th>
-<th>Employee ID</th>
-<th>Position</th>
-<th>Department</th>
-<th>Employment</th>
-<th>Salary Rate</th>
-<th>Action</th>
+<th>EMPLOYEE ID</th>
+<th>FIRST NAME</th>
+<th>MIDDLE NAME</th>
+<th>LAST NAME</th>
+<th>BIRTHDATE</th>
+<th>AGE</th>
+<th>GENDER</th>
+<th>MOBILE</th>
+<th>EMAIL</th>
+<th>POSITION</th>
+<th>DEPARTMENT</th>
+<th>EMPLOYMENT</th>
+<th>SALARY</th>
+<th>ACTION</th>
 
 </tr>
 
 </thead>
 
-<tbody></tbody>
+<tbody id="employeeBody">
+
+</tbody>
 
 </table>
 
@@ -434,147 +391,97 @@ id="employeeModal">
 <div class="modal-box">
 
 <button
-class="close-btn"
+class="btn close-btn"
 onclick="closeModal()">
 
 X
 
 </button>
 
-<h3>Employee Information</h3>
-
-<div class="classic-tabs">
-
-<button
-class="tab-btn active"
-onclick="openTab(event,'personal')">
-
-Personal
-
-</button>
-
-<button
-class="tab-btn"
-onclick="openTab(event,'contact')">
-
-Contact
-
-</button>
-
-<button
-class="tab-btn"
-onclick="openTab(event,'job')">
-
-Job
-
-</button>
-
-</div>
-
-<!-- PERSONAL -->
-
-<div
-id="personal"
-class="tab-content active">
+<h2 style="margin-bottom:15px;">
+Employee Information
+</h2>
 
 <div class="form-grid">
 
-<input class="emp-field" placeholder="First Name">
-<input class="emp-field" placeholder="Middle Name">
-<input class="emp-field" placeholder="Last Name">
+<input id="firstname"
+placeholder="First Name">
 
-<input
-class="emp-field"
-type="date"
-id="birthdate"
-onchange="calcAge()">
+<input id="middlename"
+placeholder="Middle Name">
 
-<input
-class="emp-field"
-id="age"
-placeholder="Age"
-readonly>
+<input id="lastname"
+placeholder="Last Name">
 
-<select class="emp-field">
+<input type="date"
+id="birthdate">
 
-<option>Gender</option>
-<option>Male</option>
-<option>Female</option>
+<input id="age"
+placeholder="Age">
 
-</select>
+<select id="gender">
 
-<input class="emp-field" placeholder="SSS Number">
-<input class="emp-field" placeholder="PhilHealth Number">
-<input class="emp-field" placeholder="Pag-IBIG Number">
-<input class="emp-field" placeholder="Health Card Number">
-<input class="emp-field" placeholder="Bank Name">
-<input class="emp-field" placeholder="Bank Account Number">
+<option value="">
+Gender
+</option>
 
-<select class="emp-field">
+<option>
+Male
+</option>
 
-<option>Select ID</option>
-<option>Passport</option>
-<option>Driver's License</option>
+<option>
+Female
+</option>
 
 </select>
 
-<input class="emp-field" placeholder="ID Number">
+<input id="mobile"
+placeholder="Mobile">
 
-</div>
+<input id="email"
+placeholder="Email">
 
-</div>
+<input id="employeeid"
+placeholder="Employee ID">
 
-<!-- CONTACT -->
+<input id="position"
+placeholder="Position">
 
-<div
-id="contact"
-class="tab-content">
+<input id="department"
+placeholder="Department">
 
-<div class="form-grid">
+<select id="employment">
 
-<input class="emp-field" placeholder="Mobile">
-<input class="emp-field" placeholder="Email">
-<input class="emp-field" placeholder="Current Address">
-<input class="emp-field" placeholder="Permanent Address">
+<option value="">
+Employment
+</option>
 
-</div>
+<option>
+Regular
+</option>
 
-</div>
+<option>
+Probationary
+</option>
 
-<!-- JOB -->
-
-<div
-id="job"
-class="tab-content">
-
-<div class="form-grid">
-
-<input class="emp-field" placeholder="Employee ID">
-<input class="emp-field" placeholder="Position">
-<input class="emp-field" placeholder="Department">
-
-<select class="emp-field">
-
-<option>Employment</option>
-<option>Regular</option>
-<option>Probationary</option>
-<option>Contractual</option>
+<option>
+Contractual
+</option>
 
 </select>
 
-<input class="emp-field" placeholder="Salary Rate">
-
-</div>
+<input id="salary"
+placeholder="Salary">
 
 </div>
 
 <br>
 
 <button
-class="save-btn"
-onclick="addEmployee()">
+class="btn save-btn"
+onclick="saveEmployee()">
 
-Save Employee
+SAVE EMPLOYEE
 
 </button>
 
@@ -588,20 +495,29 @@ Save Employee
 FIREBASE IMPORT
 ========================= */
 
-import { initializeApp }
+import {
 
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
 import {
 
 getFirestore,
 collection,
 addDoc,
-getDocs
+getDocs,
+updateDoc,
+deleteDoc,
+doc
 
 }
 
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 /* =========================
 FIREBASE CONFIG
@@ -609,24 +525,28 @@ FIREBASE CONFIG
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
 
-authDomain: "hr-system-38fc3.firebaseapp.com",
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
 
-projectId: "hr-system-38fc3",
+projectId:
+"hr-system-38fc3",
 
-storageBucket: "hr-system-38fc3.firebasestorage.app",
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
 
-messagingSenderId: "615471610834",
+messagingSenderId:
+"615471610834",
 
-appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b",
-
-measurementId: "G-TGBXWWZWE0"
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
 
 };
 
 /* =========================
-INIT FIREBASE
+INIT
 ========================= */
 
 const app =
@@ -639,9 +559,7 @@ getFirestore(app);
 VARIABLES
 ========================= */
 
-let editRowIndex = null;
-
-let employees = [];
+let editId = null;
 
 /* =========================
 MODAL
@@ -649,94 +567,17 @@ MODAL
 
 window.openModal = function(){
 
-document.getElementById(
-'employeeModal'
-).style.display='flex';
+employeeModal.style.display =
+'flex';
 
 }
 
 window.closeModal = function(){
 
-document.getElementById(
-'employeeModal'
-).style.display='none';
+employeeModal.style.display =
+'none';
 
-}
-
-/* =========================
-TAB
-========================= */
-
-window.openTab = function(evt,tabId){
-
-document
-.querySelectorAll('.tab-content')
-.forEach(tab=>{
-
-tab.classList.remove('active');
-
-});
-
-document
-.getElementById(tabId)
-.classList.add('active');
-
-document
-.querySelectorAll('.tab-btn')
-.forEach(btn=>{
-
-btn.classList.remove('active');
-
-});
-
-evt.currentTarget
-.classList.add('active');
-
-}
-
-/* =========================
-AGE
-========================= */
-
-window.calcAge = function(){
-
-let birthInput =
-document.getElementById(
-'birthdate'
-);
-
-let ageInput =
-document.getElementById(
-'age'
-);
-
-let birth =
-new Date(birthInput.value);
-
-let today =
-new Date();
-
-let years =
-today.getFullYear() -
-birth.getFullYear();
-
-let m =
-today.getMonth() -
-birth.getMonth();
-
-if(
-m < 0 ||
-
-(m === 0 &&
-today.getDate() <
-birth.getDate())
-){
-
-years--;
-
-}
-
-ageInput.value = years;
+clearForm();
 
 }
 
@@ -744,198 +585,225 @@ ageInput.value = years;
 SAVE EMPLOYEE
 ========================= */
 
-window.addEmployee =
+window.saveEmployee =
 async function(){
 
-let fields =
-
-document.querySelectorAll(
-'.emp-field'
-);
-
-let employeeData = [];
-
-fields.forEach(field=>{
-
-employeeData.push(field.value);
-
-});
-
-/* EDIT */
-
-if(editRowIndex !== null){
-
-employees[editRowIndex] =
-employeeData;
-
-localStorage.setItem(
-'employees',
-JSON.stringify(employees)
-);
-
-editRowIndex = null;
-
-alert('Employee Updated');
-
-renderTable();
-
-closeModal();
-
-clearForm();
-
-return;
-
-}
-
-/* CHECK DUPLICATE */
-
-let employeeId =
-employeeData[18] || '';
-
-let duplicate =
-employees.find(emp =>
-
-(emp[18] || '') === employeeId
-
-);
-
-if(duplicate){
+if(
+firstname.value === '' ||
+lastname.value === '' ||
+employeeid.value === ''
+){
 
 alert(
-'Employee ID already exists!'
+'Complete Required Fields'
 );
 
 return;
 
 }
 
-/* SAVE NEW */
+let data = {
 
-employees.push(employeeData);
+firstname:
+firstname.value,
 
-localStorage.setItem(
-'employees',
-JSON.stringify(employees)
-);
+middlename:
+middlename.value,
 
-/* FIREBASE SAVE */
+lastname:
+lastname.value,
+
+birthdate:
+birthdate.value,
+
+age:
+age.value,
+
+gender:
+gender.value,
+
+mobile:
+mobile.value,
+
+email:
+email.value,
+
+employeeid:
+employeeid.value,
+
+position:
+position.value,
+
+department:
+department.value,
+
+employment:
+employment.value,
+
+salary:
+salary.value
+
+};
 
 try{
 
-await addDoc(
+if(editId){
 
-collection(db,'employees'),
-
-{
-
-firstname: employeeData[0] || '',
-middlename: employeeData[1] || '',
-lastname: employeeData[2] || '',
-birthdate: employeeData[3] || '',
-age: employeeData[4] || '',
-gender: employeeData[5] || '',
-sss: employeeData[6] || '',
-philhealth: employeeData[7] || '',
-pagibig: employeeData[8] || '',
-healthcard: employeeData[9] || '',
-bankname: employeeData[10] || '',
-bankaccount: employeeData[11] || '',
-idtype: employeeData[12] || '',
-idnumber: employeeData[13] || '',
-mobile: employeeData[14] || '',
-email: employeeData[15] || '',
-currentaddress: employeeData[16] || '',
-permanentaddress: employeeData[17] || '',
-employeeid: employeeData[18] || '',
-position: employeeData[19] || '',
-department: employeeData[20] || '',
-employment: employeeData[21] || '',
-salary: employeeData[22] || ''
-
-}
-
+await updateDoc(
+doc(db,'employees',editId),
+data
 );
 
 alert(
-'Employee Saved Successfully'
+'Employee Updated'
 );
+
+}else{
+
+await addDoc(
+collection(db,'employees'),
+data
+);
+
+alert(
+'Employee Saved'
+);
+
+}
+
+closeModal();
+
+loadEmployees();
 
 }catch(error){
 
 console.log(error);
 
 alert(
-'Firebase Save Error'
+'Firebase Error'
 );
 
 }
-
-renderTable();
-
-closeModal();
-
-clearForm();
 
 }
 
 /* =========================
-RENDER TABLE
+LOAD EMPLOYEES
 ========================= */
 
-function renderTable(){
+async function loadEmployees(){
 
-let table =
-document.querySelector(
-'#empTable tbody'
+employeeBody.innerHTML='';
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'employees')
 );
 
-table.innerHTML='';
+let totalCount = 0;
 
-employees.forEach((emp,index)=>{
+querySnapshot.forEach(docSnap=>{
 
-table.innerHTML += `
+totalCount++;
+
+let emp =
+docSnap.data();
+
+employeeBody.innerHTML += `
 
 <tr>
 
-<td>${emp[0] || ''}</td>
-<td>${emp[1] || ''}</td>
-<td>${emp[2] || ''}</td>
-<td>${emp[3] || ''}</td>
-<td>${emp[4] || ''}</td>
-<td>${emp[5] || ''}</td>
-<td>${emp[6] || ''}</td>
-<td>${emp[7] || ''}</td>
-<td>${emp[8] || ''}</td>
-<td>${emp[9] || ''}</td>
-<td>${emp[10] || ''}</td>
-<td>${emp[11] || ''}</td>
-<td>${emp[12] || ''}</td>
-<td>${emp[13] || ''}</td>
-<td>${emp[14] || ''}</td>
-<td>${emp[15] || ''}</td>
-<td>${emp[18] || ''}</td>
-<td>${emp[19] || ''}</td>
-<td>${emp[20] || ''}</td>
-<td>${emp[21] || ''}</td>
-<td>${emp[22] || ''}</td>
+<td>
+${emp.employeeid || ''}
+</td>
+
+<td>
+${emp.firstname || ''}
+</td>
+
+<td>
+${emp.middlename || ''}
+</td>
+
+<td>
+${emp.lastname || ''}
+</td>
+
+<td>
+${emp.birthdate || ''}
+</td>
+
+<td>
+${emp.age || ''}
+</td>
+
+<td>
+${emp.gender || ''}
+</td>
+
+<td>
+${emp.mobile || ''}
+</td>
+
+<td>
+${emp.email || ''}
+</td>
+
+<td>
+${emp.position || ''}
+</td>
+
+<td>
+${emp.department || ''}
+</td>
+
+<td>
+${emp.employment || ''}
+</td>
+
+<td>
+${emp.salary || ''}
+</td>
 
 <td>
 
-<button
-class='btn'
-onclick='editRow(${index})'>
+<div style="display:flex;gap:5px;">
 
-Edit
+<button
+class="btn edit-btn"
+onclick="editEmployee(
+'${docSnap.id}',
+'${emp.firstname || ''}',
+'${emp.middlename || ''}',
+'${emp.lastname || ''}',
+'${emp.birthdate || ''}',
+'${emp.age || ''}',
+'${emp.gender || ''}',
+'${emp.mobile || ''}',
+'${emp.email || ''}',
+'${emp.employeeid || ''}',
+'${emp.position || ''}',
+'${emp.department || ''}',
+'${emp.employment || ''}',
+'${emp.salary || ''}'
+)">
+
+EDIT
 
 </button>
 
 <button
-class='btn'
-onclick='deleteRow(${index})'>
+class="btn delete-btn"
+onclick="deleteEmployee(
+'${docSnap.id}'
+)">
 
-Delete
+DELETE
 
 </button>
+
+</div>
 
 </td>
 
@@ -945,32 +813,53 @@ Delete
 
 });
 
-updateTotal();
+total.innerText =
+'Total : ' + totalCount;
 
 }
+
+loadEmployees();
 
 /* =========================
 EDIT
 ========================= */
 
-window.editRow = function(index){
+window.editEmployee = function(
+
+id,
+fn,
+mn,
+ln,
+bd,
+ag,
+gen,
+mob,
+em,
+eid,
+pos,
+dep,
+emp,
+sal
+
+){
+
+editId = id;
+
+firstname.value = fn;
+middlename.value = mn;
+lastname.value = ln;
+birthdate.value = bd;
+age.value = ag;
+gender.value = gen;
+mobile.value = mob;
+email.value = em;
+employeeid.value = eid;
+position.value = pos;
+department.value = dep;
+employment.value = emp;
+salary.value = sal;
 
 openModal();
-
-editRowIndex = index;
-
-let emp = employees[index];
-
-let fields =
-document.querySelectorAll(
-'.emp-field'
-);
-
-fields.forEach((field,i)=>{
-
-field.value = emp[i] || '';
-
-});
 
 }
 
@@ -978,16 +867,36 @@ field.value = emp[i] || '';
 DELETE
 ========================= */
 
-window.deleteRow = function(index){
+window.deleteEmployee =
+async function(id){
 
-employees.splice(index,1);
-
-localStorage.setItem(
-'employees',
-JSON.stringify(employees)
+let confirmDelete = confirm(
+'Delete Employee?'
 );
 
-renderTable();
+if(!confirmDelete) return;
+
+try{
+
+await deleteDoc(
+doc(db,'employees',id)
+);
+
+alert(
+'Employee Deleted'
+);
+
+loadEmployees();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Delete Error'
+);
+
+}
 
 }
 
@@ -995,38 +904,32 @@ renderTable();
 SEARCH
 ========================= */
 
-window.searchEmp = function(){
+window.searchEmployee =
+function(){
 
-let val =
-document.getElementById(
-'search'
-).value.toLowerCase();
+let value =
+
+search.value.toLowerCase();
 
 let rows =
-document.querySelectorAll(
-'#empTable tbody tr'
-);
 
-let visible = 0;
+document.querySelectorAll(
+'#employeeBody tr'
+);
 
 rows.forEach(row=>{
 
-let show =
+row.style.display =
+
 row.innerText
 .toLowerCase()
-.includes(val);
+.includes(value)
 
-row.style.display =
-show ? '' : 'none';
+? ''
 
-if(show) visible++;
+: 'none';
 
 });
-
-document.getElementById(
-'total'
-).innerText =
-'Showing : ' + visible;
 
 }
 
@@ -1036,115 +939,23 @@ CLEAR
 
 function clearForm(){
 
-document
-.querySelectorAll('.emp-field')
-.forEach(el=>{
+editId = null;
 
-el.value='';
-
-});
-
-}
-
-/* =========================
-TOTAL
-========================= */
-
-function updateTotal(){
-
-let rows =
-document.querySelectorAll(
-'#empTable tbody tr'
-);
-
-document.getElementById(
-'total'
-).innerText =
-'Total : ' + rows.length;
+firstname.value='';
+middlename.value='';
+lastname.value='';
+birthdate.value='';
+age.value='';
+gender.value='';
+mobile.value='';
+email.value='';
+employeeid.value='';
+position.value='';
+department.value='';
+employment.value='';
+salary.value='';
 
 }
-
-/* =========================
-LOAD FIREBASE
-========================= */
-
-async function loadEmployeesFirebase(){
-
-employees =
-
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-let querySnapshot =
-await getDocs(
-collection(db,'employees')
-);
-
-querySnapshot.forEach((doc)=>{
-
-let data = doc.data();
-
-let empId =
-data.employeeid || '';
-
-let exists =
-employees.find(emp =>
-
-(emp[18] || '') === empId
-
-);
-
-if(!exists){
-
-employees.push([
-
-data.firstname || '',
-data.middlename || '',
-data.lastname || '',
-data.birthdate || '',
-data.age || '',
-data.gender || '',
-data.sss || '',
-data.philhealth || '',
-data.pagibig || '',
-data.healthcard || '',
-data.bankname || '',
-data.bankaccount || '',
-data.idtype || '',
-data.idnumber || '',
-data.mobile || '',
-data.email || '',
-data.currentaddress || '',
-data.permanentaddress || '',
-data.employeeid || '',
-data.position || '',
-data.department || '',
-data.employment || '',
-data.salary || ''
-
-]);
-
-}
-
-});
-
-/* SAVE CLEAN */
-
-localStorage.setItem(
-'employees',
-JSON.stringify(employees)
-);
-
-renderTable();
-
-}
-
-/* =========================
-AUTO LOAD
-========================= */
-
-loadEmployeesFirebase();
 
 </script>
 
