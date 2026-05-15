@@ -4,6 +4,9 @@
 
 <title>HR SYSTEM LOGIN</title>
 
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <style>
 
 *{
@@ -23,7 +26,8 @@ justify-content:center;
 
 align-items:center;
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #1f1f1f,
 #2b2b2b
@@ -36,28 +40,33 @@ overflow:hidden;
 
 .login-box{
 
-width:380px;
+width:400px;
+
+max-width:95%;
 
 background:#2b2b2b;
 
 padding:30px;
 
-border-radius:15px;
+border-radius:20px;
 
 border:3px solid #ffcc00;
 
-box-shadow:0 5px 20px rgba(0,0,0,0.6);
+box-shadow:
+0 5px 20px rgba(0,0,0,0.6);
 
 text-align:center;
 
 color:white;
+
+animation:fadeIn 0.5s ease;
 }
 
 /* TITLE */
 
 .title{
 
-font-size:32px;
+font-size:35px;
 
 font-weight:bold;
 
@@ -65,7 +74,8 @@ color:#ffcc00;
 
 margin-bottom:10px;
 
-text-shadow:2px 2px 5px black;
+text-shadow:
+2px 2px 5px black;
 }
 
 .subtitle{
@@ -84,13 +94,13 @@ select{
 
 width:100%;
 
-padding:12px;
+padding:14px;
 
 margin-bottom:15px;
 
 border:none;
 
-border-radius:10px;
+border-radius:12px;
 
 background:#1f1f1f;
 
@@ -99,6 +109,8 @@ color:white;
 font-size:14px;
 
 border:2px solid #555;
+
+transition:0.3s;
 }
 
 input:focus,
@@ -107,6 +119,57 @@ select:focus{
 outline:none;
 
 border-color:#ffcc00;
+
+box-shadow:
+0 0 10px rgba(255,204,0,0.4);
+}
+
+/* PASSWORD BOX */
+
+.password-box{
+
+position:relative;
+}
+
+.show-btn{
+
+position:absolute;
+
+right:12px;
+
+top:13px;
+
+cursor:pointer;
+
+font-size:13px;
+
+color:#ffcc00;
+
+font-weight:bold;
+}
+
+/* REMEMBER */
+
+.remember{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+margin-bottom:20px;
+
+font-size:13px;
+
+justify-content:left;
+}
+
+.remember input{
+
+width:auto;
+
+margin:0;
 }
 
 /* BUTTON */
@@ -115,13 +178,14 @@ border-color:#ffcc00;
 
 width:100%;
 
-padding:12px;
+padding:14px;
 
 border:none;
 
-border-radius:10px;
+border-radius:12px;
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ffcc00,
 #ff8800
@@ -143,30 +207,62 @@ transition:0.3s;
 transform:scale(1.03);
 }
 
-/* INFO */
+/* LOADING */
 
-.demo{
+.loading{
 
-margin-top:20px;
+display:none;
 
-font-size:12px;
-
-line-height:1.8;
-
-background:#1f1f1f;
-
-padding:12px;
-
-border-radius:10px;
-
-border:1px solid #555;
-}
-
-.demo span{
+margin-top:15px;
 
 color:#ffcc00;
 
+font-size:14px;
+
 font-weight:bold;
+}
+
+/* FOOTER */
+
+.footer{
+
+margin-top:25px;
+
+font-size:12px;
+
+color:#aaa;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.login-box{
+
+padding:20px;
+}
+
+.title{
+
+font-size:28px;
+}
+
 }
 
 </style>
@@ -178,15 +274,11 @@ font-weight:bold;
 <div class="login-box">
 
 <div class="title">
-
 HR SYSTEM
-
 </div>
 
 <div class="subtitle">
-
-Admin & Employee Login
-
+Professional Firebase Login
 </div>
 
 <select id="role">
@@ -210,10 +302,36 @@ type="text"
 id="username"
 placeholder="Username">
 
+<div class="password-box">
+
 <input
 type="password"
 id="password"
 placeholder="Password">
+
+<span
+class="show-btn"
+onclick="togglePassword()">
+
+SHOW
+
+</span>
+
+</div>
+
+<div class="remember">
+
+<input
+type="checkbox"
+id="remember">
+
+<label for="remember">
+
+Remember Me
+
+</label>
+
+</div>
 
 <button
 class="login-btn"
@@ -223,147 +341,294 @@ LOGIN
 
 </button>
 
-<div class="demo">
+<div
+class="loading"
+id="loading">
 
-<div>
-<span>ADMIN DEFAULT</span>
+Please wait...
+
 </div>
 
-Username : admin
+<div class="footer">
 
-<br>
-
-Password : admin123
-
-<br><br>
-
-<div>
-<span>EMPLOYEE LOGIN</span>
-</div>
-
-Use employee username/password
-created in SETTINGS page
+Powered by Firebase Realtime HR System
 
 </div>
 
 </div>
 
-<script>
+<script type="module">
 
 /* =========================
-LOGIN
+FIREBASE IMPORT
 ========================= */
 
-function login(){
+import {
 
-let role =
-document.getElementById(
-'role'
-).value;
+initializeApp
 
-let username =
-document.getElementById(
-'username'
-).value;
+}
 
-let password =
-document.getElementById(
-'password'
-).value;
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 /* =========================
-ADMIN LOGIN
+FIREBASE CONFIG
 ========================= */
 
-if(
+const firebaseConfig = {
 
-role === 'admin' &&
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
 
-username === 'admin' &&
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
 
-password === 'admin123'
+projectId:
+"hr-system-38fc3",
 
-){
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
 
-localStorage.setItem(
-'userRole',
-'admin'
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+/* =========================
+INIT
+========================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+AUTO LOGIN CHECK
+========================= */
+
+let savedUser =
+
+localStorage.getItem(
+'loggedInUser'
 );
 
-localStorage.setItem(
-'loggedInUser',
-'ADMIN'
+let savedRole =
+
+localStorage.getItem(
+'userRole'
 );
+
+if(savedUser && savedRole){
+
+if(savedRole === 'admin'){
 
 window.location.href =
 'index.html';
 
-return;
-
-}
-
-/* =========================
-EMPLOYEE LOGIN
-========================= */
-
-if(role === 'employee'){
-
-let users =
-
-JSON.parse(
-localStorage.getItem('users')
-) || [];
-
-let validUser = users.find(user =>
-
-user.username === username &&
-
-user.password === password &&
-
-user.role === 'employee'
-
-);
-
-/* VALID */
-
-if(validUser){
-
-localStorage.setItem(
-'userRole',
-'employee'
-);
-
-localStorage.setItem(
-'loggedInUser',
-validUser.username
-);
+}else{
 
 window.location.href =
 'employeeportal.html';
 
 }
 
-/* INVALID */
+}
 
-else{
+/* =========================
+SHOW PASSWORD
+========================= */
+
+window.togglePassword = function(){
+
+let pass =
+
+document.getElementById(
+'password'
+);
+
+if(pass.type === 'password'){
+
+pass.type = 'text';
+
+}else{
+
+pass.type = 'password';
+
+}
+
+}
+
+/* =========================
+LOGIN
+========================= */
+
+window.login = async function(){
+
+let role =
+
+document.getElementById(
+'role'
+).value;
+
+let username =
+
+document.getElementById(
+'username'
+).value.trim();
+
+let password =
+
+document.getElementById(
+'password'
+).value.trim();
+
+if(
+role === '' ||
+username === '' ||
+password === ''
+){
 
 alert(
-'Invalid Employee Login'
+'Complete all fields'
+);
+
+return;
+
+}
+
+/* LOADING */
+
+loading.style.display =
+'block';
+
+try{
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'users')
+);
+
+let found = false;
+
+querySnapshot.forEach(doc=>{
+
+let user = doc.data();
+
+if(
+
+user.role === role &&
+
+user.username === username &&
+
+user.password === password
+
+){
+
+found = true;
+
+/* SAVE SESSION */
+
+localStorage.setItem(
+'loggedInUser',
+username
+);
+
+localStorage.setItem(
+'userRole',
+role
+);
+
+/* REMEMBER */
+
+if(
+remember.checked
+){
+
+localStorage.setItem(
+'rememberUser',
+username
 );
 
 }
 
+/* REDIRECT */
+
+if(role === 'admin'){
+
+window.location.href =
+'index.html';
+
+}else{
+
+window.location.href =
+'employeeportal.html';
+
 }
 
-/* INVALID ROLE */
+}
 
-else{
+});
+
+loading.style.display =
+'none';
+
+if(!found){
 
 alert(
 'Invalid Login'
 );
 
 }
+
+}catch(error){
+
+console.log(error);
+
+loading.style.display =
+'none';
+
+alert(
+'Firebase Connection Error'
+);
+
+}
+
+}
+
+/* =========================
+REMEMBER USER
+========================= */
+
+let remembered =
+
+localStorage.getItem(
+'rememberUser'
+);
+
+if(remembered){
+
+username.value =
+remembered;
+
+remember.checked = true;
 
 }
 
