@@ -91,6 +91,11 @@ background:#008000;
 color:white;
 }
 
+.print-btn{
+background:#cc0000;
+color:white;
+}
+
 /* FORM */
 
 .form-section{
@@ -184,6 +189,125 @@ color:red;
 font-weight:bold;
 }
 
+/* PAYSLIP */
+
+.payslip{
+
+margin-top:25px;
+
+background:white;
+
+padding:20px;
+
+border-radius:12px;
+
+color:black;
+
+display:none;
+}
+
+.payslip-header{
+
+text-align:center;
+
+margin-bottom:20px;
+
+border-bottom:2px solid #ffcc00;
+
+padding-bottom:10px;
+}
+
+.payslip-header h2{
+
+color:#cc0000;
+
+font-size:28px;
+}
+
+.payroll-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:10px;
+}
+
+.payroll-table th{
+
+background:#ffcc00;
+
+color:black;
+}
+
+.netpay{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:green;
+
+margin-top:20px;
+
+text-align:right;
+}
+
+.signature{
+
+margin-top:50px;
+
+display:flex;
+
+justify-content:space-between;
+}
+
+.line{
+
+border-top:1px solid black;
+
+width:220px;
+
+text-align:center;
+
+padding-top:5px;
+}
+
+/* PRINT */
+
+@media print{
+
+body{
+background:white;
+padding:0;
+}
+
+.header,
+.form-section > .form-grid,
+.save-btn,
+.table-wrapper,
+.back-btn,
+.print-btn,
+#requestType,
+#requestDate,
+#days,
+#reason{
+display:none !important;
+}
+
+.container{
+
+border:none;
+
+background:white;
+}
+
+.payslip{
+display:block !important;
+}
+
+}
+
 </style>
 
 </head>
@@ -200,6 +324,8 @@ font-weight:bold;
 👨‍💼 EMPLOYEE REQUEST
 </div>
 
+<div style="display:flex;gap:10px;">
+
 <button
 class="btn back-btn"
 onclick="window.location.href='index.html'">
@@ -207,6 +333,16 @@ onclick="window.location.href='index.html'">
 ← BACK
 
 </button>
+
+<button
+class="btn print-btn"
+onclick="printPayslip()">
+
+🖨 PRINT PAYSLIP
+
+</button>
+
+</div>
 
 </div>
 
@@ -292,6 +428,92 @@ SUBMIT REQUEST
 </tbody>
 
 </table>
+
+</div>
+
+<!-- INDIVIDUAL PAYSLIP -->
+
+<div
+class="payslip"
+id="payslipArea">
+
+<div class="payslip-header">
+
+<h2>PAPPRITO</h2>
+
+<p>EMPLOYEE PAYSLIP</p>
+
+</div>
+
+<table class="payroll-table">
+
+<tr>
+<th>Employee</th>
+<td id="payEmp">-</td>
+</tr>
+
+<tr>
+<th>Gross Pay</th>
+<td id="payGross">0.00</td>
+</tr>
+
+<tr>
+<th>Overtime</th>
+<td id="payOvertime">0.00</td>
+</tr>
+
+<tr>
+<th>SSS</th>
+<td id="paySSS">0.00</td>
+</tr>
+
+<tr>
+<th>PhilHealth</th>
+<td id="payPhilhealth">0.00</td>
+</tr>
+
+<tr>
+<th>Pag-IBIG</th>
+<td id="payPagibig">0.00</td>
+</tr>
+
+<tr>
+<th>Health Card</th>
+<td id="payHealth">0.00</td>
+</tr>
+
+<tr>
+<th>Other Deduction</th>
+<td id="payOther">0.00</td>
+</tr>
+
+<tr>
+<th>Total Deduction</th>
+<td id="payDeduction">0.00</td>
+</tr>
+
+</table>
+
+<div class="netpay">
+
+NET PAY :
+<span id="payNet">
+0.00
+</span>
+
+</div>
+
+<div class="signature">
+
+<div class="line">
+HR Signature
+</div>
+
+<div class="line">
+Employee Signature
+</div>
+
+</div>
 
 </div>
 
@@ -397,6 +619,8 @@ alert('Request Submitted');
 
 renderRequests();
 
+loadPayslip();
+
 }
 
 /* RENDER */
@@ -435,6 +659,80 @@ ${req.status}
 `;
 
 });
+
+}
+
+/* LOAD PAYSLIP */
+
+function loadPayslip(){
+
+let payroll =
+
+JSON.parse(
+localStorage.getItem('payroll')
+) || [];
+
+let empName =
+employee.value;
+
+let pay = payroll.find(p=>
+p.employee === empName
+);
+
+if(!pay) return;
+
+document.getElementById(
+'payslipArea'
+).style.display='block';
+
+payEmp.innerText =
+pay.employee || '-';
+
+payGross.innerText =
+Number(pay.gross || 0)
+.toFixed(2);
+
+payOvertime.innerText =
+Number(pay.overtime || 0)
+.toFixed(2);
+
+paySSS.innerText =
+Number(pay.sss || 0)
+.toFixed(2);
+
+payPhilhealth.innerText =
+Number(pay.philhealth || 0)
+.toFixed(2);
+
+payPagibig.innerText =
+Number(pay.pagibig || 0)
+.toFixed(2);
+
+payHealth.innerText =
+Number(pay.health || 0)
+.toFixed(2);
+
+payOther.innerText =
+Number(pay.other || 0)
+.toFixed(2);
+
+payDeduction.innerText =
+Number(pay.deductions || 0)
+.toFixed(2);
+
+payNet.innerText =
+Number(pay.net || 0)
+.toFixed(2);
+
+}
+
+/* PRINT */
+
+function printPayslip(){
+
+loadPayslip();
+
+window.print();
 
 }
 
