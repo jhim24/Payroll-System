@@ -165,7 +165,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:2600px;
+min-width:2400px;
 }
 
 th,
@@ -217,7 +217,6 @@ font-weight:bold;
 @media(max-width:768px){
 
 .title{
-
 font-size:22px;
 }
 
@@ -274,6 +273,11 @@ Select Employee
 </option>
 
 </select>
+
+<input
+type="number"
+id="dailyrate"
+placeholder="Daily Rate">
 
 <input
 type="number"
@@ -342,13 +346,13 @@ placeholder="Health Card">
 
 <input
 type="number"
-id="others"
+id="otherdeduction"
 placeholder="Other Deduction">
 
 <input
 type="text"
-id="othersReason"
-placeholder="Reason for Other Deduction">
+id="deductionreason"
+placeholder="Reason for Deduction">
 
 </div>
 
@@ -385,21 +389,22 @@ TOTAL NET PAY :
 
 <th>EMPLOYEE ID</th>
 <th>EMPLOYEE</th>
+<th>DAILY RATE</th>
 <th>GROSS</th>
 <th>OVERTIME</th>
 <th>HOLIDAY</th>
-<th>SICK</th>
-<th>VACATION</th>
-<th>BIRTHDAY</th>
-<th>MATERNITY</th>
-<th>PATERNITY</th>
+<th>SICK LEAVE</th>
+<th>VACATION LEAVE</th>
+<th>BIRTHDAY LEAVE</th>
+<th>MATERNITY LEAVE</th>
+<th>PATERNITY LEAVE</th>
 <th>ALLOWANCE</th>
 <th>SSS</th>
 <th>PHILHEALTH</th>
 <th>PAG-IBIG</th>
 <th>HEALTH CARD</th>
-<th>OTHERS</th>
-<th>REASON</th>
+<th>OTHER DEDUCTION</th>
+<th>DEDUCTION REASON</th>
 <th>TOTAL DEDUCTION</th>
 <th>NET PAY</th>
 <th>ACTION</th>
@@ -422,9 +427,7 @@ TOTAL NET PAY :
 
 <script type="module">
 
-/* =========================
-FIREBASE
-========================= */
+/* FIREBASE */
 
 import {
 
@@ -433,7 +436,7 @@ initializeApp
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
 import {
 
@@ -447,7 +450,7 @@ doc
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 /* CONFIG */
 
@@ -479,9 +482,7 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
-/* =========================
-LOAD EMPLOYEES
-========================= */
+/* LOAD EMPLOYEES */
 
 async function loadEmployees(){
 
@@ -531,18 +532,14 @@ ${fullname}
 
 loadEmployees();
 
-/* =========================
-SAVE PAYROLL
-========================= */
+/* SAVE PAYROLL */
 
 window.savePayroll =
 async function(){
 
 if(employeeSelect.value===''){
 
-alert(
-'Select Employee'
-);
+alert('Select Employee');
 
 return;
 
@@ -560,6 +557,9 @@ selected.dataset.id;
 let employee =
 employeeSelect.value;
 
+let dailyRate =
+Number(dailyrate.value || 0);
+
 let grossPay =
 Number(gross.value || 0);
 
@@ -569,19 +569,19 @@ Number(overtime.value || 0);
 let holidayPay =
 Number(holiday.value || 0);
 
-let sickLeavePay =
+let sickLeave =
 Number(sickleave.value || 0);
 
-let vacationLeavePay =
+let vacationLeave =
 Number(vacationleave.value || 0);
 
-let birthdayLeavePay =
+let birthdayLeave =
 Number(birthdayleave.value || 0);
 
-let maternityLeavePay =
+let maternityLeave =
 Number(maternityleave.value || 0);
 
-let paternityLeavePay =
+let paternityLeave =
 Number(paternityleave.value || 0);
 
 let allowancePay =
@@ -599,11 +599,11 @@ Number(pagibig.value || 0);
 let healthCardDed =
 Number(healthcard.value || 0);
 
-let othersDed =
-Number(others.value || 0);
+let otherDed =
+Number(otherdeduction.value || 0);
 
-let othersReasonText =
-othersReason.value || '';
+let deductionReason =
+deductionreason.value;
 
 let deductions =
 
@@ -611,18 +611,18 @@ sssDed +
 philhealthDed +
 pagibigDed +
 healthCardDed +
-othersDed;
+otherDed;
 
 let net =
 
 grossPay +
 overtimePay +
 holidayPay +
-sickLeavePay +
-vacationLeavePay +
-birthdayLeavePay +
-maternityLeavePay +
-paternityLeavePay +
+sickLeave +
+vacationLeave +
+birthdayLeave +
+maternityLeave +
+paternityLeave +
 allowancePay -
 
 deductions;
@@ -638,21 +638,23 @@ empid: empid,
 
 employee: employee,
 
+dailyrate: dailyRate,
+
 gross: grossPay,
 
 overtime: overtimePay,
 
 holiday: holidayPay,
 
-sick: sickLeavePay,
+sickleave: sickLeave,
 
-vacation: vacationLeavePay,
+vacationleave: vacationLeave,
 
-birthday: birthdayLeavePay,
+birthdayleave: birthdayLeave,
 
-maternity: maternityLeavePay,
+maternityleave: maternityLeave,
 
-paternity: paternityLeavePay,
+paternityleave: paternityLeave,
 
 allowance: allowancePay,
 
@@ -662,11 +664,11 @@ philhealth: philhealthDed,
 
 pagibig: pagibigDed,
 
-health: healthCardDed,
+healthcard: healthCardDed,
 
-other: othersDed,
+otherdeduction: otherDed,
 
-otherreason: othersReasonText,
+deductionreason: deductionReason,
 
 deductions: deductions,
 
@@ -680,9 +682,7 @@ new Date()
 
 );
 
-alert(
-'Payroll Saved'
-);
+alert('Payroll Saved');
 
 clearForm();
 
@@ -692,17 +692,13 @@ loadPayroll();
 
 console.log(error);
 
-alert(
-'Firebase Error'
-);
+alert('Firebase Error');
 
 }
 
 }
 
-/* =========================
-LOAD PAYROLL
-========================= */
+/* LOAD PAYROLL */
 
 async function loadPayroll(){
 
@@ -733,6 +729,11 @@ payrollBody.innerHTML += `
 <td>${pay.employee || ''}</td>
 
 <td>
+₱ ${Number(pay.dailyrate || 0)
+.toFixed(2)}
+</td>
+
+<td>
 ₱ ${Number(pay.gross || 0)
 .toFixed(2)}
 </td>
@@ -748,27 +749,27 @@ payrollBody.innerHTML += `
 </td>
 
 <td>
-₱ ${Number(pay.sick || 0)
+₱ ${Number(pay.sickleave || 0)
 .toFixed(2)}
 </td>
 
 <td>
-₱ ${Number(pay.vacation || 0)
+₱ ${Number(pay.vacationleave || 0)
 .toFixed(2)}
 </td>
 
 <td>
-₱ ${Number(pay.birthday || 0)
+₱ ${Number(pay.birthdayleave || 0)
 .toFixed(2)}
 </td>
 
 <td>
-₱ ${Number(pay.maternity || 0)
+₱ ${Number(pay.maternityleave || 0)
 .toFixed(2)}
 </td>
 
 <td>
-₱ ${Number(pay.paternity || 0)
+₱ ${Number(pay.paternityleave || 0)
 .toFixed(2)}
 </td>
 
@@ -793,17 +794,17 @@ payrollBody.innerHTML += `
 </td>
 
 <td>
-₱ ${Number(pay.health || 0)
+₱ ${Number(pay.healthcard || 0)
 .toFixed(2)}
 </td>
 
 <td>
-₱ ${Number(pay.other || 0)
+₱ ${Number(pay.otherdeduction || 0)
 .toFixed(2)}
 </td>
 
 <td>
-${pay.otherreason || '-'}
+${pay.deductionreason || ''}
 </td>
 
 <td>
@@ -843,9 +844,7 @@ total.toFixed(2);
 
 loadPayroll();
 
-/* =========================
-DELETE PAYROLL
-========================= */
+/* DELETE PAYROLL */
 
 window.deletePayroll =
 async function(id){
@@ -867,13 +866,13 @@ loadPayroll();
 
 }
 
-/* =========================
-CLEAR FORM
-========================= */
+/* CLEAR FORM */
 
 function clearForm(){
 
 employeeSelect.value='';
+
+dailyrate.value='';
 
 gross.value='';
 
@@ -901,9 +900,9 @@ pagibig.value='';
 
 healthcard.value='';
 
-others.value='';
+otherdeduction.value='';
 
-othersReason.value='';
+deductionreason.value='';
 
 }
 
