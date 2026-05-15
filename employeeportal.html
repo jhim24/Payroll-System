@@ -403,7 +403,7 @@ onclick="logout()">
 
 <div class="form-section">
 
-<!-- AUTO EMPLOYEE INFO -->
+<!-- EMPLOYEE INFO -->
 
 <div class="emp-info">
 
@@ -422,6 +422,8 @@ onclick="logout()">
 </div>
 
 </div>
+
+<!-- REQUEST FORM -->
 
 <div class="form-grid">
 
@@ -478,7 +480,7 @@ onclick="loadPayslip()">
 
 </div>
 
-<!-- TABLE -->
+<!-- REQUEST TABLE -->
 
 <div class="table-wrapper">
 
@@ -622,24 +624,27 @@ localStorage.getItem('employees')
 
 let currentEmployee = null;
 
+/* MATCH EMPLOYEE ID */
+
 employees.forEach(emp=>{
 
-let fullname =
+let fullname = [
 
-(emp[0] || '') + ' ' +
-(emp[1] || '') + ' ' +
-(emp[2] || '');
+emp[0] || '',
+emp[1] || '',
+emp[2] || ''
 
-fullname = fullname
+].join(' ')
 .replace(/\s+/g,' ')
 .trim();
 
-let loginUser =
-currentUser
+let username =
+
+(emp[18] || '')
 .replace(/\s+/g,' ')
 .trim();
 
-if(fullname === loginUser){
+if(username === currentUser){
 
 currentEmployee = {
 
@@ -675,7 +680,9 @@ alert(
 
 }
 
-/* STORAGE */
+/* =========================
+REQUEST STORAGE
+========================= */
 
 let requests =
 
@@ -748,15 +755,8 @@ let filteredRequests =
 
 requests.filter(req=>{
 
-return req.employee
-.replace(/\s+/g,' ')
-.trim()
-
-===
-
-currentEmployee.name
-.replace(/\s+/g,' ')
-.trim();
+return req.empid ===
+currentEmployee.id;
 
 });
 
@@ -833,21 +833,24 @@ return;
 
 }
 
+/* MATCH EMPLOYEE */
+
 let pay = payroll.find(p=>{
 
-let payrollName =
+let payrollEmployee =
 
 (p.employee || '')
 .replace(/\s+/g,' ')
 .trim();
 
-let employeeName =
+let currentEmployeeName =
 
 currentEmployee.name
 .replace(/\s+/g,' ')
 .trim();
 
-return payrollName === employeeName;
+return payrollEmployee ===
+currentEmployeeName;
 
 });
 
@@ -859,9 +862,13 @@ return;
 
 }
 
+/* SHOW */
+
 document.getElementById(
 'payslipArea'
 ).style.display='block';
+
+/* DISPLAY DATA */
 
 payEmp.innerText =
 pay.employee || '-';
