@@ -4,9 +4,6 @@
 
 <title>Employee Masterlist</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
 <style>
 
 *{
@@ -20,30 +17,24 @@ margin:0;
 
 padding:15px;
 
-background:
-linear-gradient(
+background:linear-gradient(
 135deg,
 #1f1f1f,
 #2b2b2b
 );
 
 color:white;
+
 }
 
 /* TOP */
 
 .top-bar{
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
 flex-wrap:wrap;
-
 gap:10px;
-
 margin-bottom:15px;
 }
 
@@ -55,13 +46,17 @@ font-size:30px;
 
 color:#ffcc00;
 
-text-shadow:
-2px 2px 5px black;
+text-shadow:2px 2px 5px black;
+
 }
 
-/* BUTTON */
+/* BUTTONS */
 
-.btn{
+.add-btn,
+.save-btn,
+.btn,
+.close-btn,
+.back-btn{
 
 padding:10px 18px;
 
@@ -77,18 +72,17 @@ font-size:13px;
 
 transition:0.3s;
 
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+
 color:white;
+
 }
 
-.btn:hover{
-
-transform:scale(1.03);
-}
+/* ADD BUTTON */
 
 .add-btn{
 
-background:
-linear-gradient(
+background:linear-gradient(
 135deg,
 #ffcc00,
 #ff9900
@@ -97,29 +91,69 @@ linear-gradient(
 color:black;
 }
 
+/* SAVE BUTTON */
+
 .save-btn{
 
-background:
-linear-gradient(
+background:linear-gradient(
 135deg,
 #00cc66,
 #00994d
 );
 }
 
-.edit-btn{
+/* EDIT DELETE BUTTON */
 
-background:#0066cc;
+.btn{
+
+background:linear-gradient(
+135deg,
+#ff4444,
+#cc0000
+);
 }
 
-.delete-btn{
+/* CLOSE BUTTON */
 
-background:#cc0000;
+.close-btn{
+
+background:linear-gradient(
+135deg,
+#ff0000,
+#990000
+);
+
+position:absolute;
+
+top:10px;
+right:10px;
 }
+
+/* BACK BUTTON */
 
 .back-btn{
 
-background:#444;
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff6600
+);
+
+color:black;
+}
+
+/* HOVER */
+
+.add-btn:hover,
+.save-btn:hover,
+.btn:hover,
+.close-btn:hover,
+.back-btn:hover{
+
+transform:translateY(-2px) scale(1.03);
+
+filter:brightness(1.1);
+
 }
 
 /* SEARCH */
@@ -137,6 +171,7 @@ border-radius:8px;
 background:#2f2f2f;
 
 color:white;
+
 }
 
 /* TABLE */
@@ -153,8 +188,29 @@ height:70vh;
 
 border-radius:12px;
 
-box-shadow:
-0 5px 15px rgba(0,0,0,0.5);
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+
+}
+
+.table-box::-webkit-scrollbar{
+
+height:12px;
+width:12px;
+
+}
+
+.table-box::-webkit-scrollbar-thumb{
+
+background:#ffcc00;
+
+border-radius:10px;
+
+}
+
+.table-box::-webkit-scrollbar-track{
+
+background:#333;
+
 }
 
 table{
@@ -163,7 +219,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1800px;
+min-width:4000px;
 
 font-size:12px;
 }
@@ -178,6 +234,7 @@ padding:8px;
 text-align:left;
 
 white-space:nowrap;
+
 }
 
 th{
@@ -189,16 +246,23 @@ color:black;
 position:sticky;
 
 top:0;
+
+z-index:2;
+
 }
 
 tr:nth-child(even){
 
 background:#242424;
+
 }
 
 tr:hover{
 
 background:#3a3a3a;
+
+transition:0.2s;
+
 }
 
 /* MODAL */
@@ -211,7 +275,7 @@ position:fixed;
 
 inset:0;
 
-background:rgba(0,0,0,0.7);
+background:rgba(0,0,0,0.5);
 
 justify-content:center;
 
@@ -226,32 +290,117 @@ background:#2b2b2b;
 
 width:95%;
 
-max-width:1100px;
+max-width:1200px;
 
 height:95vh;
 
 overflow:auto;
 
-padding:20px;
+padding:15px;
 
 border:3px solid #ffcc00;
 
+position:relative;
+
 border-radius:15px;
 
-position:relative;
+box-shadow:0 5px 20px rgba(0,0,0,0.7);
+
+color:white;
+
 }
 
-/* FORM */
+/* TABS */
+
+.classic-tabs{
+
+display:flex;
+flex-wrap:wrap;
+
+gap:4px;
+
+background:#1f1f1f;
+
+padding:6px;
+
+border-radius:8px;
+
+margin-top:10px;
+
+}
+
+.tab-btn{
+
+background:#444;
+
+padding:8px 16px;
+
+cursor:pointer;
+
+font-size:12px;
+
+font-weight:bold;
+
+border:none;
+
+color:white;
+
+border-radius:6px;
+
+transition:0.3s;
+
+}
+
+.tab-btn.active{
+
+background:#ffcc00;
+
+color:black;
+
+}
+
+.tab-btn:hover{
+
+background:#ff9900;
+
+color:black;
+
+}
+
+/* CONTENT */
+
+.tab-content{
+
+display:none;
+
+padding:15px;
+
+background:#333;
+
+margin-top:10px;
+
+border-radius:8px;
+
+}
+
+.tab-content.active{
+
+display:block;
+}
+
+/* GRID */
 
 .form-grid{
 
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
+repeat(auto-fit,minmax(200px,1fr));
 
-gap:10px;
+gap:8px;
 }
+
+/* INPUT */
 
 input,
 select{
@@ -260,40 +409,22 @@ width:100%;
 
 padding:10px;
 
-border-radius:8px;
-
 border:2px solid #555;
+
+border-radius:8px;
 
 background:#1f1f1f;
 
 color:white;
+
 }
 
-/* CLOSE */
+input:focus,
+select:focus{
 
-.close-btn{
+outline:none;
 
-position:absolute;
-
-top:10px;
-right:10px;
-
-background:#cc0000;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-table{
-
-font-size:11px;
-}
-
-h2{
-
-font-size:24px;
-}
+border-color:#ffcc00;
 
 }
 
@@ -306,16 +437,14 @@ font-size:24px;
 <div class="top-bar">
 
 <button
-class="btn back-btn"
+class="back-btn"
 onclick="window.location.href='index.html'">
 
 ← BACK
 
 </button>
 
-<h2>
-EMPLOYEE MASTERLIST
-</h2>
+<h2>Employee Masterlist</h2>
 
 <div style="display:flex;gap:10px;">
 
@@ -324,16 +453,16 @@ EMPLOYEE MASTERLIST
 <input
 type="text"
 id="search"
-placeholder="Search Employee"
-onkeyup="searchEmployee()">
+placeholder="Search..."
+onkeyup="searchEmp()">
 
 </div>
 
 <button
-class="btn add-btn"
+class="add-btn"
 onclick="openModal()">
 
-+ ADD EMPLOYEE
++ Add Employee
 
 </button>
 
@@ -341,7 +470,11 @@ onclick="openModal()">
 
 </div>
 
-<h3 id="total">
+<h3 id="total"
+style="
+color:#ff4444;
+font-size:20px;
+">
 Total : 0
 </h3>
 
@@ -349,34 +482,48 @@ Total : 0
 
 <div class="table-box">
 
-<table id="employeeTable">
+<table id="empTable">
 
 <thead>
 
 <tr>
 
-<th>EMPLOYEE ID</th>
-<th>FIRST NAME</th>
-<th>MIDDLE NAME</th>
-<th>LAST NAME</th>
-<th>BIRTHDATE</th>
-<th>AGE</th>
-<th>GENDER</th>
-<th>MOBILE</th>
-<th>EMAIL</th>
-<th>POSITION</th>
-<th>DEPARTMENT</th>
-<th>EMPLOYMENT</th>
-<th>SALARY</th>
-<th>ACTION</th>
+<th>First Name</th>
+<th>Middle Name</th>
+<th>Last Name</th>
+<th>Birthdate</th>
+<th>Age</th>
+<th>Gender</th>
+
+<th>SSS Number</th>
+<th>PhilHealth Number</th>
+<th>Pag-IBIG Number</th>
+<th>Health Card Number</th>
+
+<th>Bank Name</th>
+<th>Bank Account Number</th>
+
+<th>ID Type</th>
+<th>ID Number</th>
+
+<th>Mobile</th>
+<th>Email</th>
+<th>Current Address</th>
+<th>Permanent Address</th>
+
+<th>Employee ID</th>
+<th>Position</th>
+<th>Department</th>
+<th>Employment</th>
+<th>Salary Rate</th>
+
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-<tbody id="employeeBody">
-
-</tbody>
+<tbody></tbody>
 
 </table>
 
@@ -391,97 +538,178 @@ id="employeeModal">
 <div class="modal-box">
 
 <button
-class="btn close-btn"
+class="close-btn"
 onclick="closeModal()">
 
 X
 
 </button>
 
-<h2 style="margin-bottom:15px;">
-Employee Information
-</h2>
+<h3>Employee Information</h3>
+
+<!-- TABS -->
+
+<div class="classic-tabs">
+
+<button
+class="tab-btn active"
+onclick="openTab(event,'personal')">
+
+Personal Info
+
+</button>
+
+<button
+class="tab-btn"
+onclick="openTab(event,'government')">
+
+Government Info
+
+</button>
+
+<button
+class="tab-btn"
+onclick="openTab(event,'contact')">
+
+Contact Info
+
+</button>
+
+<button
+class="tab-btn"
+onclick="openTab(event,'employment')">
+
+Employment Info
+
+</button>
+
+</div>
+
+<!-- PERSONAL -->
+
+<div
+id="personal"
+class="tab-content active">
 
 <div class="form-grid">
 
-<input id="firstname"
-placeholder="First Name">
+<input class="emp-field" placeholder="First Name">
+<input class="emp-field" placeholder="Middle Name">
+<input class="emp-field" placeholder="Last Name">
 
-<input id="middlename"
-placeholder="Middle Name">
+<input
+class="emp-field"
+type="date"
+id="birthdate"
+onchange="calcAge()">
 
-<input id="lastname"
-placeholder="Last Name">
+<input
+class="emp-field"
+id="age"
+placeholder="Age"
+readonly>
 
-<input type="date"
-id="birthdate">
+<select class="emp-field">
 
-<input id="age"
-placeholder="Age">
-
-<select id="gender">
-
-<option value="">
-Gender
-</option>
-
-<option>
-Male
-</option>
-
-<option>
-Female
-</option>
+<option>Gender</option>
+<option>Male</option>
+<option>Female</option>
 
 </select>
 
-<input id="mobile"
-placeholder="Mobile">
+</div>
 
-<input id="email"
-placeholder="Email">
+</div>
 
-<input id="employeeid"
-placeholder="Employee ID">
+<!-- GOVERNMENT -->
 
-<input id="position"
-placeholder="Position">
+<div
+id="government"
+class="tab-content">
 
-<input id="department"
-placeholder="Department">
+<div class="form-grid">
 
-<select id="employment">
+<input class="emp-field" placeholder="SSS Number">
+<input class="emp-field" placeholder="PhilHealth Number">
+<input class="emp-field" placeholder="Pag-IBIG Number">
+<input class="emp-field" placeholder="Health Card Number">
 
-<option value="">
-Employment
-</option>
+<input class="emp-field" placeholder="Bank Name">
+<input class="emp-field" placeholder="Bank Account Number">
 
-<option>
-Regular
-</option>
+<select class="emp-field">
 
-<option>
-Probationary
-</option>
+<option>Select ID</option>
 
-<option>
-Contractual
-</option>
+<option>Passport</option>
+<option>Driver License</option>
+<option>National ID</option>
+<option>Company ID</option>
 
 </select>
 
-<input id="salary"
-placeholder="Salary">
+<input class="emp-field" placeholder="ID Number">
+
+</div>
+
+</div>
+
+<!-- CONTACT -->
+
+<div
+id="contact"
+class="tab-content">
+
+<div class="form-grid">
+
+<input class="emp-field" placeholder="Mobile">
+<input class="emp-field" placeholder="Email">
+
+<input class="emp-field" placeholder="Current Address">
+
+<input class="emp-field" placeholder="Permanent Address">
+
+</div>
+
+</div>
+
+<!-- EMPLOYMENT -->
+
+<div
+id="employment"
+class="tab-content">
+
+<div class="form-grid">
+
+<input class="emp-field" placeholder="Employee ID">
+
+<input class="emp-field" placeholder="Position">
+
+<input class="emp-field" placeholder="Department">
+
+<select class="emp-field">
+
+<option>Employment</option>
+
+<option>Regular</option>
+<option>Probationary</option>
+<option>Contractual</option>
+
+</select>
+
+<input class="emp-field" placeholder="Salary Rate">
+
+</div>
 
 </div>
 
 <br>
 
 <button
-class="btn save-btn"
+class="save-btn"
 onclick="saveEmployee()">
 
-SAVE EMPLOYEE
+Save Employee
 
 </button>
 
@@ -491,18 +719,11 @@ SAVE EMPLOYEE
 
 <script type="module">
 
-/* =========================
-FIREBASE IMPORT
-========================= */
+/* FIREBASE */
 
-import {
+import { initializeApp }
 
-initializeApp
-
-}
-
-from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
 
@@ -510,44 +731,31 @@ getFirestore,
 collection,
 addDoc,
 getDocs,
-updateDoc,
 deleteDoc,
-doc
+doc,
+updateDoc
 
 }
 
-from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-/* =========================
-FIREBASE CONFIG
-========================= */
+/* CONFIG */
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
 
-authDomain:
-"hr-system-38fc3.firebaseapp.com",
+authDomain: "hr-system-38fc3.firebaseapp.com",
 
-projectId:
-"hr-system-38fc3",
+projectId: "hr-system-38fc3",
 
-storageBucket:
-"hr-system-38fc3.firebasestorage.app",
+storageBucket: "hr-system-38fc3.firebasestorage.app",
 
-messagingSenderId:
-"615471610834",
+messagingSenderId: "615471610834",
 
-appId:
-"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b"
 
 };
-
-/* =========================
-INIT
-========================= */
 
 const app =
 initializeApp(firebaseConfig);
@@ -555,93 +763,126 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
-/* =========================
-VARIABLES
-========================= */
+/* VARIABLES */
+
+let employees = [];
 
 let editId = null;
 
-/* =========================
-MODAL
-========================= */
+/* MODAL */
 
 window.openModal = function(){
 
-employeeModal.style.display =
-'flex';
+employeeModal.style.display='flex';
 
 }
 
 window.closeModal = function(){
 
-employeeModal.style.display =
-'none';
+employeeModal.style.display='none';
 
 clearForm();
 
 }
 
-/* =========================
-SAVE EMPLOYEE
-========================= */
+/* TABS */
+
+window.openTab = function(evt,tabId){
+
+document
+.querySelectorAll('.tab-content')
+
+.forEach(tab=>{
+
+tab.classList.remove('active');
+
+});
+
+document
+.getElementById(tabId)
+
+.classList.add('active');
+
+document
+.querySelectorAll('.tab-btn')
+
+.forEach(btn=>{
+
+btn.classList.remove('active');
+
+});
+
+evt.currentTarget
+.classList.add('active');
+
+}
+
+/* AGE */
+
+window.calcAge = function(){
+
+let birth =
+new Date(birthdate.value);
+
+let today =
+new Date();
+
+let years =
+today.getFullYear() -
+birth.getFullYear();
+
+age.value = years;
+
+}
+
+/* SAVE */
 
 window.saveEmployee =
 async function(){
 
-if(
-firstname.value === '' ||
-lastname.value === '' ||
-employeeid.value === ''
-){
+let fields =
 
-alert(
-'Complete Required Fields'
+document.querySelectorAll(
+'.emp-field'
 );
 
-return;
+let data = [];
 
-}
+fields.forEach(field=>{
 
-let data = {
+data.push(field.value);
 
-firstname:
-firstname.value,
+});
 
-middlename:
-middlename.value,
+let employeeData = {
 
-lastname:
-lastname.value,
+firstname:data[0] || '',
+middlename:data[1] || '',
+lastname:data[2] || '',
+birthdate:data[3] || '',
+age:data[4] || '',
+gender:data[5] || '',
 
-birthdate:
-birthdate.value,
+sss:data[6] || '',
+philhealth:data[7] || '',
+pagibig:data[8] || '',
+healthcard:data[9] || '',
 
-age:
-age.value,
+bankname:data[10] || '',
+bankaccount:data[11] || '',
+idtype:data[12] || '',
+idnumber:data[13] || '',
 
-gender:
-gender.value,
+mobile:data[14] || '',
+email:data[15] || '',
+currentaddress:data[16] || '',
+permanentaddress:data[17] || '',
 
-mobile:
-mobile.value,
-
-email:
-email.value,
-
-employeeid:
-employeeid.value,
-
-position:
-position.value,
-
-department:
-department.value,
-
-employment:
-employment.value,
-
-salary:
-salary.value
+employeeid:data[18] || '',
+position:data[19] || '',
+department:data[20] || '',
+employment:data[21] || '',
+salary:data[22] || ''
 
 };
 
@@ -650,24 +891,26 @@ try{
 if(editId){
 
 await updateDoc(
+
 doc(db,'employees',editId),
-data
+
+employeeData
+
 );
 
-alert(
-'Employee Updated'
-);
+alert('Employee Updated');
 
 }else{
 
 await addDoc(
+
 collection(db,'employees'),
-data
+
+employeeData
+
 );
 
-alert(
-'Employee Saved'
-);
+alert('Employee Saved');
 
 }
 
@@ -679,131 +922,112 @@ loadEmployees();
 
 console.log(error);
 
-alert(
-'Firebase Error'
-);
+alert('Save Error');
 
 }
 
 }
 
-/* =========================
-LOAD EMPLOYEES
-========================= */
+/* LOAD */
 
 async function loadEmployees(){
 
-employeeBody.innerHTML='';
+employees = [];
 
-let querySnapshot =
+let table =
+
+document.querySelector(
+'#empTable tbody'
+);
+
+table.innerHTML='';
+
+let snapshot =
 
 await getDocs(
 collection(db,'employees')
 );
 
-let totalCount = 0;
+snapshot.forEach(docSnap=>{
 
-querySnapshot.forEach(docSnap=>{
+employees.push({
 
-totalCount++;
+id:docSnap.id,
 
-let emp =
-docSnap.data();
+...docSnap.data()
 
-employeeBody.innerHTML += `
+});
+
+});
+
+renderTable();
+
+}
+
+/* RENDER */
+
+function renderTable(){
+
+let table =
+
+document.querySelector(
+'#empTable tbody'
+);
+
+table.innerHTML='';
+
+employees.forEach((emp)=>{
+
+table.innerHTML += `
 
 <tr>
 
-<td>
-${emp.employeeid || ''}
-</td>
+<td>${emp.firstname || ''}</td>
+<td>${emp.middlename || ''}</td>
+<td>${emp.lastname || ''}</td>
+<td>${emp.birthdate || ''}</td>
+<td>${emp.age || ''}</td>
+<td>${emp.gender || ''}</td>
+
+<td>${emp.sss || ''}</td>
+<td>${emp.philhealth || ''}</td>
+<td>${emp.pagibig || ''}</td>
+<td>${emp.healthcard || ''}</td>
+
+<td>${emp.bankname || ''}</td>
+<td>${emp.bankaccount || ''}</td>
+
+<td>${emp.idtype || ''}</td>
+<td>${emp.idnumber || ''}</td>
+
+<td>${emp.mobile || ''}</td>
+<td>${emp.email || ''}</td>
+<td>${emp.currentaddress || ''}</td>
+<td>${emp.permanentaddress || ''}</td>
+
+<td>${emp.employeeid || ''}</td>
+<td>${emp.position || ''}</td>
+<td>${emp.department || ''}</td>
+<td>${emp.employment || ''}</td>
+<td>${emp.salary || ''}</td>
 
 <td>
-${emp.firstname || ''}
-</td>
-
-<td>
-${emp.middlename || ''}
-</td>
-
-<td>
-${emp.lastname || ''}
-</td>
-
-<td>
-${emp.birthdate || ''}
-</td>
-
-<td>
-${emp.age || ''}
-</td>
-
-<td>
-${emp.gender || ''}
-</td>
-
-<td>
-${emp.mobile || ''}
-</td>
-
-<td>
-${emp.email || ''}
-</td>
-
-<td>
-${emp.position || ''}
-</td>
-
-<td>
-${emp.department || ''}
-</td>
-
-<td>
-${emp.employment || ''}
-</td>
-
-<td>
-${emp.salary || ''}
-</td>
-
-<td>
-
-<div style="display:flex;gap:5px;">
 
 <button
-class="btn edit-btn"
-onclick="editEmployee(
-'${docSnap.id}',
-'${emp.firstname || ''}',
-'${emp.middlename || ''}',
-'${emp.lastname || ''}',
-'${emp.birthdate || ''}',
-'${emp.age || ''}',
-'${emp.gender || ''}',
-'${emp.mobile || ''}',
-'${emp.email || ''}',
-'${emp.employeeid || ''}',
-'${emp.position || ''}',
-'${emp.department || ''}',
-'${emp.employment || ''}',
-'${emp.salary || ''}'
-)">
+class='btn'
+onclick="editEmployee('${emp.id}')">
 
-EDIT
+Edit
 
 </button>
 
 <button
-class="btn delete-btn"
-onclick="deleteEmployee(
-'${docSnap.id}'
-)">
+class='btn'
+onclick="deleteEmployee('${emp.id}')">
 
-DELETE
+Delete
 
 </button>
-
-</div>
 
 </td>
 
@@ -813,149 +1037,151 @@ DELETE
 
 });
 
-total.innerText =
-'Total : ' + totalCount;
+updateTotal();
 
 }
 
-loadEmployees();
+/* EDIT */
 
-/* =========================
-EDIT
-========================= */
+window.editEmployee = function(id){
 
-window.editEmployee = function(
+let emp = employees.find(e=>e.id===id);
 
-id,
-fn,
-mn,
-ln,
-bd,
-ag,
-gen,
-mob,
-em,
-eid,
-pos,
-dep,
-emp,
-sal
-
-){
-
-editId = id;
-
-firstname.value = fn;
-middlename.value = mn;
-lastname.value = ln;
-birthdate.value = bd;
-age.value = ag;
-gender.value = gen;
-mobile.value = mob;
-email.value = em;
-employeeid.value = eid;
-position.value = pos;
-department.value = dep;
-employment.value = emp;
-salary.value = sal;
+if(!emp) return;
 
 openModal();
 
-}
+editId = id;
 
-/* =========================
-DELETE
-========================= */
+let values = [
 
-window.deleteEmployee =
-async function(id){
+emp.firstname,
+emp.middlename,
+emp.lastname,
+emp.birthdate,
+emp.age,
+emp.gender,
 
-let confirmDelete = confirm(
-'Delete Employee?'
-);
+emp.sss,
+emp.philhealth,
+emp.pagibig,
+emp.healthcard,
 
-if(!confirmDelete) return;
+emp.bankname,
+emp.bankaccount,
+emp.idtype,
+emp.idnumber,
 
-try{
+emp.mobile,
+emp.email,
+emp.currentaddress,
+emp.permanentaddress,
 
-await deleteDoc(
-doc(db,'employees',id)
-);
+emp.employeeid,
+emp.position,
+emp.department,
+emp.employment,
+emp.salary
 
-alert(
-'Employee Deleted'
-);
+];
 
-loadEmployees();
+document.querySelectorAll('.emp-field')
 
-}catch(error){
+.forEach((field,i)=>{
 
-console.log(error);
-
-alert(
-'Delete Error'
-);
-
-}
-
-}
-
-/* =========================
-SEARCH
-========================= */
-
-window.searchEmployee =
-function(){
-
-let value =
-
-search.value.toLowerCase();
-
-let rows =
-
-document.querySelectorAll(
-'#employeeBody tr'
-);
-
-rows.forEach(row=>{
-
-row.style.display =
-
-row.innerText
-.toLowerCase()
-.includes(value)
-
-? ''
-
-: 'none';
+field.value = values[i] || '';
 
 });
 
 }
 
-/* =========================
-CLEAR
-========================= */
+/* DELETE */
+
+window.deleteEmployee =
+async function(id){
+
+if(confirm('Delete Employee?')){
+
+await deleteDoc(
+doc(db,'employees',id)
+);
+
+loadEmployees();
+
+}
+
+}
+
+/* SEARCH */
+
+window.searchEmp = function(){
+
+let val =
+search.value.toLowerCase();
+
+let rows =
+
+document.querySelectorAll(
+'#empTable tbody tr'
+);
+
+let visible = 0;
+
+rows.forEach(row=>{
+
+let show =
+
+row.innerText
+.toLowerCase()
+.includes(val);
+
+row.style.display =
+show ? '' : 'none';
+
+if(show) visible++;
+
+});
+
+total.innerText =
+'Showing : ' + visible;
+
+}
+
+/* CLEAR */
 
 function clearForm(){
 
 editId = null;
 
-firstname.value='';
-middlename.value='';
-lastname.value='';
-birthdate.value='';
-age.value='';
-gender.value='';
-mobile.value='';
-email.value='';
-employeeid.value='';
-position.value='';
-department.value='';
-employment.value='';
-salary.value='';
+document
+.querySelectorAll('.emp-field')
+
+.forEach(el=>{
+
+el.value='';
+
+});
 
 }
+
+/* TOTAL */
+
+function updateTotal(){
+
+let rows =
+
+document.querySelectorAll(
+'#empTable tbody tr'
+);
+
+total.innerText =
+'Total : ' + rows.length;
+
+}
+
+/* AUTO LOAD */
+
+loadEmployees();
 
 </script>
 
