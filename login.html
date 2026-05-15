@@ -143,7 +143,7 @@ transition:0.3s;
 transform:scale(1.03);
 }
 
-/* DEMO */
+/* INFO */
 
 .demo{
 
@@ -226,7 +226,7 @@ LOGIN
 <div class="demo">
 
 <div>
-<span>ADMIN</span>
+<span>ADMIN DEFAULT</span>
 </div>
 
 Username : admin
@@ -238,14 +238,11 @@ Password : admin123
 <br><br>
 
 <div>
-<span>EMPLOYEE</span>
+<span>EMPLOYEE LOGIN</span>
 </div>
 
-Username : employee
-
-<br>
-
-Password : employee123
+Use employee username/password
+created in SETTINGS page
 
 </div>
 
@@ -274,7 +271,9 @@ document.getElementById(
 'password'
 ).value;
 
-/* ADMIN */
+/* =========================
+ADMIN LOGIN
+========================= */
 
 if(
 
@@ -291,26 +290,52 @@ localStorage.setItem(
 'admin'
 );
 
+localStorage.setItem(
+'loggedInUser',
+'ADMIN'
+);
+
 window.location.href =
 'index.html';
 
+return;
+
 }
 
-/* EMPLOYEE */
+/* =========================
+EMPLOYEE LOGIN
+========================= */
 
-else if(
+if(role === 'employee'){
 
-role === 'employee' &&
+let users =
 
-username === 'employee' &&
+JSON.parse(
+localStorage.getItem('users')
+) || [];
 
-password === 'employee123'
+let validUser = users.find(user =>
 
-){
+user.username === username &&
+
+user.password === password &&
+
+user.role === 'employee'
+
+);
+
+/* VALID */
+
+if(validUser){
 
 localStorage.setItem(
 'userRole',
 'employee'
+);
+
+localStorage.setItem(
+'loggedInUser',
+validUser.username
 );
 
 window.location.href =
@@ -319,6 +344,18 @@ window.location.href =
 }
 
 /* INVALID */
+
+else{
+
+alert(
+'Invalid Employee Login'
+);
+
+}
+
+}
+
+/* INVALID ROLE */
 
 else{
 
