@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>QR Attendance Scanner</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+body{
+
+background:#1f1f1f;
+
+color:white;
+
+padding:20px;
+
+text-align:center;
+}
+
+.container{
+
+max-width:600px;
+
+margin:auto;
+
+background:#2b2b2b;
+
+padding:20px;
+
+border-radius:20px;
+
+border:3px solid #ffcc00;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+
+h1{
+
+color:#ffcc00;
+
+margin-bottom:20px;
+}
+
+#reader{
+
+width:100%;
+
+overflow:hidden;
+
+border-radius:15px;
+
+border:3px solid #ffcc00;
+}
+
+.result{
+
+margin-top:20px;
+
+padding:20px;
+
+background:#111;
+
+border-radius:15px;
+
+font-size:18px;
+
+line-height:1.8;
+
+border:2px solid #00cc66;
+}
+
+.success{
+
+color:#00ff99;
+
+font-weight:bold;
+}
+
+.time{
+
+color:#ffcc00;
+
+font-size:22px;
+
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>
+📷 QR ATTENDANCE
+</h1>
+
+<div id="reader"></div>
+
+<div class="result">
+
+<div class="success">
+Waiting for QR Scan...
+</div>
+
+<div class="time"
+id="clock">
+
+00:00:00
+
+</div>
+
+<div id="employeeInfo">
+
+No Employee
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script type="module">
+
+import {
+
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
+
+projectId:
+"hr-system-38fc3",
+
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* CLOCK */
+
+function updateClock(){
+
+clock.innerText =
+
+new Date()
+.toLocaleTimeString();
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* QR SUCCESS */
+
+async function onScanSuccess(decodedText){
+
+try{
+
+let data =
+JSON.parse(decodedText);
+
+employeeInfo.innerHTML = `
+
+<b>Employee ID:</b>
+${data.employeeid}
+
+<br>
+
+<b>Name:</b>
+${data.name}
+
+<br>
+
+<b>Date:</b>
+${new Date().toLocaleDateString()}
+
+<br>
+
+<b>Time:</b>
+${new Date().toLocaleTimeString()}
+
+`;
+
+/* SAVE ATTENDANCE */
+
+await addDoc(
+
+collection(db,'attendance'),
+
+{
+
+employeeid:
+data.employeeid,
+
+employee:
+data.name,
+
+date:
+new Date()
+.toLocaleDateString(),
+
+timein:
+new Date()
+.toLocaleTimeString(),
+
+timestamp:
+Date.now()
+
+}
+
+);
+
+navigator.vibrate(200);
+
+}catch(error){
+
+console.log(error);
+
+alert('Invalid QR');
+
+}
+
+}
+
+/* START SCANNER */
+
+new Html5QrcodeScanner(
+
+"reader",
+
+{
+
+fps:10,
+
+qrbox:250
+
+}
+
+).render(onScanSuccess);
+
+</script>
+
+</body>
+</html>
