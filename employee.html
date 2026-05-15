@@ -284,19 +284,6 @@ transition:0.2s;
 
 }
 
-/* QR */
-
-.qr-box{
-
-background:white;
-
-padding:4px;
-
-border-radius:8px;
-
-display:inline-block;
-}
-
 /* MODAL */
 
 .modal{
@@ -460,7 +447,7 @@ border-color:#ffcc00;
 
 }
 
-/* PRINT ID */
+/* PRINT */
 
 @media print{
 
@@ -559,7 +546,7 @@ Total : 0
 
 <tr>
 
-<th>QR CODE</th>
+<th>QR</th>
 
 <th>First Name</th>
 <th>Middle Name</th>
@@ -624,8 +611,6 @@ X
 
 <h3>Employee Information</h3>
 
-<!-- TABS -->
-
 <div class="classic-tabs">
 
 <button
@@ -662,8 +647,6 @@ Employment Info
 
 </div>
 
-<!-- PERSONAL -->
-
 <div
 id="personal"
 class="tab-content active">
@@ -698,8 +681,6 @@ readonly>
 
 </div>
 
-<!-- GOVERNMENT -->
-
 <div
 id="government"
 class="tab-content">
@@ -731,8 +712,6 @@ class="tab-content">
 
 </div>
 
-<!-- CONTACT -->
-
 <div
 id="contact"
 class="tab-content">
@@ -749,8 +728,6 @@ class="tab-content">
 </div>
 
 </div>
-
-<!-- EMPLOYMENT -->
 
 <div
 id="employment"
@@ -794,11 +771,7 @@ Save Employee
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
 <script type="module">
-
-/* FIREBASE */
 
 import { initializeApp }
 
@@ -817,8 +790,6 @@ updateDoc
 }
 
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-/* CONFIG */
 
 const firebaseConfig = {
 
@@ -842,13 +813,9 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
-/* VARIABLES */
-
 let employees = [];
 
 let editId = null;
-
-/* MODAL */
 
 window.openModal = function(){
 
@@ -863,8 +830,6 @@ employeeModal.style.display='none';
 clearForm();
 
 }
-
-/* TABS */
 
 window.openTab = function(evt,tabId){
 
@@ -893,8 +858,6 @@ evt.currentTarget
 
 }
 
-/* AGE */
-
 window.calcAge = function(){
 
 let birth =
@@ -911,13 +874,10 @@ age.value = years;
 
 }
 
-/* SAVE */
-
 window.saveEmployee =
 async function(){
 
 let fields =
-
 document.querySelectorAll(
 '.emp-field'
 );
@@ -1008,14 +968,11 @@ alert('Save Error');
 
 }
 
-/* LOAD */
-
 async function loadEmployees(){
 
 employees = [];
 
 let table =
-
 document.querySelector(
 '#empTable tbody'
 );
@@ -1023,7 +980,6 @@ document.querySelector(
 table.innerHTML='';
 
 let snapshot =
-
 await getDocs(
 collection(db,'employees')
 );
@@ -1044,12 +1000,9 @@ renderTable();
 
 }
 
-/* RENDER */
-
 function renderTable(){
 
 let table =
-
 document.querySelector(
 '#empTable tbody'
 );
@@ -1064,13 +1017,16 @@ table.innerHTML += `
 
 <td>
 
-<div class="qr-box">
+<button
+class="print-btn"
+onclick="viewQR(
+'${emp.employeeid}',
+'${emp.firstname || ''} ${emp.lastname || ''}'
+)">
 
-<canvas
-id="qr-${emp.employeeid}">
-</canvas>
+VIEW QR
 
-</div>
+</button>
 
 </td>
 
@@ -1135,51 +1091,137 @@ Delete
 
 updateTotal();
 
-generateQRCodes();
+}
+
+/* VIEW QR */
+
+window.viewQR =
+function(employeeid,name){
+
+let qrWindow =
+window.open(
+'',
+'_blank',
+'width=400,height=500'
+);
+
+qrWindow.document.write(`
+
+<html>
+
+<head>
+
+<title>Employee QR</title>
+
+<style>
+
+body{
+
+font-family:Tahoma,sans-serif;
+
+text-align:center;
+
+padding:20px;
+
+background:white;
 
 }
 
-/* QR */
+h2{
 
-function generateQRCodes(){
+color:#cc0000;
 
-employees.forEach(emp=>{
+}
 
-let canvas =
-document.getElementById(
-`qr-${emp.employeeid}`
-);
+#qrcode{
 
-if(canvas){
+margin-top:20px;
+
+}
+
+button{
+
+margin-top:20px;
+
+padding:10px 20px;
+
+border:none;
+
+background:#ffcc00;
+
+font-weight:bold;
+
+cursor:pointer;
+
+border-radius:8px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>PAPPRITO</h2>
+
+<h3>Employee QR Code</h3>
+
+<p><b>ID:</b> ${employeeid}</p>
+
+<p><b>Name:</b> ${name}</p>
+
+<div id="qrcode"></div>
+
+<br>
+
+<button onclick="window.print()">
+PRINT QR
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"><\/script>
+
+<script>
 
 QRCode.toCanvas(
 
-canvas,
+document.createElement('canvas'),
 
 JSON.stringify({
 
-employeeid:
-emp.employeeid,
+employeeid:'${employeeid}',
 
-name:
-(emp.firstname || '') + ' ' +
-(emp.lastname || '')
+name:'${name}'
 
 }),
 
 {
-width:70
+width:220
+},
+
+function(error,canvas){
+
+if(!error){
+
+document
+.getElementById('qrcode')
+.appendChild(canvas);
+
+}
+
 }
 
 );
 
+<\/script>
+
+</body>
+
+</html>
+
+`);
+
 }
-
-});
-
-}
-
-/* EDIT */
 
 window.editEmployee = function(id){
 
@@ -1232,8 +1274,6 @@ field.value = values[i] || '';
 
 }
 
-/* DELETE */
-
 window.deleteEmployee =
 async function(id){
 
@@ -1249,15 +1289,12 @@ loadEmployees();
 
 }
 
-/* SEARCH */
-
 window.searchEmp = function(){
 
 let val =
 search.value.toLowerCase();
 
 let rows =
-
 document.querySelectorAll(
 '#empTable tbody tr'
 );
@@ -1267,7 +1304,6 @@ let visible = 0;
 rows.forEach(row=>{
 
 let show =
-
 row.innerText
 .toLowerCase()
 .includes(val);
@@ -1284,8 +1320,6 @@ total.innerText =
 
 }
 
-/* CLEAR */
-
 function clearForm(){
 
 editId = null;
@@ -1300,12 +1334,9 @@ el.value='';
 
 }
 
-/* TOTAL */
-
 function updateTotal(){
 
 let rows =
-
 document.querySelectorAll(
 '#empTable tbody tr'
 );
@@ -1314,8 +1345,6 @@ total.innerText =
 'Total : ' + rows.length;
 
 }
-
-/* AUTO LOAD */
 
 loadEmployees();
 
