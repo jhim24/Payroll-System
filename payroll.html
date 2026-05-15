@@ -152,7 +152,9 @@ color:white;
 
 margin-top:20px;
 
-overflow:auto;
+overflow-x:auto;
+
+-webkit-overflow-scrolling:touch;
 
 background:white;
 
@@ -176,6 +178,8 @@ border:1px solid #999;
 padding:10px;
 
 text-align:center;
+
+white-space:nowrap;
 }
 
 th{
@@ -218,6 +222,70 @@ font-weight:bold;
 
 .title{
 font-size:22px;
+}
+
+.table-wrapper{
+
+overflow-x:auto;
+}
+
+table{
+
+min-width:1800px;
+
+font-size:11px;
+}
+
+th,
+td{
+
+padding:7px;
+}
+
+}
+
+/* EXTRA SMALL */
+
+@media(max-width:480px){
+
+table{
+
+min-width:1600px;
+
+font-size:10px;
+}
+
+th,
+td{
+
+padding:6px;
+}
+
+}
+
+/* PRINT */
+
+@media print{
+
+body{
+background:white;
+padding:0;
+}
+
+.btn{
+display:none !important;
+}
+
+.container{
+
+border:none;
+
+background:white;
+}
+
+table{
+
+min-width:100%;
 }
 
 }
