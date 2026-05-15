@@ -101,6 +101,11 @@ background:#ff8800;
 color:black;
 }
 
+.logout-btn{
+background:#990000;
+color:white;
+}
+
 /* FORM */
 
 .form-section{
@@ -325,7 +330,8 @@ padding:0;
 .table-wrapper,
 .back-btn,
 .view-btn,
-.print-btn{
+.print-btn,
+.logout-btn{
 display:none !important;
 }
 
@@ -363,7 +369,7 @@ margin:auto;
 👨‍💼 EMPLOYEE REQUEST
 </div>
 
-<div style="display:flex;gap:10px;">
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
 
 <button
 class="btn back-btn"
@@ -378,6 +384,14 @@ class="btn print-btn"
 onclick="printPayslip()">
 
 🖨 PRINT PAYSLIP
+
+</button>
+
+<button
+class="btn logout-btn"
+onclick="logout()">
+
+🚪 LOGOUT
 
 </button>
 
@@ -494,7 +508,7 @@ onclick="loadPayslip()">
 
 </div>
 
-<!-- INDIVIDUAL PAYSLIP -->
+<!-- PAYSLIP -->
 
 <div
 class="payslip"
@@ -616,7 +630,16 @@ let fullname =
 (emp[1] || '') + ' ' +
 (emp[2] || '');
 
-if(fullname.trim() === currentUser.trim()){
+fullname = fullname
+.replace(/\s+/g,' ')
+.trim();
+
+let loginUser =
+currentUser
+.replace(/\s+/g,' ')
+.trim();
+
+if(fullname === loginUser){
 
 currentEmployee = {
 
@@ -634,11 +657,21 @@ name: fullname
 
 if(currentEmployee){
 
-empIdDisplay.innerText =
+document.getElementById(
+'empIdDisplay'
+).innerText =
 currentEmployee.id;
 
-empNameDisplay.innerText =
+document.getElementById(
+'empNameDisplay'
+).innerText =
 currentEmployee.name;
+
+}else{
+
+alert(
+'Employee account not connected to Employee Masterlist'
+);
 
 }
 
@@ -650,13 +683,23 @@ JSON.parse(
 localStorage.getItem('employeeRequests')
 ) || [];
 
-/* SUBMIT */
+/* =========================
+SUBMIT REQUEST
+========================= */
 
 function submitRequest(){
 
 if(!currentEmployee){
 
 alert('Employee Not Found');
+
+return;
+
+}
+
+if(requestType.value===''){
+
+alert('Select Request Type');
 
 return;
 
@@ -693,21 +736,51 @@ renderRequests();
 
 }
 
-/* RENDER */
+/* =========================
+RENDER REQUESTS
+========================= */
 
 function renderRequests(){
 
 requestBody.innerHTML='';
 
-requests
-.filter(req=>
+let filteredRequests =
 
-req.employee ===
+requests.filter(req=>{
+
+return req.employee
+.replace(/\s+/g,' ')
+.trim()
+
+===
+
 currentEmployee.name
+.replace(/\s+/g,' ')
+.trim();
 
-)
+});
 
-.forEach(req=>{
+if(filteredRequests.length===0){
+
+requestBody.innerHTML = `
+
+<tr>
+
+<td colspan="7">
+
+NO REQUEST FOUND
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+filteredRequests.forEach(req=>{
 
 let statusClass =
 req.status.toLowerCase();
@@ -740,7 +813,9 @@ ${req.status}
 
 }
 
-/* LOAD PAYSLIP */
+/* =========================
+LOAD PAYSLIP
+========================= */
 
 function loadPayslip(){
 
@@ -750,9 +825,31 @@ JSON.parse(
 localStorage.getItem('payroll')
 ) || [];
 
-let pay = payroll.find(p=>
-p.employee === currentEmployee.name
-);
+if(!currentEmployee){
+
+alert('Employee Not Found');
+
+return;
+
+}
+
+let pay = payroll.find(p=>{
+
+let payrollName =
+
+(p.employee || '')
+.replace(/\s+/g,' ')
+.trim();
+
+let employeeName =
+
+currentEmployee.name
+.replace(/\s+/g,' ')
+.trim();
+
+return payrollName === employeeName;
+
+});
 
 if(!pay){
 
@@ -807,7 +904,9 @@ Number(pay.net || 0)
 
 }
 
-/* PRINT */
+/* =========================
+PRINT
+========================= */
 
 function printPayslip(){
 
@@ -817,7 +916,36 @@ window.print();
 
 }
 
-/* AUTO LOAD */
+/* =========================
+LOGOUT
+========================= */
+
+function logout(){
+
+let confirmLogout = confirm(
+'Are you sure you want to logout?'
+);
+
+if(confirmLogout){
+
+localStorage.removeItem(
+'loggedInUser'
+);
+
+localStorage.removeItem(
+'userRole'
+);
+
+window.location.href =
+'login.html';
+
+}
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
 
 renderRequests();
 
