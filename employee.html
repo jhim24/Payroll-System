@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="manifest" href="manifest.json">
 
 <meta name="theme-color" content="#ffcc00">
 
 <link rel="apple-touch-icon" href="icon-192.png">
+
 <title>Employee Masterlist</title>
 
 <style>
@@ -60,7 +62,8 @@ text-shadow:2px 2px 5px black;
 .save-btn,
 .btn,
 .close-btn,
-.back-btn{
+.back-btn,
+.print-btn{
 
 padding:10px 18px;
 
@@ -103,6 +106,17 @@ background:linear-gradient(
 135deg,
 #00cc66,
 #00994d
+);
+}
+
+/* PRINT */
+
+.print-btn{
+
+background:linear-gradient(
+135deg,
+#0099ff,
+#0066cc
 );
 }
 
@@ -152,7 +166,8 @@ color:black;
 .save-btn:hover,
 .btn:hover,
 .close-btn:hover,
-.back-btn:hover{
+.back-btn:hover,
+.print-btn:hover{
 
 transform:translateY(-2px) scale(1.03);
 
@@ -223,7 +238,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:4000px;
+min-width:4500px;
 
 font-size:12px;
 }
@@ -267,6 +282,19 @@ background:#3a3a3a;
 
 transition:0.2s;
 
+}
+
+/* QR */
+
+.qr-box{
+
+background:white;
+
+padding:4px;
+
+border-radius:8px;
+
+display:inline-block;
 }
 
 /* MODAL */
@@ -432,6 +460,37 @@ border-color:#ffcc00;
 
 }
 
+/* PRINT ID */
+
+@media print{
+
+body{
+
+background:white;
+
+padding:0;
+
+}
+
+.top-bar,
+.modal{
+
+display:none !important;
+
+}
+
+.table-box{
+
+overflow:visible;
+
+height:auto;
+
+border:none;
+
+}
+
+}
+
 </style>
 
 </head>
@@ -450,7 +509,7 @@ onclick="window.location.href='index.html'">
 
 <h2>Employee Masterlist</h2>
 
-<div style="display:flex;gap:10px;">
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
 
 <div class="search-box">
 
@@ -467,6 +526,14 @@ class="add-btn"
 onclick="openModal()">
 
 + Add Employee
+
+</button>
+
+<button
+class="print-btn"
+onclick="window.print()">
+
+🖨 PRINT
 
 </button>
 
@@ -491,6 +558,8 @@ Total : 0
 <thead>
 
 <tr>
+
+<th>QR CODE</th>
 
 <th>First Name</th>
 <th>Middle Name</th>
@@ -520,6 +589,10 @@ Total : 0
 <th>Department</th>
 <th>Employment</th>
 <th>Salary Rate</th>
+
+<th>Vacation Leave</th>
+<th>Sick Leave</th>
+<th>Birthday Leave</th>
 
 <th>Action</th>
 
@@ -721,6 +794,8 @@ Save Employee
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
 <script type="module">
 
 /* FIREBASE */
@@ -795,7 +870,6 @@ window.openTab = function(evt,tabId){
 
 document
 .querySelectorAll('.tab-content')
-
 .forEach(tab=>{
 
 tab.classList.remove('active');
@@ -804,12 +878,10 @@ tab.classList.remove('active');
 
 document
 .getElementById(tabId)
-
 .classList.add('active');
 
 document
 .querySelectorAll('.tab-btn')
-
 .forEach(btn=>{
 
 btn.classList.remove('active');
@@ -889,9 +961,7 @@ employment:data[21] || '',
 salary:data[22] || '',
 
 vacationleave:10,
-
 sickleave:7,
-
 birthdayleave:1
 
 };
@@ -992,6 +1062,18 @@ table.innerHTML += `
 
 <tr>
 
+<td>
+
+<div class="qr-box">
+
+<canvas
+id="qr-${emp.employeeid}">
+</canvas>
+
+</div>
+
+</td>
+
 <td>${emp.firstname || ''}</td>
 <td>${emp.middlename || ''}</td>
 <td>${emp.lastname || ''}</td>
@@ -1021,6 +1103,10 @@ table.innerHTML += `
 <td>${emp.employment || ''}</td>
 <td>${emp.salary || ''}</td>
 
+<td>${emp.vacationleave || 0}</td>
+<td>${emp.sickleave || 0}</td>
+<td>${emp.birthdayleave || 0}</td>
+
 <td>
 
 <button
@@ -1048,6 +1134,48 @@ Delete
 });
 
 updateTotal();
+
+generateQRCodes();
+
+}
+
+/* QR */
+
+function generateQRCodes(){
+
+employees.forEach(emp=>{
+
+let canvas =
+document.getElementById(
+`qr-${emp.employeeid}`
+);
+
+if(canvas){
+
+QRCode.toCanvas(
+
+canvas,
+
+JSON.stringify({
+
+employeeid:
+emp.employeeid,
+
+name:
+(emp.firstname || '') + ' ' +
+(emp.lastname || '')
+
+}),
+
+{
+width:70
+}
+
+);
+
+}
+
+});
 
 }
 
@@ -1096,7 +1224,6 @@ emp.salary
 ];
 
 document.querySelectorAll('.emp-field')
-
 .forEach((field,i)=>{
 
 field.value = values[i] || '';
@@ -1165,7 +1292,6 @@ editId = null;
 
 document
 .querySelectorAll('.emp-field')
-
 .forEach(el=>{
 
 el.value='';
