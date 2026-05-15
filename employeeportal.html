@@ -250,11 +250,11 @@ border:3px solid #cc9900;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
 
-/* EXACT 1/4 BOND SIZE */
-
 width:95mm;
 
-height:135mm;
+height:auto;
+
+min-height:135mm;
 
 margin-left:auto;
 margin-right:auto;
@@ -313,7 +313,7 @@ border-radius:10px;
 border:2px solid #e6a36d;
 }
 
-/* TABLE */
+/* PAYROLL TABLE */
 
 .payroll-table{
 
@@ -344,6 +344,17 @@ padding:5px;
 border:1px solid #999;
 
 background:white;
+
+text-align:left;
+
+font-weight:bold;
+}
+
+.payroll-table td:last-child{
+
+text-align:right;
+
+width:35%;
 }
 
 /* TOTAL */
@@ -371,7 +382,7 @@ text-align:right;
 
 .signature{
 
-margin-top:28px;
+margin-top:25px;
 
 display:flex;
 
@@ -393,6 +404,20 @@ text-align:center;
 padding-top:4px;
 
 font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.payslip{
+
+width:100%;
+
+max-width:100%;
+
+}
+
 }
 
 /* PRINT */
@@ -436,7 +461,7 @@ display:block !important;
 
 width:95mm;
 
-height:135mm;
+min-height:135mm;
 
 margin:auto;
 
@@ -449,103 +474,6 @@ page-break-inside:avoid;
 
 }
 
-/* PRINT */
-
-@media print{
-
-@page{
-size:A4 portrait;
-margin:5mm;
-}
-
-body{
-background:white;
-padding:0;
-}
-
-.header,
-.form-grid,
-.save-btn,
-.table-wrapper,
-.back-btn,
-.view-btn,
-.print-btn,
-.logout-btn,
-.close-btn{
-display:none !important;
-}
-
-.container{
-
-border:none;
-
-background:white;
-
-box-shadow:none;
-}
-
-.payslip{
-
-display:block !important;
-
-width:90mm;
-
-min-height:130mm;
-
-margin:auto;
-
-border:1px solid #999;
-
-box-shadow:none;
-
-page-break-inside:avoid;
-}
-
-}
-/* PRINT */
-
-@media print{
-
-body{
-background:white;
-padding:0;
-}
-
-.header,
-.form-grid,
-.save-btn,
-.table-wrapper,
-.back-btn,
-.view-btn,
-.print-btn,
-.logout-btn,
-.close-btn{
-display:none !important;
-}
-
-.container{
-
-border:none;
-
-background:white;
-}
-
-.payslip{
-
-display:block !important;
-
-width:100%;
-
-max-width:520px;
-
-margin:auto;
-
-border:none;
-
-box-shadow:none;
-}
-
-}
 </style>
 
 </head>
@@ -553,8 +481,6 @@ box-shadow:none;
 <body>
 
 <div class="container">
-
-<!-- HEADER -->
 
 <div class="header">
 
@@ -591,8 +517,6 @@ onclick="logout()">
 </div>
 
 </div>
-
-<!-- FORM -->
 
 <div class="form-section">
 
@@ -849,22 +773,16 @@ Employee Signature
 
 <script>
 
-/* =========================
-CURRENT USER
-========================= */
+/* CURRENT USER */
 
 let currentUser =
-
 localStorage.getItem(
 'loggedInUser'
 ) || '';
 
-/* =========================
-LOAD EMPLOYEE INFO
-========================= */
+/* LOAD EMPLOYEES */
 
 let employees =
-
 JSON.parse(
 localStorage.getItem('employees')
 ) || [];
@@ -913,17 +831,9 @@ currentEmployee.id;
 empNameDisplay.innerText =
 currentEmployee.name;
 
-}else{
-
-alert(
-'Employee account not connected to Employee Masterlist'
-);
-
 }
 
-/* =========================
-REQUEST STORAGE
-========================= */
+/* REQUEST STORAGE */
 
 let requests =
 
@@ -931,19 +841,9 @@ JSON.parse(
 localStorage.getItem('employeeRequests')
 ) || [];
 
-/* =========================
-SUBMIT REQUEST
-========================= */
+/* SUBMIT REQUEST */
 
 function submitRequest(){
-
-if(!currentEmployee){
-
-alert('Employee Not Found');
-
-return;
-
-}
 
 if(requestType.value===''){
 
@@ -984,26 +884,22 @@ renderRequests();
 
 }
 
-/* =========================
-RENDER REQUESTS
-========================= */
+/* RENDER REQUEST */
 
 function renderRequests(){
 
 requestBody.innerHTML='';
 
-let filteredRequests =
-
-requests.filter(req=>{
+let filtered = requests.filter(req=>{
 
 return req.empid ===
 currentEmployee.id;
 
 });
 
-if(filteredRequests.length===0){
+if(filtered.length===0){
 
-requestBody.innerHTML = `
+requestBody.innerHTML=`
 
 <tr>
 
@@ -1021,7 +917,7 @@ return;
 
 }
 
-filteredRequests.forEach(req=>{
+filtered.forEach(req=>{
 
 let statusClass =
 req.status.toLowerCase();
@@ -1031,15 +927,10 @@ requestBody.innerHTML += `
 <tr>
 
 <td>${req.empid}</td>
-
 <td>${req.employee}</td>
-
 <td>${req.type}</td>
-
 <td>${req.date}</td>
-
 <td>${req.days}</td>
-
 <td>${req.reason}</td>
 
 <td class="${statusClass}">
@@ -1054,9 +945,7 @@ ${req.status}
 
 }
 
-/* =========================
-LOAD PAYSLIP
-========================= */
+/* LOAD PAYSLIP */
 
 function loadPayslip(){
 
@@ -1066,30 +955,17 @@ JSON.parse(
 localStorage.getItem('payroll')
 ) || [];
 
-if(!currentEmployee){
-
-alert('Employee Not Found');
-
-return;
-
-}
-
 let pay = payroll.find(p=>{
 
-let payrollEmployee =
-
-(p.employee || '')
+return (p.employee || '')
 .replace(/\s+/g,' ')
-.trim();
+.trim()
 
-let currentEmployeeName =
+===
 
 currentEmployee.name
 .replace(/\s+/g,' ')
 .trim();
-
-return payrollEmployee ===
-currentEmployeeName;
 
 });
 
@@ -1113,62 +989,47 @@ payDate.innerText =
 new Date().toDateString();
 
 payGross.innerText =
-Number(pay.gross || 0)
-.toFixed(2);
+Number(pay.gross || 0).toFixed(2);
 
 payOvertime.innerText =
-Number(pay.overtime || 0)
-.toFixed(2);
+Number(pay.overtime || 0).toFixed(2);
 
 payHoliday.innerText =
-Number(pay.holiday || 0)
-.toFixed(2);
+Number(pay.holiday || 0).toFixed(2);
 
 paySick.innerText =
-Number(pay.sick || 0)
-.toFixed(2);
+Number(pay.sick || 0).toFixed(2);
 
 payBirthday.innerText =
-Number(pay.birthday || 0)
-.toFixed(2);
+Number(pay.birthday || 0).toFixed(2);
 
 payVacation.innerText =
-Number(pay.vacation || 0)
-.toFixed(2);
+Number(pay.vacation || 0).toFixed(2);
 
 paySSS.innerText =
-Number(pay.sss || 0)
-.toFixed(2);
+Number(pay.sss || 0).toFixed(2);
 
 payPhilhealth.innerText =
-Number(pay.philhealth || 0)
-.toFixed(2);
+Number(pay.philhealth || 0).toFixed(2);
 
 payPagibig.innerText =
-Number(pay.pagibig || 0)
-.toFixed(2);
+Number(pay.pagibig || 0).toFixed(2);
 
 payHealth.innerText =
-Number(pay.health || 0)
-.toFixed(2);
+Number(pay.health || 0).toFixed(2);
 
 payOther.innerText =
-Number(pay.other || 0)
-.toFixed(2);
+Number(pay.other || 0).toFixed(2);
 
 payDeduction.innerText =
-Number(pay.deductions || 0)
-.toFixed(2);
+Number(pay.deductions || 0).toFixed(2);
 
 payNet.innerText =
-Number(pay.net || 0)
-.toFixed(2);
+Number(pay.net || 0).toFixed(2);
 
 }
 
-/* =========================
-CLOSE PAYSLIP
-========================= */
+/* CLOSE PAYSLIP */
 
 function closePayslip(){
 
@@ -1176,9 +1037,7 @@ payslipArea.style.display='none';
 
 }
 
-/* =========================
-PRINT
-========================= */
+/* PRINT */
 
 function printPayslip(){
 
@@ -1188,17 +1047,13 @@ window.print();
 
 }
 
-/* =========================
-LOGOUT
-========================= */
+/* LOGOUT */
 
 function logout(){
 
-let confirmLogout = confirm(
+if(confirm(
 'Are you sure you want to logout?'
-);
-
-if(confirmLogout){
+)){
 
 localStorage.removeItem(
 'loggedInUser'
@@ -1215,9 +1070,7 @@ window.location.href =
 
 }
 
-/* =========================
-AUTO LOAD
-========================= */
+/* AUTO LOAD */
 
 renderRequests();
 
