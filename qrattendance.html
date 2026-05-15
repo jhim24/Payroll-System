@@ -120,6 +120,13 @@ font-size:22px;
 font-weight:bold;
 }
 
+.error{
+
+color:red;
+
+font-weight:bold;
+}
+
 </style>
 
 </head>
@@ -169,6 +176,10 @@ No Employee
 
 <script type="module">
 
+/* =========================
+FIREBASE
+========================= */
+
 import {
 
 initializeApp
@@ -192,27 +203,29 @@ getDocs
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-/* FIREBASE */
+/* =========================
+FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
 apiKey:
-"YOUR_API_KEY",
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
 
 authDomain:
-"YOUR_AUTH_DOMAIN",
+"hr-system-38fc3.firebaseapp.com",
 
 projectId:
-"YOUR_PROJECT_ID",
+"hr-system-38fc3",
 
 storageBucket:
-"YOUR_STORAGE_BUCKET",
+"hr-system-38fc3.firebasestorage.app",
 
 messagingSenderId:
-"YOUR_SENDER_ID",
+"615471610834",
 
 appId:
-"YOUR_APP_ID"
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
 
 };
 
@@ -222,7 +235,9 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
-/* CLOCK */
+/* =========================
+CLOCK
+========================= */
 
 function updateClock(){
 
@@ -237,13 +252,17 @@ setInterval(updateClock,1000);
 
 updateClock();
 
-/* SCAN PROTECTION */
+/* =========================
+SCAN PROTECTION
+========================= */
 
 let lastScan = "";
 
 let scanLock = false;
 
-/* QR SUCCESS */
+/* =========================
+QR SUCCESS
+========================= */
 
 async function onScanSuccess(decodedText){
 
@@ -284,20 +303,30 @@ const attendanceQuery = query(
 
 collection(db,'attendance'),
 
-where('employeeid','==',data.employeeid),
+where(
+'employeeid',
+'==',
+data.employeeid
+),
 
-where('date','==',today)
+where(
+'date',
+'==',
+today
+)
 
 );
 
 const existing =
 await getDocs(attendanceQuery);
 
+/* ALREADY SCANNED */
+
 if(!existing.empty){
 
 employeeInfo.innerHTML = `
 
-<div style="color:red;font-weight:bold;">
+<div class="error">
 
 ALREADY SCANNED TODAY
 
@@ -314,6 +343,8 @@ ${data.employeeid}
 ${data.name}
 
 `;
+
+navigator.vibrate(300);
 
 setTimeout(()=>{
 
@@ -351,7 +382,7 @@ ${new Date().toLocaleTimeString()}
 
 <br><br>
 
-<div style="color:#00ff99;font-weight:bold;">
+<div class="success">
 
 TIME IN SAVED
 
@@ -387,6 +418,8 @@ Date.now()
 
 );
 
+/* VIBRATE */
+
 navigator.vibrate(200);
 
 /* RESET */
@@ -403,7 +436,15 @@ lastScan = "";
 
 console.log(error);
 
-alert('Invalid QR');
+employeeInfo.innerHTML = `
+
+<div class="error">
+
+INVALID QR CODE
+
+</div>
+
+`;
 
 scanLock = false;
 
@@ -411,7 +452,9 @@ scanLock = false;
 
 }
 
-/* START QR */
+/* =========================
+START SCANNER
+========================= */
 
 new Html5QrcodeScanner(
 
