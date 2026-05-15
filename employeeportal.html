@@ -191,16 +191,13 @@ color:white;
 
 margin-top:25px;
 
-overflow-x:hidden;
-
-overflow-y:hidden;
+overflow-x:auto;
 
 background:white;
 
 border-radius:10px;
 
 width:100%;
-
 }
 
 table{
@@ -209,10 +206,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:100%;
-
-table-layout:fixed;
-
+min-width:1000px;
 }
 
 th,
@@ -227,8 +221,8 @@ text-align:center;
 font-size:11px;
 
 word-break:break-word;
-
 }
+
 th{
 
 background:#ffcc00;
@@ -258,85 +252,110 @@ font-weight:bold;
 }
 
 /* =========================
-PAYSLIP FINAL FIX
+PAPER
 ========================= */
 
-.payslip{
+.paper{
 
-display:none;
+width:190mm;
+
+min-height:270mm;
 
 margin:20px auto;
 
-width:95mm;
-
-min-height:auto;
-
 background:white;
+
+padding:5mm;
+
+display:none;
+
+grid-template-columns:1fr 1fr;
+
+gap:6px;
+
+border-radius:10px;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.5);
+
+}
+
+/* PAYSLIP */
+
+.payslip{
+
+border:2px solid #ffcc00;
+
+border-radius:10px;
+
+padding:6px;
+
+background:#f9f9f9;
 
 color:black;
 
-padding:10px;
+display:flex;
 
-border-radius:18px;
+flex-direction:column;
 
-border:2px solid #cc9900;
+justify-content:space-between;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.4);
+min-height:125mm;
 
-overflow:auto;
-
-word-break:break-word;
+overflow:hidden;
 
 }
+
 /* COMPANY */
 
 .company{
 
 text-align:center;
 
+margin-bottom:4px;
+
+padding-bottom:3px;
+
 border-bottom:2px solid #ffcc00;
 
-padding-bottom:5px;
-
-margin-bottom:8px;
 }
 
 .company h2{
 
-font-size:18px;
+font-size:13px;
 
-color:#660000;
+color:#cc0000;
+
 }
 
 .company p{
 
-font-size:9px;
+font-size:8px;
 
 font-weight:bold;
+
 }
 
 /* INFO */
 
 .info{
 
-font-size:10px;
+font-size:8px;
 
-line-height:1.7;
+line-height:1.4;
 
-padding:8px;
+background:#fff8dc;
 
-background:#fff5f0;
+padding:4px;
+
+border-radius:4px;
 
 border:1px solid #ffcc00;
 
-border-radius:8px;
+margin-bottom:4px;
 
-margin-bottom:8px;
-
-overflow-wrap:break-word;
 }
 
-/* TABLE FIX */
+/* PAYROLL TABLE */
 
 .payroll-table{
 
@@ -346,9 +365,16 @@ border-collapse:collapse;
 
 font-size:7px;
 
-margin-top:5px;
+margin-top:3px;
 
-table-layout:fixed;
+}
+
+.payroll-table th,
+.payroll-table td{
+
+border:1px solid #999;
+
+padding:2px;
 
 }
 
@@ -356,94 +382,64 @@ table-layout:fixed;
 
 background:#ffcc00;
 
-color:black;
+font-size:7px;
 
-padding:6px;
-
-font-size:9px;
 }
 
 .payroll-table td{
 
-border:1px solid #999;
-
-padding:2px;
-
-font-size:8px;
-
-word-break:break-word;
+background:white;
 
 }
 
-/* COLUMN SIZE */
+/* TOTAL */
 
-.payroll-table td:first-child,
-.payroll-table th:first-child{
-
-width:68%;
-
-text-align:left;
-
-}
-
-.payroll-table td:last-child,
-.payroll-table th:last-child{
-
-width:32%;
-
-text-align:right;
-
-font-weight:bold;
-
-}
-
-/* NETPAY */
-
-.netpay{
+.total{
 
 margin-top:5px;
 
-padding:10px;
+padding:5px;
 
 background:#008000;
 
 color:white;
 
-font-size:12px;
+border-radius:5px;
+
+font-size:9px;
 
 font-weight:bold;
 
-border-radius:8px;
-
 text-align:right;
 
-overflow-wrap:break-word;
 }
 
 /* SIGNATURE */
 
 .signature{
 
-margin-top:10px;
+margin-top:8px;
 
 display:flex;
 
 justify-content:space-between;
 
-gap:10px;
+font-size:7px;
 
-font-size:8px;
 }
 
 .line{
 
+margin-top:10px;
+
 border-top:1px solid black;
 
-width:80px;
-
-padding-top:4px;
+width:65px;
 
 text-align:center;
+
+padding-top:2px;
+
 }
 
 /* PRINT */
@@ -468,34 +464,30 @@ border:none;
 background:white;
 }
 
-.payslip{
+.paper{
 
-display:block !important;
+display:grid !important;
 
-margin:auto;
+border:none;
 
 box-shadow:none;
 
-width:95mm;
+width:190mm;
 
-max-width:95mm;
+min-height:270mm;
 
-min-height:auto;
+padding:0;
 
-overflow:visible;
+margin:auto;
 
 }
 
-.payroll-table{
+.payslip{
 
-font-size:9px;
-}
+box-shadow:none;
 
-.payroll-table td{
+break-inside:avoid;
 
-white-space:normal;
-
-word-break:break-word;
 }
 
 }
@@ -508,53 +500,23 @@ word-break:break-word;
 font-size:22px;
 }
 
-.payslip{
+.paper{
 
 width:100%;
 
-max-width:360px;
-
-padding:8px;
-
-margin:auto;
+grid-template-columns:1fr;
 
 }
 
-.payroll-table{
+.payslip{
 
-font-size:7px;
-
-}
-
-.payroll-table th,
-.payroll-table td{
-
-padding:3px;
+min-height:auto;
 
 }
+
 table{
 
-font-size:10px;
-
-}
-
-th,
-td{
-
-padding:4px;
-
-font-size:9px;
-
-}
-.netpay{
-
-font-size:11px;
-
-}
-
-.line{
-
-width:70px;
+min-width:800px;
 
 }
 
@@ -720,155 +682,11 @@ onclick="printPayslip()">
 
 </div>
 
-<!-- PAYSLIP -->
+<!-- PAPER -->
 
 <div
-class="payslip"
-id="payslipArea">
-
-<div class="company">
-
-<h2>PAPPRITO</h2>
-
-<p>OFFICIAL EMPLOYEE PAYSLIP</p>
-
-</div>
-
-<div class="info">
-
-<b>Employee ID :</b>
-<span id="payEmpId">-</span>
-
-<br>
-
-<b>Employee :</b>
-<span id="payEmp">-</span>
-
-<br>
-
-<b>Date :</b>
-<span id="payDate">-</span>
-
-</div>
-
-<table class="payroll-table">
-
-<tr>
-<th>EARNINGS</th>
-<th>AMOUNT</th>
-</tr>
-
-<tr>
-<td>Daily Rate</td>
-<td id="payDailyRate">0.00</td>
-</tr>
-
-<tr>
-<td>Total Days</td>
-<td id="payTotalDays">0</td>
-</tr>
-
-<tr>
-<td>Overtime</td>
-<td id="payOvertime">0.00</td>
-</tr>
-
-<tr>
-<td>Holiday Pay</td>
-<td id="payHoliday">0.00</td>
-</tr>
-
-<tr>
-<td>Sick Leave</td>
-<td id="paySick">0.00</td>
-</tr>
-
-<tr>
-<td>Vacation Leave</td>
-<td id="payVacation">0.00</td>
-</tr>
-
-<tr>
-<td>Birthday Leave</td>
-<td id="payBirthday">0.00</td>
-</tr>
-
-<tr>
-<td>Maternity Leave</td>
-<td id="payMaternity">0.00</td>
-</tr>
-
-<tr>
-<td>Paternity Leave</td>
-<td id="payPaternity">0.00</td>
-</tr>
-
-<tr>
-<td>Allowance</td>
-<td id="payAllowance">0.00</td>
-</tr>
-
-</table>
-
-<table class="payroll-table">
-
-<tr>
-<th>DEDUCTIONS</th>
-<th>AMOUNT</th>
-</tr>
-
-<tr>
-<td>SSS</td>
-<td id="paySSS">0.00</td>
-</tr>
-
-<tr>
-<td>PhilHealth</td>
-<td id="payPhilhealth">0.00</td>
-</tr>
-
-<tr>
-<td>Pag-IBIG</td>
-<td id="payPagibig">0.00</td>
-</tr>
-
-<tr>
-<td>Health Card</td>
-<td id="payHealth">0.00</td>
-</tr>
-
-<tr>
-<td>Others</td>
-<td id="payOther">0.00</td>
-</tr>
-
-<tr>
-<td>Total Deduction</td>
-<td id="payDeduction">0.00</td>
-</tr>
-
-</table>
-
-<div class="netpay">
-
-NET PAY :
-₱ <span id="payNet">
-0.00
-</span>
-
-</div>
-
-<div class="signature">
-
-<div class="line">
-HR Signature
-</div>
-
-<div class="line">
-Employee Signature
-</div>
-
-</div>
+class="paper"
+id="paper">
 
 </div>
 
@@ -1208,7 +1026,7 @@ await getDocs(
 collection(db,'payroll')
 );
 
-let found = false;
+let payrollRecords = [];
 
 querySnapshot.forEach(docSnap=>{
 
@@ -1219,95 +1037,184 @@ pay.empid ===
 currentEmployee.id
 ){
 
-found = true;
-
-payslipArea.style.display='block';
-
-payEmpId.innerText =
-pay.empid || '';
-
-payEmp.innerText =
-pay.employee || '';
-
-payDate.innerText =
-pay.date || '';
-
-payDailyRate.innerText =
-Number(pay.dailyrate || 0)
-.toFixed(2);
-
-payTotalDays.innerText =
-Number(pay.totaldays || 0);
-
-payOvertime.innerText =
-Number(pay.overtime || 0)
-.toFixed(2);
-
-payHoliday.innerText =
-Number(pay.holiday || 0)
-.toFixed(2);
-
-paySick.innerText =
-Number(pay.sick || 0)
-.toFixed(2);
-
-payVacation.innerText =
-Number(pay.vacation || 0)
-.toFixed(2);
-
-payBirthday.innerText =
-Number(pay.birthday || 0)
-.toFixed(2);
-
-payMaternity.innerText =
-Number(pay.maternity || 0)
-.toFixed(2);
-
-payPaternity.innerText =
-Number(pay.paternity || 0)
-.toFixed(2);
-
-payAllowance.innerText =
-Number(pay.allowance || 0)
-.toFixed(2);
-
-paySSS.innerText =
-Number(pay.sss || 0)
-.toFixed(2);
-
-payPhilhealth.innerText =
-Number(pay.philhealth || 0)
-.toFixed(2);
-
-payPagibig.innerText =
-Number(pay.pagibig || 0)
-.toFixed(2);
-
-payHealth.innerText =
-Number(pay.health || 0)
-.toFixed(2);
-
-payOther.innerText =
-Number(pay.other || 0)
-.toFixed(2);
-
-payDeduction.innerText =
-Number(pay.deductions || 0)
-.toFixed(2);
-
-payNet.innerText =
-Number(pay.net || 0)
-.toFixed(2);
+payrollRecords.push(pay);
 
 }
 
 });
 
-if(!found){
+if(payrollRecords.length === 0){
 
 alert('No Payslip Found');
 
+return;
+
 }
+
+paper.style.display='grid';
+
+paper.innerHTML='';
+
+while(payrollRecords.length < 4){
+
+payrollRecords.push(null);
+
+}
+
+payrollRecords.forEach(pay=>{
+
+let div =
+document.createElement('div');
+
+div.className='payslip';
+
+if(pay){
+
+div.innerHTML = `
+
+<div>
+
+<div class="company">
+
+<h2>PAPPRITO</h2>
+
+<p>OFFICIAL EMPLOYEE PAYSLIP</p>
+
+</div>
+
+<div class="info">
+
+<b>ID:</b>
+${pay.empid || '-'}
+
+<br>
+
+<b>Name:</b>
+${pay.employee || '-'}
+
+<br>
+
+<b>Date:</b>
+${pay.date || '-'}
+
+</div>
+
+<table class="payroll-table">
+
+<tr>
+<th>EARNINGS</th>
+<th>AMOUNT</th>
+</tr>
+
+<tr>
+<td>Daily Rate</td>
+<td>₱ ${Number(pay.dailyrate || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Total Days</td>
+<td>${Number(pay.totaldays || 0)}</td>
+</tr>
+
+<tr>
+<td>Overtime</td>
+<td>₱ ${Number(pay.overtime || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Holiday</td>
+<td>₱ ${Number(pay.holiday || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Sick Leave</td>
+<td>₱ ${Number(pay.sick || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Vacation Leave</td>
+<td>₱ ${Number(pay.vacation || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Birthday Leave</td>
+<td>₱ ${Number(pay.birthday || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Allowance</td>
+<td>₱ ${Number(pay.allowance || 0).toFixed(2)}</td>
+</tr>
+
+</table>
+
+<table class="payroll-table">
+
+<tr>
+<th>DEDUCTIONS</th>
+<th>AMOUNT</th>
+</tr>
+
+<tr>
+<td>SSS</td>
+<td>₱ ${Number(pay.sss || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>PhilHealth</td>
+<td>₱ ${Number(pay.philhealth || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Pag-IBIG</td>
+<td>₱ ${Number(pay.pagibig || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Health Card</td>
+<td>₱ ${Number(pay.health || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Others</td>
+<td>₱ ${Number(pay.other || 0).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Total Deduction</td>
+<td>₱ ${Number(pay.deductions || 0).toFixed(2)}</td>
+</tr>
+
+</table>
+
+<div class="total">
+
+NET PAY :
+₱ ${Number(pay.net || 0).toFixed(2)}
+
+</div>
+
+</div>
+
+<div class="signature">
+
+<div class="line">
+HR
+</div>
+
+<div class="line">
+Employee
+</div>
+
+</div>
+
+`;
+
+}
+
+paper.appendChild(div);
+
+});
 
 }
 
@@ -1316,7 +1223,7 @@ alert('No Payslip Found');
 window.closePayslip =
 function(){
 
-payslipArea.style.display='none';
+paper.style.display='none';
 
 }
 
