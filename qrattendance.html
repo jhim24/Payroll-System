@@ -44,38 +44,14 @@ border:3px solid #ffcc00;
 box-shadow:0 5px 20px rgba(0,0,0,0.5);
 }
 
-/* TOP BAR */
+h1{
 
-.top-bar{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
+color:#ffcc00;
 
 margin-bottom:20px;
-
-flex-wrap:wrap;
-
-gap:10px;
 }
 
-/* BACK BUTTON */
-
 .back-btn{
-
-padding:10px 18px;
-
-border:none;
-
-border-radius:10px;
-
-cursor:pointer;
-
-font-weight:bold;
-
-font-size:13px;
 
 background:linear-gradient(
 135deg,
@@ -85,21 +61,19 @@ background:linear-gradient(
 
 color:black;
 
-transition:0.3s;
-}
+padding:12px 18px;
 
-.back-btn:hover{
+border:none;
 
-transform:scale(1.03);
-}
+border-radius:10px;
 
-h1{
+font-weight:bold;
 
-color:#ffcc00;
+cursor:pointer;
 
-margin:0;
+margin-bottom:20px;
 
-font-size:28px;
+font-size:14px;
 }
 
 #reader{
@@ -146,27 +120,6 @@ font-size:22px;
 font-weight:bold;
 }
 
-/* MOBILE */
-
-@media(max-width:768px){
-
-h1{
-
-font-size:22px;
-}
-
-.result{
-
-font-size:15px;
-}
-
-.time{
-
-font-size:18px;
-}
-
-}
-
 </style>
 
 </head>
@@ -174,10 +127,6 @@ font-size:18px;
 <body>
 
 <div class="container">
-
-<!-- TOP -->
-
-<div class="top-bar">
 
 <button
 class="back-btn"
@@ -191,13 +140,7 @@ onclick="window.location.href='index.html'">
 📷 QR ATTENDANCE
 </h1>
 
-</div>
-
-<!-- QR -->
-
 <div id="reader"></div>
-
-<!-- RESULT -->
 
 <div class="result">
 
@@ -239,7 +182,10 @@ import {
 
 getFirestore,
 collection,
-addDoc
+addDoc,
+query,
+where,
+getDocs
 
 }
 
@@ -251,22 +197,22 @@ from
 const firebaseConfig = {
 
 apiKey:
-"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+"YOUR_API_KEY",
 
 authDomain:
-"hr-system-38fc3.firebaseapp.com",
+"YOUR_AUTH_DOMAIN",
 
 projectId:
-"hr-system-38fc3",
+"YOUR_PROJECT_ID",
 
 storageBucket:
-"hr-system-38fc3.firebasestorage.app",
+"YOUR_STORAGE_BUCKET",
 
 messagingSenderId:
-"615471610834",
+"YOUR_SENDER_ID",
 
 appId:
-"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+"YOUR_APP_ID"
 
 };
 
@@ -291,14 +237,97 @@ setInterval(updateClock,1000);
 
 updateClock();
 
+/* SCAN PROTECTION */
+
+let lastScan = "";
+
+let scanLock = false;
+
 /* QR SUCCESS */
 
 async function onScanSuccess(decodedText){
+
+if(scanLock) return;
+
+scanLock = true;
 
 try{
 
 let data =
 JSON.parse(decodedText);
+
+let currentScan =
+data.employeeid;
+
+/* BLOCK DUPLICATE */
+
+if(lastScan === currentScan){
+
+setTimeout(()=>{
+
+scanLock = false;
+
+},3000);
+
+return;
+
+}
+
+lastScan = currentScan;
+
+let today =
+new Date().toLocaleDateString();
+
+/* CHECK EXISTING */
+
+const attendanceQuery = query(
+
+collection(db,'attendance'),
+
+where('employeeid','==',data.employeeid),
+
+where('date','==',today)
+
+);
+
+const existing =
+await getDocs(attendanceQuery);
+
+if(!existing.empty){
+
+employeeInfo.innerHTML = `
+
+<div style="color:red;font-weight:bold;">
+
+ALREADY SCANNED TODAY
+
+</div>
+
+<br>
+
+<b>Employee ID:</b>
+${data.employeeid}
+
+<br>
+
+<b>Name:</b>
+${data.name}
+
+`;
+
+setTimeout(()=>{
+
+scanLock = false;
+
+lastScan = "";
+
+},3000);
+
+return;
+
+}
+
+/* SHOW INFO */
 
 employeeInfo.innerHTML = `
 
@@ -313,12 +342,20 @@ ${data.name}
 <br>
 
 <b>Date:</b>
-${new Date().toLocaleDateString()}
+${today}
 
 <br>
 
 <b>Time:</b>
 ${new Date().toLocaleTimeString()}
+
+<br><br>
+
+<div style="color:#00ff99;font-weight:bold;">
+
+TIME IN SAVED
+
+</div>
 
 `;
 
@@ -337,8 +374,7 @@ employee:
 data.name,
 
 date:
-new Date()
-.toLocaleDateString(),
+today,
 
 timein:
 new Date()
@@ -353,17 +389,29 @@ Date.now()
 
 navigator.vibrate(200);
 
+/* RESET */
+
+setTimeout(()=>{
+
+scanLock = false;
+
+lastScan = "";
+
+},3000);
+
 }catch(error){
 
 console.log(error);
 
 alert('Invalid QR');
 
-}
+scanLock = false;
 
 }
 
-/* START SCANNER */
+}
+
+/* START QR */
 
 new Html5QrcodeScanner(
 
