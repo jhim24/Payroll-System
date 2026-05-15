@@ -4,6 +4,9 @@
 
 <title>HR Settings</title>
 
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <style>
 
 *{
@@ -24,7 +27,7 @@ color:white;
 
 .container{
 
-max-width:700px;
+max-width:900px;
 
 margin:auto;
 
@@ -36,14 +39,16 @@ border-radius:15px;
 
 overflow:hidden;
 
-box-shadow:0 5px 20px rgba(0,0,0,0.5);
+box-shadow:
+0 5px 20px rgba(0,0,0,0.5);
 }
 
 /* HEADER */
 
 .header{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ffcc00,
 #ff8800
@@ -56,6 +61,8 @@ display:flex;
 justify-content:space-between;
 
 align-items:center;
+
+flex-wrap:wrap;
 }
 
 .title{
@@ -78,7 +85,8 @@ padding:20px;
 
 display:grid;
 
-grid-template-columns:1fr;
+grid-template-columns:
+1fr 1fr;
 
 gap:15px;
 }
@@ -99,6 +107,14 @@ background:#1f1f1f;
 color:white;
 
 font-size:14px;
+}
+
+input:focus,
+select:focus{
+
+outline:none;
+
+border-color:#ffcc00;
 }
 
 /* BUTTON */
@@ -164,6 +180,8 @@ table{
 width:100%;
 
 border-collapse:collapse;
+
+min-width:700px;
 }
 
 th,
@@ -188,13 +206,33 @@ color:black;
 }
 
 .role-admin{
+
 color:red;
+
 font-weight:bold;
 }
 
 .role-employee{
+
 color:green;
+
 font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.form-grid{
+
+grid-template-columns:1fr;
+}
+
+.title{
+
+font-size:22px;
+}
+
 }
 
 </style>
@@ -210,7 +248,7 @@ font-weight:bold;
 <div class="header">
 
 <div class="title">
-⚙️ USER SETTINGS
+⚙️ FIREBASE USER SETTINGS
 </div>
 
 <button
@@ -229,11 +267,7 @@ onclick="window.location.href='index.html'">
 
 <div class="form-grid">
 
-<!-- EMPLOYEE DROPDOWN -->
-
-<select
-id="employeeDropdown"
-onchange="selectEmployee()">
+<select id="employeeSelect">
 
 <option value="">
 Select Employee
@@ -244,7 +278,7 @@ Select Employee
 <input
 type="text"
 id="username"
-placeholder="Username / Employee ID">
+placeholder="Username">
 
 <input
 type="password"
@@ -267,6 +301,10 @@ EMPLOYEE
 
 </select>
 
+</div>
+
+<br>
+
 <button
 class="btn save-btn"
 onclick="saveUser()">
@@ -274,8 +312,6 @@ onclick="saveUser()">
 SAVE USER
 
 </button>
-
-</div>
 
 <!-- TABLE -->
 
@@ -287,6 +323,7 @@ SAVE USER
 
 <tr>
 
+<th>EMPLOYEE</th>
 <th>USERNAME</th>
 <th>PASSWORD</th>
 <th>ROLE</th>
@@ -308,49 +345,107 @@ SAVE USER
 
 </div>
 
-<script>
+<script type="module">
 
 /* =========================
-USER STORAGE
+FIREBASE IMPORT
 ========================= */
 
-let users =
+import {
 
-JSON.parse(
-localStorage.getItem('users')
-) || [];
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+/* =========================
+FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
+
+projectId:
+"hr-system-38fc3",
+
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+/* =========================
+INIT
+========================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
 
 /* =========================
 LOAD EMPLOYEES
 ========================= */
 
-function loadEmployees(){
+async function loadEmployees(){
 
-let employees =
-
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-employeeDropdown.innerHTML =
+employeeSelect.innerHTML =
 
 '<option value="">Select Employee</option>';
 
-employees.forEach(emp=>{
+let querySnapshot =
+
+await getDocs(
+collection(db,'employees')
+);
+
+querySnapshot.forEach(doc=>{
+
+let emp = doc.data();
 
 let fullname =
 
-(emp[0] || '') + ' ' +
-(emp[1] || '') + ' ' +
-(emp[2] || '');
+(emp.firstname || '') + ' ' +
+
+(emp.middlename || '') + ' ' +
+
+(emp.lastname || '');
 
 let empId =
-emp[18] || 'NO-ID';
+emp.employeeid || '';
 
-employeeDropdown.innerHTML += `
+employeeSelect.innerHTML += `
 
 <option
-value="${empId}">
+value="${empId}"
+data-name="${fullname}">
 
 ${empId} - ${fullname}
 
@@ -362,95 +457,131 @@ ${empId} - ${fullname}
 
 }
 
+loadEmployees();
+
 /* =========================
-SELECT EMPLOYEE
+AUTO USERNAME
 ========================= */
 
-function selectEmployee(){
+employeeSelect.addEventListener(
+'change',
+function(){
 
 username.value =
-employeeDropdown.value;
+this.value;
 
 role.value =
 'employee';
 
 }
+);
 
 /* =========================
 SAVE USER
 ========================= */
 
-function saveUser(){
+window.saveUser =
+async function(){
 
 if(
+
 username.value === '' ||
+
 password.value === '' ||
+
 role.value === ''
+
 ){
 
-alert('Complete all fields');
+alert(
+'Complete all fields'
+);
 
 return;
 
 }
 
-/* CHECK DUPLICATE */
+/* EMPLOYEE NAME */
 
-let exist = users.find(user=>
+let employeeName = '';
 
-user.username ===
-username.value
+if(employeeSelect.value !== ''){
 
-);
+let selected =
 
-if(exist){
+employeeSelect.options[
+employeeSelect.selectedIndex
+];
 
-alert('Username already exists');
-
-return;
+employeeName =
+selected.dataset.name;
 
 }
 
-let data = {
+try{
 
-username:username.value,
+await addDoc(
+collection(db,'users'),
 
-password:password.value,
+{
 
-role:role.value
+employee:
+employeeName,
 
-};
+username:
+username.value,
 
-users.push(data);
+password:
+password.value,
 
-localStorage.setItem(
-'users',
-JSON.stringify(users)
+role:
+role.value
+
+}
+
 );
 
-alert('User Saved');
-
-renderUsers();
+alert(
+'User Saved Successfully'
+);
 
 clearForm();
+
+loadUsers();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Firebase Save Error'
+);
+
+}
 
 }
 
 /* =========================
-RENDER USERS
+LOAD USERS
 ========================= */
 
-function renderUsers(){
+async function loadUsers(){
 
 userBody.innerHTML='';
 
-if(users.length===0){
+let querySnapshot =
 
-userBody.innerHTML=`
+await getDocs(
+collection(db,'users')
+);
+
+if(querySnapshot.empty){
+
+userBody.innerHTML = `
 
 <tr>
 
-<td colspan="4">
+<td colspan="5">
 
 NO USER FOUND
 
@@ -464,17 +595,25 @@ return;
 
 }
 
-users.forEach((user,index)=>{
+querySnapshot.forEach(userDoc=>{
+
+let user = userDoc.data();
 
 let roleClass =
 
 user.role === 'admin'
+
 ? 'role-admin'
+
 : 'role-employee';
 
 userBody.innerHTML += `
 
 <tr>
+
+<td>
+${user.employee || '-'}
+</td>
 
 <td>
 ${user.username}
@@ -485,14 +624,16 @@ ${user.password}
 </td>
 
 <td class="${roleClass}">
+
 ${user.role.toUpperCase()}
+
 </td>
 
 <td>
 
 <button
 class="btn delete-btn"
-onclick="deleteUser(${index})">
+onclick="deleteUser('${userDoc.id}')">
 
 DELETE
 
@@ -508,36 +649,52 @@ DELETE
 
 }
 
+loadUsers();
+
 /* =========================
 DELETE USER
 ========================= */
 
-function deleteUser(index){
+window.deleteUser =
+async function(id){
 
 let confirmDelete = confirm(
 'Delete User?'
 );
 
-if(confirmDelete){
+if(!confirmDelete) return;
 
-users.splice(index,1);
+try{
 
-localStorage.setItem(
-'users',
-JSON.stringify(users)
+await deleteDoc(
+doc(db,'users',id)
 );
 
-renderUsers();
+alert(
+'User Deleted'
+);
+
+loadUsers();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Delete Error'
+);
 
 }
 
 }
 
 /* =========================
-CLEAR FORM
+CLEAR
 ========================= */
 
 function clearForm(){
+
+employeeSelect.value='';
 
 username.value='';
 
@@ -545,17 +702,7 @@ password.value='';
 
 role.value='';
 
-employeeDropdown.value='';
-
 }
-
-/* =========================
-AUTO LOAD
-========================= */
-
-loadEmployees();
-
-renderUsers();
 
 </script>
 
