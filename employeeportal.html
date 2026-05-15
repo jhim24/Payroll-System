@@ -79,6 +79,13 @@ cursor:pointer;
 font-weight:bold;
 
 font-size:13px;
+
+transition:0.3s;
+}
+
+.btn:hover{
+
+transform:scale(1.03);
 }
 
 .back-btn{
@@ -103,6 +110,11 @@ color:black;
 
 .logout-btn{
 background:#990000;
+color:white;
+}
+
+.close-btn{
+background:#444;
 color:white;
 }
 
@@ -224,43 +236,75 @@ font-weight:bold;
 
 margin-top:25px;
 
-width:48%;
-
 background:white;
 
 padding:15px;
 
-border-radius:12px;
+border-radius:15px;
 
 color:black;
 
 display:none;
 
-border:2px solid #ffcc00;
+border:3px solid #ffcc00;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
+
+width:48%;
+
+margin-left:auto;
+margin-right:auto;
 }
 
-.payslip-header{
+/* COMPANY */
+
+.company{
 
 text-align:center;
 
 margin-bottom:10px;
 
-border-bottom:2px solid #ffcc00;
+padding-bottom:8px;
 
-padding-bottom:10px;
+border-bottom:2px solid #ffcc00;
 }
 
-.payslip-header h2{
+.company h2{
+
+font-size:22px;
 
 color:#cc0000;
-
-font-size:20px;
 }
 
-.payslip-header p{
+.company p{
 
 font-size:11px;
+
+font-weight:bold;
+
+color:#555;
 }
+
+/* INFO */
+
+.info{
+
+font-size:11px;
+
+line-height:1.6;
+
+margin-bottom:8px;
+
+background:#fff8dc;
+
+padding:8px;
+
+border-radius:8px;
+
+border:1px solid #ffcc00;
+}
+
+/* TABLE */
 
 .payroll-table{
 
@@ -268,9 +312,9 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:10px;
+margin-top:8px;
 
-font-size:11px;
+font-size:10px;
 }
 
 .payroll-table th{
@@ -280,22 +324,37 @@ background:#ffcc00;
 color:black;
 }
 
+.payroll-table td{
+
+background:white;
+}
+
+/* TOTAL */
+
 .netpay{
+
+margin-top:10px;
+
+padding:10px;
+
+background:#008000;
+
+color:white;
+
+border-radius:8px;
 
 font-size:18px;
 
 font-weight:bold;
 
-color:green;
-
-margin-top:15px;
-
 text-align:right;
 }
 
+/* SIGNATURE */
+
 .signature{
 
-margin-top:30px;
+margin-top:25px;
 
 display:flex;
 
@@ -306,13 +365,17 @@ font-size:10px;
 
 .line{
 
+margin-top:25px;
+
 border-top:1px solid black;
 
 width:120px;
 
 text-align:center;
 
-padding-top:5px;
+padding-top:4px;
+
+font-weight:bold;
 }
 
 /* PRINT */
@@ -331,7 +394,8 @@ padding:0;
 .back-btn,
 .view-btn,
 .print-btn,
-.logout-btn{
+.logout-btn,
+.close-btn{
 display:none !important;
 }
 
@@ -349,6 +413,10 @@ display:block !important;
 width:48%;
 
 margin:auto;
+
+border:none;
+
+box-shadow:none;
 }
 
 }
@@ -478,6 +546,14 @@ onclick="loadPayslip()">
 
 </button>
 
+<button
+class="btn close-btn"
+onclick="closePayslip()">
+
+❌ CLOSE PAYSLIP
+
+</button>
+
 </div>
 
 <!-- REQUEST TABLE -->
@@ -516,58 +592,104 @@ onclick="loadPayslip()">
 class="payslip"
 id="payslipArea">
 
-<div class="payslip-header">
+<div class="company">
 
 <h2>PAPPRITO</h2>
 
-<p>EMPLOYEE PAYSLIP</p>
+<p>OFFICIAL EMPLOYEE PAYSLIP</p>
+
+</div>
+
+<div class="info">
+
+<b>Employee ID :</b>
+<span id="payEmpId">-</span>
+
+<br>
+
+<b>Employee :</b>
+<span id="payEmp">-</span>
+
+<br>
+
+<b>Date :</b>
+<span id="payDate">-</span>
 
 </div>
 
 <table class="payroll-table">
 
 <tr>
-<th>Employee</th>
-<td id="payEmp">-</td>
+<th>EARNINGS</th>
+<th>AMOUNT</th>
 </tr>
 
 <tr>
-<th>Gross Pay</th>
+<td>Gross Pay</td>
 <td id="payGross">0.00</td>
 </tr>
 
 <tr>
-<th>Overtime</th>
+<td>Overtime</td>
 <td id="payOvertime">0.00</td>
 </tr>
 
 <tr>
-<th>SSS</th>
+<td>Holiday Pay</td>
+<td id="payHoliday">0.00</td>
+</tr>
+
+<tr>
+<td>Sick Leave</td>
+<td id="paySick">0.00</td>
+</tr>
+
+<tr>
+<td>Birthday Leave</td>
+<td id="payBirthday">0.00</td>
+</tr>
+
+<tr>
+<td>Vacation Leave</td>
+<td id="payVacation">0.00</td>
+</tr>
+
+</table>
+
+<table class="payroll-table">
+
+<tr>
+<th>DEDUCTIONS</th>
+<th>AMOUNT</th>
+</tr>
+
+<tr>
+<td>SSS</td>
 <td id="paySSS">0.00</td>
 </tr>
 
 <tr>
-<th>PhilHealth</th>
+<td>PhilHealth</td>
 <td id="payPhilhealth">0.00</td>
 </tr>
 
 <tr>
-<th>Pag-IBIG</th>
+<td>Pag-IBIG</td>
 <td id="payPagibig">0.00</td>
 </tr>
 
 <tr>
-<th>Health Card</th>
+<td>Health Card</td>
 <td id="payHealth">0.00</td>
 </tr>
 
 <tr>
-<th>Other Deduction</th>
+<td>Other Deduction</td>
 <td id="payOther">0.00</td>
 </tr>
 
 <tr>
-<th>Total Deduction</th>
+<td>Total Deduction</td>
 <td id="payDeduction">0.00</td>
 </tr>
 
@@ -624,8 +746,6 @@ localStorage.getItem('employees')
 
 let currentEmployee = null;
 
-/* MATCH EMPLOYEE ID */
-
 employees.forEach(emp=>{
 
 let fullname = [
@@ -662,14 +782,10 @@ name: fullname
 
 if(currentEmployee){
 
-document.getElementById(
-'empIdDisplay'
-).innerText =
+empIdDisplay.innerText =
 currentEmployee.id;
 
-document.getElementById(
-'empNameDisplay'
-).innerText =
+empNameDisplay.innerText =
 currentEmployee.name;
 
 }else{
@@ -833,8 +949,6 @@ return;
 
 }
 
-/* MATCH EMPLOYEE */
-
 let pay = payroll.find(p=>{
 
 let payrollEmployee =
@@ -862,16 +976,16 @@ return;
 
 }
 
-/* SHOW */
+payslipArea.style.display='block';
 
-document.getElementById(
-'payslipArea'
-).style.display='block';
-
-/* DISPLAY DATA */
+payEmpId.innerText =
+currentEmployee.id;
 
 payEmp.innerText =
 pay.employee || '-';
+
+payDate.innerText =
+new Date().toDateString();
 
 payGross.innerText =
 Number(pay.gross || 0)
@@ -879,6 +993,22 @@ Number(pay.gross || 0)
 
 payOvertime.innerText =
 Number(pay.overtime || 0)
+.toFixed(2);
+
+payHoliday.innerText =
+Number(pay.holiday || 0)
+.toFixed(2);
+
+paySick.innerText =
+Number(pay.sick || 0)
+.toFixed(2);
+
+payBirthday.innerText =
+Number(pay.birthday || 0)
+.toFixed(2);
+
+payVacation.innerText =
+Number(pay.vacation || 0)
 .toFixed(2);
 
 paySSS.innerText =
@@ -908,6 +1038,16 @@ Number(pay.deductions || 0)
 payNet.innerText =
 Number(pay.net || 0)
 .toFixed(2);
+
+}
+
+/* =========================
+CLOSE PAYSLIP
+========================= */
+
+function closePayslip(){
+
+payslipArea.style.display='none';
 
 }
 
