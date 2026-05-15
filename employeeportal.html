@@ -252,32 +252,28 @@ font-weight:bold;
 }
 
 /* =========================
-PAYSLIP 1/4 BOND PAPER
+PAYSLIP
 ========================= */
 
 .payslip{
 
 display:none;
 
-width:95mm;
-
-min-height:135mm;
-
 margin:20px auto;
+
+width:110mm;
 
 background:#f9f9f9;
 
-border:2px solid #ffcc00;
-
-border-radius:12px;
-
-padding:8px;
-
 color:black;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
+padding:10px;
 
-overflow:hidden;
+border-radius:15px;
+
+border:2px solid #ffcc00;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
 
 }
 
@@ -287,46 +283,44 @@ overflow:hidden;
 
 text-align:center;
 
-padding-bottom:4px;
+margin-bottom:6px;
 
-margin-bottom:5px;
+padding-bottom:5px;
 
 border-bottom:2px solid #ffcc00;
 }
 
 .company h2{
 
-font-size:14px;
+font-size:18px;
 
 color:#cc0000;
 }
 
 .company p{
 
-font-size:8px;
+font-size:9px;
 
 font-weight:bold;
-
 }
 
 /* INFO */
 
 .info{
 
-font-size:8px;
+font-size:10px;
 
-line-height:1.5;
+line-height:1.6;
+
+margin-bottom:6px;
 
 background:#fff8dc;
 
-padding:5px;
+padding:6px;
 
-border-radius:5px;
+border-radius:6px;
 
 border:1px solid #ffcc00;
-
-margin-bottom:5px;
-
 }
 
 /* PAYROLL TABLE */
@@ -337,10 +331,9 @@ width:100%;
 
 border-collapse:collapse;
 
-font-size:7px;
+margin-top:5px;
 
-margin-top:4px;
-
+table-layout:fixed;
 }
 
 .payroll-table th,
@@ -348,71 +341,129 @@ margin-top:4px;
 
 border:1px solid #999;
 
-padding:2px;
+padding:4px;
 
+font-size:9px;
+
+overflow:hidden;
+
+white-space:nowrap;
+
+text-overflow:ellipsis;
 }
 
 .payroll-table th{
 
 background:#ffcc00;
 
-font-size:7px;
+color:black;
 
+font-size:9px;
 }
 
 .payroll-table td{
 
 background:white;
-
 }
 
-/* TOTAL */
+/* LEFT COLUMN */
 
-.total{
+.payroll-table td:first-child,
+.payroll-table th:first-child{
 
-margin-top:5px;
+width:65%;
 
-padding:6px;
+text-align:left;
+}
+
+/* RIGHT COLUMN */
+
+.payroll-table td:last-child,
+.payroll-table th:last-child{
+
+width:35%;
+
+text-align:right;
+
+font-weight:bold;
+}
+
+/* NET PAY */
+
+.netpay{
+
+margin-top:8px;
+
+padding:8px;
 
 background:#008000;
 
 color:white;
 
-border-radius:5px;
+border-radius:6px;
 
-font-size:9px;
+font-size:12px;
 
 font-weight:bold;
 
 text-align:right;
-
 }
 
 /* SIGNATURE */
 
 .signature{
 
-margin-top:10px;
+margin-top:15px;
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:7px;
-
+font-size:8px;
 }
 
 .line{
 
-margin-top:10px;
+margin-top:12px;
 
 border-top:1px solid black;
 
-width:65px;
+width:75px;
 
 text-align:center;
 
-padding-top:2px;
+padding-top:3px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.title{
+font-size:22px;
+}
+
+.payslip{
+
+width:100%;
+
+max-width:110mm;
+
+padding:8px;
+}
+
+.payroll-table th,
+.payroll-table td{
+
+font-size:8px;
+
+padding:3px;
+}
+
+.line{
+
+width:65px;
+}
 
 }
 
@@ -442,42 +493,15 @@ background:white;
 
 display:block !important;
 
-width:95mm;
-
-min-height:135mm;
-
-margin:0 auto;
+margin:auto;
 
 box-shadow:none;
 
-border:2px solid #000;
+width:110mm;
 
-page-break-inside:avoid;
+max-width:110mm;
 
-}
-
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.title{
-font-size:22px;
-}
-
-.payslip{
-
-width:100%;
-
-max-width:95mm;
-
-}
-
-table{
-
-min-width:800px;
-
+border:2px solid #ffcc00;
 }
 
 }
@@ -515,23 +539,13 @@ onclick="logout()">
 <div class="emp-info">
 
 <div>
-
 <b>EMPLOYEE ID :</b>
-
-<span id="empIdDisplay">
--
-</span>
-
+<span id="empIdDisplay">-</span>
 </div>
 
 <div>
-
 <b>EMPLOYEE NAME :</b>
-
-<span id="empNameDisplay">
--
-</span>
-
+<span id="empNameDisplay">-</span>
 </div>
 
 </div>
@@ -696,7 +710,7 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Holiday</td>
+<td>Holiday Pay</td>
 <td id="payHoliday">0.00</td>
 </tr>
 
@@ -713,6 +727,16 @@ id="payslipArea">
 <tr>
 <td>Birthday Leave</td>
 <td id="payBirthday">0.00</td>
+</tr>
+
+<tr>
+<td>Maternity Leave</td>
+<td id="payMaternity">0.00</td>
+</tr>
+
+<tr>
+<td>Paternity Leave</td>
+<td id="payPaternity">0.00</td>
 </tr>
 
 <tr>
@@ -761,7 +785,7 @@ id="payslipArea">
 
 </table>
 
-<div class="total">
+<div class="netpay">
 
 NET PAY :
 ₱ <span id="payNet">0.00</span>
@@ -863,7 +887,6 @@ let emp = docSnap.data();
 let fullname =
 
 (emp.firstname || '') + ' ' +
-(emp.middlename || '') + ' ' +
 (emp.lastname || '');
 
 if(
@@ -1167,6 +1190,14 @@ Number(pay.vacation || 0)
 
 payBirthday.innerText =
 Number(pay.birthday || 0)
+.toFixed(2);
+
+payMaternity.innerText =
+Number(pay.maternity || 0)
+.toFixed(2);
+
+payPaternity.innerText =
+Number(pay.paternity || 0)
 .toFixed(2);
 
 payAllowance.innerText =
