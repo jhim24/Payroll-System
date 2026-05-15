@@ -2,87 +2,129 @@
 <html>
 <head>
 
-<title>Employee Attendance</title>
+<title>Employee Masterlist</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <style>
 
 *{
-margin:0;
-padding:0;
 box-sizing:border-box;
 font-family:Tahoma,sans-serif;
 }
 
 body{
-background:#1f1f1f;
-padding:10px;
+
+margin:0;
+
+padding:15px;
+
+background:linear-gradient(
+135deg,
+#1f1f1f,
+#2b2b2b
+);
+
 color:white;
+
 }
 
-/* CONTAINER */
+/* TOP */
 
-.container{
-
-max-width:1300px;
-
-margin:auto;
-
-background:#2b2b2b;
-
-border:2px solid #ffcc00;
-
-border-radius:12px;
-
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
-
-padding:10px;
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:15px;
 }
 
-/* HEADER */
+h2{
 
-.header{
+margin:0;
 
-padding:10px;
+font-size:30px;
 
-text-align:center;
+color:#ffcc00;
 
-position:relative;
+text-shadow:2px 2px 5px black;
+
 }
 
 /* BUTTONS */
 
-.top-btn{
+.add-btn,
+.save-btn,
+.btn,
+.close-btn,
+.back-btn{
 
 padding:10px 18px;
-
-cursor:pointer;
-
-font-weight:bold;
-
-font-size:12px;
 
 border:none;
 
 border-radius:10px;
 
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:13px;
+
 transition:0.3s;
 
 box-shadow:0 4px 10px rgba(0,0,0,0.4);
+
+color:white;
+
 }
 
-.top-btn:hover{
+.add-btn{
 
-transform:translateY(-2px);
+background:linear-gradient(
+135deg,
+#ffcc00,
+#ff9900
+);
 
-filter:brightness(1.1);
+color:black;
 }
 
-.back-btn{
+.save-btn{
+
+background:linear-gradient(
+135deg,
+#00cc66,
+#00994d
+);
+}
+
+.btn{
+
+background:linear-gradient(
+135deg,
+#ff4444,
+#cc0000
+);
+}
+
+.close-btn{
+
+background:linear-gradient(
+135deg,
+#ff0000,
+#990000
+);
 
 position:absolute;
 
-left:15px;
-top:15px;
+top:10px;
+right:10px;
+}
+
+.back-btn{
 
 background:linear-gradient(
 135deg,
@@ -93,273 +135,74 @@ background:linear-gradient(
 color:black;
 }
 
-.print-btn{
+.add-btn:hover,
+.save-btn:hover,
+.btn:hover,
+.close-btn:hover,
+.back-btn:hover{
 
-position:absolute;
+transform:translateY(-2px) scale(1.03);
 
-right:15px;
-top:15px;
+filter:brightness(1.1);
 
-background:linear-gradient(
-135deg,
-#00cc66,
-#00994d
-);
-
-color:white;
 }
 
-/* LOGO */
+/* SEARCH */
 
-.logo{
-
-width:65px;
-height:65px;
-
-margin:auto;
-
-background:white;
-
-border-radius:50%;
-
-display:flex;
-
-align-items:center;
-justify-content:center;
-
-overflow:hidden;
-
-border:2px solid #ffcc00;
-
-margin-bottom:8px;
-}
-
-.logo img{
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-}
-
-/* TITLE */
-
-.title{
-
-font-size:30px;
-
-font-weight:bold;
-
-margin-bottom:10px;
-
-color:#ffcc00;
-
-text-shadow:2px 2px 5px black;
-}
-
-/* FILTERS */
-
-.filter-section{
-
-display:flex;
-
-justify-content:center;
-
-gap:10px;
-
-flex-wrap:wrap;
-
-margin-top:15px;
-}
-
-select,
-input{
+.search-box input{
 
 padding:10px;
 
-border:2px solid #555;
+width:250px;
 
-font-size:13px;
-
-min-width:220px;
+border:2px solid #ffcc00;
 
 border-radius:8px;
 
-background:#1f1f1f;
-
-color:white;
-}
-
-input:focus,
-select:focus{
-
-outline:none;
-
-border-color:#ffcc00;
-}
-
-/* EMPLOYEE INFO */
-
-.employee-info{
-
-margin-top:15px;
-
-line-height:1.5;
-
-font-size:15px;
-
-font-weight:bold;
-
-color:#ffcc00;
-}
-
-/* CLOCK */
-
-.clock{
-
-font-size:30px;
-
-font-weight:bold;
-
-margin-top:10px;
-
-color:#00ff99;
-}
-
-.date{
-
-font-size:18px;
-
-margin-top:3px;
-}
-
-/* ACTION BUTTONS */
-
-.button-group{
-
-display:flex;
-
-justify-content:center;
-
-gap:8px;
-
-flex-wrap:wrap;
-
-margin:18px 0;
-}
-
-.action-btn{
-
-padding:10px 20px;
-
-font-size:13px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-border:none;
-
-border-radius:10px;
+background:#2f2f2f;
 
 color:white;
 
-min-width:120px;
-
-transition:0.3s;
-
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
-}
-
-.action-btn:hover{
-
-transform:translateY(-2px);
-
-filter:brightness(1.1);
-}
-
-.timein{
-background:#008000;
-}
-
-.breakout{
-background:#c58a00;
-}
-
-.breakin{
-background:#0066cc;
-}
-
-.timeout{
-background:#cc0000;
-}
-
-/* DELETE BUTTON */
-
-.delete-btn{
-
-background:#cc0000;
-
-color:white;
-
-border:none;
-
-padding:6px 12px;
-
-border-radius:6px;
-
-cursor:pointer;
-
-font-weight:bold;
-
-transition:0.3s;
-}
-
-.delete-btn:hover{
-
-background:#ff0000;
-
-transform:scale(1.05);
 }
 
 /* TABLE */
 
-.table-wrapper{
-
-overflow:auto;
-
-max-height:350px;
+.table-box{
 
 background:#2b2b2b;
 
-margin-top:10px;
-
 border:2px solid #ffcc00;
 
-border-radius:10px;
+overflow:auto;
+
+height:70vh;
+
+border-radius:12px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+
 }
 
-/* SCROLLBAR */
+.table-box::-webkit-scrollbar{
 
-.table-wrapper::-webkit-scrollbar{
-
-width:12px;
 height:12px;
+width:12px;
+
 }
 
-.table-wrapper::-webkit-scrollbar-track{
-
-background:#333;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb{
+.table-box::-webkit-scrollbar-thumb{
 
 background:#ffcc00;
 
 border-radius:10px;
+
 }
 
-/* TABLE */
+.table-box::-webkit-scrollbar-track{
+
+background:#333;
+
+}
 
 table{
 
@@ -367,7 +210,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1600px;
+min-width:4000px;
 
 font-size:12px;
 }
@@ -379,9 +222,10 @@ border:1px solid #555;
 
 padding:8px;
 
-text-align:center;
+text-align:left;
 
 white-space:nowrap;
+
 }
 
 th{
@@ -393,134 +237,184 @@ color:black;
 position:sticky;
 
 top:0;
+
+z-index:2;
+
 }
 
 tr:nth-child(even){
 
 background:#242424;
+
 }
 
 tr:hover{
 
 background:#3a3a3a;
+
+transition:0.2s;
+
 }
 
-/* SUMMARY */
+/* MODAL */
 
-.summary{
+.modal{
 
-margin-top:15px;
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.5);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999;
+}
+
+.modal-box{
 
 background:#2b2b2b;
 
+width:95%;
+
+max-width:1200px;
+
+height:95vh;
+
+overflow:auto;
+
 padding:15px;
 
-border:2px solid #ffcc00;
+border:3px solid #ffcc00;
+
+position:relative;
+
+border-radius:15px;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.7);
+
+color:white;
+
+}
+
+/* TABS */
+
+.classic-tabs{
+
+display:flex;
+flex-wrap:wrap;
+
+gap:4px;
+
+background:#1f1f1f;
+
+padding:6px;
+
+border-radius:8px;
+
+margin-top:10px;
+
+}
+
+.tab-btn{
+
+background:#444;
+
+padding:8px 16px;
+
+cursor:pointer;
+
+font-size:12px;
 
 font-weight:bold;
 
-line-height:1.8;
+border:none;
 
-border-radius:10px;
+color:white;
 
-color:#ffcc00;
+border-radius:6px;
+
+transition:0.3s;
+
 }
 
-/* SIGNATURE */
+.tab-btn.active{
 
-.signature{
+background:#ffcc00;
 
-margin-top:50px;
-
-display:flex;
-
-justify-content:space-between;
-
-text-align:center;
-}
-
-.line{
-
-margin-top:50px;
-
-border-top:1px solid white;
-
-padding-top:5px;
-
-width:250px;
-}
-
-/* PRINT */
-
-@media print{
-
-@page{
-size:landscape;
-margin:10mm;
-}
-
-body{
-background:white;
-padding:0;
-zoom:85%;
 color:black;
+
 }
 
-/* HIDE BUTTONS */
+.tab-btn:hover{
 
-.back-btn,
-.print-btn,
-.button-group,
-.filter-section,
-.clock,
-.date,
-.delete-btn{
+background:#ff9900;
 
-display:none !important;
+color:black;
+
 }
 
-/* REMOVE BOARD */
+/* CONTENT */
 
-.container{
-
-border:none !important;
-box-shadow:none !important;
-
-background:white;
-}
-
-/* REMOVE SCROLLBAR */
-
-.table-wrapper{
-
-overflow:visible !important;
-
-max-height:none !important;
-
-border:none !important;
-}
-
-.table-wrapper::-webkit-scrollbar{
+.tab-content{
 
 display:none;
+
+padding:15px;
+
+background:#333;
+
+margin-top:10px;
+
+border-radius:8px;
+
 }
 
-/* AUTO FIT */
-
-table{
-
-min-width:100% !important;
-
-font-size:10px;
+.tab-content.active{
+display:block;
 }
 
-th,
-td{
+/* GRID */
 
-white-space:normal !important;
+.form-grid{
 
-padding:4px;
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(200px,1fr));
+
+gap:8px;
 }
+
+/* INPUT */
+
+input,
+select{
+
+width:100%;
+
+padding:10px;
+
+border:2px solid #555;
+
+border-radius:8px;
+
+background:#1f1f1f;
+
+color:white;
+
+}
+
+input:focus,
+select:focus{
+
+outline:none;
+
+border-color:#ffcc00;
 
 }
 
@@ -528,21 +422,8 @@ padding:4px;
 
 @media(max-width:768px){
 
-.filter-section{
-flex-direction:column;
-}
-
-select,
-input{
-width:100%;
-}
-
-.button-group{
-flex-direction:column;
-}
-
-.action-btn{
-width:100%;
+.table-box{
+height:auto;
 }
 
 }
@@ -553,601 +434,573 @@ width:100%;
 
 <body>
 
-<div class="container">
-
-<!-- HEADER -->
-
-<div class="header">
+<div class="top-bar">
 
 <button
-class="top-btn back-btn"
-onclick="window.history.back()">
+class="back-btn"
+onclick="window.location.href='index.html'">
 
 ← BACK
 
 </button>
 
-<button
-class="top-btn print-btn"
-onclick="printAttendance()">
+<h2>Employee Masterlist</h2>
 
-🖨 PRINT DTR
+<div style="display:flex;gap:10px;">
 
-</button>
-
-<div class="logo">
-
-<img
-src="https://i.imgur.com/8Km9tLL.png">
-
-</div>
-
-<div class="title">
-EMPLOYEE ATTENDANCE
-</div>
-
-<!-- FILTER -->
-
-<div class="filter-section">
-
-<select
-id="employeeSelect"
-onchange="filterAttendance()">
-
-<option value="">
-Select Employee
-</option>
-
-</select>
+<div class="search-box">
 
 <input
-type="date"
-id="fromDate"
-onchange="filterAttendance()">
-
-<input
-type="date"
-id="toDate"
-onchange="filterAttendance()">
+type="text"
+id="search"
+placeholder="Search..."
+onkeyup="searchEmp()">
 
 </div>
-
-<!-- INFO -->
-
-<div class="employee-info">
-
-<div id="employeeId">
-EMPLOYEE ID :
-</div>
-
-<div id="employeeName">
-EMPLOYEE NAME :
-</div>
-
-</div>
-
-<!-- CLOCK -->
-
-<div
-class="clock"
-id="clock">
-
-00:00:00
-
-</div>
-
-<div
-class="date"
-id="dateToday">
-
-DATE
-
-</div>
-
-<!-- BUTTONS -->
-
-<div class="button-group">
 
 <button
-class="action-btn timein"
-onclick="timeIn()">
+class="add-btn"
+onclick="openModal()">
 
-TIME IN
-
-</button>
-
-<button
-class="action-btn breakout"
-onclick="breakOut()">
-
-BREAK OUT
-
-</button>
-
-<button
-class="action-btn breakin"
-onclick="breakIn()">
-
-BREAK IN
-
-</button>
-
-<button
-class="action-btn timeout"
-onclick="timeOut()">
-
-TIME OUT
++ Add Employee
 
 </button>
 
 </div>
+
+</div>
+
+<h3 id="total"
+style="
+color:#ff4444;
+font-size:20px;
+">
+
+Total : 0
+
+</h3>
 
 <!-- TABLE -->
 
-<div class="table-wrapper">
+<div class="table-box">
 
-<table>
+<table id="empTable">
 
 <thead>
 
 <tr>
 
-<th>DATE</th>
-<th>EMP ID</th>
-<th>EMPLOYEE NAME</th>
-<th>TIME IN</th>
-<th>BREAK OUT</th>
-<th>BREAK IN</th>
-<th>TIME OUT</th>
-<th>BREAK MINUTES</th>
-<th>TOTAL HOURS</th>
-<th>LATE</th>
-<th>STATUS</th>
-<th>ACTION</th>
+<th>First Name</th>
+<th>Middle Name</th>
+<th>Last Name</th>
+<th>Birthdate</th>
+<th>Age</th>
+<th>Gender</th>
+
+<th>SSS Number</th>
+<th>PhilHealth Number</th>
+<th>Pag-IBIG Number</th>
+<th>Health Card Number</th>
+
+<th>Bank Name</th>
+<th>Bank Account Number</th>
+
+<th>ID Type</th>
+<th>ID Number</th>
+
+<th>Mobile</th>
+<th>Email</th>
+
+<th>Current Address</th>
+<th>Permanent Address</th>
+
+<th>Employee ID</th>
+<th>Position</th>
+<th>Department</th>
+<th>Employment</th>
+<th>Salary Rate</th>
+
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-<tbody id="attendanceBody">
-
-</tbody>
+<tbody></tbody>
 
 </table>
 
 </div>
 
-<!-- SUMMARY -->
+<!-- MODAL -->
 
-<div class="summary">
+<div
+class="modal"
+id="employeeModal">
 
-<div id="totalDays">
-TOTAL DAYS : 0
+<div class="modal-box">
+
+<button
+class="close-btn"
+onclick="closeModal()">
+
+X
+
+</button>
+
+<h3>Employee Information</h3>
+
+<!-- TABS -->
+
+<div class="classic-tabs">
+
+<button
+class="tab-btn active"
+onclick="openTab(event,'personal')">
+
+Personal
+
+</button>
+
+<button
+class="tab-btn"
+onclick="openTab(event,'contact')">
+
+Contact
+
+</button>
+
+<button
+class="tab-btn"
+onclick="openTab(event,'job')">
+
+Job
+
+</button>
+
 </div>
 
-<div id="totalRecords">
-TOTAL RECORDS : 0
+<!-- PERSONAL -->
+
+<div
+id="personal"
+class="tab-content active">
+
+<div class="form-grid">
+
+<input class="emp-field" placeholder="First Name">
+<input class="emp-field" placeholder="Middle Name">
+<input class="emp-field" placeholder="Last Name">
+
+<input
+class="emp-field"
+type="date"
+id="birthdate"
+onchange="calcAge()">
+
+<input
+class="emp-field"
+id="age"
+placeholder="Age"
+readonly>
+
+<select class="emp-field">
+
+<option>Gender</option>
+<option>Male</option>
+<option>Female</option>
+
+</select>
+
+<input class="emp-field" placeholder="SSS Number">
+<input class="emp-field" placeholder="PhilHealth Number">
+<input class="emp-field" placeholder="Pag-IBIG Number">
+<input class="emp-field" placeholder="Health Card Number">
+
+<input class="emp-field" placeholder="Bank Name">
+<input class="emp-field" placeholder="Bank Account Number">
+
+<select class="emp-field">
+
+<option>Select ID</option>
+
+<option>Passport</option>
+<option>Driver License</option>
+<option>National ID</option>
+<option>Company ID</option>
+
+</select>
+
+<input class="emp-field" placeholder="ID Number">
+
+</div>
+
+</div>
+
+<!-- CONTACT -->
+
+<div
+id="contact"
+class="tab-content">
+
+<div class="form-grid">
+
+<input class="emp-field" placeholder="Mobile">
+<input class="emp-field" placeholder="Email">
+<input class="emp-field" placeholder="Current Address">
+<input class="emp-field" placeholder="Permanent Address">
+
 </div>
 
 </div>
 
-<!-- SIGNATURE -->
+<!-- JOB -->
 
-<div class="signature">
+<div
+id="job"
+class="tab-content">
 
-<div>
+<div class="form-grid">
 
-<div class="line">
-EMPLOYER SIGNATURE
+<input class="emp-field" placeholder="Employee ID">
+<input class="emp-field" placeholder="Position">
+<input class="emp-field" placeholder="Department">
+
+<select class="emp-field">
+
+<option>Employment</option>
+<option>Regular</option>
+<option>Probationary</option>
+<option>Contractual</option>
+
+</select>
+
+<input class="emp-field" placeholder="Salary Rate">
+
 </div>
 
 </div>
 
-<div>
+<br>
 
-<div class="line">
-EMPLOYEE SIGNATURE
+<button
+class="save-btn"
+onclick="saveEmployee()">
+
+Save Employee
+
+</button>
+
 </div>
 
 </div>
 
-</div>
+<script type="module">
 
-</div>
+/* =========================
+FIREBASE
+========================= */
 
-<script>
+import {
 
-/* CLOCK */
-
-function updateClock(){
-
-let now = new Date();
-
-clock.innerText =
-now.toLocaleTimeString();
-
-dateToday.innerText =
-now.toDateString();
+initializeApp
 
 }
 
-setInterval(updateClock,1000);
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-updateClock();
+import {
 
-/* EMPLOYEES */
-
-function loadEmployees(){
-
-let employees =
-
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-employeeSelect.innerHTML =
-'<option value="">Select Employee</option>';
-
-employees.forEach((emp,index)=>{
-
-let fullName =
-
-(emp[0] || '') + ' ' +
-(emp[1] || '') + ' ' +
-(emp[2] || '');
-
-let empId =
-emp[18] || 'NO-ID';
-
-employeeSelect.innerHTML += `
-
-<option value="${fullName}">
-
-${empId} - ${fullName}
-
-</option>
-
-`;
-
-});
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+updateDoc
 
 }
 
-/* STORAGE */
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-let attendance =
+/* CONFIG */
 
-JSON.parse(
-localStorage.getItem('attendance')
-) || [];
+const firebaseConfig = {
 
-/* DATE */
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
 
-function getToday(){
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
 
-let d = new Date();
+projectId:
+"hr-system-38fc3",
 
-return (
-d.getMonth()+1
-) + '/' +
-d.getDate() + '/' +
-d.getFullYear();
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
 
-}
+messagingSenderId:
+"615471610834",
 
-function getTime(){
-
-return new Date()
-.toLocaleTimeString();
-
-}
-
-/* FORMAT DATE */
-
-function formatDate(dateStr){
-
-let parts =
-dateStr.split('/');
-
-let month =
-parts[0].padStart(2,'0');
-
-let day =
-parts[1].padStart(2,'0');
-
-let year =
-parts[2];
-
-return `${year}-${month}-${day}`;
-
-}
-
-/* TIME IN */
-
-function timeIn(){
-
-if(employeeSelect.value===''){
-
-alert('Select Employee');
-
-return;
-
-}
-
-let fullName =
-employeeSelect.value;
-
-/* GET EMPLOYEE ID FROM MASTERLIST */
-
-let employees =
-
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
-
-let empId = 'NO-ID';
-
-employees.forEach(emp=>{
-
-let full =
-
-(emp[0] || '') + ' ' +
-(emp[1] || '') + ' ' +
-(emp[2] || '');
-
-if(full === fullName){
-
-empId = emp[18] || 'NO-ID';
-
-}
-
-});
-
-let data = {
-
-date:getToday(),
-
-empid:empId,
-
-name:fullName,
-
-timein:getTime(),
-
-breakout:'-',
-
-breakin:'-',
-
-timeout:'-',
-
-breakminutes:'0 mins',
-
-totalhours:'0',
-
-late:'0 mins',
-
-status:'PRESENT'
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
 
 };
 
-attendance.push(data);
+const app =
+initializeApp(firebaseConfig);
 
-localStorage.setItem(
-'attendance',
-JSON.stringify(attendance)
-);
+const db =
+getFirestore(app);
 
-filterAttendance();
+/* VARIABLES */
 
-}
+let employees = [];
+let editId = null;
 
-/* BREAK OUT */
+/* MODAL */
 
-function breakOut(){
+window.openModal = function(){
 
-if(attendance.length===0) return;
-
-attendance[
-attendance.length-1
-].breakout = getTime();
-
-localStorage.setItem(
-'attendance',
-JSON.stringify(attendance)
-);
-
-filterAttendance();
+employeeModal.style.display='flex';
 
 }
 
-/* BREAK IN */
+window.closeModal = function(){
 
-function breakIn(){
+employeeModal.style.display='none';
 
-if(attendance.length===0) return;
-
-attendance[
-attendance.length-1
-].breakin = getTime();
-
-localStorage.setItem(
-'attendance',
-JSON.stringify(attendance)
-);
-
-filterAttendance();
+clearForm();
 
 }
 
-/* TIME OUT */
+/* TAB */
 
-function timeOut(){
+window.openTab = function(evt,tabId){
 
-if(attendance.length===0) return;
+document
+.querySelectorAll('.tab-content')
+.forEach(tab=>{
 
-let last =
-attendance[
-attendance.length-1
-];
-
-last.timeout = getTime();
-
-let inTime =
-new Date(
-'1/1/2024 ' + last.timein
-);
-
-let outTime =
-new Date(
-'1/1/2024 ' + last.timeout
-);
-
-let diff =
-
-(outTime - inTime)
-/ 1000 / 60 / 60;
-
-let breakMinutes = 0;
-
-if(
-last.breakout !== '-' &&
-last.breakin !== '-'
-){
-
-let breakOut =
-new Date(
-'1/1/2024 ' + last.breakout
-);
-
-let breakIn =
-new Date(
-'1/1/2024 ' + last.breakin
-);
-
-breakMinutes =
-
-(breakIn - breakOut)
-/ 1000 / 60;
-
-}
-
-let finalHours =
-
-diff - (breakMinutes / 60);
-
-last.breakminutes =
-breakMinutes.toFixed(0) + ' mins';
-
-last.totalhours =
-finalHours.toFixed(2);
-
-localStorage.setItem(
-'attendance',
-JSON.stringify(attendance)
-);
-
-filterAttendance();
-
-}
-
-/* FILTER */
-
-function filterAttendance(){
-
-let emp =
-employeeSelect.value;
-
-let fromDate =
-document.getElementById(
-'fromDate'
-).value;
-
-let toDate =
-document.getElementById(
-'toDate'
-).value;
-
-let tbody =
-document.getElementById(
-'attendanceBody'
-);
-
-tbody.innerHTML = '';
-
-let filtered = attendance.filter(att=>{
-
-let empMatch =
-emp === '' ||
-att.name === emp;
-
-let attDate =
-formatDate(att.date);
-
-let fromMatch =
-fromDate === '' ||
-attDate >= fromDate;
-
-let toMatch =
-toDate === '' ||
-attDate <= toDate;
-
-return (
-empMatch &&
-fromMatch &&
-toMatch
-);
+tab.classList.remove('active');
 
 });
 
-if(filtered.length===0){
+document
+.getElementById(tabId)
+.classList.add('active');
 
-tbody.innerHTML = `
+document
+.querySelectorAll('.tab-btn')
+.forEach(btn=>{
 
-<tr>
+btn.classList.remove('active');
 
-<td colspan="12">
+});
 
-NO ATTENDANCE RECORD
-
-</td>
-
-</tr>
-
-`;
-
-totalDays.innerText =
-'TOTAL DAYS : 0';
-
-totalRecords.innerText =
-'TOTAL RECORDS : 0';
-
-return;
+evt.currentTarget
+.classList.add('active');
 
 }
 
-filtered.forEach(att=>{
+/* AGE */
 
-let row =
-document.createElement('tr');
+window.calcAge = function(){
 
-row.innerHTML = `
+let birth =
+new Date(birthdate.value);
 
-<td>${att.date}</td>
-<td>${att.empid}</td>
-<td>${att.name}</td>
-<td>${att.timein}</td>
-<td>${att.breakout}</td>
-<td>${att.breakin}</td>
-<td>${att.timeout}</td>
-<td>${att.breakminutes}</td>
-<td>${att.totalhours}</td>
-<td>${att.late}</td>
-<td>${att.status}</td>
+let today =
+new Date();
+
+let years =
+today.getFullYear() -
+birth.getFullYear();
+
+let m =
+today.getMonth() -
+birth.getMonth();
+
+if(
+m < 0 ||
+(
+m === 0 &&
+today.getDate() <
+birth.getDate()
+)
+){
+
+years--;
+
+}
+
+age.value = years;
+
+}
+
+/* SAVE */
+
+window.saveEmployee =
+async function(){
+
+let fields =
+
+document.querySelectorAll(
+'.emp-field'
+);
+
+let data = [];
+
+fields.forEach(field=>{
+
+data.push(field.value);
+
+});
+
+try{
+
+if(editId){
+
+await updateDoc(
+
+doc(
+db,
+'employees',
+editId
+),
+
+{
+
+data:data
+
+}
+
+);
+
+alert(
+'Employee Updated'
+);
+
+}else{
+
+await addDoc(
+
+collection(db,'employees'),
+
+{
+
+data:data
+
+}
+
+);
+
+alert(
+'Employee Saved'
+);
+
+}
+
+loadEmployees();
+
+closeModal();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Firebase Error'
+);
+
+}
+
+}
+
+/* LOAD */
+
+async function loadEmployees(){
+
+employees = [];
+
+let table =
+document.querySelector(
+'#empTable tbody'
+);
+
+table.innerHTML='';
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'employees')
+);
+
+querySnapshot.forEach(empDoc=>{
+
+let emp =
+empDoc.data().data || [];
+
+employees.push({
+
+id:empDoc.id,
+data:emp
+
+});
+
+table.innerHTML += `
+
+<tr>
+
+<td>${emp[0] || ''}</td>
+<td>${emp[1] || ''}</td>
+<td>${emp[2] || ''}</td>
+<td>${emp[3] || ''}</td>
+<td>${emp[4] || ''}</td>
+<td>${emp[5] || ''}</td>
+
+<td>${emp[6] || ''}</td>
+<td>${emp[7] || ''}</td>
+<td>${emp[8] || ''}</td>
+<td>${emp[9] || ''}</td>
+
+<td>${emp[10] || ''}</td>
+<td>${emp[11] || ''}</td>
+
+<td>${emp[12] || ''}</td>
+<td>${emp[13] || ''}</td>
+
+<td>${emp[14] || ''}</td>
+<td>${emp[15] || ''}</td>
+
+<td>${emp[16] || ''}</td>
+<td>${emp[17] || ''}</td>
+
+<td>${emp[18] || ''}</td>
+<td>${emp[19] || ''}</td>
+<td>${emp[20] || ''}</td>
+<td>${emp[21] || ''}</td>
+<td>${emp[22] || ''}</td>
 
 <td>
 
 <button
-class="delete-btn"
-onclick="deleteAttendance(${attendance.indexOf(att)})">
+class="btn"
+onclick="editEmployee(
+'${empDoc.id}'
+)">
+
+EDIT
+
+</button>
+
+<button
+class="btn"
+onclick="deleteEmployee(
+'${empDoc.id}'
+)">
 
 DELETE
 
@@ -1155,66 +1008,136 @@ DELETE
 
 </td>
 
-`;
+</tr>
 
-tbody.appendChild(row);
+`;
 
 });
 
-totalDays.innerText =
-'TOTAL DAYS : ' +
-filtered.length;
+updateTotal();
 
-totalRecords.innerText =
-'TOTAL RECORDS : ' +
-filtered.length;
+}
 
-employeeId.innerText =
-'EMPLOYEE ID : ' +
-(filtered[0]?.empid || '-');
+loadEmployees();
 
-employeeName.innerText =
-'EMPLOYEE NAME : ' +
-(emp || 'ALL');
+/* EDIT */
+
+window.editEmployee =
+function(id){
+
+let employee =
+employees.find(
+e=>e.id===id
+);
+
+if(!employee) return;
+
+openModal();
+
+editId = id;
+
+let fields =
+document.querySelectorAll(
+'.emp-field'
+);
+
+fields.forEach((field,i)=>{
+
+field.value =
+employee.data[i] || '';
+
+});
 
 }
 
 /* DELETE */
 
-function deleteAttendance(index){
+window.deleteEmployee =
+async function(id){
 
-if(
+let confirmDelete =
 confirm(
-'Delete Attendance Record?'
-)
-){
-
-attendance.splice(index,1);
-
-localStorage.setItem(
-'attendance',
-JSON.stringify(attendance)
+'Delete Employee?'
 );
 
-filterAttendance();
+if(confirmDelete){
 
-}
-
-}
-
-/* PRINT */
-
-function printAttendance(){
-
-window.print();
-
-}
-
-/* AUTO LOAD */
+await deleteDoc(
+doc(db,'employees',id)
+);
 
 loadEmployees();
 
-filterAttendance();
+}
+
+}
+
+/* SEARCH */
+
+window.searchEmp =
+function(){
+
+let val =
+search.value.toLowerCase();
+
+let rows =
+
+document.querySelectorAll(
+'#empTable tbody tr'
+);
+
+let visible = 0;
+
+rows.forEach(row=>{
+
+let show =
+
+row.innerText
+.toLowerCase()
+.includes(val);
+
+row.style.display =
+show ? '' : 'none';
+
+if(show) visible++;
+
+});
+
+total.innerText =
+'Showing : ' + visible;
+
+}
+
+/* CLEAR */
+
+function clearForm(){
+
+editId = null;
+
+document
+.querySelectorAll('.emp-field')
+.forEach(el=>{
+
+el.value='';
+
+});
+
+}
+
+/* TOTAL */
+
+function updateTotal(){
+
+let rows =
+
+document.querySelectorAll(
+'#empTable tbody tr'
+);
+
+total.innerText =
+'Total : ' + rows.length;
+
+}
 
 </script>
 
