@@ -229,10 +229,22 @@ onclick="window.location.href='index.html'">
 
 <div class="form-grid">
 
+<!-- EMPLOYEE DROPDOWN -->
+
+<select
+id="employeeDropdown"
+onchange="selectEmployee()">
+
+<option value="">
+Select Employee
+</option>
+
+</select>
+
 <input
 type="text"
 id="username"
-placeholder="Username">
+placeholder="Username / Employee ID">
 
 <input
 type="password"
@@ -299,7 +311,7 @@ SAVE USER
 <script>
 
 /* =========================
-STORAGE
+USER STORAGE
 ========================= */
 
 let users =
@@ -307,6 +319,62 @@ let users =
 JSON.parse(
 localStorage.getItem('users')
 ) || [];
+
+/* =========================
+LOAD EMPLOYEES
+========================= */
+
+function loadEmployees(){
+
+let employees =
+
+JSON.parse(
+localStorage.getItem('employees')
+) || [];
+
+employeeDropdown.innerHTML =
+
+'<option value="">Select Employee</option>';
+
+employees.forEach(emp=>{
+
+let fullname =
+
+(emp[0] || '') + ' ' +
+(emp[1] || '') + ' ' +
+(emp[2] || '');
+
+let empId =
+emp[18] || 'NO-ID';
+
+employeeDropdown.innerHTML += `
+
+<option
+value="${empId}">
+
+${empId} - ${fullname}
+
+</option>
+
+`;
+
+});
+
+}
+
+/* =========================
+SELECT EMPLOYEE
+========================= */
+
+function selectEmployee(){
+
+username.value =
+employeeDropdown.value;
+
+role.value =
+'employee';
+
+}
 
 /* =========================
 SAVE USER
@@ -321,6 +389,23 @@ role.value === ''
 ){
 
 alert('Complete all fields');
+
+return;
+
+}
+
+/* CHECK DUPLICATE */
+
+let exist = users.find(user=>
+
+user.username ===
+username.value
+
+);
+
+if(exist){
+
+alert('Username already exists');
 
 return;
 
@@ -449,7 +534,7 @@ renderUsers();
 }
 
 /* =========================
-CLEAR
+CLEAR FORM
 ========================= */
 
 function clearForm(){
@@ -460,11 +545,15 @@ password.value='';
 
 role.value='';
 
+employeeDropdown.value='';
+
 }
 
 /* =========================
 AUTO LOAD
 ========================= */
+
+loadEmployees();
 
 renderUsers();
 
