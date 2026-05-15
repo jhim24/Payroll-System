@@ -203,6 +203,10 @@ color:#ffcc00;
 font-size:22px;
 }
 
+table{
+min-width:1000px;
+}
+
 }
 
 </style>
@@ -276,7 +280,7 @@ NO REQUEST FOUND
 <script type="module">
 
 /* =========================
-FIREBASE
+FIREBASE IMPORT
 ========================= */
 
 import {
@@ -284,9 +288,8 @@ import {
 initializeApp
 
 }
-
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
 
@@ -298,11 +301,12 @@ deleteDoc,
 doc
 
 }
-
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-/* CONFIG */
+/* =========================
+FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
@@ -316,4 +320,258 @@ projectId:
 "hr-system-38fc3",
 
 storageBucket:
-"hr
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b",
+
+measurementId:
+"G-TGBXWWZWE0"
+
+};
+
+/* =========================
+INIT FIREBASE
+========================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+LOAD REQUESTS
+========================= */
+
+async function loadRequests(){
+
+let requestBody =
+document.getElementById(
+'requestBody'
+);
+
+let emptyBox =
+document.getElementById(
+'emptyBox'
+);
+
+requestBody.innerHTML='';
+
+try{
+
+const querySnapshot =
+await getDocs(
+collection(db,'employeeRequests')
+);
+
+if(querySnapshot.empty){
+
+emptyBox.style.display='block';
+
+return;
+
+}
+
+emptyBox.style.display='none';
+
+querySnapshot.forEach(docSnap=>{
+
+let req =
+docSnap.data();
+
+let id =
+docSnap.id;
+
+let statusClass =
+
+(req.status || 'pending')
+.toLowerCase();
+
+requestBody.innerHTML += `
+
+<tr>
+
+<td>${req.empid || '-'}</td>
+
+<td>${req.employee || '-'}</td>
+
+<td>${req.type || '-'}</td>
+
+<td>${req.date || '-'}</td>
+
+<td>${req.days || '-'}</td>
+
+<td>${req.reason || '-'}</td>
+
+<td class="${statusClass}">
+${req.status || 'PENDING'}
+</td>
+
+<td>
+
+<button
+class="btn approve-btn"
+onclick="approveRequest('${id}')">
+
+APPROVE
+
+</button>
+
+<button
+class="btn reject-btn"
+onclick="rejectRequest('${id}')">
+
+REJECT
+
+</button>
+
+<button
+class="btn delete-btn"
+onclick="deleteRequest('${id}')">
+
+DELETE
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Error Loading Requests'
+);
+
+}
+
+}
+
+/* =========================
+APPROVE
+========================= */
+
+window.approveRequest =
+async function(id){
+
+try{
+
+await updateDoc(
+doc(db,'employeeRequests',id),
+{
+status:'APPROVED'
+}
+);
+
+alert(
+'Request Approved'
+);
+
+loadRequests();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Approve Error'
+);
+
+}
+
+}
+
+/* =========================
+REJECT
+========================= */
+
+window.rejectRequest =
+async function(id){
+
+try{
+
+await updateDoc(
+doc(db,'employeeRequests',id),
+{
+status:'REJECTED'
+}
+);
+
+alert(
+'Request Rejected'
+);
+
+loadRequests();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Reject Error'
+);
+
+}
+
+}
+
+/* =========================
+DELETE
+========================= */
+
+window.deleteRequest =
+async function(id){
+
+let confirmDelete =
+confirm(
+'Delete Request?'
+);
+
+if(confirmDelete){
+
+try{
+
+await deleteDoc(
+doc(db,'employeeRequests',id)
+);
+
+alert(
+'Request Deleted'
+);
+
+loadRequests();
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Delete Error'
+);
+
+}
+
+}
+
+}
+
+/* =========================
+AUTO LOAD
+========================= */
+
+loadRequests();
+
+</script>
+
+</body>
+</html>
