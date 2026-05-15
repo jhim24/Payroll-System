@@ -26,7 +26,7 @@ color:white;
 
 .container{
 
-max-width:1600px;
+max-width:1700px;
 
 margin:auto;
 
@@ -165,7 +165,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:2400px;
+min-width:2600px;
 }
 
 th,
@@ -276,13 +276,13 @@ Select Employee
 
 <input
 type="number"
-id="dailyrate"
-placeholder="Daily Rate">
+id="totaldays"
+placeholder="Total Days">
 
 <input
 type="number"
-id="gross"
-placeholder="Gross Pay">
+id="dailyrate"
+placeholder="Daily Rate">
 
 <input
 type="number"
@@ -389,8 +389,9 @@ TOTAL NET PAY :
 
 <th>EMPLOYEE ID</th>
 <th>EMPLOYEE</th>
+<th>TOTAL DAYS</th>
 <th>DAILY RATE</th>
-<th>GROSS</th>
+<th>BASIC PAY</th>
 <th>OVERTIME</th>
 <th>HOLIDAY</th>
 <th>SICK LEAVE</th>
@@ -557,11 +558,14 @@ selected.dataset.id;
 let employee =
 employeeSelect.value;
 
+let totalDays =
+Number(totaldays.value || 0);
+
 let dailyRate =
 Number(dailyrate.value || 0);
 
-let grossPay =
-Number(gross.value || 0);
+let basicPay =
+totalDays * dailyRate;
 
 let overtimePay =
 Number(overtime.value || 0);
@@ -615,7 +619,7 @@ otherDed;
 
 let net =
 
-grossPay +
+basicPay +
 overtimePay +
 holidayPay +
 sickLeave +
@@ -638,9 +642,11 @@ empid: empid,
 
 employee: employee,
 
+totaldays: totalDays,
+
 dailyrate: dailyRate,
 
-gross: grossPay,
+basicpay: basicPay,
 
 overtime: overtimePay,
 
@@ -728,13 +734,15 @@ payrollBody.innerHTML += `
 
 <td>${pay.employee || ''}</td>
 
+<td>${pay.totaldays || 0}</td>
+
 <td>
 ₱ ${Number(pay.dailyrate || 0)
 .toFixed(2)}
 </td>
 
 <td>
-₱ ${Number(pay.gross || 0)
+₱ ${Number(pay.basicpay || 0)
 .toFixed(2)}
 </td>
 
@@ -872,9 +880,9 @@ function clearForm(){
 
 employeeSelect.value='';
 
-dailyrate.value='';
+totaldays.value='';
 
-gross.value='';
+dailyrate.value='';
 
 overtime.value='';
 
