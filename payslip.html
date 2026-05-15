@@ -4,6 +4,9 @@
 
 <title>4 Payslip Bond Paper</title>
 
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <style>
 
 *{
@@ -113,7 +116,7 @@ color:white;
 
 width:190mm;
 
-height:270mm;
+min-height:270mm;
 
 margin:auto;
 
@@ -128,8 +131,6 @@ grid-template-columns:1fr 1fr;
 grid-template-rows:1fr 1fr;
 
 gap:6px;
-
-overflow:hidden;
 
 border-radius:10px;
 
@@ -155,6 +156,8 @@ justify-content:space-between;
 overflow:hidden;
 
 background:#f9f9f9;
+
+min-height:125mm;
 }
 
 /* COMPANY */
@@ -190,7 +193,7 @@ color:#444;
 
 .info{
 
-font-size:10px;
+font-size:9px;
 
 line-height:1.5;
 
@@ -213,7 +216,7 @@ width:100%;
 
 border-collapse:collapse;
 
-font-size:9px;
+font-size:8px;
 
 margin-top:4px;
 }
@@ -232,7 +235,7 @@ background:#ffcc00;
 
 color:black;
 
-font-size:9px;
+font-size:8px;
 }
 
 td{
@@ -254,7 +257,7 @@ color:white;
 
 border-radius:5px;
 
-font-size:11px;
+font-size:10px;
 
 font-weight:bold;
 
@@ -280,7 +283,7 @@ margin-top:12px;
 
 border-top:1px solid black;
 
-width:90px;
+width:80px;
 
 text-align:center;
 
@@ -298,6 +301,27 @@ color:white;
 font-weight:bold;
 
 font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.paper{
+
+width:100%;
+
+grid-template-columns:1fr;
+
+grid-template-rows:auto;
+
+}
+
+.payslip{
+
+min-height:auto;
+}
+
 }
 
 /* PRINT */
@@ -328,18 +352,18 @@ box-shadow:none;
 
 width:190mm;
 
-height:270mm;
+min-height:270mm;
 
 padding:0;
 
-overflow:hidden;
-
-page-break-after:avoid;
+gap:6px;
 }
 
 .payslip{
 
 box-shadow:none;
+
+break-inside:avoid;
 }
 
 }
@@ -408,33 +432,110 @@ onclick="window.print()">
 
 </div>
 
-<script>
+<script type="module">
 
 /* =========================
-LOAD PAYROLL
+FIREBASE
 ========================= */
 
-let payrollRecords = [];
+import {
 
-try{
-
-payrollRecords = JSON.parse(
-localStorage.getItem('payroll')
-) || [];
-
-}catch(error){
-
-payrollRecords = [];
+initializeApp
 
 }
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs,
+onSnapshot
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+/* =========================
+CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
+
+projectId:
+"hr-system-38fc3",
+
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
 
 /* =========================
 VARIABLES
 ========================= */
 
+let payrollRecords = [];
+
 let currentPage = 0;
 
 const perPage = 4;
+
+/* =========================
+LOAD PAYROLL REALTIME
+========================= */
+
+function loadPayrollRealtime(){
+
+onSnapshot(
+
+collection(db,'payroll'),
+
+(snapshot)=>{
+
+payrollRecords = [];
+
+snapshot.forEach(doc=>{
+
+payrollRecords.push({
+
+id: doc.id,
+
+...doc.data()
+
+});
+
+});
+
+renderPayslips();
+
+}
+
+);
+
+}
+
+loadPayrollRealtime();
 
 /* =========================
 RENDER PAYSLIP
@@ -489,13 +590,18 @@ div.innerHTML = `
 
 <div class="info">
 
+<b>Employee ID:</b>
+${pay.empid || '-'}
+
+<br>
+
 <b>Employee:</b>
 ${pay.employee || '-'}
 
 <br>
 
 <b>Date:</b>
-${new Date().toDateString()}
+${pay.date || '-'}
 
 </div>
 
@@ -507,44 +613,65 @@ ${new Date().toDateString()}
 </tr>
 
 <tr>
-<td>Gross Pay</td>
+<td>Basic Pay</td>
 <td>
-${Number(pay.gross || 0).toFixed(2)}
+₱ ${Number(pay.basicpay || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
 <td>Overtime</td>
 <td>
-${Number(pay.overtime || 0).toFixed(2)}
+₱ ${Number(pay.overtime || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
-<td>Holiday</td>
+<td>Holiday Pay</td>
 <td>
-${Number(pay.holiday || 0).toFixed(2)}
+₱ ${Number(pay.holiday || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
 <td>Sick Leave</td>
 <td>
-${Number(pay.sick || 0).toFixed(2)}
-</td>
-</tr>
-
-<tr>
-<td>Birthday Leave</td>
-<td>
-${Number(pay.birthday || 0).toFixed(2)}
+₱ ${Number(pay.sickleave || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
 <td>Vacation Leave</td>
 <td>
-${Number(pay.vacation || 0).toFixed(2)}
+₱ ${Number(pay.vacationleave || 0).toFixed(2)}
+</td>
+</tr>
+
+<tr>
+<td>Birthday Leave</td>
+<td>
+₱ ${Number(pay.birthdayleave || 0).toFixed(2)}
+</td>
+</tr>
+
+<tr>
+<td>Maternity Leave</td>
+<td>
+₱ ${Number(pay.maternityleave || 0).toFixed(2)}
+</td>
+</tr>
+
+<tr>
+<td>Paternity Leave</td>
+<td>
+₱ ${Number(pay.paternityleave || 0).toFixed(2)}
+</td>
+</tr>
+
+<tr>
+<td>Allowance</td>
+<td>
+₱ ${Number(pay.allowance || 0).toFixed(2)}
 </td>
 </tr>
 
@@ -560,35 +687,56 @@ ${Number(pay.vacation || 0).toFixed(2)}
 <tr>
 <td>SSS</td>
 <td>
-${Number(pay.sss || 0).toFixed(2)}
+₱ ${Number(pay.sss || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
 <td>PhilHealth</td>
 <td>
-${Number(pay.philhealth || 0).toFixed(2)}
+₱ ${Number(pay.philhealth || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
 <td>Pag-IBIG</td>
 <td>
-${Number(pay.pagibig || 0).toFixed(2)}
+₱ ${Number(pay.pagibig || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
 <td>Health Card</td>
 <td>
-${Number(pay.health || 0).toFixed(2)}
+₱ ${Number(pay.healthcard || 0).toFixed(2)}
 </td>
 </tr>
 
 <tr>
-<td>Other</td>
+<td>Other Deduction</td>
 <td>
-${Number(pay.other || 0).toFixed(2)}
+₱ ${Number(pay.otherdeduction || 0).toFixed(2)}
+</td>
+</tr>
+
+<tr>
+<td>Total Deduction</td>
+<td>
+₱ ${Number(pay.deductions || 0).toFixed(2)}
+</td>
+</tr>
+
+</table>
+
+<table>
+
+<tr>
+<th>DEDUCTION REASON</th>
+</tr>
+
+<tr>
+<td>
+${pay.deductionreason || '-'}
 </td>
 </tr>
 
@@ -597,7 +745,7 @@ ${Number(pay.other || 0).toFixed(2)}
 <div class="total">
 
 NET PAY :
-${Number(pay.net || 0).toFixed(2)}
+₱ ${Number(pay.net || 0).toFixed(2)}
 
 </div>
 
@@ -634,7 +782,8 @@ pageInfo.innerText =
 NEXT PAGE
 ========================= */
 
-function nextPage(){
+window.nextPage =
+function(){
 
 if(
 (currentPage + 1) * perPage
@@ -654,7 +803,8 @@ renderPayslips();
 PREV PAGE
 ========================= */
 
-function prevPage(){
+window.prevPage =
+function(){
 
 if(currentPage > 0){
 
@@ -665,12 +815,6 @@ renderPayslips();
 }
 
 }
-
-/* =========================
-AUTO LOAD
-========================= */
-
-renderPayslips();
 
 </script>
 
