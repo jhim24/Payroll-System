@@ -26,7 +26,7 @@ color:white;
 
 .container{
 
-max-width:1400px;
+max-width:1600px;
 
 margin:auto;
 
@@ -165,7 +165,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1600px;
+min-width:2600px;
 }
 
 th,
@@ -292,6 +292,31 @@ placeholder="Holiday Pay">
 
 <input
 type="number"
+id="sickleave"
+placeholder="Sick Leave">
+
+<input
+type="number"
+id="vacationleave"
+placeholder="Vacation Leave">
+
+<input
+type="number"
+id="birthdayleave"
+placeholder="Birthday Leave">
+
+<input
+type="number"
+id="maternityleave"
+placeholder="Maternity Leave">
+
+<input
+type="number"
+id="paternityleave"
+placeholder="Paternity Leave">
+
+<input
+type="number"
 id="allowance"
 placeholder="Allowance">
 
@@ -309,6 +334,21 @@ placeholder="PhilHealth">
 type="number"
 id="pagibig"
 placeholder="Pag-IBIG">
+
+<input
+type="number"
+id="healthcard"
+placeholder="Health Card">
+
+<input
+type="number"
+id="others"
+placeholder="Other Deduction">
+
+<input
+type="text"
+id="othersReason"
+placeholder="Reason for Other Deduction">
 
 </div>
 
@@ -348,10 +388,18 @@ TOTAL NET PAY :
 <th>GROSS</th>
 <th>OVERTIME</th>
 <th>HOLIDAY</th>
+<th>SICK</th>
+<th>VACATION</th>
+<th>BIRTHDAY</th>
+<th>MATERNITY</th>
+<th>PATERNITY</th>
 <th>ALLOWANCE</th>
 <th>SSS</th>
 <th>PHILHEALTH</th>
 <th>PAG-IBIG</th>
+<th>HEALTH CARD</th>
+<th>OTHERS</th>
+<th>REASON</th>
 <th>TOTAL DEDUCTION</th>
 <th>NET PAY</th>
 <th>ACTION</th>
@@ -385,7 +433,7 @@ initializeApp
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
 
@@ -399,7 +447,7 @@ doc
 }
 
 from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 /* CONFIG */
 
@@ -521,6 +569,21 @@ Number(overtime.value || 0);
 let holidayPay =
 Number(holiday.value || 0);
 
+let sickLeavePay =
+Number(sickleave.value || 0);
+
+let vacationLeavePay =
+Number(vacationleave.value || 0);
+
+let birthdayLeavePay =
+Number(birthdayleave.value || 0);
+
+let maternityLeavePay =
+Number(maternityleave.value || 0);
+
+let paternityLeavePay =
+Number(paternityleave.value || 0);
+
 let allowancePay =
 Number(allowance.value || 0);
 
@@ -533,17 +596,33 @@ Number(philhealth.value || 0);
 let pagibigDed =
 Number(pagibig.value || 0);
 
+let healthCardDed =
+Number(healthcard.value || 0);
+
+let othersDed =
+Number(others.value || 0);
+
+let othersReasonText =
+othersReason.value || '';
+
 let deductions =
 
 sssDed +
 philhealthDed +
-pagibigDed;
+pagibigDed +
+healthCardDed +
+othersDed;
 
 let net =
 
 grossPay +
 overtimePay +
 holidayPay +
+sickLeavePay +
+vacationLeavePay +
+birthdayLeavePay +
+maternityLeavePay +
+paternityLeavePay +
 allowancePay -
 
 deductions;
@@ -565,6 +644,16 @@ overtime: overtimePay,
 
 holiday: holidayPay,
 
+sick: sickLeavePay,
+
+vacation: vacationLeavePay,
+
+birthday: birthdayLeavePay,
+
+maternity: maternityLeavePay,
+
+paternity: paternityLeavePay,
+
 allowance: allowancePay,
 
 sss: sssDed,
@@ -572,6 +661,12 @@ sss: sssDed,
 philhealth: philhealthDed,
 
 pagibig: pagibigDed,
+
+health: healthCardDed,
+
+other: othersDed,
+
+otherreason: othersReasonText,
 
 deductions: deductions,
 
@@ -653,6 +748,31 @@ payrollBody.innerHTML += `
 </td>
 
 <td>
+₱ ${Number(pay.sick || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.vacation || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.birthday || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.maternity || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.paternity || 0)
+.toFixed(2)}
+</td>
+
+<td>
 ₱ ${Number(pay.allowance || 0)
 .toFixed(2)}
 </td>
@@ -670,6 +790,20 @@ payrollBody.innerHTML += `
 <td>
 ₱ ${Number(pay.pagibig || 0)
 .toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.health || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.other || 0)
+.toFixed(2)}
+</td>
+
+<td>
+${pay.otherreason || '-'}
 </td>
 
 <td>
@@ -747,6 +881,16 @@ overtime.value='';
 
 holiday.value='';
 
+sickleave.value='';
+
+vacationleave.value='';
+
+birthdayleave.value='';
+
+maternityleave.value='';
+
+paternityleave.value='';
+
 allowance.value='';
 
 sss.value='';
@@ -754,6 +898,12 @@ sss.value='';
 philhealth.value='';
 
 pagibig.value='';
+
+healthcard.value='';
+
+others.value='';
+
+othersReason.value='';
 
 }
 
