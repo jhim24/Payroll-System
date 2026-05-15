@@ -4,62 +4,71 @@
 
 <title>Employee Masterlist</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
 <style>
 
 *{
+margin:0;
+padding:0;
 box-sizing:border-box;
 font-family:Tahoma,sans-serif;
 }
 
 body{
+background:#1f1f1f;
+padding:15px;
+color:white;
+}
 
-margin:0;
+/* CONTAINER */
+
+.container{
+
+max-width:1400px;
+
+margin:auto;
+
+background:#2b2b2b;
+
+border:2px solid #ffcc00;
+
+border-radius:15px;
 
 padding:15px;
 
-background:linear-gradient(
-135deg,
-#1f1f1f,
-#2b2b2b
-);
-
-color:white;
-
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* TOP */
+/* TOP BAR */
 
 .top-bar{
+
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
 flex-wrap:wrap;
+
 gap:10px;
+
 margin-bottom:15px;
 }
 
-h2{
-
-margin:0;
+.title{
 
 font-size:30px;
+
+font-weight:bold;
 
 color:#ffcc00;
 
 text-shadow:2px 2px 5px black;
-
 }
 
-/* BUTTONS */
+/* BUTTON */
 
-.add-btn,
-.save-btn,
-.btn,
-.close-btn,
-.back-btn{
+.btn{
 
 padding:10px 18px;
 
@@ -76,52 +85,24 @@ font-size:13px;
 transition:0.3s;
 
 box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
 
-color:white;
+.btn:hover{
 
+transform:translateY(-2px);
+
+filter:brightness(1.1);
 }
 
 .add-btn{
 
 background:linear-gradient(
 135deg,
-#ffcc00,
-#ff9900
-);
-
-color:black;
-}
-
-.save-btn{
-
-background:linear-gradient(
-135deg,
 #00cc66,
 #00994d
 );
-}
 
-.btn{
-
-background:linear-gradient(
-135deg,
-#ff4444,
-#cc0000
-);
-}
-
-.close-btn{
-
-background:linear-gradient(
-135deg,
-#ff0000,
-#990000
-);
-
-position:absolute;
-
-top:10px;
-right:10px;
+color:white;
 }
 
 .back-btn{
@@ -135,16 +116,45 @@ background:linear-gradient(
 color:black;
 }
 
-.add-btn:hover,
-.save-btn:hover,
-.btn:hover,
-.close-btn:hover,
-.back-btn:hover{
+.save-btn{
 
-transform:translateY(-2px) scale(1.03);
+background:linear-gradient(
+135deg,
+#00cc66,
+#00994d
+);
 
-filter:brightness(1.1);
+color:white;
+}
 
+.edit-btn{
+
+background:#0066cc;
+
+color:white;
+
+padding:6px 12px;
+}
+
+.delete-btn{
+
+background:#cc0000;
+
+color:white;
+
+padding:6px 12px;
+}
+
+.close-btn{
+
+background:#444;
+
+color:white;
+
+position:absolute;
+
+top:10px;
+right:10px;
 }
 
 /* SEARCH */
@@ -159,49 +169,24 @@ border:2px solid #ffcc00;
 
 border-radius:8px;
 
-background:#2f2f2f;
+background:#1f1f1f;
 
 color:white;
-
 }
 
 /* TABLE */
 
-.table-box{
-
-background:#2b2b2b;
-
-border:2px solid #ffcc00;
+.table-wrapper{
 
 overflow:auto;
 
-height:70vh;
+max-height:70vh;
 
-border-radius:12px;
-
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
-
-}
-
-.table-box::-webkit-scrollbar{
-
-height:12px;
-width:12px;
-
-}
-
-.table-box::-webkit-scrollbar-thumb{
-
-background:#ffcc00;
+border:2px solid #ffcc00;
 
 border-radius:10px;
 
-}
-
-.table-box::-webkit-scrollbar-track{
-
-background:#333;
-
+background:#2b2b2b;
 }
 
 table{
@@ -210,7 +195,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:4000px;
+min-width:3000px;
 
 font-size:12px;
 }
@@ -225,7 +210,6 @@ padding:8px;
 text-align:left;
 
 white-space:nowrap;
-
 }
 
 th{
@@ -239,21 +223,16 @@ position:sticky;
 top:0;
 
 z-index:2;
-
 }
 
 tr:nth-child(even){
 
 background:#242424;
-
 }
 
 tr:hover{
 
 background:#3a3a3a;
-
-transition:0.2s;
-
 }
 
 /* MODAL */
@@ -266,7 +245,7 @@ position:fixed;
 
 inset:0;
 
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.6);
 
 justify-content:center;
 
@@ -287,18 +266,13 @@ height:95vh;
 
 overflow:auto;
 
-padding:15px;
+padding:20px;
+
+border-radius:15px;
 
 border:3px solid #ffcc00;
 
 position:relative;
-
-border-radius:15px;
-
-box-shadow:0 5px 20px rgba(0,0,0,0.7);
-
-color:white;
-
 }
 
 /* TABS */
@@ -306,40 +280,29 @@ color:white;
 .classic-tabs{
 
 display:flex;
+
+gap:5px;
+
 flex-wrap:wrap;
 
-gap:4px;
-
-background:#1f1f1f;
-
-padding:6px;
-
-border-radius:8px;
-
-margin-top:10px;
-
+margin-top:15px;
 }
 
 .tab-btn{
 
-background:#444;
-
-padding:8px 16px;
-
-cursor:pointer;
-
-font-size:12px;
-
-font-weight:bold;
+padding:10px 18px;
 
 border:none;
 
+cursor:pointer;
+
+font-weight:bold;
+
+background:#444;
+
 color:white;
 
-border-radius:6px;
-
-transition:0.3s;
-
+border-radius:8px;
 }
 
 .tab-btn.active{
@@ -347,15 +310,6 @@ transition:0.3s;
 background:#ffcc00;
 
 color:black;
-
-}
-
-.tab-btn:hover{
-
-background:#ff9900;
-
-color:black;
-
 }
 
 /* CONTENT */
@@ -364,33 +318,31 @@ color:black;
 
 display:none;
 
-padding:15px;
+margin-top:15px;
 
 background:#333;
 
-margin-top:10px;
+padding:15px;
 
-border-radius:8px;
-
+border-radius:10px;
 }
 
 .tab-content.active{
+
 display:block;
 }
 
-/* GRID */
+/* FORM */
 
 .form-grid{
 
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(200px,1fr));
+repeat(auto-fit,minmax(220px,1fr));
 
-gap:8px;
+gap:12px;
 }
-
-/* INPUT */
 
 input,
 select{
@@ -399,14 +351,13 @@ width:100%;
 
 padding:10px;
 
-border:2px solid #555;
-
 border-radius:8px;
+
+border:2px solid #555;
 
 background:#1f1f1f;
 
 color:white;
-
 }
 
 input:focus,
@@ -415,17 +366,19 @@ select:focus{
 outline:none;
 
 border-color:#ffcc00;
-
 }
 
-/* MOBILE */
+/* TOTAL */
 
-@media(max-width:768px){
+.total{
 
-.table-box{
-height:auto;
-}
+margin-bottom:10px;
 
+font-size:18px;
+
+font-weight:bold;
+
+color:#ff4444;
 }
 
 </style>
@@ -434,35 +387,39 @@ height:auto;
 
 <body>
 
+<div class="container">
+
 <div class="top-bar">
 
 <button
-class="back-btn"
+class="btn back-btn"
 onclick="window.location.href='index.html'">
 
 ← BACK
 
 </button>
 
-<h2>Employee Masterlist</h2>
+<div class="title">
+EMPLOYEE MASTERLIST
+</div>
 
-<div style="display:flex;gap:10px;">
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
 
 <div class="search-box">
 
 <input
 type="text"
 id="search"
-placeholder="Search..."
-onkeyup="searchEmp()">
+placeholder="Search Employee..."
+onkeyup="searchEmployee()">
 
 </div>
 
 <button
-class="add-btn"
+class="btn add-btn"
 onclick="openModal()">
 
-+ Add Employee
++ ADD EMPLOYEE
 
 </button>
 
@@ -470,65 +427,66 @@ onclick="openModal()">
 
 </div>
 
-<h3 id="total"
-style="
-color:#ff4444;
-font-size:20px;
-">
+<div
+class="total"
+id="total">
 
-Total : 0
+TOTAL : 0
 
-</h3>
+</div>
 
 <!-- TABLE -->
 
-<div class="table-box">
+<div class="table-wrapper">
 
-<table id="empTable">
+<table>
 
 <thead>
 
 <tr>
 
-<th>First Name</th>
-<th>Middle Name</th>
-<th>Last Name</th>
-<th>Birthdate</th>
-<th>Age</th>
-<th>Gender</th>
+<th>FIRST NAME</th>
+<th>MIDDLE NAME</th>
+<th>LAST NAME</th>
+<th>BIRTHDATE</th>
+<th>AGE</th>
+<th>GENDER</th>
 
-<th>SSS Number</th>
-<th>PhilHealth Number</th>
-<th>Pag-IBIG Number</th>
-<th>Health Card Number</th>
+<th>SSS</th>
+<th>PHILHEALTH</th>
+<th>PAG-IBIG</th>
+<th>HEALTH CARD</th>
 
-<th>Bank Name</th>
-<th>Bank Account Number</th>
+<th>BANK NAME</th>
+<th>BANK ACCOUNT</th>
 
-<th>ID Type</th>
-<th>ID Number</th>
+<th>ID TYPE</th>
+<th>ID NUMBER</th>
 
-<th>Mobile</th>
-<th>Email</th>
+<th>MOBILE</th>
+<th>EMAIL</th>
+<th>CURRENT ADDRESS</th>
+<th>PERMANENT ADDRESS</th>
 
-<th>Current Address</th>
-<th>Permanent Address</th>
+<th>EMPLOYEE ID</th>
+<th>POSITION</th>
+<th>DEPARTMENT</th>
+<th>EMPLOYMENT</th>
+<th>SALARY RATE</th>
 
-<th>Employee ID</th>
-<th>Position</th>
-<th>Department</th>
-<th>Employment</th>
-<th>Salary Rate</th>
-
-<th>Action</th>
+<th>ACTION</th>
 
 </tr>
 
 </thead>
 
-<tbody></tbody>
+<tbody id="employeeBody">
+
+</tbody>
 
 </table>
+
+</div>
 
 </div>
 
@@ -541,14 +499,16 @@ id="employeeModal">
 <div class="modal-box">
 
 <button
-class="close-btn"
+class="btn close-btn"
 onclick="closeModal()">
 
 X
 
 </button>
 
-<h3>Employee Information</h3>
+<h2 style="color:#ffcc00;">
+EMPLOYEE INFORMATION
+</h2>
 
 <!-- TABS -->
 
@@ -558,7 +518,15 @@ X
 class="tab-btn active"
 onclick="openTab(event,'personal')">
 
-Personal
+PERSONAL INFO
+
+</button>
+
+<button
+class="tab-btn"
+onclick="openTab(event,'government')">
+
+GOVERNMENT INFO
 
 </button>
 
@@ -566,15 +534,15 @@ Personal
 class="tab-btn"
 onclick="openTab(event,'contact')">
 
-Contact
+CONTACT INFO
 
 </button>
 
 <button
 class="tab-btn"
-onclick="openTab(event,'job')">
+onclick="openTab(event,'employment')">
 
-Job
+EMPLOYMENT INFO
 
 </button>
 
@@ -606,11 +574,26 @@ readonly>
 
 <select class="emp-field">
 
-<option>Gender</option>
+<option value="">
+Gender
+</option>
+
 <option>Male</option>
 <option>Female</option>
 
 </select>
+
+</div>
+
+</div>
+
+<!-- GOVERNMENT -->
+
+<div
+id="government"
+class="tab-content">
+
+<div class="form-grid">
 
 <input class="emp-field" placeholder="SSS Number">
 <input class="emp-field" placeholder="PhilHealth Number">
@@ -622,7 +605,9 @@ readonly>
 
 <select class="emp-field">
 
-<option>Select ID</option>
+<option value="">
+ID Type
+</option>
 
 <option>Passport</option>
 <option>Driver License</option>
@@ -645,8 +630,8 @@ class="tab-content">
 
 <div class="form-grid">
 
-<input class="emp-field" placeholder="Mobile">
-<input class="emp-field" placeholder="Email">
+<input class="emp-field" placeholder="Mobile Number">
+<input class="emp-field" placeholder="Email Address">
 <input class="emp-field" placeholder="Current Address">
 <input class="emp-field" placeholder="Permanent Address">
 
@@ -654,10 +639,10 @@ class="tab-content">
 
 </div>
 
-<!-- JOB -->
+<!-- EMPLOYMENT -->
 
 <div
-id="job"
+id="employment"
 class="tab-content">
 
 <div class="form-grid">
@@ -668,7 +653,10 @@ class="tab-content">
 
 <select class="emp-field">
 
-<option>Employment</option>
+<option value="">
+Employment Status
+</option>
+
 <option>Regular</option>
 <option>Probationary</option>
 <option>Contractual</option>
@@ -684,10 +672,10 @@ class="tab-content">
 <br>
 
 <button
-class="save-btn"
+class="btn save-btn"
 onclick="saveEmployee()">
 
-Save Employee
+SAVE EMPLOYEE
 
 </button>
 
@@ -697,18 +685,11 @@ Save Employee
 
 <script type="module">
 
-/* =========================
-FIREBASE
-========================= */
+/* FIREBASE */
 
-import {
+import { initializeApp }
 
-initializeApp
-
-}
-
-from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
 
@@ -722,30 +703,23 @@ updateDoc
 
 }
 
-from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-/* CONFIG */
+/* FIREBASE CONFIG */
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
 
-authDomain:
-"hr-system-38fc3.firebaseapp.com",
+authDomain: "hr-system-38fc3.firebaseapp.com",
 
-projectId:
-"hr-system-38fc3",
+projectId: "hr-system-38fc3",
 
-storageBucket:
-"hr-system-38fc3.firebasestorage.app",
+storageBucket: "hr-system-38fc3.firebasestorage.app",
 
-messagingSenderId:
-"615471610834",
+messagingSenderId: "615471610834",
 
-appId:
-"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b"
 
 };
 
@@ -758,6 +732,7 @@ getFirestore(app);
 /* VARIABLES */
 
 let employees = [];
+
 let editId = null;
 
 /* MODAL */
@@ -776,32 +751,31 @@ clearForm();
 
 }
 
-/* TAB */
+/* TABS */
 
-window.openTab = function(evt,tabId){
+window.openTab = function(evt,id){
 
-document
-.querySelectorAll('.tab-content')
+document.querySelectorAll('.tab-content')
+
 .forEach(tab=>{
 
 tab.classList.remove('active');
 
 });
 
-document
-.getElementById(tabId)
+document.getElementById(id)
+
 .classList.add('active');
 
-document
-.querySelectorAll('.tab-btn')
+document.querySelectorAll('.tab-btn')
+
 .forEach(btn=>{
 
 btn.classList.remove('active');
 
 });
 
-evt.currentTarget
-.classList.add('active');
+evt.currentTarget.classList.add('active');
 
 }
 
@@ -815,28 +789,12 @@ new Date(birthdate.value);
 let today =
 new Date();
 
-let years =
+let ageValue =
+
 today.getFullYear() -
 birth.getFullYear();
 
-let m =
-today.getMonth() -
-birth.getMonth();
-
-if(
-m < 0 ||
-(
-m === 0 &&
-today.getDate() <
-birth.getDate()
-)
-){
-
-years--;
-
-}
-
-age.value = years;
+age.value = ageValue;
 
 }
 
@@ -859,29 +817,51 @@ data.push(field.value);
 
 });
 
+let employeeData = {
+
+firstname:data[0] || '',
+middlename:data[1] || '',
+lastname:data[2] || '',
+birthdate:data[3] || '',
+age:data[4] || '',
+gender:data[5] || '',
+
+sss:data[6] || '',
+philhealth:data[7] || '',
+pagibig:data[8] || '',
+healthcard:data[9] || '',
+
+bankname:data[10] || '',
+bankaccount:data[11] || '',
+idtype:data[12] || '',
+idnumber:data[13] || '',
+
+mobile:data[14] || '',
+email:data[15] || '',
+currentaddress:data[16] || '',
+permanentaddress:data[17] || '',
+
+employeeid:data[18] || '',
+position:data[19] || '',
+department:data[20] || '',
+employment:data[21] || '',
+salary:data[22] || ''
+
+};
+
 try{
 
 if(editId){
 
 await updateDoc(
 
-doc(
-db,
-'employees',
-editId
-),
+doc(db,'employees',editId),
 
-{
-
-data:data
-
-}
+employeeData
 
 );
 
-alert(
-'Employee Updated'
-);
+alert('Employee Updated');
 
 }else{
 
@@ -889,31 +869,23 @@ await addDoc(
 
 collection(db,'employees'),
 
-{
-
-data:data
-
-}
+employeeData
 
 );
 
-alert(
-'Employee Saved'
-);
+alert('Employee Saved');
 
 }
-
-loadEmployees();
 
 closeModal();
+
+loadEmployees();
 
 }catch(error){
 
 console.log(error);
 
-alert(
-'Firebase Error'
-);
+alert('Save Error');
 
 }
 
@@ -925,82 +897,84 @@ async function loadEmployees(){
 
 employees = [];
 
-let table =
-document.querySelector(
-'#empTable tbody'
-);
+employeeBody.innerHTML='';
 
-table.innerHTML='';
-
-let querySnapshot =
+let snapshot =
 
 await getDocs(
 collection(db,'employees')
 );
 
-querySnapshot.forEach(empDoc=>{
-
-let emp =
-empDoc.data().data || [];
+snapshot.forEach(docSnap=>{
 
 employees.push({
 
-id:empDoc.id,
-data:emp
+id:docSnap.id,
+
+...docSnap.data()
 
 });
 
-table.innerHTML += `
+});
+
+renderTable();
+
+}
+
+/* RENDER */
+
+function renderTable(){
+
+employeeBody.innerHTML='';
+
+employees.forEach(emp=>{
+
+employeeBody.innerHTML += `
 
 <tr>
 
-<td>${emp[0] || ''}</td>
-<td>${emp[1] || ''}</td>
-<td>${emp[2] || ''}</td>
-<td>${emp[3] || ''}</td>
-<td>${emp[4] || ''}</td>
-<td>${emp[5] || ''}</td>
+<td>${emp.firstname}</td>
+<td>${emp.middlename}</td>
+<td>${emp.lastname}</td>
+<td>${emp.birthdate}</td>
+<td>${emp.age}</td>
+<td>${emp.gender}</td>
 
-<td>${emp[6] || ''}</td>
-<td>${emp[7] || ''}</td>
-<td>${emp[8] || ''}</td>
-<td>${emp[9] || ''}</td>
+<td>${emp.sss}</td>
+<td>${emp.philhealth}</td>
+<td>${emp.pagibig}</td>
+<td>${emp.healthcard}</td>
 
-<td>${emp[10] || ''}</td>
-<td>${emp[11] || ''}</td>
+<td>${emp.bankname}</td>
+<td>${emp.bankaccount}</td>
 
-<td>${emp[12] || ''}</td>
-<td>${emp[13] || ''}</td>
+<td>${emp.idtype}</td>
+<td>${emp.idnumber}</td>
 
-<td>${emp[14] || ''}</td>
-<td>${emp[15] || ''}</td>
+<td>${emp.mobile}</td>
+<td>${emp.email}</td>
+<td>${emp.currentaddress}</td>
+<td>${emp.permanentaddress}</td>
 
-<td>${emp[16] || ''}</td>
-<td>${emp[17] || ''}</td>
-
-<td>${emp[18] || ''}</td>
-<td>${emp[19] || ''}</td>
-<td>${emp[20] || ''}</td>
-<td>${emp[21] || ''}</td>
-<td>${emp[22] || ''}</td>
+<td>${emp.employeeid}</td>
+<td>${emp.position}</td>
+<td>${emp.department}</td>
+<td>${emp.employment}</td>
+<td>${emp.salary}</td>
 
 <td>
 
 <button
-class="btn"
-onclick="editEmployee(
-'${empDoc.id}'
-)">
+class="btn edit-btn"
+onclick="editEmployee('${emp.id}')">
 
 EDIT
 
 </button>
 
 <button
-class="btn"
-onclick="deleteEmployee(
-'${empDoc.id}'
-)">
+class="btn delete-btn"
+onclick="deleteEmployee('${emp.id}')">
 
 DELETE
 
@@ -1014,37 +988,60 @@ DELETE
 
 });
 
-updateTotal();
+total.innerText =
+'TOTAL : ' + employees.length;
 
 }
 
-loadEmployees();
-
 /* EDIT */
 
-window.editEmployee =
-function(id){
+window.editEmployee = function(id){
 
-let employee =
-employees.find(
-e=>e.id===id
-);
+let emp = employees.find(e=>e.id===id);
 
-if(!employee) return;
+if(!emp) return;
 
 openModal();
 
 editId = id;
 
-let fields =
-document.querySelectorAll(
-'.emp-field'
-);
+let values = [
 
-fields.forEach((field,i)=>{
+emp.firstname,
+emp.middlename,
+emp.lastname,
+emp.birthdate,
+emp.age,
+emp.gender,
 
-field.value =
-employee.data[i] || '';
+emp.sss,
+emp.philhealth,
+emp.pagibig,
+emp.healthcard,
+
+emp.bankname,
+emp.bankaccount,
+emp.idtype,
+emp.idnumber,
+
+emp.mobile,
+emp.email,
+emp.currentaddress,
+emp.permanentaddress,
+
+emp.employeeid,
+emp.position,
+emp.department,
+emp.employment,
+emp.salary
+
+];
+
+document.querySelectorAll('.emp-field')
+
+.forEach((field,index)=>{
+
+field.value = values[index] || '';
 
 });
 
@@ -1055,15 +1052,12 @@ employee.data[i] || '';
 window.deleteEmployee =
 async function(id){
 
-let confirmDelete =
-confirm(
-'Delete Employee?'
-);
-
-if(confirmDelete){
+if(confirm('Delete Employee?')){
 
 await deleteDoc(
+
 doc(db,'employees',id)
+
 );
 
 loadEmployees();
@@ -1074,37 +1068,30 @@ loadEmployees();
 
 /* SEARCH */
 
-window.searchEmp =
-function(){
+window.searchEmployee = function(){
 
-let val =
+let value =
 search.value.toLowerCase();
 
 let rows =
 
 document.querySelectorAll(
-'#empTable tbody tr'
+'#employeeBody tr'
 );
-
-let visible = 0;
 
 rows.forEach(row=>{
 
-let show =
+row.style.display =
 
 row.innerText
 .toLowerCase()
-.includes(val);
+.includes(value)
 
-row.style.display =
-show ? '' : 'none';
+? ''
 
-if(show) visible++;
+: 'none';
 
 });
-
-total.innerText =
-'Showing : ' + visible;
 
 }
 
@@ -1114,30 +1101,19 @@ function clearForm(){
 
 editId = null;
 
-document
-.querySelectorAll('.emp-field')
-.forEach(el=>{
+document.querySelectorAll('.emp-field')
 
-el.value='';
+.forEach(field=>{
+
+field.value='';
 
 });
 
 }
 
-/* TOTAL */
+/* AUTO LOAD */
 
-function updateTotal(){
-
-let rows =
-
-document.querySelectorAll(
-'#empTable tbody tr'
-);
-
-total.innerText =
-'Total : ' + rows.length;
-
-}
+loadEmployees();
 
 </script>
 
