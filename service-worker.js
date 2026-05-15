@@ -1,4 +1,4 @@
-const CACHE_NAME = "papprito-hr-v1";
+const CACHE_NAME = "papprito-hr-v2";
 
 const urlsToCache = [
 
@@ -9,11 +9,17 @@ const urlsToCache = [
 "/payroll.html",
 "/employeeportal.html",
 "/hrapproval.html",
-"/payslip.html"
+"/trackleaves.html",
+"/payslip.html",
+"/manifest.json",
+"/icon-192.png",
+"/icon-512.png"
 
 ];
 
 self.addEventListener("install",event=>{
+
+self.skipWaiting();
 
 event.waitUntil(
 
@@ -25,6 +31,34 @@ return cache.addAll(urlsToCache);
 })
 
 );
+
+});
+
+self.addEventListener("activate",event=>{
+
+event.waitUntil(
+
+caches.keys().then(keys=>{
+
+return Promise.all(
+
+keys.map(key=>{
+
+if(key !== CACHE_NAME){
+
+return caches.delete(key);
+
+}
+
+})
+
+);
+
+})
+
+);
+
+return self.clients.claim();
 
 });
 
