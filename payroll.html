@@ -167,7 +167,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:2600px;
+min-width:2800px;
 }
 
 th,
@@ -475,6 +475,7 @@ TOTAL NET PAY :
 <th>OTHER DEDUCTION</th>
 <th>DEDUCTION REASON</th>
 <th>TOTAL DEDUCTION</th>
+<th>TOTAL GROSS</th>
 <th>NET PAY</th>
 <th>ACTION</th>
 
@@ -685,7 +686,7 @@ pagibigDed +
 healthCardDed +
 otherDed;
 
-let net =
+let gross =
 
 basicPay +
 overtimePay +
@@ -695,9 +696,9 @@ vacationLeave +
 birthdayLeave +
 maternityLeave +
 paternityLeave +
-allowancePay -
+allowancePay;
 
-deductions;
+let net = gross - deductions;
 
 try{
 
@@ -745,6 +746,8 @@ otherdeduction: otherDed,
 deductionreason: deductionReason,
 
 deductions: deductions,
+
+gross: gross,
 
 net: net,
 
@@ -885,6 +888,11 @@ ${pay.deductionreason || ''}
 
 <td>
 ₱ ${Number(pay.deductions || 0)
+.toFixed(2)}
+</td>
+
+<td>
+₱ ${Number(pay.gross || 0)
 .toFixed(2)}
 </td>
 
