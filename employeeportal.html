@@ -170,7 +170,7 @@ line-height:1.8;
 font-size:15px;
 }
 
-/* TABLE */
+/* REQUEST TABLE */
 
 .table-wrapper{
 
@@ -183,7 +183,7 @@ background:white;
 border-radius:10px;
 }
 
-table{
+.main-table{
 
 width:100%;
 
@@ -192,8 +192,8 @@ border-collapse:collapse;
 min-width:1000px;
 }
 
-th,
-td{
+.main-table th,
+.main-table td{
 
 border:1px solid #999;
 
@@ -202,14 +202,14 @@ padding:10px;
 text-align:center;
 }
 
-th{
+.main-table th{
 
 background:#ffcc00;
 
 color:black;
 }
 
-td{
+.main-table td{
 color:black;
 }
 
@@ -230,7 +230,9 @@ color:red;
 font-weight:bold;
 }
 
-/* ================= PAYSLIP FIX ================= */
+/* =========================
+PAYSLIP
+========================= */
 
 .payslip{
 
@@ -238,9 +240,9 @@ margin-top:25px;
 
 background:white;
 
-padding:10px;
+padding:12px;
 
-border-radius:20px;
+border-radius:18px;
 
 color:black;
 
@@ -250,16 +252,14 @@ border:3px solid #cc9900;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
 
-/* FIXED SIZE */
+width:340px;
 
-width:88mm;
-
-min-height:130mm;
+min-height:520px;
 
 margin-left:auto;
 margin-right:auto;
 
-overflow:visible;
+overflow:hidden;
 
 }
 
@@ -269,16 +269,16 @@ overflow:visible;
 
 text-align:center;
 
-margin-bottom:6px;
+margin-bottom:10px;
 
-padding-bottom:5px;
+padding-bottom:8px;
 
 border-bottom:2px solid #ffcc00;
 }
 
 .company h2{
 
-font-size:18px;
+font-size:24px;
 
 font-weight:bold;
 
@@ -287,7 +287,7 @@ color:#660000;
 
 .company p{
 
-font-size:9px;
+font-size:11px;
 
 font-weight:bold;
 
@@ -298,22 +298,24 @@ letter-spacing:1px;
 
 .info{
 
-font-size:9px;
+font-size:11px;
 
-line-height:1.5;
+line-height:1.7;
 
-margin-bottom:6px;
+margin-bottom:10px;
 
 background:#fff5f0;
 
-padding:6px;
+padding:10px;
 
-border-radius:8px;
+border-radius:10px;
 
 border:2px solid #e6a36d;
+
+word-break:break-word;
 }
 
-/* TABLE */
+/* PAYROLL TABLE */
 
 .payroll-table{
 
@@ -321,9 +323,9 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:5px;
+margin-top:8px;
 
-font-size:8px;
+font-size:11px;
 
 table-layout:fixed;
 
@@ -335,16 +337,18 @@ background:#e6a000;
 
 color:black;
 
-padding:4px;
+padding:7px;
 
-font-size:8px;
+font-size:11px;
 
 text-align:center;
+
+border:1px solid #999;
 }
 
 .payroll-table td{
 
-padding:4px;
+padding:7px;
 
 border:1px solid #999;
 
@@ -352,82 +356,92 @@ background:white;
 
 font-weight:bold;
 
-white-space:nowrap;
+font-size:11px;
 
 overflow:hidden;
 
-text-overflow:ellipsis;
+word-break:break-word;
 }
-
-/* DESCRIPTION COLUMN */
 
 .payroll-table td:first-child{
 
-width:60%;
+width:65%;
 
 text-align:left;
 }
 
-/* AMOUNT COLUMN */
-
 .payroll-table td:last-child{
 
-width:40%;
+width:35%;
 
 text-align:right;
 
-font-size:8px;
+white-space:nowrap;
 }
 
 /* NET PAY */
 
 .netpay{
 
-margin-top:6px;
+margin-top:10px;
 
-padding:7px;
+padding:10px;
 
 background:#009900;
 
 color:white;
 
-border-radius:6px;
+border-radius:8px;
 
-font-size:12px;
+font-size:18px;
 
 font-weight:bold;
 
 text-align:right;
-
-overflow:hidden;
 }
 
 /* SIGNATURE */
 
 .signature{
 
-margin-top:18px;
+margin-top:35px;
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:7px;
+font-size:10px;
 }
 
 .line{
 
-margin-top:18px;
+margin-top:25px;
 
 border-top:1px solid black;
 
-width:75px;
+width:110px;
 
 text-align:center;
 
-padding-top:3px;
+padding-top:4px;
 
 font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.payslip{
+
+width:100%;
+
+max-width:340px;
+
+min-height:auto;
+
+}
+
 }
 
 /* PRINT */
@@ -469,27 +483,15 @@ box-shadow:none;
 
 display:block !important;
 
-width:88mm;
+width:340px;
 
-min-height:130mm;
+min-height:520px;
 
 margin:auto;
 
 border:2px solid #cc9900;
 
 box-shadow:none;
-
-overflow:visible;
-}
-
-.payroll-table{
-
-font-size:8px;
-}
-
-.payroll-table td:last-child{
-
-font-size:8px;
 }
 
 }
@@ -560,7 +562,7 @@ onclick="logout()">
 
 </div>
 
-<!-- REQUEST FORM -->
+<!-- REQUEST -->
 
 <div class="form-grid">
 
@@ -629,7 +631,7 @@ onclick="closePayslip()">
 
 <div class="table-wrapper">
 
-<table>
+<table class="main-table">
 
 <thead>
 
@@ -776,11 +778,11 @@ NET PAY :
 <div class="signature">
 
 <div class="line">
-HR Signature
+Employer
 </div>
 
 <div class="line">
-Employee Signature
+Employee
 </div>
 
 </div>
@@ -800,7 +802,7 @@ localStorage.getItem(
 'loggedInUser'
 ) || '';
 
-/* LOAD EMPLOYEES */
+/* EMPLOYEES */
 
 let employees =
 JSON.parse(
@@ -861,7 +863,7 @@ JSON.parse(
 localStorage.getItem('employeeRequests')
 ) || [];
 
-/* SUBMIT REQUEST */
+/* SUBMIT */
 
 function submitRequest(){
 
@@ -904,7 +906,7 @@ renderRequests();
 
 }
 
-/* RENDER REQUEST */
+/* RENDER */
 
 function renderRequests(){
 
@@ -965,7 +967,7 @@ ${req.status}
 
 }
 
-/* LOAD PAYSLIP */
+/* PAYSLIP */
 
 function loadPayslip(){
 
@@ -1049,7 +1051,7 @@ Number(pay.net || 0).toFixed(2);
 
 }
 
-/* CLOSE PAYSLIP */
+/* CLOSE */
 
 function closePayslip(){
 
