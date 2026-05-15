@@ -4,6 +4,9 @@
 
 <title>HR System Dashboard</title>
 
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <style>
 
 *{
@@ -44,6 +47,8 @@ gap:10px;
 box-shadow:4px 0 10px rgba(0,0,0,0.4);
 
 position:relative;
+
+overflow-y:auto;
 }
 
 .sidebar h2{
@@ -314,6 +319,8 @@ MOBILE
 
 body{
 flex-direction:column;
+height:auto;
+overflow:auto;
 }
 
 .sidebar{
@@ -379,14 +386,18 @@ font-size:35px;
 🧾 Payslip
 </button>
 
+<button onclick="openPage('employeeportal.html')">
+👨‍💼 Employee Portal
+</button>
+
 <button onclick="openPage('hrapproval.html')">
 ✅ HR Approval Request
 </button>
 
-  <button onclick="openPage('settings.html')">
+<button onclick="openPage('settings.html')">
 ⚙️ Settings
 </button>
-  
+
 <!-- LOGOUT -->
 
 <button
@@ -497,8 +508,8 @@ and payroll history.
 
 <p>
 Generate printable payslips
-with PDF-ready professional
-layout and deductions.
+with professional layout,
+leave pay and deductions.
 </p>
 
 </div>
@@ -523,8 +534,8 @@ birthday leave and day off.
 <p>
 Employees can submit leave
 requests directly connected
-to HR approval and employee
-masterlist database.
+to Firebase database and
+HR approval system.
 </p>
 
 </div>
@@ -555,13 +566,70 @@ DATE
 
 </div>
 
-<script>
+<script type="module">
+
+/* =========================
+FIREBASE
+========================= */
+
+import {
+
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* =========================
+FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+
+authDomain:
+"hr-system-38fc3.firebaseapp.com",
+
+projectId:
+"hr-system-38fc3",
+
+storageBucket:
+"hr-system-38fc3.firebasestorage.app",
+
+messagingSenderId:
+"615471610834",
+
+appId:
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
 
 /* =========================
 OPEN PAGE
 ========================= */
 
-function openPage(page){
+window.openPage =
+function(page){
 
 window.location.href = page;
 
@@ -571,7 +639,8 @@ window.location.href = page;
 LOGOUT
 ========================= */
 
-function logout(){
+window.logout =
+function(){
 
 let confirmLogout = confirm(
 'Are you sure you want to logout?'
@@ -581,6 +650,10 @@ if(confirmLogout){
 
 localStorage.removeItem(
 'userRole'
+);
+
+localStorage.removeItem(
+'loggedInUser'
 );
 
 window.location.href =
@@ -598,10 +671,14 @@ function updateClock(){
 
 let now = new Date();
 
-clock.innerText =
+document.getElementById(
+'clock'
+).innerText =
 now.toLocaleTimeString();
 
-dateToday.innerText =
+document.getElementById(
+'dateToday'
+).innerText =
 now.toDateString();
 
 }
@@ -614,55 +691,73 @@ updateClock();
 LOAD DASHBOARD COUNTS
 ========================= */
 
-function loadDashboard(){
+async function loadDashboard(){
 
-let employees =
+try{
 
-JSON.parse(
-localStorage.getItem('employees')
-) || [];
+/* EMPLOYEES */
 
-let attendance =
-
-JSON.parse(
-localStorage.getItem('attendance')
-) || [];
-
-let payroll =
-
-JSON.parse(
-localStorage.getItem('payroll')
-) || [];
-
-let requests =
-
-JSON.parse(
-localStorage.getItem('employeeRequests')
-) || [];
+const employeeSnap =
+await getDocs(
+collection(db,'employees')
+);
 
 document.getElementById(
 'totalEmployees'
 ).innerText =
-employees.length;
+employeeSnap.size;
+
+/* ATTENDANCE */
+
+const attendanceSnap =
+await getDocs(
+collection(db,'attendance')
+);
 
 document.getElementById(
 'totalAttendance'
 ).innerText =
-attendance.length;
+attendanceSnap.size;
+
+/* PAYROLL */
+
+const payrollSnap =
+await getDocs(
+collection(db,'payroll')
+);
 
 document.getElementById(
 'totalPayroll'
 ).innerText =
-payroll.length;
+payrollSnap.size;
+
+/* REQUESTS */
+
+const requestSnap =
+await getDocs(
+collection(db,'employeeRequests')
+);
 
 document.getElementById(
 'totalRequests'
 ).innerText =
-requests.length;
+requestSnap.size;
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Failed to load Firebase dashboard data'
+);
 
 }
 
-/* AUTO LOAD */
+}
+
+/* =========================
+AUTO LOAD
+========================= */
 
 loadDashboard();
 
