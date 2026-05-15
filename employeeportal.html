@@ -191,11 +191,16 @@ color:white;
 
 margin-top:25px;
 
-overflow:auto;
+overflow-x:hidden;
+
+overflow-y:hidden;
 
 background:white;
 
 border-radius:10px;
+
+width:100%;
+
 }
 
 table{
@@ -204,7 +209,10 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:1100px;
+min-width:100%;
+
+table-layout:fixed;
+
 }
 
 th,
@@ -212,11 +220,15 @@ td{
 
 border:1px solid #999;
 
-padding:10px;
+padding:6px;
 
 text-align:center;
-}
 
+font-size:11px;
+
+word-break:break-word;
+
+}
 th{
 
 background:#ffcc00;
@@ -520,7 +532,20 @@ font-size:7px;
 padding:3px;
 
 }
+table{
 
+font-size:10px;
+
+}
+
+th,
+td{
+
+padding:4px;
+
+font-size:9px;
+
+}
 .netpay{
 
 font-size:11px;
