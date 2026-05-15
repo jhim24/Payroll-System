@@ -286,7 +286,7 @@ HR SYSTEM
 </div>
 
 <div class="subtitle">
-Professional Firebase Authentication Login
+Professional HR Login System
 </div>
 
 <select id="role">
@@ -306,9 +306,9 @@ EMPLOYEE
 </select>
 
 <input
-type="email"
+type="text"
 id="email"
-placeholder="Email">
+placeholder="Email or Employee ID">
 
 <div class="password-box">
 
@@ -359,7 +359,7 @@ Please wait...
 
 <div class="footer">
 
-Powered by Firebase Authentication HR System
+Powered by Firebase HR System
 
 </div>
 
@@ -390,6 +390,17 @@ onAuthStateChanged
 
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 /* =========================
 FIREBASE CONFIG
@@ -427,6 +438,9 @@ initializeApp(firebaseConfig);
 const auth =
 getAuth(app);
 
+const db =
+getFirestore(app);
+
 /* =========================
 AUTO LOGIN CHECK
 ========================= */
@@ -444,11 +458,6 @@ if(role === 'admin'){
 
 window.location.href =
 'index.html';
-
-}else if(role === 'employee'){
-
-window.location.href =
-'employeeportal.html';
 
 }
 
@@ -493,7 +502,7 @@ document.getElementById(
 'role'
 ).value;
 
-let email =
+let username =
 
 document.getElementById(
 'email'
@@ -507,7 +516,7 @@ document.getElementById(
 
 if(
 role === '' ||
-email === '' ||
+username === '' ||
 password === ''
 ){
 
@@ -519,22 +528,24 @@ return;
 
 }
 
-/* LOADING */
-
 loading.style.display =
 'block';
+
+/* =========================
+ADMIN LOGIN
+========================= */
+
+if(role === 'admin'){
 
 try{
 
 await signInWithEmailAndPassword(
 
 auth,
-email,
+username,
 password
 
 );
-
-/* SAVE ROLE */
 
 localStorage.setItem(
 'userRole',
@@ -543,10 +554,8 @@ role
 
 localStorage.setItem(
 'loggedInUser',
-email
+username
 );
-
-/* REMEMBER */
 
 if(
 remember.checked
@@ -554,24 +563,13 @@ remember.checked
 
 localStorage.setItem(
 'rememberUser',
-email
+username
 );
 
 }
 
-/* REDIRECT */
-
-if(role === 'admin'){
-
 window.location.href =
 'index.html';
-
-}else{
-
-window.location.href =
-'employeeportal.html';
-
-}
 
 }catch(error){
 
@@ -581,6 +579,94 @@ error.message
 
 loading.style.display =
 'none';
+
+}
+
+}
+
+/* =========================
+EMPLOYEE LOGIN
+========================= */
+
+if(role === 'employee'){
+
+try{
+
+let querySnapshot =
+
+await getDocs(
+collection(db,'users')
+);
+
+let found = false;
+
+querySnapshot.forEach(doc=>{
+
+let user = doc.data();
+
+if(
+
+user.role === 'employee' &&
+
+user.username === username &&
+
+user.password === password
+
+){
+
+found = true;
+
+localStorage.setItem(
+'loggedInUser',
+username
+);
+
+localStorage.setItem(
+'userRole',
+role
+);
+
+if(
+remember.checked
+){
+
+localStorage.setItem(
+'rememberUser',
+username
+);
+
+}
+
+window.location.href =
+'employeeportal.html';
+
+}
+
+});
+
+loading.style.display =
+'none';
+
+if(!found){
+
+alert(
+'Invalid Employee Login'
+);
+
+}
+
+}catch(error){
+
+console.log(error);
+
+loading.style.display =
+'none';
+
+alert(
+'Firebase Error'
+);
+
+}
 
 }
 
