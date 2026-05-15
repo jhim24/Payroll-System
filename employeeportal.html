@@ -96,6 +96,11 @@ background:#cc0000;
 color:white;
 }
 
+.view-btn{
+background:#ff8800;
+color:black;
+}
+
 /* FORM */
 
 .form-section{
@@ -127,6 +132,25 @@ border:2px solid #555;
 background:#1f1f1f;
 
 color:white;
+}
+
+/* EMPLOYEE INFO */
+
+.emp-info{
+
+background:#1a1a1a;
+
+padding:15px;
+
+border-radius:10px;
+
+border:2px solid #ffcc00;
+
+margin-bottom:15px;
+
+line-height:1.8;
+
+font-size:15px;
 }
 
 /* TABLE */
@@ -195,22 +219,26 @@ font-weight:bold;
 
 margin-top:25px;
 
+width:48%;
+
 background:white;
 
-padding:20px;
+padding:15px;
 
 border-radius:12px;
 
 color:black;
 
 display:none;
+
+border:2px solid #ffcc00;
 }
 
 .payslip-header{
 
 text-align:center;
 
-margin-bottom:20px;
+margin-bottom:10px;
 
 border-bottom:2px solid #ffcc00;
 
@@ -221,7 +249,12 @@ padding-bottom:10px;
 
 color:#cc0000;
 
-font-size:28px;
+font-size:20px;
+}
+
+.payslip-header p{
+
+font-size:11px;
 }
 
 .payroll-table{
@@ -231,6 +264,8 @@ width:100%;
 border-collapse:collapse;
 
 margin-top:10px;
+
+font-size:11px;
 }
 
 .payroll-table th{
@@ -242,31 +277,33 @@ color:black;
 
 .netpay{
 
-font-size:22px;
+font-size:18px;
 
 font-weight:bold;
 
 color:green;
 
-margin-top:20px;
+margin-top:15px;
 
 text-align:right;
 }
 
 .signature{
 
-margin-top:50px;
+margin-top:30px;
 
 display:flex;
 
 justify-content:space-between;
+
+font-size:10px;
 }
 
 .line{
 
 border-top:1px solid black;
 
-width:220px;
+width:120px;
 
 text-align:center;
 
@@ -283,15 +320,12 @@ padding:0;
 }
 
 .header,
-.form-section > .form-grid,
+.form-grid,
 .save-btn,
 .table-wrapper,
 .back-btn,
-.print-btn,
-#requestType,
-#requestDate,
-#days,
-#reason{
+.view-btn,
+.print-btn{
 display:none !important;
 }
 
@@ -303,7 +337,12 @@ background:white;
 }
 
 .payslip{
+
 display:block !important;
+
+width:48%;
+
+margin:auto;
 }
 
 }
@@ -350,15 +389,27 @@ onclick="printPayslip()">
 
 <div class="form-section">
 
+<!-- AUTO EMPLOYEE INFO -->
+
+<div class="emp-info">
+
+<div>
+<b>EMPLOYEE ID :</b>
+<span id="empIdDisplay">
+-
+</span>
+</div>
+
+<div>
+<b>EMPLOYEE NAME :</b>
+<span id="empNameDisplay">
+-
+</span>
+</div>
+
+</div>
+
 <div class="form-grid">
-
-<select id="employee">
-
-<option value="">
-Select Employee
-</option>
-
-</select>
 
 <select id="requestType">
 
@@ -393,6 +444,8 @@ placeholder="Reason"></textarea>
 
 <br>
 
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
 <button
 class="btn save-btn"
 onclick="submitRequest()">
@@ -400,6 +453,16 @@ onclick="submitRequest()">
 SUBMIT REQUEST
 
 </button>
+
+<button
+class="btn view-btn"
+onclick="loadPayslip()">
+
+👁 VIEW PAYSLIP
+
+</button>
+
+</div>
 
 <!-- TABLE -->
 
@@ -523,9 +586,19 @@ Employee Signature
 
 <script>
 
-/* LOAD EMPLOYEES */
+/* =========================
+CURRENT USER
+========================= */
 
-function loadEmployees(){
+let currentUser =
+
+localStorage.getItem(
+'loggedInUser'
+) || '';
+
+/* =========================
+LOAD EMPLOYEE INFO
+========================= */
 
 let employees =
 
@@ -533,8 +606,7 @@ JSON.parse(
 localStorage.getItem('employees')
 ) || [];
 
-employee.innerHTML =
-'<option value="">Select Employee</option>';
+let currentEmployee = null;
 
 employees.forEach(emp=>{
 
@@ -544,21 +616,29 @@ let fullname =
 (emp[1] || '') + ' ' +
 (emp[2] || '');
 
-let empId =
-emp[18] || 'NO-ID';
+if(fullname.trim() === currentUser.trim()){
 
-employee.innerHTML += `
+currentEmployee = {
 
-<option value="${fullname}"
-data-id="${empId}">
+id: emp[18] || 'NO-ID',
 
-${empId} - ${fullname}
+name: fullname
 
-</option>
+};
 
-`;
+}
 
 });
+
+/* DISPLAY */
+
+if(currentEmployee){
+
+empIdDisplay.innerText =
+currentEmployee.id;
+
+empNameDisplay.innerText =
+currentEmployee.name;
 
 }
 
@@ -574,27 +654,19 @@ localStorage.getItem('employeeRequests')
 
 function submitRequest(){
 
-if(employee.value===''){
+if(!currentEmployee){
 
-alert('Select Employee');
+alert('Employee Not Found');
 
 return;
 
 }
 
-let selected =
-employee.options[
-employee.selectedIndex
-];
-
-let empId =
-selected.dataset.id;
-
 let data = {
 
-empid:empId,
+empid:currentEmployee.id,
 
-employee:employee.value,
+employee:currentEmployee.name,
 
 type:requestType.value,
 
@@ -619,8 +691,6 @@ alert('Request Submitted');
 
 renderRequests();
 
-loadPayslip();
-
 }
 
 /* RENDER */
@@ -629,7 +699,15 @@ function renderRequests(){
 
 requestBody.innerHTML='';
 
-requests.forEach(req=>{
+requests
+.filter(req=>
+
+req.employee ===
+currentEmployee.name
+
+)
+
+.forEach(req=>{
 
 let statusClass =
 req.status.toLowerCase();
@@ -672,14 +750,17 @@ JSON.parse(
 localStorage.getItem('payroll')
 ) || [];
 
-let empName =
-employee.value;
-
 let pay = payroll.find(p=>
-p.employee === empName
+p.employee === currentEmployee.name
 );
 
-if(!pay) return;
+if(!pay){
+
+alert('No Payslip Found');
+
+return;
+
+}
 
 document.getElementById(
 'payslipArea'
@@ -737,8 +818,6 @@ window.print();
 }
 
 /* AUTO LOAD */
-
-loadEmployees();
 
 renderRequests();
 
