@@ -56,8 +56,8 @@ inset:0;
 background:
 linear-gradient(
 135deg,
-rgba(0,0,0,0.55),
-rgba(0,0,0,0.35)
+rgba(0,0,0,0.18),
+rgba(0,0,0,0.08)
 );
 
 backdrop-filter:blur(2px);
@@ -194,7 +194,7 @@ padding:20px;
 
 overflow:auto;
 
-background:#252525;
+background:transparent;
 
 contain:layout paint;
 
@@ -308,18 +308,29 @@ font-weight:bold;
 text-align:center;
 }
 .red{
-background:#a00000;
+background:rgba(160,0,0,0.75);
+
+backdrop-filter:blur(4px);
 }
 
 .yellow{
-background:#d4a000;
+background:rgba(212,160,0,0.75);
+
+backdrop-filter:blur(4px);
+
+color:black;
+}
 
 .dark{
-background:#222;
+background:rgba(34,34,34,0.78);
+
+backdrop-filter:blur(4px);
 }
 
 .green{
-background:#007a2f;
+background:rgba(0,122,47,0.75);
+
+backdrop-filter:blur(4px);
 }
 
 /* =========================
@@ -338,7 +349,9 @@ gap:20px;
 
 .card{
 
-background:#2f2f2f;
+background:rgba(25,25,25,0.55);
+
+backdrop-filter:blur(6px);
 
 padding:25px;
 
