@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#ffcc00">
-
 <link rel="apple-touch-icon" href="icon-192.png">
+
 <title>Employee Portal</title>
 
-  <link
+<link
 href="https://fonts.googleapis.com/icon?family=Material+Icons"
 rel="stylesheet">
-  
+
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
@@ -29,8 +29,6 @@ background:#1f1f1f;
 padding:15px;
 color:white;
 }
-
-/* CONTAINER */
 
 .container{
 
@@ -80,6 +78,15 @@ font-weight:bold;
 color:black;
 }
 
+.portal-title{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+}
+
 /* BUTTON */
 
 .btn{
@@ -107,23 +114,12 @@ justify-content:center;
 gap:8px;
 }
 
-.material-icons{
-
-font-size:20px;
-}
-
-.portal-title{
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-}
-
 .btn:hover{
-
 transform:scale(1.03);
+}
+
+.material-icons{
+font-size:20px;
 }
 
 .logout-btn{
@@ -133,6 +129,11 @@ color:white;
 
 .submit-btn{
 background:#008000;
+color:white;
+}
+
+.attendance-btn{
+background:#0066cc;
 color:white;
 }
 
@@ -160,6 +161,7 @@ color:white;
 background:#990000;
 color:white;
 }
+
 .edit-btn,
 .delete-btn{
 
@@ -183,6 +185,7 @@ border-radius:8px;
 
 font-weight:bold;
 }
+
 /* FORM */
 
 .form-section{
@@ -237,6 +240,24 @@ background:#1f1f1f;
 color:white;
 }
 
+textarea{
+min-height:90px;
+resize:vertical;
+}
+
+/* ACTION BUTTONS */
+
+.action-buttons{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-top:15px;
+}
+
 /* TABLE */
 
 .table-wrapper{
@@ -273,6 +294,7 @@ overflow:hidden;
 
 border-radius:12px;
 }
+
 .table-wrapper th,
 .table-wrapper td{
 
@@ -290,14 +312,14 @@ white-space:nowrap;
 
 line-height:1.2;
 }
+
 .table-wrapper td{
 
 color:white;
 
 background:#1f1f1f;
-
-transition:0.2s;
 }
+
 .table-wrapper th{
 
 background:
@@ -311,31 +333,13 @@ color:black;
 
 font-weight:bold;
 
-letter-spacing:0.5px;
-
 position:sticky;
 
 top:0;
 
 z-index:2;
 }
-td:last-child{
 
-min-width:220px;
-}
-
-.action-buttons{
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-flex-wrap:wrap;
-
-gap:6px;
-}
 /* STATUS */
 
 .pending{
@@ -344,18 +348,16 @@ font-weight:bold;
 }
 
 .approved{
-color:green;
+color:#00ff99;
 font-weight:bold;
 }
 
 .rejected{
-color:red;
+color:#ff3333;
 font-weight:bold;
 }
 
-/* =========================
-PAYSLIP
-========================= */
+/* PAYSLIP */
 
 .payslip{
 
@@ -376,10 +378,7 @@ border-radius:15px;
 border:2px solid #ffcc00;
 
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
-
 }
-
-/* COMPANY */
 
 .company{
 
@@ -406,8 +405,6 @@ font-size:9px;
 font-weight:bold;
 }
 
-/* INFO */
-
 .info{
 
 font-size:10px;
@@ -424,8 +421,6 @@ border-radius:6px;
 
 border:1px solid #ffcc00;
 }
-
-/* PAYROLL TABLE */
 
 .payroll-table{
 
@@ -446,12 +441,6 @@ border:1px solid #999;
 padding:4px;
 
 font-size:9px;
-
-overflow:hidden;
-
-white-space:nowrap;
-
-text-overflow:ellipsis;
 }
 
 .payroll-table th{
@@ -459,38 +448,13 @@ text-overflow:ellipsis;
 background:#ffcc00;
 
 color:black;
-
-font-size:9px;
 }
 
 .payroll-table td{
 
 background:white;
+color:black;
 }
-
-/* LEFT COLUMN */
-
-.payroll-table td:first-child,
-.payroll-table th:first-child{
-
-width:65%;
-
-text-align:left;
-}
-
-/* RIGHT COLUMN */
-
-.payroll-table td:last-child,
-.payroll-table th:last-child{
-
-width:35%;
-
-text-align:right;
-
-font-weight:bold;
-}
-
-/* NET PAY */
 
 .netpay{
 
@@ -510,8 +474,6 @@ font-weight:bold;
 
 text-align:right;
 }
-
-/* SIGNATURE */
 
 .signature{
 
@@ -545,72 +507,16 @@ padding-top:3px;
 font-size:22px;
 }
 
-.payslip{
-
-width:100%;
-
-max-width:110mm;
-
-padding:8px;
+.table-wrapper table{
+min-width:1000px;
 }
 
-.payroll-table th,
-.payroll-table td{
-
-border:1px solid #999;
-
-padding:2px;
-
-font-size:8px;
-
-line-height:1.2;
-
-word-break:break-word;
-
-}
-
-.line{
-
-width:65px;
-}
-
-}
-
-/* PRINT */
-
-@media print{
-
-body{
-background:white;
-padding:0;
-}
-
-.header,
-.form-grid,
-.table-wrapper,
-.emp-info,
 .action-buttons{
-display:none !important;
+flex-direction:column;
 }
 
-.container{
-border:none;
-background:white;
-}
-
-.payslip{
-
-display:block !important;
-
-margin:auto;
-
-box-shadow:none;
-
-width:110mm;
-
-max-width:110mm;
-
-border:2px solid #ffcc00;
+.btn{
+width:100%;
 }
 
 }
@@ -651,6 +557,8 @@ LOGOUT
 
 </div>
 
+<!-- FORM SECTION -->
+
 <div class="form-section">
 
 <!-- EMPLOYEE INFO -->
@@ -669,7 +577,7 @@ LOGOUT
 
 </div>
 
-<!-- FORM -->
+<!-- REQUEST FORM -->
 
 <div class="form-grid">
 
@@ -680,11 +588,8 @@ Select Request
 </option>
 
 <option>DAY OFF</option>
-
 <option>VACATION LEAVE</option>
-
 <option>BIRTHDAY LEAVE</option>
-
 <option>SICK LEAVE</option>
 
 </select>
@@ -704,17 +609,31 @@ placeholder="Reason"></textarea>
 
 </div>
 
-<br>
+<!-- BUTTONS -->
 
-<div
-class="action-buttons"
-style="display:flex;gap:10px;flex-wrap:wrap;">
+<div class="action-buttons">
 
 <button
 class="btn submit-btn"
 onclick="submitRequest()">
 
+<span class="material-icons">
+send
+</span>
+
 SUBMIT REQUEST
+
+</button>
+
+<button
+class="btn attendance-btn"
+onclick="submitAttendanceRequest()">
+
+<span class="material-icons">
+schedule
+</span>
+
+ATTENDANCE REQUEST
 
 </button>
 
@@ -861,25 +780,15 @@ id="payslipArea">
 </tr>
 
 <tr>
-<td>Maternity Leave</td>
-<td id="payMaternity">0.00</td>
-</tr>
-
-<tr>
-<td>Paternity Leave</td>
-<td id="payPaternity">0.00</td>
-</tr>
-
-<tr>
 <td>Allowance</td>
 <td id="payAllowance">0.00</td>
 </tr>
 
-  <tr>
+<tr>
 <td><b>TOTAL GROSS</b></td>
 <td id="payGross"><b>0.00</b></td>
 </tr>
-  
+
 </table>
 
 <table class="payroll-table">
@@ -1077,6 +986,8 @@ return;
 
 }
 
+try{
+
 if(editId){
 
 await updateDoc(
@@ -1139,6 +1050,79 @@ clearForm();
 
 loadRequests();
 
+}catch(error){
+
+console.log(error);
+
+alert('Submit Error');
+
+}
+
+}
+
+/* ATTENDANCE REQUEST */
+
+window.submitAttendanceRequest =
+async function(){
+
+let attendanceType =
+prompt(
+'Enter Attendance Request:\nTIME IN\nTIME OUT\nMISSING SCAN\nLATE'
+);
+
+if(!attendanceType) return;
+
+let attendanceReason =
+prompt(
+'Enter Reason'
+);
+
+if(!attendanceReason) return;
+
+try{
+
+await addDoc(
+
+collection(db,'attendanceRequests'),
+
+{
+
+empid:
+currentEmployee.id,
+
+employee:
+currentEmployee.name,
+
+type:
+attendanceType,
+
+date:
+new Date().toLocaleDateString(),
+
+reason:
+attendanceReason,
+
+status:
+'PENDING'
+
+}
+
+);
+
+alert(
+'Attendance Request Submitted'
+);
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Attendance Request Error'
+);
+
+}
+
 }
 
 /* LOAD REQUESTS */
@@ -1186,6 +1170,8 @@ ${req.status}
 
 <td>
 
+${req.status === 'PENDING' ? `
+
 <button
 class="btn edit-btn"
 onclick="editRequest(
@@ -1207,6 +1193,8 @@ onclick="deleteRequest('${id}')">
 DELETE
 
 </button>
+
+` : 'LOCKED'}
 
 </td>
 
@@ -1256,7 +1244,7 @@ loadRequests();
 
 }
 
-/* CLEAR */
+/* CLEAR FORM */
 
 function clearForm(){
 
@@ -1328,14 +1316,6 @@ payBirthday.innerText =
 Number(pay.birthday || 0)
 .toFixed(2);
 
-payMaternity.innerText =
-Number(pay.maternity || 0)
-.toFixed(2);
-
-payPaternity.innerText =
-Number(pay.paternity || 0)
-.toFixed(2);
-
 payAllowance.innerText =
 Number(pay.allowance || 0)
 .toFixed(2);
@@ -1345,6 +1325,10 @@ Number(pay.gross || 0)
 .toFixed(2);
 
 paySSS.innerText =
+Number(pay.sss || 0)
+.toFixed(2);
+
+payPhilhealth.innerText =
 Number(pay.philhealth || 0)
 .toFixed(2);
 
@@ -1380,7 +1364,7 @@ alert('No Payslip Found');
 
 }
 
-/* CLOSE */
+/* CLOSE PAYSLIP */
 
 window.closePayslip =
 function(){
@@ -1389,7 +1373,7 @@ payslipArea.style.display='none';
 
 }
 
-/* PRINT */
+/* PRINT PAYSLIP */
 
 window.printPayslip =
 function(){
