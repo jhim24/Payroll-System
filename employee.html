@@ -190,6 +190,19 @@ background:#2f2f2f;
 color:white;
 }
 
+/* FILTER */
+
+.filter-box{
+
+display:flex;
+
+gap:10px;
+
+margin-bottom:15px;
+
+flex-wrap:wrap;
+}
+
 /* TABLE */
 
 .table-box{
@@ -514,7 +527,8 @@ color:black;
 }
 
 .top-bar,
-.modal{
+.modal,
+.filter-box{
 
 display:none !important;
 }
@@ -588,6 +602,36 @@ onclick="window.print()">
 <h3 id="total">
 Total : 0
 </h3>
+
+<!-- FILTER -->
+
+<div class="filter-box">
+
+<button
+class="print-btn"
+onclick="filterStatus('ALL')">
+
+ALL
+
+</button>
+
+<button
+class="save-btn"
+onclick="filterStatus('Active')">
+
+ACTIVE
+
+</button>
+
+<button
+class="btn"
+onclick="filterStatus('INACTIVE')">
+
+INACTIVE
+
+</button>
+
+</div>
 
 <!-- TABLE -->
 
@@ -917,6 +961,8 @@ let employees = [];
 
 let editId = null;
 
+let currentStatusFilter = 'ALL';
+
 window.openModal = function(){
 
 employeeModal.style.display='flex';
@@ -1086,6 +1132,16 @@ table.innerHTML='';
 
 employees.forEach((emp)=>{
 
+if(currentStatusFilter==='Active'){
+
+if(emp.status !== 'Active') return;
+}
+
+if(currentStatusFilter==='INACTIVE'){
+
+if(emp.status === 'Active') return;
+}
+
 let statusClass =
 emp.status==='Active'
 ? 'status-active'
@@ -1178,6 +1234,13 @@ Delete
 });
 
 updateTotal();
+}
+
+window.filterStatus = function(status){
+
+currentStatusFilter = status;
+
+renderTable();
 }
 
 window.editEmployee = function(id){
@@ -1290,7 +1353,7 @@ function updateTotal(){
 
 let rows =
 document.querySelectorAll(
-'#empTable tbody tr'
+'#empTable tbody tr:not([style*="display: none"])'
 );
 
 total.innerText =
