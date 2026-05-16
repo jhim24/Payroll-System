@@ -8,6 +8,8 @@
 
 <link rel="apple-touch-icon" href="icon-192.png">
 
+<meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
@@ -23,42 +25,30 @@ font-family:Tahoma,sans-serif;
 }
 
 body{
-
 background:
 linear-gradient(
 135deg,
 #1f1f1f,
 #2b2b2b
 );
-
 padding:15px;
-
 color:white;
 }
 
 /* TOP */
 
 .top-bar{
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
 flex-wrap:wrap;
-
 gap:10px;
-
 margin-bottom:15px;
 }
 
 h2{
-
 font-size:30px;
-
 color:#ffcc00;
-
 text-shadow:2px 2px 5px black;
 }
 
@@ -72,39 +62,28 @@ text-shadow:2px 2px 5px black;
 .print-btn{
 
 padding:10px 18px;
-
 border:none;
-
 border-radius:10px;
-
 cursor:pointer;
-
 font-weight:bold;
-
 font-size:13px;
-
 transition:0.3s;
-
 box-shadow:
 0 4px 10px rgba(0,0,0,0.4);
-
 color:white;
 }
 
 .add-btn{
-
 background:
 linear-gradient(
 135deg,
 #ffcc00,
 #ff9900
 );
-
 color:black;
 }
 
 .save-btn{
-
 background:
 linear-gradient(
 135deg,
@@ -114,7 +93,6 @@ linear-gradient(
 }
 
 .print-btn{
-
 background:
 linear-gradient(
 135deg,
@@ -124,7 +102,6 @@ linear-gradient(
 }
 
 .btn{
-
 background:
 linear-gradient(
 135deg,
@@ -134,7 +111,6 @@ linear-gradient(
 }
 
 .close-btn{
-
 background:
 linear-gradient(
 135deg,
@@ -143,13 +119,11 @@ linear-gradient(
 );
 
 position:absolute;
-
 top:10px;
 right:10px;
 }
 
 .back-btn{
-
 background:
 linear-gradient(
 135deg,
@@ -167,8 +141,7 @@ color:black;
 .back-btn:hover,
 .print-btn:hover{
 
-transform:
-translateY(-2px);
+transform:translateY(-2px);
 
 filter:brightness(1.1);
 }
@@ -178,28 +151,19 @@ filter:brightness(1.1);
 .search-box input{
 
 width:250px;
-
 padding:10px;
-
 border:2px solid #ffcc00;
-
 border-radius:8px;
-
 background:#2f2f2f;
-
 color:white;
 }
 
 /* FILTER */
 
 .filter-box{
-
 display:flex;
-
 gap:10px;
-
 margin-bottom:15px;
-
 flex-wrap:wrap;
 }
 
@@ -208,13 +172,9 @@ flex-wrap:wrap;
 .table-box{
 
 background:#2b2b2b;
-
 border:2px solid #ffcc00;
-
 overflow:auto;
-
 height:70vh;
-
 border-radius:12px;
 
 box-shadow:
@@ -224,11 +184,8 @@ box-shadow:
 table{
 
 width:100%;
-
 border-collapse:collapse;
-
 min-width:4500px;
-
 font-size:12px;
 }
 
@@ -236,34 +193,25 @@ th,
 td{
 
 border:1px solid #555;
-
 padding:8px;
-
 text-align:left;
-
 white-space:nowrap;
 }
 
 th{
 
 background:#ffcc00;
-
 color:black;
-
 position:sticky;
-
 top:0;
-
 z-index:2;
 }
 
 tr:nth-child(even){
-
 background:#242424;
 }
 
 tr:hover{
-
 background:#3a3a3a;
 }
 
@@ -272,15 +220,11 @@ background:#3a3a3a;
 .modal{
 
 display:none;
-
 position:fixed;
-
 inset:0;
-
 background:rgba(0,0,0,0.6);
 
 justify-content:center;
-
 align-items:center;
 
 z-index:999;
@@ -296,17 +240,13 @@ linear-gradient(
 );
 
 width:95%;
-
 max-width:1200px;
-
 height:95vh;
-
 overflow:auto;
 
 padding:20px;
 
 border:2px solid #ffcc00;
-
 border-radius:18px;
 
 position:relative;
@@ -315,14 +255,10 @@ box-shadow:
 0 10px 30px rgba(0,0,0,0.7);
 }
 
-/* TITLE */
-
 .modal-box h3{
 
 font-size:28px;
-
 color:#ffcc00;
-
 margin-bottom:15px;
 
 text-shadow:
@@ -334,9 +270,7 @@ text-shadow:
 .classic-tabs{
 
 display:flex;
-
 flex-wrap:wrap;
-
 gap:8px;
 
 padding:10px;
@@ -365,7 +299,6 @@ linear-gradient(
 padding:12px 18px;
 
 border:none;
-
 border-radius:10px;
 
 cursor:pointer;
@@ -398,12 +331,10 @@ background:#d9d9d9;
 border-radius:14px;
 
 border-top:5px solid #ffcc00;
-
 border-left:5px solid #ff4444;
 }
 
 .tab-content.active{
-
 display:block;
 }
 
@@ -440,7 +371,6 @@ font-size:13px;
 }
 
 input::placeholder{
-
 color:#555;
 }
 
@@ -457,9 +387,7 @@ border-color:#ffcc00;
 #total{
 
 color:#ff4444;
-
 font-size:20px;
-
 margin-bottom:10px;
 }
 
@@ -490,24 +418,19 @@ font-weight:bold;
 @media(max-width:768px){
 
 .top-bar{
-
 flex-direction:column;
-
 align-items:flex-start;
 }
 
 .search-box input{
-
 width:100%;
 }
 
 .form-grid{
-
 grid-template-columns:1fr;
 }
 
 table{
-
 min-width:2500px;
 }
 
@@ -518,27 +441,20 @@ min-width:2500px;
 @media print{
 
 body{
-
 background:white;
-
 padding:0;
-
 color:black;
 }
 
 .top-bar,
 .modal,
 .filter-box{
-
 display:none !important;
 }
 
 .table-box{
-
 overflow:visible;
-
 height:auto;
-
 border:none;
 }
 
@@ -595,14 +511,14 @@ onclick="window.print()">
 
 </button>
 
- <button
+<button
 class="btn"
 onclick="window.location.href='inactive-employees.html'">
 
 INACTIVE EMPLOYEES
 
 </button>
-  
+
 </div>
 
 </div>
@@ -610,8 +526,6 @@ INACTIVE EMPLOYEES
 <h3 id="total">
 Total : 0
 </h3>
-
-<!-- FILTER -->
 
 <div class="filter-box">
 
@@ -640,8 +554,6 @@ INACTIVE
 </button>
 
 </div>
-
-<!-- TABLE -->
 
 <div class="table-box">
 
@@ -971,17 +883,25 @@ let editId = null;
 
 let currentStatusFilter = 'ALL';
 
+/* OPEN MODAL */
+
 window.openModal = function(){
 
 employeeModal.style.display='flex';
+
 }
+
+/* CLOSE MODAL */
 
 window.closeModal = function(){
 
 employeeModal.style.display='none';
 
 clearForm();
+
 }
+
+/* OPEN TAB */
 
 window.openTab = function(evt,tabId){
 
@@ -990,6 +910,7 @@ document
 .forEach(tab=>{
 
 tab.classList.remove('active');
+
 });
 
 document
@@ -1001,11 +922,15 @@ document
 .forEach(btn=>{
 
 btn.classList.remove('active');
+
 });
 
 evt.currentTarget
 .classList.add('active');
+
 }
+
+/* CALCULATE AGE */
 
 window.calcAge = function(){
 
@@ -1020,7 +945,10 @@ today.getFullYear() -
 birth.getFullYear();
 
 age.value = years;
+
 }
+
+/* SAVE EMPLOYEE */
 
 window.saveEmployee =
 async function(){
@@ -1033,6 +961,7 @@ let data = [];
 fields.forEach(field=>{
 
 data.push(field.value);
+
 });
 
 let employeeData = {
@@ -1091,6 +1020,7 @@ employeeData
 );
 
 alert('Employee Saved');
+
 }
 
 closeModal();
@@ -1102,9 +1032,12 @@ loadEmployees();
 console.log(error);
 
 alert('Save Error');
+
 }
 
 }
+
+/* LOAD EMPLOYEES */
 
 async function loadEmployees(){
 
@@ -1125,11 +1058,16 @@ employees.push({
 id:docSnap.id,
 
 ...docSnap.data()
+
 });
+
 });
 
 renderTable();
+
 }
+
+/* RENDER TABLE */
 
 function renderTable(){
 
@@ -1143,11 +1081,13 @@ employees.forEach((emp)=>{
 if(currentStatusFilter==='Active'){
 
 if(emp.status !== 'Active') return;
+
 }
 
 if(currentStatusFilter==='INACTIVE'){
 
 if(emp.status === 'Active') return;
+
 }
 
 let statusClass =
@@ -1239,21 +1179,138 @@ Delete
 </tr>
 
 `;
+
 });
 
 updateTotal();
+
 }
+
+/* FILTER */
 
 window.filterStatus = function(status){
 
 currentStatusFilter = status;
 
 renderTable();
+
 }
 
- window.viewQR =
+/* VIEW QR */
+
+window.viewQR =
 function(employeeid,name){
- 
+
+let qrWindow =
+window.open(
+'',
+'_blank',
+'width=400,height=500'
+);
+
+qrWindow.document.write(`
+
+<html>
+
+<head>
+
+<title>Employee QR</title>
+
+<style>
+
+body{
+font-family:Tahoma,sans-serif;
+text-align:center;
+padding:20px;
+background:white;
+}
+
+h2{
+color:#cc0000;
+}
+
+#qrcode{
+margin-top:20px;
+}
+
+button{
+margin-top:20px;
+padding:10px 20px;
+border:none;
+background:#ffcc00;
+font-weight:bold;
+cursor:pointer;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>PAPPRITO</h2>
+
+<h3>Employee QR Code</h3>
+
+<p><b>ID:</b> ${employeeid}</p>
+
+<p><b>Name:</b> ${name}</p>
+
+<div id="qrcode"></div>
+
+<br>
+
+<button onclick="window.print()">
+PRINT QR
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"><\/script>
+
+<script>
+
+QRCode.toCanvas(
+
+document.createElement('canvas'),
+
+JSON.stringify({
+
+employeeid:'${employeeid}',
+
+name:'${name}'
+
+}),
+
+{
+width:220
+},
+
+function(error,canvas){
+
+if(!error){
+
+document
+.getElementById('qrcode')
+.appendChild(canvas);
+
+}
+
+}
+
+);
+
+<\/script>
+
+</body>
+
+</html>
+
+`);
+
+}
+
+/* EDIT EMPLOYEE */
+
 window.editEmployee = function(id){
 
 let emp =
@@ -1303,8 +1360,12 @@ document
 .forEach((field,i)=>{
 
 field.value = values[i] || '';
+
 });
+
 }
+
+/* DELETE */
 
 window.deleteEmployee =
 async function(id){
@@ -1316,8 +1377,12 @@ doc(db,'employees',id)
 );
 
 loadEmployees();
+
 }
+
 }
+
+/* SEARCH */
 
 window.searchEmp = function(){
 
@@ -1342,11 +1407,15 @@ row.style.display =
 show ? '' : 'none';
 
 if(show) visible++;
+
 });
 
 total.innerText =
 'Showing : ' + visible;
+
 }
+
+/* CLEAR */
 
 function clearForm(){
 
@@ -1357,8 +1426,12 @@ document
 .forEach(el=>{
 
 el.value='';
+
 });
+
 }
+
+/* TOTAL */
 
 function updateTotal(){
 
@@ -1369,7 +1442,10 @@ document.querySelectorAll(
 
 total.innerText =
 'Total : ' + rows.length;
+
 }
+
+/* START */
 
 loadEmployees();
 
