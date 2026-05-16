@@ -8,52 +8,57 @@
 
 <link rel="apple-touch-icon" href="icon-192.png">
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Employee Masterlist</title>
 
 <style>
 
 *{
+margin:0;
+padding:0;
 box-sizing:border-box;
 font-family:Tahoma,sans-serif;
 }
 
 body{
 
-margin:0;
-
-padding:15px;
-
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #1f1f1f,
 #2b2b2b
 );
 
-color:white;
+padding:15px;
 
+color:white;
 }
 
 /* TOP */
 
 .top-bar{
+
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
 flex-wrap:wrap;
+
 gap:10px;
+
 margin-bottom:15px;
 }
 
 h2{
-
-margin:0;
 
 font-size:30px;
 
 color:#ffcc00;
 
 text-shadow:2px 2px 5px black;
-
 }
 
 /* BUTTONS */
@@ -79,17 +84,16 @@ font-size:13px;
 
 transition:0.3s;
 
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
+box-shadow:
+0 4px 10px rgba(0,0,0,0.4);
 
 color:white;
-
 }
-
-/* ADD BUTTON */
 
 .add-btn{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ffcc00,
 #ff9900
@@ -98,44 +102,40 @@ background:linear-gradient(
 color:black;
 }
 
-/* SAVE BUTTON */
-
 .save-btn{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #00cc66,
 #00994d
 );
 }
 
-/* PRINT */
-
 .print-btn{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #0099ff,
 #0066cc
 );
 }
 
-/* EDIT DELETE BUTTON */
-
 .btn{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ff4444,
 #cc0000
 );
 }
 
-/* CLOSE BUTTON */
-
 .close-btn{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ff0000,
 #990000
@@ -147,11 +147,10 @@ top:10px;
 right:10px;
 }
 
-/* BACK BUTTON */
-
 .back-btn{
 
-background:linear-gradient(
+background:
+linear-gradient(
 135deg,
 #ffcc00,
 #ff6600
@@ -160,8 +159,6 @@ background:linear-gradient(
 color:black;
 }
 
-/* HOVER */
-
 .add-btn:hover,
 .save-btn:hover,
 .btn:hover,
@@ -169,19 +166,19 @@ color:black;
 .back-btn:hover,
 .print-btn:hover{
 
-transform:translateY(-2px) scale(1.03);
+transform:
+translateY(-2px);
 
 filter:brightness(1.1);
-
 }
 
 /* SEARCH */
 
 .search-box input{
 
-padding:10px;
-
 width:250px;
+
+padding:10px;
 
 border:2px solid #ffcc00;
 
@@ -190,7 +187,6 @@ border-radius:8px;
 background:#2f2f2f;
 
 color:white;
-
 }
 
 /* TABLE */
@@ -207,29 +203,8 @@ height:70vh;
 
 border-radius:12px;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
-
-}
-
-.table-box::-webkit-scrollbar{
-
-height:12px;
-width:12px;
-
-}
-
-.table-box::-webkit-scrollbar-thumb{
-
-background:#ffcc00;
-
-border-radius:10px;
-
-}
-
-.table-box::-webkit-scrollbar-track{
-
-background:#333;
-
+box-shadow:
+0 5px 15px rgba(0,0,0,0.5);
 }
 
 table{
@@ -238,7 +213,7 @@ width:100%;
 
 border-collapse:collapse;
 
-min-width:4500px;
+min-width:4200px;
 
 font-size:12px;
 }
@@ -253,7 +228,6 @@ padding:8px;
 text-align:left;
 
 white-space:nowrap;
-
 }
 
 th{
@@ -267,21 +241,16 @@ position:sticky;
 top:0;
 
 z-index:2;
-
 }
 
 tr:nth-child(even){
 
 background:#242424;
-
 }
 
 tr:hover{
 
 background:#3a3a3a;
-
-transition:0.2s;
-
 }
 
 /* MODAL */
@@ -294,7 +263,7 @@ position:fixed;
 
 inset:0;
 
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.6);
 
 justify-content:center;
 
@@ -324,14 +293,26 @@ padding:20px;
 
 border:2px solid #ffcc00;
 
-position:relative;
-
 border-radius:18px;
+
+position:relative;
 
 box-shadow:
 0 10px 30px rgba(0,0,0,0.7);
+}
 
-color:white;
+/* TITLE */
+
+.modal-box h3{
+
+font-size:28px;
+
+color:#ffcc00;
+
+margin-bottom:15px;
+
+text-shadow:
+2px 2px 5px black;
 }
 
 /* TABS */
@@ -344,6 +325,10 @@ flex-wrap:wrap;
 
 gap:8px;
 
+padding:10px;
+
+border-radius:12px;
+
 background:
 linear-gradient(
 135deg,
@@ -351,13 +336,7 @@ linear-gradient(
 #1f1f1f
 );
 
-padding:10px;
-
-border-radius:12px;
-
-margin-top:10px;
-
-border:1px solid #444;
+margin-bottom:15px;
 }
 
 .tab-btn{
@@ -371,23 +350,17 @@ linear-gradient(
 
 padding:12px 18px;
 
-cursor:pointer;
-
-font-size:13px;
-
-font-weight:bold;
-
 border:none;
-
-color:white;
 
 border-radius:10px;
 
+cursor:pointer;
+
+font-weight:bold;
+
+color:white;
+
 transition:0.3s;
-
-min-width:160px;
-
-text-align:center;
 }
 
 .tab-btn.active{
@@ -398,34 +371,17 @@ linear-gradient(
 #ffcc00,
 #ff4444
 );
-
-color:white;
-
-box-shadow:
-0 4px 12px rgba(255,80,80,0.4);
 }
-
-.tab-btn:hover{
-
-background:#ff9900;
-
-color:black;
-
-}
-
-/* CONTENT */
 
 .tab-content{
 
 display:none;
 
-padding:25px;
+padding:20px;
 
 background:#d9d9d9;
 
 border-radius:14px;
-
-margin-top:12px;
 
 border-top:5px solid #ffcc00;
 
@@ -436,6 +392,7 @@ border-left:5px solid #ff4444;
 
 display:block;
 }
+
 /* GRID */
 
 .form-grid{
@@ -443,9 +400,9 @@ display:block;
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(200px,1fr));
+repeat(auto-fit,minmax(220px,1fr));
 
-gap:10px;
+gap:12px;
 }
 
 /* INPUT */
@@ -455,7 +412,7 @@ select{
 
 width:100%;
 
-padding:10px;
+padding:11px;
 
 border:2px solid #555;
 
@@ -465,6 +422,12 @@ background:#f1f1f1;
 
 color:black;
 
+font-size:13px;
+}
+
+input::placeholder{
+
+color:#555;
 }
 
 input:focus,
@@ -473,32 +436,47 @@ select:focus{
 outline:none;
 
 border-color:#ffcc00;
-
-}
-.modal-box h3{
-
-color:#ffcc00;
-
-font-size:28px;
-
-margin-bottom:15px;
-
-text-shadow:2px 2px 5px black;
 }
 
-input::placeholder{
+/* TOTAL */
 
-color:#555;
+#total{
+
+color:#ff4444;
+
+font-size:20px;
+
+margin-bottom:10px;
 }
-  /* MOBILE */
+
+/* MOBILE */
 
 @media(max-width:768px){
+
+.top-bar{
+
+flex-direction:column;
+
+align-items:flex-start;
+}
+
+.search-box input{
+
+width:100%;
+}
 
 .form-grid{
 
 grid-template-columns:1fr;
 }
+
+table{
+
+min-width:2500px;
 }
+
+}
+
 /* PRINT */
 
 @media print{
@@ -509,13 +487,13 @@ background:white;
 
 padding:0;
 
+color:black;
 }
 
 .top-bar,
 .modal{
 
 display:none !important;
-
 }
 
 .table-box{
@@ -525,7 +503,6 @@ overflow:visible;
 height:auto;
 
 border:none;
-
 }
 
 }
@@ -548,7 +525,12 @@ onclick="window.location.href='index.html'">
 
 <h2>Employee Masterlist</h2>
 
-<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<div
+style="
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+">
 
 <div class="search-box">
 
@@ -580,11 +562,7 @@ onclick="window.print()">
 
 </div>
 
-<h3 id="total"
-style="
-color:#ff4444;
-font-size:20px;
-">
+<h3 id="total">
 Total : 0
 </h3>
 
@@ -699,6 +677,8 @@ Employment Info
 
 </div>
 
+<!-- PERSONAL -->
+
 <div
 id="personal"
 class="tab-content active">
@@ -706,7 +686,9 @@ class="tab-content active">
 <div class="form-grid">
 
 <input class="emp-field" placeholder="First Name">
+
 <input class="emp-field" placeholder="Middle Name">
+
 <input class="emp-field" placeholder="Last Name">
 
 <input
@@ -733,6 +715,8 @@ readonly>
 
 </div>
 
+<!-- GOVERNMENT -->
+
 <div
 id="government"
 class="tab-content">
@@ -740,38 +724,12 @@ class="tab-content">
 <div class="form-grid">
 
 <input class="emp-field" placeholder="SSS Number">
+
 <input class="emp-field" placeholder="PhilHealth Number">
+
 <input class="emp-field" placeholder="Pag-IBIG Number">
+
 <input class="emp-field" placeholder="Health Card Number">
-
-<select class="emp-field">
-
-<option>Select Bank</option>
-
-<option>BDO Unibank</option>
-<option>Bank of the Philippine Islands (BPI)</option>
-<option>Metrobank</option>
-<option>Land Bank of the Philippines</option>
-<option>Philippine National Bank (PNB)</option>
-<option>Security Bank</option>
-<option>China Bank</option>
-<option>RCBC</option>
-<option>UnionBank</option>
-<option>EastWest Bank</option>
-<option>AUB</option>
-<option>PSBank</option>
-<option>Maybank Philippines</option>
-<option>CIMB Bank</option>
-<option>Tonik Bank</option>
-<option>GoTyme Bank</option>
-<option>GCash / GSave</option>
-<option>Maya Bank</option>
-<option>ING Philippines</option>
-<option>Robinsons Bank</option>
-
-</select>
-<input class="emp-field" placeholder="ID Number">
-<input class="emp-field" placeholder="Bank Account Number">
 
 <select class="emp-field">
 
@@ -833,9 +791,12 @@ placeholder="Bank Account Number">
 <input
 class="emp-field"
 placeholder="ID Number">
+
 </div>
 
 </div>
+
+<!-- CONTACT -->
 
 <div
 id="contact"
@@ -844,6 +805,7 @@ class="tab-content">
 <div class="form-grid">
 
 <input class="emp-field" placeholder="Mobile">
+
 <input class="emp-field" placeholder="Email">
 
 <input class="emp-field" placeholder="Current Address">
@@ -853,6 +815,8 @@ class="tab-content">
 </div>
 
 </div>
+
+<!-- EMPLOYMENT -->
 
 <div
 id="employment"
@@ -865,6 +829,16 @@ class="tab-content">
 <input class="emp-field" placeholder="Position">
 
 <input class="emp-field" placeholder="Department">
+
+<select class="emp-field">
+
+<option>Employment</option>
+
+<option>Regular</option>
+<option>Probationary</option>
+<option>Contractual</option>
+
+</select>
 
 <input class="emp-field" placeholder="Salary Rate">
 
@@ -908,17 +882,17 @@ from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
+apiKey:"AIzaSyAehoq0teVYHiJ4bkKOgBqIgJZrQpce3k8",
 
-authDomain: "hr-system-38fc3.firebaseapp.com",
+authDomain:"hr-system-38fc3.firebaseapp.com",
 
-projectId: "hr-system-38fc3",
+projectId:"hr-system-38fc3",
 
-storageBucket: "hr-system-38fc3.firebasestorage.app",
+storageBucket:"hr-system-38fc3.firebasestorage.app",
 
-messagingSenderId: "615471610834",
+messagingSenderId:"615471610834",
 
-appId: "1:615471610834:web:a0d671d4e3f4c1b57b660b"
+appId:"1:615471610834:web:a0d671d4e3f4c1b57b660b"
 
 };
 
@@ -932,10 +906,11 @@ let employees = [];
 
 let editId = null;
 
+/* MODAL */
+
 window.openModal = function(){
 
 employeeModal.style.display='flex';
-
 }
 
 window.closeModal = function(){
@@ -943,8 +918,9 @@ window.closeModal = function(){
 employeeModal.style.display='none';
 
 clearForm();
-
 }
+
+/* TABS */
 
 window.openTab = function(evt,tabId){
 
@@ -953,7 +929,6 @@ document
 .forEach(tab=>{
 
 tab.classList.remove('active');
-
 });
 
 document
@@ -965,13 +940,13 @@ document
 .forEach(btn=>{
 
 btn.classList.remove('active');
-
 });
 
 evt.currentTarget
 .classList.add('active');
-
 }
+
+/* AGE */
 
 window.calcAge = function(){
 
@@ -986,23 +961,21 @@ today.getFullYear() -
 birth.getFullYear();
 
 age.value = years;
-
 }
+
+/* SAVE */
 
 window.saveEmployee =
 async function(){
 
 let fields =
-document.querySelectorAll(
-'.emp-field'
-);
+document.querySelectorAll('.emp-field');
 
 let data = [];
 
 fields.forEach(field=>{
 
 data.push(field.value);
-
 });
 
 let employeeData = {
@@ -1046,11 +1019,8 @@ try{
 if(editId){
 
 await updateDoc(
-
 doc(db,'employees',editId),
-
 employeeData
-
 );
 
 alert('Employee Updated');
@@ -1058,15 +1028,11 @@ alert('Employee Updated');
 }else{
 
 await addDoc(
-
 collection(db,'employees'),
-
 employeeData
-
 );
 
 alert('Employee Saved');
-
 }
 
 closeModal();
@@ -1078,10 +1044,11 @@ loadEmployees();
 console.log(error);
 
 alert('Save Error');
-
 }
 
 }
+
+/* LOAD */
 
 async function loadEmployees(){
 
@@ -1106,14 +1073,13 @@ employees.push({
 id:docSnap.id,
 
 ...docSnap.data()
-
 });
-
 });
 
 renderTable();
-
 }
+
+/* RENDER */
 
 function renderTable(){
 
@@ -1136,7 +1102,7 @@ table.innerHTML += `
 class="print-btn"
 onclick="viewQR(
 '${emp.employeeid}',
-'${emp.firstname || ''} ${emp.lastname || ''}'
+'${emp.firstname} ${emp.lastname}'
 )">
 
 VIEW QR
@@ -1174,14 +1140,14 @@ VIEW QR
 <td>${emp.employment || ''}</td>
 <td>${emp.salary || ''}</td>
 
-<td>${emp.vacationleave || 0}</td>
-<td>${emp.sickleave || 0}</td>
-<td>${emp.birthdayleave || 0}</td>
+<td>${emp.vacationleave}</td>
+<td>${emp.sickleave}</td>
+<td>${emp.birthdayleave}</td>
 
 <td>
 
 <button
-class='btn'
+class="btn"
 onclick="editEmployee('${emp.id}')">
 
 Edit
@@ -1189,7 +1155,7 @@ Edit
 </button>
 
 <button
-class='btn'
+class="btn"
 onclick="deleteEmployee('${emp.id}')">
 
 Delete
@@ -1201,146 +1167,17 @@ Delete
 </tr>
 
 `;
-
 });
 
 updateTotal();
-
 }
 
-/* VIEW QR */
-
-window.viewQR =
-function(employeeid,name){
-
-let qrWindow =
-window.open(
-'',
-'_blank',
-'width=400,height=500'
-);
-
-qrWindow.document.write(`
-
-<html>
-
-<head>
-
-<title>Employee QR</title>
-
-<style>
-
-body{
-
-font-family:Tahoma,sans-serif;
-
-text-align:center;
-
-padding:20px;
-
-background:white;
-
-}
-
-h2{
-
-color:#cc0000;
-
-}
-
-#qrcode{
-
-margin-top:20px;
-
-}
-
-button{
-
-margin-top:20px;
-
-padding:10px 20px;
-
-border:none;
-
-background:#ffcc00;
-
-font-weight:bold;
-
-cursor:pointer;
-
-border-radius:8px;
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<h2>PAPPRITO</h2>
-
-<h3>Employee QR Code</h3>
-
-<p><b>ID:</b> ${employeeid}</p>
-
-<p><b>Name:</b> ${name}</p>
-
-<div id="qrcode"></div>
-
-<br>
-
-<button onclick="window.print()">
-PRINT QR
-</button>
-
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"><\/script>
-
-<script>
-
-QRCode.toCanvas(
-
-document.createElement('canvas'),
-
-JSON.stringify({
-
-employeeid:'${employeeid}',
-
-name:'${name}'
-
-}),
-
-{
-width:220
-},
-
-function(error,canvas){
-
-if(!error){
-
-document
-.getElementById('qrcode')
-.appendChild(canvas);
-
-}
-
-}
-
-);
-
-<\/script>
-
-</body>
-
-</html>
-
-`);
-
-}
+/* EDIT */
 
 window.editEmployee = function(id){
 
-let emp = employees.find(e=>e.id===id);
+let emp =
+employees.find(e=>e.id===id);
 
 if(!emp) return;
 
@@ -1380,14 +1217,15 @@ emp.salary
 
 ];
 
-document.querySelectorAll('.emp-field')
+document
+.querySelectorAll('.emp-field')
 .forEach((field,i)=>{
 
 field.value = values[i] || '';
-
 });
-
 }
+
+/* DELETE */
 
 window.deleteEmployee =
 async function(id){
@@ -1399,10 +1237,10 @@ doc(db,'employees',id)
 );
 
 loadEmployees();
-
+}
 }
 
-}
+/* SEARCH */
 
 window.searchEmp = function(){
 
@@ -1427,13 +1265,13 @@ row.style.display =
 show ? '' : 'none';
 
 if(show) visible++;
-
 });
 
 total.innerText =
 'Showing : ' + visible;
-
 }
+
+/* CLEAR */
 
 function clearForm(){
 
@@ -1444,10 +1282,10 @@ document
 .forEach(el=>{
 
 el.value='';
-
 });
-
 }
+
+/* TOTAL */
 
 function updateTotal(){
 
@@ -1458,7 +1296,6 @@ document.querySelectorAll(
 
 total.innerText =
 'Total : ' + rows.length;
-
 }
 
 loadEmployees();
