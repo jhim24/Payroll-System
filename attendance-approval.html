@@ -543,13 +543,10 @@ attendanceSnap.docs[0];
 /* MISSING TIME IN */
 
 if(
-req.type ===
-'Missing Time In'
-){
-if(
 req.requesttype ===
 'Missing Time In'
-)
+){
+
 await updateDoc(
 doc(
 db,
@@ -568,7 +565,7 @@ timein:req.time
 if(
 req.requesttype ===
 'Missing Time Out'
-)
+){
 
 await updateDoc(
 doc(
@@ -588,7 +585,7 @@ timeout:req.time
 if(
 req.requesttype ===
 'Late Correction'
-)
+){
 
 await updateDoc(
 doc(
@@ -604,7 +601,6 @@ timein:req.time
 }
 
 }else{
-
 /* CREATE NEW ATTENDANCE */
 
 let newAttendance = {
