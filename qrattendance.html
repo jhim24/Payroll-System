@@ -291,6 +291,80 @@ throw new Error(
 let currentScan =
 data.employeeid;
 
+/* CHECK EMPLOYEE */
+
+const employeeQuery = query(
+
+collection(db,'employees'),
+
+where(
+'employeeid',
+'==',
+data.employeeid
+)
+
+);
+
+const employeeSnap =
+await getDocs(employeeQuery);
+
+/* EMPLOYEE NOT FOUND */
+
+if(employeeSnap.empty){
+
+employeeInfo.innerHTML = `
+
+<div class="error">
+
+EMPLOYEE NOT FOUND
+
+</div>
+
+`;
+
+scanLock = false;
+
+return;
+
+}
+
+let empData =
+employeeSnap.docs[0].data();
+
+/* BLOCK INACTIVE */
+
+if(empData.status !== 'Active'){
+
+employeeInfo.innerHTML = `
+
+<div style="
+background:red;
+padding:20px;
+border-radius:10px;
+font-weight:bold;
+color:white;
+text-align:center;
+">
+
+EMPLOYEE INACTIVE
+
+<br><br>
+
+STATUS:
+${empData.status}
+
+</div>
+
+`;
+
+navigator.vibrate(400);
+
+scanLock = false;
+
+return;
+
+}
+  
 /* BLOCK DUPLICATE */
 
 if(lastScan === currentScan){
