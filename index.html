@@ -113,9 +113,9 @@ font-size:20px;
 
 .sidebar button:hover{
 
-background:#ffcc00;
+background:#4a4a4a;
 
-color:black;
+color:#ffcc00;
 
 }
 
@@ -160,6 +160,10 @@ padding:20px;
 overflow:auto;
 
 background:#252525;
+
+contain:layout paint;
+
+backface-visibility:hidden;
 }
 
 .main h1{
@@ -493,7 +497,11 @@ width:100%;
 }
 
 }
+#clock,
+#dateToday{
 
+will-change:contents;
+}
 </style>
 
 </head>
@@ -831,7 +839,11 @@ now.toDateString();
 
 }
 
-setInterval(updateClock,1000);
+setInterval(()=>{
+
+requestAnimationFrame(updateClock);
+
+},1000);
 
 updateClock();
 
