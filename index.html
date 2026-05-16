@@ -232,7 +232,15 @@ border-radius:10px;
 
 color:white;
 
-box-shadow:0 5px 10px rgba(0,0,0,0.4);
+background-clip:padding-box;
+
+will-change:transform;
+
+transform:translateZ(0);
+
+backface-visibility:hidden;
+
+box-shadow:0 3px 8px rgba(0,0,0,0.25);
 
 position:relative;
 
@@ -313,10 +321,9 @@ transition:0.3s;
 
 .card:hover{
 
-transform:translateY(-5px);
+transform:translateY(-2px);
 
-box-shadow:0 8px 15px rgba(0,0,0,0.6);
-}
+box-shadow:0 4px 8px rgba(0,0,0,0.35);
 
 .card h3{
 
@@ -379,7 +386,17 @@ font-size:15px;
 }
 
 }
+.stats,
+.cards,
+.stat-card,
+.card{
 
+transform:translateZ(0);
+
+backface-visibility:hidden;
+
+will-change:transform;
+}
 </style>
 
 </head>
