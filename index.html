@@ -350,10 +350,15 @@ MOBILE
 @media(max-width:768px){
 
 body{
+
 flex-direction:column;
+
 height:auto;
+
 overflow:auto;
 }
+
+/* SIDEBAR */
 
 .sidebar{
 
@@ -362,17 +367,67 @@ width:100%;
 border-right:none;
 
 border-bottom:3px solid #ffcc00;
+
+padding:10px;
+
+flex-direction:row;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+gap:8px;
 }
 
-.cards,
-.stats{
+.sidebar h2{
 
-grid-template-columns:1fr;
+width:100%;
+
+font-size:22px;
+
+margin-bottom:10px;
+
+text-align:center;
+}
+
+.sidebar button{
+
+width:48%;
+
+font-size:12px;
+
+padding:12px;
+
+justify-content:center;
+
+text-align:center;
+
+border-left:none;
+
+border-bottom:4px solid #ffcc00;
+}
+
+/* MAIN */
+
+.main{
+
+padding:12px;
 }
 
 .main h1{
 
 font-size:28px;
+
+text-align:center;
+}
+
+/* CLOCK */
+
+.top-time{
+
+justify-content:center;
+
+text-align:center;
 }
 
 #clock{
@@ -383,6 +438,63 @@ font-size:24px;
 #dateToday{
 
 font-size:15px;
+}
+
+/* STATS */
+
+.stats{
+
+grid-template-columns:1fr;
+
+gap:12px;
+}
+
+.stat-card{
+
+padding:18px;
+}
+
+.stat-card h2{
+
+font-size:38px;
+}
+
+.stat-card p{
+
+font-size:16px;
+}
+
+/* CARDS */
+
+.cards{
+
+grid-template-columns:1fr;
+
+gap:15px;
+}
+
+.card{
+
+padding:18px;
+}
+
+.card h3{
+
+font-size:20px;
+}
+
+.card p{
+
+font-size:13px;
+
+line-height:1.5;
+}
+
+/* LOGOUT */
+
+.logout-btn{
+
+width:100%;
 }
 
 }
