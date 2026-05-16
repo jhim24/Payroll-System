@@ -1168,8 +1168,8 @@ table.innerHTML += `
 <button
 class="print-btn"
 onclick="viewQR(
-'${emp.employeeid}',
-'${emp.firstname} ${emp.lastname}'
+'${emp.employeeid || ""}',
+'${emp.firstname || ""} ${emp.lastname || ""}'
 )">
 
 VIEW QR
@@ -1251,6 +1251,9 @@ currentStatusFilter = status;
 renderTable();
 }
 
+ window.viewQR =
+function(employeeid,name){
+ 
 window.editEmployee = function(id){
 
 let emp =
