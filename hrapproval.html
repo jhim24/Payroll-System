@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="manifest" href="manifest.json">
 
 <meta name="theme-color" content="#ffcc00">
 
 <link rel="apple-touch-icon" href="icon-192.png">
+
 <title>HR Approval Request</title>
 
 <meta name="viewport"
@@ -302,7 +304,9 @@ collection,
 getDocs,
 updateDoc,
 deleteDoc,
-doc
+doc,
+query,
+where
 
 }
 from
@@ -330,10 +334,7 @@ messagingSenderId:
 "615471610834",
 
 appId:
-"1:615471610834:web:a0d671d4e3f4c1b57b660b",
-
-measurementId:
-"G-TGBXWWZWE0"
+"1:615471610834:web:a0d671d4e3f4c1b57b660b"
 
 };
 
@@ -392,7 +393,7 @@ docSnap.id;
 
 let statusClass =
 
-(req.status || 'pending')
+(req.status || 'PENDING')
 .toLowerCase();
 
 requestBody.innerHTML += `
@@ -462,7 +463,7 @@ alert(
 }
 
 /* =========================
-APPROVE
+APPROVE REQUEST
 ========================= */
 
 window.approveRequest =
@@ -470,12 +471,125 @@ async function(id){
 
 try{
 
+/* GET REQUEST */
+
+const reqSnap =
+await getDocs(
+query(
+collection(db,'employeeRequests'),
+where('__name__','==',id)
+)
+);
+
+if(reqSnap.empty){
+
+alert('Request Not Found');
+
+return;
+
+}
+
+let reqDoc =
+reqSnap.docs[0];
+
+let leave =
+reqDoc.data();
+
+/* UPDATE STATUS */
+
 await updateDoc(
 doc(db,'employeeRequests',id),
 {
 status:'APPROVED'
 }
 );
+
+/* FIND EMPLOYEE */
+
+let empQuery =
+query(
+collection(db,'employees'),
+where(
+'employeeid',
+'==',
+leave.empid
+)
+);
+
+let empSnap =
+await getDocs(empQuery);
+
+if(!empSnap.empty){
+
+let empDoc =
+empSnap.docs[0];
+
+let empData =
+empDoc.data();
+
+let updates = {};
+
+let days =
+parseInt(
+leave.days || 1
+);
+
+/* VACATION */
+
+if(
+leave.type ===
+'Vacation Leave'
+){
+
+updates.vacationleave =
+Math.max(
+0,
+(empData.vacationleave || 0)
+- days
+);
+
+}
+
+/* SICK */
+
+if(
+leave.type ===
+'Sick Leave'
+){
+
+updates.sickleave =
+Math.max(
+0,
+(empData.sickleave || 0)
+- days
+);
+
+}
+
+/* BIRTHDAY */
+
+if(
+leave.type ===
+'Birthday Leave'
+){
+
+updates.birthdayleave =
+Math.max(
+0,
+(empData.birthdayleave || 0)
+- days
+);
+
+}
+
+/* UPDATE EMPLOYEE */
+
+await updateDoc(
+doc(db,'employees',empDoc.id),
+updates
+);
+
+}
 
 alert(
 'Request Approved'
@@ -496,7 +610,7 @@ alert(
 }
 
 /* =========================
-REJECT
+REJECT REQUEST
 ========================= */
 
 window.rejectRequest =
@@ -530,7 +644,7 @@ alert(
 }
 
 /* =========================
-DELETE
+DELETE REQUEST
 ========================= */
 
 window.deleteRequest =
