@@ -8,6 +8,10 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Employee Portal</title>
 
+  <link
+href="https://fonts.googleapis.com/icon?family=Material+Icons"
+rel="stylesheet">
+  
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
@@ -93,6 +97,28 @@ font-weight:bold;
 font-size:13px;
 
 transition:0.3s;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:8px;
+}
+
+.material-icons{
+
+font-size:20px;
+}
+
+.portal-title{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
 }
 
 .btn:hover{
@@ -529,17 +555,13 @@ border:2px solid #ffcc00;
 
 <div class="header">
 
-<div class="title">
-👨‍💼 EMPLOYEE PORTAL
-</div>
+<<div class="title portal-title">
 
-<button
-class="btn logout-btn"
-onclick="logout()">
+<span class="material-icons">
+badge
+</span>
 
-🚪 LOGOUT
-
-</button>
+EMPLOYEE PORTAL
 
 </div>
 
@@ -614,7 +636,11 @@ SUBMIT REQUEST
 class="btn view-btn"
 onclick="loadPayslip()">
 
-👁 VIEW PAYSLIP
+<span class="material-icons">
+print
+</span>
+
+PRINT PAYSLIP
 
 </button>
 
@@ -622,7 +648,11 @@ onclick="loadPayslip()">
 class="btn close-btn"
 onclick="closePayslip()">
 
-❌ CLOSE PAYSLIP
+<span class="material-icons">
+close
+</span>
+
+CLOSE PAYSLIP
 
 </button>
 
@@ -630,7 +660,11 @@ onclick="closePayslip()">
 class="btn print-btn"
 onclick="printPayslip()">
 
-🖨 PRINT PAYSLIP
+<span class="material-icons">
+print
+</span>
+
+PRINT PAYSLIP
 
 </button>
 
