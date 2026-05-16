@@ -714,7 +714,7 @@ PRINT PAYSLIP
 <th>EMPLOYEE</th>
 <th>REQUEST</th>
 <th>DATE</th>
-<th>DAYS</th>
+<th>DAYS / TIME</th>
 <th>REASON</th>
 <th>STATUS</th>
 <th>ACTION</th>
@@ -945,9 +945,18 @@ let editId = null;
 
 async function loadEmployee(){
 
+/* EMPLOYEE REQUESTS */
+
 let querySnapshot =
 await getDocs(
-collection(db,'employees')
+collection(db,'employeeRequests')
+);
+
+/* ATTENDANCE REQUESTS */
+
+let attendanceSnapshot =
+await getDocs(
+collection(db,'attendanceRequests')
 );
 
 querySnapshot.forEach(docSnap=>{
@@ -1323,7 +1332,49 @@ collection(db,'payroll')
 let found = false;
 
 querySnapshot.forEach(docSnap=>{
+/* LOAD ATTENDANCE REQUESTS */
 
+attendanceSnapshot.forEach(docSnap=>{
+
+let req = docSnap.data();
+
+if(
+req.employeeid === currentEmployee.id
+){
+
+let statusClass =
+(req.status || '')
+.toLowerCase();
+
+requestBody.innerHTML += `
+
+<tr>
+
+<td>${req.employeeid}</td>
+
+<td>${req.employee}</td>
+
+<td>${req.requesttype}</td>
+
+<td>${req.date}</td>
+
+<td>${req.time}</td>
+
+<td>${req.reason}</td>
+
+<td class="${statusClass}">
+${req.status}
+</td>
+
+<td>ATTENDANCE</td>
+
+</tr>
+
+`;
+
+}
+
+});
 let pay = docSnap.data();
 
 if(
