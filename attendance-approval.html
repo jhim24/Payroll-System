@@ -410,11 +410,11 @@ requestBody.innerHTML += `
 
 <tr>
 
-<td>${req.employeeid || '-'}</td>
+<td>${req.empid || '-'}</td>
 
 <td>${req.employee || '-'}</td>
 
-<td>${req.requesttype || '-'}</td>
+<td>${req.type || '-'}</td>
 
 <td>${req.date || '-'}</td>
 
@@ -481,13 +481,14 @@ async function(id){
 
 try{
 
-const reqSnap =
-await getDocs(
+const reqQuery =
 query(
 collection(db,'attendanceRequests'),
 where('__name__','==',id)
-)
 );
+
+const reqSnap =
+await getDocs(reqQuery);
 
 if(reqSnap.empty){
 
@@ -503,7 +504,7 @@ reqSnap.docs[0];
 let req =
 reqDoc.data();
 
-/* UPDATE STATUS */
+/* UPDATE REQUEST STATUS */
 
 await updateDoc(
 doc(db,'attendanceRequests',id),
@@ -512,7 +513,7 @@ status:'APPROVED'
 }
 );
 
-/* FIND ATTENDANCE */
+/* CHECK EXISTING ATTENDANCE */
 
 const attendanceQuery =
 query(
@@ -520,7 +521,7 @@ collection(db,'attendance'),
 where(
 'employeeid',
 '==',
-req.employeeid
+req.empid
 ),
 where(
 'date',
@@ -532,7 +533,7 @@ req.date
 const attendanceSnap =
 await getDocs(attendanceQuery);
 
-/* IF ATTENDANCE EXIST */
+/* EXISTING ATTENDANCE */
 
 if(!attendanceSnap.empty){
 
@@ -542,7 +543,7 @@ attendanceSnap.docs[0];
 /* MISSING TIME IN */
 
 if(
-req.requesttype ===
+req.type ===
 'Missing Time In'
 ){
 
@@ -562,7 +563,7 @@ timein:req.time
 /* MISSING TIME OUT */
 
 if(
-req.requesttype ===
+req.type ===
 'Missing Time Out'
 ){
 
@@ -582,7 +583,7 @@ timeout:req.time
 /* LATE CORRECTION */
 
 if(
-req.requesttype ===
+req.type ===
 'Late Correction'
 ){
 
@@ -601,24 +602,24 @@ timein:req.time
 
 }else{
 
-/* CREATE NEW RECORD */
+/* CREATE NEW ATTENDANCE */
 
-let newData = {
+let newAttendance = {
 
-employeeid:req.employeeid,
+employeeid:req.empid,
 
 employee:req.employee,
 
 date:req.date,
 
 timein:
-req.requesttype ===
+req.type ===
 'Missing Time In'
 ? req.time
 : '',
 
 timeout:
-req.requesttype ===
+req.type ===
 'Missing Time Out'
 ? req.time
 : '',
@@ -629,7 +630,7 @@ timestamp:Date.now()
 
 await addDoc(
 collection(db,'attendance'),
-newData
+newAttendance
 );
 
 }
