@@ -2,7 +2,10 @@
 <html>
 <head>
 <title>HR System Dashboard</title>
-
+  <link
+href="https://fonts.googleapis.com/icon?family=Material+Icons"
+rel="stylesheet">
+  
 <link rel="manifest" href="/manifest.json">
 
 <link rel="icon" href="/logo.png">
@@ -95,6 +98,17 @@ color:white;
 transition:0.3s;
 
 border-radius:6px;
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+}
+
+.material-icons{
+
+font-size:20px;
 }
 
 .sidebar button:hover{
@@ -367,55 +381,66 @@ font-size:15px;
 <h2>HR SYSTEM</h2>
 
 <button onclick="openPage('employee.html')">
-👥 Employees
+<span class="material-icons">groups</span>
+Employees
 </button>
 
 <button onclick="openPage('attendance.html')">
-🕒 Attendance
+<span class="material-icons">schedule</span>
+Attendance
 </button>
 
 <button onclick="openPage('qrattendance.html')">
-📷 QR Attendance
+<span class="material-icons">qr_code_scanner</span>
+QR Attendance
 </button>
-  
+
 <button onclick="openPage('payroll.html')">
-💰 Payroll
+<span class="material-icons">payments</span>
+Payroll
 </button>
 
 <button onclick="openPage('autopayroll.html')">
-🤖 Auto Payroll
+<span class="material-icons">smart_toy</span>
+Auto Payroll
 </button>
 
 <button onclick="openPage('autoattendance.html')">
-🧮 Auto Attendance
+<span class="material-icons">calculate</span>
+Auto Attendance
 </button>
 
 <button onclick="openPage('payslip.html')">
-🧾 Payslip
+<span class="material-icons">receipt_long</span>
+Payslip
 </button>
 
 <button onclick="openPage('hrapproval.html')">
-✅ HR Approval Request
+<span class="material-icons">fact_check</span>
+HR Approval
 </button>
 
 <button onclick="openPage('trackleaves.html')">
-📋 Track Leaves
-</button>
-  
-<button onclick="openPage('settings.html')">
-⚙️ Settings
+<span class="material-icons">event_note</span>
+Track Leaves
 </button>
 
-<!-- LOGOUT -->
+<button onclick="openPage('settings.html')">
+<span class="material-icons">settings</span>
+Settings
+</button>
 
 <button
 class="logout-btn"
 onclick="logout()">
 
-🚪 LOG OUT
+<span class="material-icons">
+logout
+</span>
+
+LOG OUT
 
 </button>
-
 </div>
 
 <!-- MAIN -->
