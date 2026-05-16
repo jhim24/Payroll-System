@@ -607,6 +607,31 @@ placeholder="Days">
 id="reason"
 placeholder="Reason"></textarea>
 
+  <!-- ATTENDANCE REQUEST -->
+
+<select id="attendanceType">
+
+<option value="">
+Select Attendance Request
+</option>
+
+<option>Missing Time In</option>
+<option>Missing Time Out</option>
+<option>Late Correction</option>
+
+</select>
+
+<input
+type="date"
+id="attendanceDate">
+
+<input
+type="time"
+id="attendanceTime">
+
+<textarea
+id="attendanceReason"
+placeholder="Attendance Reason"></textarea>
 </div>
 
 <!-- BUTTONS -->
@@ -986,6 +1011,88 @@ return;
 
 }
 
+if(attendanceDate.value===''){
+
+alert('Select Date');
+
+return;
+
+}
+
+if(attendanceTime.value===''){
+
+alert('Select Time');
+
+return;
+
+}
+
+if(attendanceReason.value===''){
+
+alert('Enter Reason');
+
+return;
+
+}
+
+try{
+
+await addDoc(
+
+collection(db,'attendanceRequests'),
+
+{
+
+employeeid:
+currentEmployee.id,
+
+employee:
+currentEmployee.name,
+
+requesttype:
+attendanceType.value,
+
+date:
+attendanceDate.value,
+
+time:
+attendanceTime.value,
+
+reason:
+attendanceReason.value,
+
+status:
+'PENDING',
+
+timestamp:
+Date.now()
+
+}
+
+);
+
+alert(
+'Attendance Request Submitted'
+);
+
+/* CLEAR */
+
+attendanceType.value='';
+attendanceDate.value='';
+attendanceTime.value='';
+attendanceReason.value='';
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Attendance Request Error'
+);
+
+}
+
+}
 try{
 
 if(editId){
@@ -1059,25 +1166,42 @@ alert('Submit Error');
 }
 
 }
-
 /* ATTENDANCE REQUEST */
 
 window.submitAttendanceRequest =
 async function(){
 
-let attendanceType =
-prompt(
-'Enter Attendance Request:\nTIME IN\nTIME OUT\nMISSING SCAN\nLATE'
-);
+if(attendanceType.value===''){
 
-if(!attendanceType) return;
+alert('Select Attendance Request');
 
-let attendanceReason =
-prompt(
-'Enter Reason'
-);
+return;
 
-if(!attendanceReason) return;
+}
+
+if(attendanceDate.value===''){
+
+alert('Select Date');
+
+return;
+
+}
+
+if(attendanceTime.value===''){
+
+alert('Select Time');
+
+return;
+
+}
+
+if(attendanceReason.value===''){
+
+alert('Enter Reason');
+
+return;
+
+}
 
 try{
 
@@ -1087,23 +1211,29 @@ collection(db,'attendanceRequests'),
 
 {
 
-empid:
+employeeid:
 currentEmployee.id,
 
 employee:
 currentEmployee.name,
 
-type:
-attendanceType,
+requesttype:
+attendanceType.value,
 
 date:
-new Date().toLocaleDateString(),
+attendanceDate.value,
+
+time:
+attendanceTime.value,
 
 reason:
-attendanceReason,
+attendanceReason.value,
 
 status:
-'PENDING'
+'PENDING',
+
+timestamp:
+Date.now()
 
 }
 
@@ -1112,6 +1242,11 @@ status:
 alert(
 'Attendance Request Submitted'
 );
+
+attendanceType.value='';
+attendanceDate.value='';
+attendanceTime.value='';
+attendanceReason.value='';
 
 }catch(error){
 
@@ -1124,7 +1259,6 @@ alert(
 }
 
 }
-
 /* LOAD REQUESTS */
 
 async function loadRequests(){
