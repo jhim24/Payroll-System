@@ -1087,8 +1087,103 @@ alert('Submit Error');
 
 /* ATTENDANCE REQUEST */
 
-async function loadRequests(){
+window.submitAttendanceRequest =
+async function(){
 
+if(attendanceType.value===''){
+
+alert('Select Attendance Request');
+
+return;
+
+}
+
+if(attendanceDate.value===''){
+
+alert('Select Date');
+
+return;
+
+}
+
+if(attendanceTime.value===''){
+
+alert('Select Time');
+
+return;
+
+}
+
+if(attendanceReason.value===''){
+
+alert('Enter Reason');
+
+return;
+
+}
+
+try{
+
+await addDoc(
+
+collection(db,'attendanceRequests'),
+
+{
+
+employeeid:
+currentEmployee.id,
+
+employee:
+currentEmployee.name,
+
+requesttype:
+attendanceType.value,
+
+date:
+attendanceDate.value,
+
+time:
+attendanceTime.value,
+
+reason:
+attendanceReason.value,
+
+status:
+'PENDING',
+
+timestamp:
+Date.now()
+
+}
+
+);
+
+alert(
+'Attendance Request Submitted'
+);
+
+/* CLEAR */
+
+attendanceType.value='';
+attendanceDate.value='';
+attendanceTime.value='';
+attendanceReason.value='';
+
+}catch(error){
+
+console.log(error);
+
+alert(
+'Attendance Request Error'
+);
+
+}
+
+}
+
+/* LOAD REQUESTS */
+
+async function loadRequests(){
 requestBody.innerHTML='';
 
 let querySnapshot =
