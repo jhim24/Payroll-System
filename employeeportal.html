@@ -945,11 +945,11 @@ let editId = null;
 
 async function loadEmployee(){
 
-/* EMPLOYEE REQUESTS */
+/* EMPLOYEES */
 
 let querySnapshot =
 await getDocs(
-collection(db,'employeeRequests')
+collection(db,'employees')
 );
 
 /* ATTENDANCE REQUESTS */
