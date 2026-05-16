@@ -69,7 +69,53 @@ color:white;
 
 animation:fadeIn 0.5s ease;
 }
+/* LOGO */
 
+.logo-box{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+margin-bottom:15px;
+}
+
+.logo{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+border:4px solid #ffcc00;
+
+background:white;
+
+padding:5px;
+
+object-fit:cover;
+
+box-shadow:
+0 4px 15px rgba(0,0,0,0.5);
+}
+
+.logo-text{
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#ff3333;
+
+margin-top:10px;
+
+text-shadow:2px 2px 5px black;
+
+letter-spacing:2px;
+}
 /* TITLE */
 
 .title{
@@ -280,6 +326,18 @@ font-size:28px;
 <body>
 
 <div class="login-box">
+
+<div class="logo-box">
+
+<img
+src="/logo.png"
+class="logo">
+
+<div class="logo-text">
+PAPPRITO
+</div>
+
+</div>
 
 <div class="title">
 HR SYSTEM
