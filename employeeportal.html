@@ -1434,35 +1434,123 @@ payslipArea.style.display='none';
 window.printPayslip =
 function(){
 
-let originalContent =
-document.body.innerHTML;
-
-let payslipContent =
+let payslip =
 document.getElementById(
 'payslipArea'
-).outerHTML;
+);
 
-document.body.innerHTML = `
+if(
+payslip.style.display === 'none' ||
+payslip.innerHTML.trim() === ''
+){
 
-<div style="
+alert('Load Payslip First');
+
+return;
+
+}
+
+let printWindow =
+window.open(
+'',
+'',
+'width=900,height=1200'
+);
+
+printWindow.document.write(`
+
+<html>
+
+<head>
+
+<title>Print Payslip</title>
+
+<style>
+
+body{
+font-family:Tahoma,sans-serif;
 padding:20px;
+background:white;
 display:flex;
 justify-content:center;
-background:white;
-">
+}
 
-${payslipContent}
+.payslip{
+display:block !important;
+width:110mm;
+background:#f9f9f9;
+color:black;
+padding:10px;
+border:2px solid #ffcc00;
+border-radius:15px;
+}
 
-</div>
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:5px;
+}
 
-`;
+th,td{
+border:1px solid #999;
+padding:4px;
+font-size:10px;
+}
 
-window.print();
+th{
+background:#ffcc00;
+color:black;
+}
 
-document.body.innerHTML =
-originalContent;
+.netpay{
+margin-top:10px;
+padding:8px;
+background:#008000;
+color:white;
+font-weight:bold;
+text-align:right;
+}
 
-location.reload();
+.signature{
+margin-top:15px;
+display:flex;
+justify-content:space-between;
+font-size:8px;
+}
+
+.line{
+margin-top:12px;
+border-top:1px solid black;
+width:75px;
+text-align:center;
+padding-top:3px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+${payslip.outerHTML}
+
+</body>
+
+</html>
+
+`);
+
+printWindow.document.close();
+
+printWindow.focus();
+
+setTimeout(()=>{
+
+printWindow.print();
+
+printWindow.close();
+
+},500);
 
 }
 /* LOGOUT */
