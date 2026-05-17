@@ -1234,8 +1234,6 @@ ${req.status}
 
 <td>
 
-<td>
-
 <button
 class="btn edit-btn"
 onclick="editRequest(
@@ -1332,47 +1330,6 @@ let found = false;
 querySnapshot.forEach(docSnap=>{
 /* LOAD ATTENDANCE REQUESTS */
 
-attendanceSnapshot.forEach(docSnap=>{
-
-let req = docSnap.data();
-
-if(
-req.employeeid === currentEmployee.id
-){
-
-let statusClass =
-(req.status || '')
-.toLowerCase();
-
-requestBody.innerHTML += `
-
-<tr>
-
-<td>${req.employeeid}</td>
-
-<td>${req.employee}</td>
-
-<td>${req.requesttype}</td>
-
-<td>${req.date}</td>
-
-<td>${req.time}</td>
-
-<td>${req.reason}</td>
-
-<td class="${statusClass}">
-${req.status}
-</td>
-
-<td>ATTENDANCE</td>
-
-</tr>
-
-`;
-
-}
-
-});
 let pay = docSnap.data();
 
 if(
