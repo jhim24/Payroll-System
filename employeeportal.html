@@ -1546,7 +1546,57 @@ padding-top:3px;
 
 <body>
 
-${payslip.outerHTML}
+<div class="payslip">
+
+<div class="company">
+
+<h2>PAPPRITO</h2>
+
+<p>OFFICIAL EMPLOYEE PAYSLIP</p>
+
+</div>
+
+<div class="info">
+
+<b>ID:</b>
+${payEmpId.innerText}
+
+<br><br>
+
+<b>Name:</b>
+${payEmp.innerText}
+
+<br><br>
+
+<b>Date:</b>
+${payDate.innerText}
+
+</div>
+
+${payslip.querySelectorAll('table')[0].outerHTML}
+
+${payslip.querySelectorAll('table')[1].outerHTML}
+
+<div class="netpay">
+
+NET PAY :
+₱ ${payNet.innerText}
+
+</div>
+
+<div class="signature">
+
+<div class="line">
+HR
+</div>
+
+<div class="line">
+Employee
+</div>
+
+</div>
+
+</div>
 
 </body>
 
