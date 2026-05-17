@@ -1439,10 +1439,37 @@ payslipArea.style.display='none';
 window.printPayslip =
 function(){
 
+let originalContent =
+document.body.innerHTML;
+
+let payslipContent =
+document.getElementById(
+'payslipArea'
+).outerHTML;
+
+document.body.innerHTML = `
+
+<div style="
+padding:20px;
+display:flex;
+justify-content:center;
+background:white;
+">
+
+${payslipContent}
+
+</div>
+
+`;
+
 window.print();
 
-}
+document.body.innerHTML =
+originalContent;
 
+location.reload();
+
+}
 /* LOGOUT */
 
 window.logout =
